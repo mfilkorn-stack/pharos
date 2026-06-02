@@ -153,9 +153,6 @@ export default function ResultDetail({ item, isFavorite, onToggleFavorite }) {
         <Section icon="droplet" tint="info" title="Wirkung">
           <p className="text-sm text-text-secondary leading-relaxed">
             Wirkstoff der Gruppe {item.gruppe}.
-            {item.indikationen?.length
-              ? ` Eingesetzt bei: ${item.indikationen.join(", ")}.`
-              : ""}
           </p>
         </Section>
       ) : null}

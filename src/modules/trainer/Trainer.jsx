@@ -642,6 +642,9 @@ export default function Trainer() {
                           <label key={i} className="flex items-center gap-3 cursor-pointer group">
                             <button
                               type="button"
+                              role="checkbox"
+                              aria-checked={!!startChecks[i]}
+                              aria-label={item}
                               onClick={() => setStartChecks({ ...startChecks, [i]: !startChecks[i] })}
                               className={`w-5 h-5 border rounded-md flex items-center justify-center transition ${
                                 startChecks[i]
@@ -720,10 +723,14 @@ export default function Trainer() {
               <button
                 onClick={handleSubmit}
                 disabled={Object.values(inputs).every((v) => !v?.trim())}
+                title={Object.values(inputs).every((v) => !v?.trim()) ? "Mindestens eine Sektion ausfüllen" : undefined}
                 className="font-mono px-8 py-4 bg-accent text-bg-primary rounded-lg hover:bg-accent/90 disabled:opacity-30 disabled:cursor-not-allowed transition tracking-wider uppercase text-sm font-semibold active:scale-[0.98]"
               >
                 Übergabe abgeben →
               </button>
+              {Object.values(inputs).every((v) => !v?.trim()) ? (
+                <span className="font-mono text-xs text-text-muted">Mindestens eine Sektion ausfüllen.</span>
+              ) : null}
               {scenario && (
                 <button
                   onClick={() => setView('brief')}

@@ -187,6 +187,18 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
   // OCR-Modell vorwaermen (Consent ist auf Shell-Ebene bereits erteilt).
   useEffect(() => { prewarmOCR(); }, []);
 
+  // ⌘K / Strg+K fokussiert das Suchfeld (passend zum Hint in der SearchBar).
+  useEffect(() => {
+    const onKey = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        document.querySelector('input[placeholder*="Suche"]')?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   // Navigation wird von der Pharos-Shell gesteuert: aktiven View + Zaehler melden,
   // Nav-Befehle (handleNav/goHome) per Ref nach aussen geben.
   useImperativeHandle(ref, () => ({ nav: handleNav, home: goHome }), [handleNav, goHome]);
@@ -450,28 +462,42 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
             {/* Results */}
             {results.length === 0 ? (
               <div className="flex flex-col items-center gap-4 py-16 px-4 text-center">
-                <p className="text-text-secondary text-base">Kein Treffer für „{query}"</p>
-                {query.trim().length >= 3 ? (
-                  searchEnriching ? (
-                    <div className="flex items-center gap-2 text-warning text-sm font-mono">
-                      <span className="h-1.5 w-1.5 rounded-full bg-warning animate-pulse" />
-                      Suche und ergänze via KI …
-                    </div>
-                  ) : searchEnrichError ? (
-                    <div className="space-y-3">
-                      <p className="text-sm text-critical">{searchEnrichError}</p>
-                      <Button variant="subtle" size="md" onClick={handleSearchEnrich}>
-                        <SparklesIcon className="h-4 w-4" />
-                        Erneut versuchen
-                      </Button>
-                    </div>
-                  ) : (
-                    <Button variant="subtle" size="md" onClick={handleSearchEnrich}>
-                      <SparklesIcon className="h-4 w-4" />
-                      Mit KI suchen und ergänzen
-                    </Button>
-                  )
-                ) : null}
+                {query.trim() ? (
+                  <>
+                    <p className="text-text-secondary text-base">Kein Treffer für „{query.trim()}"</p>
+                    {query.trim().length >= 3 ? (
+                      searchEnriching ? (
+                        <div className="flex items-center gap-2 text-warning text-sm font-mono">
+                          <span className="h-1.5 w-1.5 rounded-full bg-warning animate-pulse" />
+                          Suche und ergänze via KI …
+                        </div>
+                      ) : searchEnrichError ? (
+                        <div className="space-y-3">
+                          <p className="text-sm text-critical">{searchEnrichError}</p>
+                          <Button variant="subtle" size="md" onClick={handleSearchEnrich}>
+                            <SparklesIcon className="h-4 w-4" />
+                            Erneut versuchen
+                          </Button>
+                        </div>
+                      ) : (
+                        <Button variant="subtle" size="md" onClick={handleSearchEnrich}>
+                          <SparklesIcon className="h-4 w-4" />
+                          Mit KI suchen und ergänzen
+                        </Button>
+                      )
+                    ) : (
+                      <p className="text-sm text-text-muted">Mindestens 3 Zeichen für die KI-Ergänzung.</p>
+                    )}
+                  </>
+                ) : activeView === "favoriten" ? (
+                  <p className="text-text-secondary text-base">Noch keine Favoriten — tippe bei einem Eintrag auf den Stern.</p>
+                ) : activeView === "verlauf" ? (
+                  <p className="text-text-secondary text-base">Noch nichts geöffnet.</p>
+                ) : activeView === "drogen" ? (
+                  <p className="text-text-secondary text-base">Keine Substanz — suche per Name, Straßenname oder Symptom.</p>
+                ) : (
+                  <p className="text-text-secondary text-base">Tippe einen Wirkstoff oder Handelsnamen, um zu suchen.</p>
+                )}
               </div>
             ) : (
               <div className="space-y-3">

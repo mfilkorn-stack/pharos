@@ -38,9 +38,9 @@ export default function ConfirmList({ matched, unmatched, codeNote, onPick, onPi
       {unmatched && unmatched.length > 0 ? (
         <Section kicker="Nicht im Datenbestand" count={unmatched.length}>
           <div className="flex flex-col border border-warning/20 rounded-lg overflow-hidden bg-warning/5">
-            {unmatched.map((name) => (
+            {unmatched.map((name, i) => (
               <button
-                key={`u:${name}`}
+                key={`u:${name}:${i}`}
                 type="button"
                 className="flex items-center gap-3 px-3 py-2.5 text-left hover:bg-warning/10 transition-colors border-b border-warning/20 last:border-b-0"
                 onClick={() => onPickUnknown(name)}

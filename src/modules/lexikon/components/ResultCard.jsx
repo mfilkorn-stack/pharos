@@ -52,9 +52,12 @@ export default function ResultCard({ item, isActive, onOpen, isFavorite, onToggl
   const sourceBadge = item.source === "ki" ? kiBadge(item) : (SOURCE_BADGE[item.source] || null);
 
   return (
-    <button
-      type="button"
+    <div
+      role="button"
+      tabIndex={0}
       onClick={onOpen}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onOpen(); } }}
+      aria-label={`${item.wirkstoff} öffnen`}
       className={`group w-full flex items-stretch bg-card hover:bg-card-hover border rounded-xl overflow-hidden transition-all text-left cursor-pointer ${
         isActive
           ? "border-accent/40 bg-card-hover"
@@ -140,11 +143,9 @@ export default function ResultCard({ item, isActive, onOpen, isFavorite, onToggl
         {/* Favorite star + Chevron */}
         <div className="flex items-center gap-1 flex-shrink-0">
           {onToggleFavorite ? (
-            <span
-              role="button"
-              tabIndex={0}
+            <button
+              type="button"
               onClick={(e) => { e.stopPropagation(); onToggleFavorite(item.id); }}
-              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); onToggleFavorite(item.id); } }}
               aria-label={isFavorite ? "Favorit entfernen" : "Als Favorit markieren"}
               title={isFavorite ? "Favorit entfernen" : "Als Favorit markieren"}
               className={`h-8 w-8 inline-flex items-center justify-center rounded-md transition-colors cursor-pointer ${
@@ -154,11 +155,11 @@ export default function ResultCard({ item, isActive, onOpen, isFavorite, onToggl
               }`}
             >
               {isFavorite ? <StarFilledIcon className="h-4 w-4" /> : <StarIcon className="h-4 w-4" />}
-            </span>
+            </button>
           ) : null}
           <ChevronRightIcon className="h-5 w-5 text-text-muted group-hover:text-accent transition-colors" />
         </div>
       </div>
-    </button>
+    </div>
   );
 }

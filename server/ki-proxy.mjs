@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import rateLimit from "express-rate-limit";
 import Anthropic from "@anthropic-ai/sdk";
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -73,9 +74,22 @@ if (!KEY) {
 
 const anthropic = KEY ? new Anthropic({ apiKey: KEY }) : null;
 
+const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || "https://www.pharos.team";
+
 const app = express();
-app.use(cors({ origin: true }));
-app.use(express.json({ limit: "20mb" }));
+app.set("trust proxy", 1); // hinter Caddy: echte Client-IP aus X-Forwarded-For
+app.use(cors({ origin: [ALLOWED_ORIGIN, /^http:\/\/localhost:\d+$/] }));
+app.use(express.json({ limit: "8mb" }));
+
+// Rate-Limit für die kostenpflichtigen KI-Endpunkte (Schutz vor Kosten-/Denial-of-Wallet).
+const kiLimiter = rateLimit({
+  windowMs: 5 * 60 * 1000,
+  max: 40,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "rate_limited", message: "Zu viele Anfragen — bitte kurz warten." },
+});
+app.use(["/ki", "/enrich", "/saa-check", "/saa-matrix", "/uebergabe/parse", "/uebergabe/evaluate"], kiLimiter);
 
 app.get("/health", (req, res) => {
   res.json({ ok: true, hasKey: Boolean(KEY) });
@@ -114,7 +128,7 @@ app.post("/ki", async (req, res) => {
       messages: [{ role: "user", content: [media, { type: "text", text: INSTRUCTION + (source ? ` Kontext: ${source}.` : "") }] }],
     });
     const txt = (msg.content || []).filter((b) => b.type === "text").map((b) => b.text).join("\n").trim();
-    const clean = txt.replace(/^```json\s*/i, "").replace(/```$/i, "").trim();
+    const clean = txt.replace(/^```(?:json)?\s*/i, "").replace(/```$/i, "").trim();
     let arr;
     try { arr = JSON.parse(clean); } catch { arr = []; }
     if (!Array.isArray(arr)) arr = [];
@@ -130,12 +144,13 @@ app.post("/enrich", async (req, res) => {
   if (!anthropic) return res.status(503).json({ error: "no_api_key" });
   const { name } = req.body || {};
   if (!name || typeof name !== "string") return res.status(400).json({ error: "missing_name" });
+  if (name.length > 120) return res.status(400).json({ error: "name_too_long" });
   try {
     const store = loadExtras();
     const key = normName(name);
     const existing = store.entries.find((e) => normName(e.wirkstoff) === key);
     if (existing) return res.json({ entry: existing, cached: true });
-    const entry = await enrich(name, { anthropic });
+    const entry = await enrich(name, { anthropic, model: MODEL });
     if (!entry) return res.status(502).json({ error: "enrich_failed" });
     // Dublettenprüfung: nicht persistieren, wenn der Eintrag eine Dublette eines
     // Seed-Eintrags (gleicher ATC/Name) oder eines bestehenden Extras ist —
@@ -384,6 +399,7 @@ app.post("/uebergabe/parse", async (req, res) => {
   if (!transcript || typeof transcript !== "string") {
     return res.status(400).json({ error: "transcript fehlt" });
   }
+  if (transcript.length > 8000) return res.status(400).json({ error: "transcript_too_long" });
   await runTrainerPrompt(res, buildParsePrompt(transcript), 1500);
 });
 
@@ -443,8 +459,10 @@ async function computeMatrixOne(name) {
 
 // Trigger: Matrix für ein Med berechnen (fire-and-forget). Liefert evtl. bereits gecachte Flags.
 app.post("/saa-matrix", (req, res) => {
+  if (!anthropic) return res.status(503).json({ error: "no_api_key" });
   const { name } = req.body || {};
   if (!name || typeof name !== "string") return res.status(400).json({ error: "missing_name" });
+  if (name.length > 120) return res.status(400).json({ error: "name_too_long" });
   const cached = loadMatrix().entries[normName(name)];
   if (!cached) queueSaaMatrix(name);
   res.json({ cached: Boolean(cached), flags: cached?.flags || null });

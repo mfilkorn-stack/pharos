@@ -24,6 +24,7 @@
   "license": "ISC",
   "dependencies": {
     "@anthropic-ai/sdk": "^0.100.1",
+    "express-rate-limit": "^8.5.2",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "tesseract.js": "^7.0.0",

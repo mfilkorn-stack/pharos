@@ -1,6 +1,19 @@
 www.pharos.team {
 	encode gzip
 
+	# Security-Header. CSP berücksichtigt: Google-Fonts (style/font), React-Inline-
+	# Styles (style-src 'unsafe-inline'), Tesseract/zxing-WASM (wasm-unsafe-eval +
+	# worker-src blob:), Kamera-/Diktat-Permissions, data:/blob:-Bilder.
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(self), microphone=(self), geolocation=()"
+		Content-Security-Policy "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+		-Server
+	}
+
 	# API → Node-Proxy (Lexikon-KI + Übergabe-Trainer).
 	# WICHTIG: als handle-Block, damit die API-Pfade VOR dem SPA-Fallback matchen.
 	@api path /ki /enrich /health /uebergabe/* /saa-check /saa-matrix

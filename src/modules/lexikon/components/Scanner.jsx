@@ -11,6 +11,7 @@ export default function Scanner({ source, onClose, onPick, onPickUnknown, onPick
   const videoRef = useRef(null);
   const fileRef = useRef(null);
   const streamRef = useRef(null);
+  const cancelRef = useRef(null);
   const autoOpenedRef = useRef(false);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState("");
@@ -30,7 +31,7 @@ export default function Scanner({ source, onClose, onPick, onPickUnknown, onPick
     setSnapshot(null);
     setStatus("");
     setMsg("");
-    if (source === "scan") startCamera();
+    if (source === "scan") { cancelRef.current?.(); cancelRef.current = startCamera(); }
   };
 
   const run = async (blob, isPdf) => {
@@ -75,10 +76,19 @@ export default function Scanner({ source, onClose, onPick, onPickUnknown, onPick
 
   useEffect(() => {
     if (source !== "scan") return;
-    const cancel = startCamera();
-    return () => { cancel(); stopCamera(); };
+    cancelRef.current = startCamera();
+    return () => { cancelRef.current?.(); stopCamera(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [source]);
+
+  // Modal-Verhalten: Esc schließt, Hintergrund-Scroll sperren.
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === "Escape") onClose?.(); };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.removeEventListener("keydown", onKey); document.body.style.overflow = prevOverflow; };
+  }, [onClose]);
 
   useEffect(() => {
     if (source === "upload" && fileRef.current && !autoOpenedRef.current) {
@@ -117,7 +127,13 @@ export default function Scanner({ source, onClose, onPick, onPickUnknown, onPick
   const frozen = snapshot !== null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-start justify-center overflow-auto p-4 sm:p-6">
+    <div
+      className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-start justify-center overflow-auto p-4 sm:p-6"
+      role="dialog"
+      aria-modal="true"
+      aria-label={source === "scan" ? "Medikament scannen" : "Datei hochladen"}
+      onClick={(e) => { if (e.target === e.currentTarget) onClose?.(); }}
+    >
       <div className="bg-bg-secondary rounded-2xl border border-border shadow-2xl max-w-md w-full flex flex-col gap-4 p-5 sm:p-6 max-h-[92vh] overflow-y-auto my-4">
         {/* Header */}
         <div className="flex items-center justify-between">

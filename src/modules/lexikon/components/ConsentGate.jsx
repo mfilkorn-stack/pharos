@@ -82,7 +82,7 @@ export default function ConsentGate({ onAccept }) {
           <Button variant="ghost" size="md" onClick={() => setDenied(true)} className="sm:flex-1">
             Ablehnen
           </Button>
-          <Button variant="primary" size="md" onClick={handleAccept} className="sm:flex-2">
+          <Button variant="primary" size="md" onClick={handleAccept} className="sm:flex-[2]">
             Verstanden und einverstanden
           </Button>
         </div>

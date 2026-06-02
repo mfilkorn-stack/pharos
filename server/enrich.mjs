@@ -42,17 +42,17 @@ const FULL_INSTRUCTION = (name) => [
   `Gib NUR ein JSON-Objekt zurück, keine Codeblöcke, kein Text drumherum.`,
 ].join("\n");
 
-async function generateFullEntry(name, anthropic) {
+async function generateFullEntry(name, anthropic, model) {
   if (!anthropic) return null;
   try {
     const msg = await anthropic.messages.create({
-      model: "claude-sonnet-4-5",
+      model: model || "claude-sonnet-4-6",
       max_tokens: 1024,
       messages: [{ role: "user", content: FULL_INSTRUCTION(name) }],
     });
     const txt = (msg.content || []).filter((b) => b.type === "text").map((b) => b.text).join("\n").trim();
-    const clean = txt.replace(/^```json\s*/i, "").replace(/```$/i, "").trim();
-    console.log(`[enrich] Claude raw for "${name}":`, clean.slice(0, 500));
+    const clean = txt.replace(/^```(?:json)?\s*/i, "").replace(/```$/i, "").trim();
+    if (process.env.DEBUG) console.log(`[enrich] Claude raw for "${name}":`, clean.slice(0, 500));
     let obj;
     try { obj = JSON.parse(clean); }
     catch (e) {
@@ -78,7 +78,7 @@ async function generateFullEntry(name, anthropic) {
       kategorie: obj.kategorie === "droge" ? "droge" : obj.kategorie === "kein_wirkstoff" ? "kein_wirkstoff" : "medikament",
       drogenklasse: typeof obj.drogenklasse === "string" ? obj.drogenklasse.trim().toLowerCase() : "",
     };
-    console.log(`[enrich] parsed for "${name}":`, JSON.stringify({ wirkstoff: result.wirkstoff, atc: result.atc, gruppe: result.gruppe, synCount: result.synonyms.length, indCount: result.indikationen.length, notfCount: result.notfall.length }));
+    if (process.env.DEBUG) console.log(`[enrich] parsed for "${name}":`, JSON.stringify({ wirkstoff: result.wirkstoff, atc: result.atc, gruppe: result.gruppe, synCount: result.synonyms.length, indCount: result.indikationen.length, notfCount: result.notfall.length }));
     return result;
   } catch (e) {
     console.error("[enrich] full", e?.message || e);
@@ -118,14 +118,14 @@ function buildDeterministicSources(wirkstoff, atc, wiki) {
   return out;
 }
 
-export async function enrich(name, { anthropic }) {
+export async function enrich(name, { anthropic, model }) {
   if (!name || typeof name !== "string") return null;
 
   // Parallel: Wikipedia + Claude. Beide Quellen mergen, Wiki gewinnt für ATC (autoritativer),
   // Claude füllt alles, was Wiki nicht hat (insb. Notfall + Gruppen-Name + Indikationen).
   const [wiki, ai] = await Promise.all([
     fetchDrugInfo(name).catch(() => null),
-    generateFullEntry(name, anthropic),
+    generateFullEntry(name, anthropic, model),
   ]);
 
   if (!wiki && !ai) return null;
@@ -159,13 +159,7 @@ export async function enrich(name, { anthropic }) {
   const wirkstoff = (ai?.wirkstoff || wiki?.wirkstoff || name).trim();
   // ATC: Wiki gewinnt (verifizierte Quelle), Claude als Fallback.
   const atc = wiki?.atc || ai?.atc || null;
-  // Synonyme: Union, dedupliziert, gekürzt.
-  const synSet = new Set();
-  for (const s of [...(wiki?.synonyms || []), ...(ai?.synonyms || [])]) {
-    const t = String(s).trim();
-    if (t && !synSet.has(t.toLowerCase())) synSet.add(t.toLowerCase()) && (synSet.has(t.toLowerCase()));
-  }
-  // Use ordered array preserving first-seen
+  // Synonyme: Union, dedupliziert (first-seen-Reihenfolge).
   const synonyms = [];
   const seen = new Set();
   for (const s of [...(wiki?.synonyms || []), ...(ai?.synonyms || [])]) {

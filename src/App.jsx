@@ -64,7 +64,7 @@ export default function App() {
           active={lexNav.active}
           counts={lexNav.counts}
           onNav={handleNav}
-          onHome={goHome}
+          onMode={handleMode}
         />
       </div>
     </div>

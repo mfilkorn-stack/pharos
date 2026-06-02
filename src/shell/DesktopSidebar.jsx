@@ -11,8 +11,8 @@ import {
 } from "../modules/lexikon/components/ui/icons.jsx";
 
 const MODES = [
-  { key: "lexikon", label: "Wirkstoff-Lexikon", Icon: MagnifyingGlassIcon },
-  { key: "trainer", label: "Übergabe-Trainer", Icon: ClipboardCheckIcon },
+  { key: "lexikon", label: "MedScan", Icon: MagnifyingGlassIcon },
+  { key: "trainer", label: "Übergabe", Icon: ClipboardCheckIcon },
 ];
 
 const LEXIKON_NAV = [
@@ -73,7 +73,7 @@ export default function DesktopSidebar({ mode, active, counts = {}, onNav, onMod
       {/* Lexikon-Navigation */}
       {mode === "lexikon" ? (
         <>
-          <div className="font-mono text-[10px] tracking-[0.25em] uppercase text-text-muted px-3 mt-4 mb-1">Lexikon</div>
+          <div className="font-mono text-[10px] tracking-[0.25em] uppercase text-text-muted px-3 mt-4 mb-1">MedScan</div>
           {LEXIKON_NAV.map((item) => (
             <Row
               key={item.key}

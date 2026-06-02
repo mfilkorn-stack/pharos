@@ -4,18 +4,14 @@ import {
   FlaskIcon,
   StarIcon,
   ClipboardCheckIcon,
-  PharosLogo,
 } from "../modules/lexikon/components/ui/icons.jsx";
 
-const LEXIKON_TABS = [
+// Sub-Navigation des MedScan-Moduls (Lexikon).
+const MEDSCAN_TABS = [
   { key: "suche", label: "Suche", Icon: MagnifyingGlassIcon },
   { key: "scannen", label: "Scannen", Icon: CameraIcon },
   { key: "drogen", label: "Drogen", Icon: FlaskIcon },
   { key: "favoriten", label: "Favoriten", Icon: StarIcon },
-];
-
-const TRAINER_TABS = [
-  { key: "trainer", label: "Übergabe", Icon: ClipboardCheckIcon },
 ];
 
 function Tab({ Icon, label, active, badge, onClick }) {
@@ -39,26 +35,36 @@ function Tab({ Icon, label, active, badge, onClick }) {
   );
 }
 
-// Feste Bottom-Tab-Bar fuer Mobile. Kontextabhaengig pro Modus; "Pharos" wechselt
-// zurueck zum Home-Launcher (Moduswechsel).
-export default function BottomTabBar({ mode, active, counts = {}, onNav, onHome }) {
-  const tabs = mode === "trainer" ? TRAINER_TABS : LEXIKON_TABS;
+// Feste Bottom-Tab-Bar (Mobile). Der letzte Tab wechselt ins ANDERE Modul
+// (Pharos = App-Name, kein Navigationsziel). MedScan ↔ Übergabe.
+export default function BottomTabBar({ mode, active, counts = {}, onNav, onMode }) {
+  const navCls =
+    "fixed bottom-0 inset-x-0 z-40 border-t border-border bg-bg-secondary/95 backdrop-blur-sm flex items-stretch";
+  const safe = { paddingBottom: "env(safe-area-inset-bottom)" };
+
+  if (mode === "trainer") {
+    return (
+      <nav className={navCls} style={safe}>
+        <Tab Icon={ClipboardCheckIcon} label="Übergabe" active onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} />
+        <Tab Icon={MagnifyingGlassIcon} label="MedScan" active={false} onClick={() => onMode?.("lexikon")} />
+      </nav>
+    );
+  }
+
+  // MedScan-Modus (Lexikon): Sub-Nav + Wechsel zur Übergabe.
   return (
-    <nav
-      className="fixed bottom-0 inset-x-0 z-40 border-t border-border bg-bg-secondary/95 backdrop-blur-sm flex items-stretch"
-      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
-    >
-      {tabs.map((t) => (
+    <nav className={navCls} style={safe}>
+      {MEDSCAN_TABS.map((t) => (
         <Tab
           key={t.key}
           Icon={t.Icon}
           label={t.label}
-          active={mode === "trainer" ? true : active === t.key}
+          active={active === t.key}
           badge={counts[t.key]}
-          onClick={() => (mode === "trainer" ? window.scrollTo({ top: 0, behavior: "smooth" }) : onNav?.(t.key))}
+          onClick={() => onNav?.(t.key)}
         />
       ))}
-      <Tab Icon={PharosLogo} label="Pharos" active={false} onClick={onHome} />
+      <Tab Icon={ClipboardCheckIcon} label="Übergabe" active={false} onClick={() => onMode?.("trainer")} />
     </nav>
   );
 }

@@ -3,14 +3,14 @@ import { PharosLogo, MagnifyingGlassIcon, ClipboardCheckIcon, ArrowRightIcon, Wi
 const TILES = [
   {
     key: "lexikon",
-    title: "Wirkstoff-Lexikon",
-    desc: "Nachschlagen, Packung scannen, Drogen & Toxidrome — offline verfügbar.",
+    title: "MedScan",
+    desc: "Wirkstoffe nachschlagen, Packung scannen, Drogen & Toxidrome — offline verfügbar.",
     Icon: MagnifyingGlassIcon,
     tag: "Nachschlagen",
   },
   {
     key: "trainer",
-    title: "Übergabe-Trainer",
+    title: "Übergabe",
     desc: "SINNHAFT-Übergabe einsprechen, KI parst & bewertet wie das ZNA-Team.",
     Icon: ClipboardCheckIcon,
     tag: "Trainieren",
@@ -66,7 +66,7 @@ export default function HomeScreen({ onPick }) {
         {/* Offline note */}
         <div className="mt-10 flex items-center gap-2 text-text-muted text-xs">
           <WifiIcon className="h-4 w-4 text-success flex-shrink-0" />
-          <span>Lexikon läuft offline. Trainer-Bewertung benötigt Internet.</span>
+          <span>MedScan läuft offline. Übergabe-Bewertung benötigt Internet.</span>
         </div>
 
         <footer className="mt-12 pt-6 border-t border-border font-mono text-[10px] tracking-wide text-text-muted">

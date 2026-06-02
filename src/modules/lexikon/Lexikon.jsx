@@ -47,6 +47,8 @@ function materialize(entry, groups) {
     source: entry.source || "0a",
     quelle: entry.quelle,
     stand: entry.stand,
+    sources: entry.sources || [],
+    verification: entry.verification || null,
   };
 }
 
@@ -164,6 +166,16 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
   }, []);
 
   useEffect(() => { reloadExtras(); }, [reloadExtras]);
+
+  // Prio-2-Polling: solange KI-Einträge noch unverifiziert (pending / ohne
+  // verification) sind, extras-runtime.json periodisch neu laden, damit der
+  // Verifizierungs-Status nachläuft, ohne dass der Nutzer etwas tun muss.
+  useEffect(() => {
+    const hasPending = runtimeExtras.some((e) => !e.verification || e.verification.status === "pending");
+    if (!hasPending) return;
+    const t = setInterval(reloadExtras, 25000);
+    return () => clearInterval(t);
+  }, [runtimeExtras, reloadExtras]);
 
   const fullDB = useMemo(() => {
     const extras = runtimeExtras.map((e) => materialize(e, data.groups));

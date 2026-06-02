@@ -63,8 +63,9 @@ function splitList(s) {
 
 export async function fetchDrugInfo(name) {
   try {
+    let lang = "de";
     let parse = await fetchPage("de", name);
-    if (!parse) parse = await fetchPage("en", name);
+    if (!parse) { lang = "en"; parse = await fetchPage("en", name); }
     if (!parse) return null;
     const title = parse.title || name;
     const wikitext = parse.wikitext?.["*"] || "";
@@ -75,7 +76,9 @@ export async function fetchDrugInfo(name) {
     const synonyms = splitList(stripWiki(synonymsRaw));
     const indikationenRaw = extractField(infobox, "Anwendungsgebiet") || extractField(infobox, "Indikation") || extractField(infobox, "Wirkstoffgruppe") || extractField(infobox, "Wirkstoffklasse") || "";
     const indikationen = splitList(stripWiki(indikationenRaw));
-    return { wirkstoff: title, atc, synonyms, indikationen };
+    // Aufgelöste Artikel-URL (echte, verifizierbare Quelle).
+    const url = `https://${lang}.wikipedia.org/wiki/${encodeURIComponent(title.replace(/ /g, "_"))}`;
+    return { wirkstoff: title, atc, synonyms, indikationen, lang, url };
   } catch (e) {
     console.error("[wikipedia]", e?.message || e);
     return null;

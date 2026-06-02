@@ -32,13 +32,23 @@ const SOURCE_BADGE = {
   unknown: { variant: "warning", label: "..." },
 };
 
+// KI-Karten zeigen den Verifizierungs-Status als Signal (Vertrauen auf einen Blick).
+function kiBadge(item) {
+  const st = item.verification?.status;
+  const n = item.verification?.sourceCount || 0;
+  if (st === "valide") return { variant: "success", label: `✓ ${n}` };
+  if (st === "teilverifiziert") return { variant: "info", label: `KI ·${n}` };
+  if (st === "widerspruch") return { variant: "critical", label: "⚠ KI" };
+  return { variant: "critical", label: "KI" };
+}
+
 export default function ResultCard({ item, isActive, onOpen, isFavorite, onToggleFavorite }) {
   const risk = maxRiskLevel(item.notfall);
   const barColor = RISK_BAR_COLOR[risk] || RISK_BAR_COLOR.info;
   const notf = getNotfallRelevanz(item.notfall);
   const synonymStr = (item.synonyms || []).join(" · ");
   const firstNotfall = item.notfall?.[0]?.text || null;
-  const sourceBadge = SOURCE_BADGE[item.source] || null;
+  const sourceBadge = item.source === "ki" ? kiBadge(item) : (SOURCE_BADGE[item.source] || null);
 
   return (
     <button

@@ -9,6 +9,8 @@ import {
   StarIcon,
   StarFilledIcon,
   SyringeIcon,
+  ShieldCheckIcon,
+  LinkIcon,
 } from "./ui/icons.jsx";
 
 function maxRiskLevel(notfall) {
@@ -28,7 +30,32 @@ const ICON_MAP = {
   pill: PillIcon,
   sparkles: SparklesIcon,
   syringe: SyringeIcon,
+  link: LinkIcon,
+  shield: ShieldCheckIcon,
 };
+
+// Verifizierungs-Badge nach verification.status (Prio-2-Ergebnis).
+const VERIFY_BADGE = {
+  pending: { variant: "warning", label: "KI · ungeprüft" },
+  teilverifiziert: { variant: "info", label: (n) => `KI · ${n} ${n === 1 ? "Quelle" : "Quellen"}` },
+  valide: { variant: "success", label: (n) => `✓ KI-valide · ${n} Quellen` },
+  widerspruch: { variant: "critical", label: "⚠ Quellen widersprüchlich" },
+  fehlgeschlagen: { variant: "neutral", label: "KI · nicht verifizierbar" },
+};
+
+function VerificationBadge({ verification }) {
+  const status = verification?.status || "pending";
+  const n = verification?.sourceCount || 0;
+  const cfg = VERIFY_BADGE[status] || VERIFY_BADGE.pending;
+  const label = typeof cfg.label === "function" ? cfg.label(n) : cfg.label;
+  return <Badge variant={cfg.variant} size="md" className="mt-3">{label}</Badge>;
+}
+
+function fmtDate(iso) {
+  if (!iso) return "";
+  try { return new Date(iso).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" }); }
+  catch { return ""; }
+}
 
 const TINT_CLASSES = {
   info: "bg-info/10 text-info",
@@ -115,7 +142,7 @@ export default function ResultDetail({ item, isFavorite, onToggleFavorite }) {
             <span className="text-sm text-text-muted">Kein Wirkstoff/Medikament — nichts angelegt.</span>
           </div>
         ) : isKI ? (
-          <Badge variant="critical" size="md" className="mt-3">KI-angereichert · ungeprüft</Badge>
+          <VerificationBadge verification={item.verification} />
         ) : is0b ? (
           <Badge variant="neutral" size="md" className="mt-3">Generische Gruppeninfo</Badge>
         ) : null}
@@ -263,10 +290,45 @@ export default function ResultDetail({ item, isFavorite, onToggleFavorite }) {
         </Section>
       ) : null}
 
+      {/* Quellen zum Überprüfen (KI-Einträge) */}
+      {isKI && item.sources?.length ? (
+        <Section
+          icon={item.verification?.status === "valide" ? "shield" : "link"}
+          tint={item.verification?.status === "valide" ? "success" : "accent"}
+          title={`Quellen${item.verification?.checkedAt ? ` · geprüft ${fmtDate(item.verification.checkedAt)}` : ""}`}
+        >
+          <ul className="space-y-2">
+            {item.sources.map((s, i) => (
+              <li key={i}>
+                <a
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-2 text-sm text-accent hover:underline"
+                >
+                  <LinkIcon className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                  <span className="min-w-0">
+                    <span className="font-medium">{s.publisher || s.domain}</span>
+                    {s.corroborates === true ? (
+                      <Badge variant="success" size="sm" className="ml-2 align-middle">bestätigt</Badge>
+                    ) : s.corroborates === false ? (
+                      <Badge variant="critical" size="sm" className="ml-2 align-middle">widerspricht</Badge>
+                    ) : null}
+                    <span className="block text-xs text-text-muted truncate">{s.domain}</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      ) : null}
+
       {/* KI disclaimer */}
       {isKI ? (
         <p className="text-xs text-text-muted border-t border-border pt-3">
-          Dieser Eintrag wurde automatisch via KI angereichert und ist nicht redaktionell geprüft.
+          {item.verification?.status === "valide"
+            ? "Automatisch quervalidiert (≥5 unabhängige Quellen) — keine redaktionelle Freigabe, kein Ersatz für fachliche Prüfung."
+            : "Automatisch via KI angereichert, nicht redaktionell geprüft. Quellen oben zum Verifizieren nutzen."}
         </p>
       ) : null}
     </div>

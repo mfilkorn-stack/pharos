@@ -6,6 +6,7 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { enrich } from "./enrich.mjs";
+import { verifyEntry } from "./verify.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = join(HERE, "..");
@@ -137,6 +138,7 @@ app.post("/enrich", async (req, res) => {
     if (!isSeedDuplicate(entry) && !isExtraDupe) {
       store.entries.push(entry);
       saveExtras(store);
+      queueVerify(entry.id); // Prio 2: zeitversetzt verifizieren (blockiert die Antwort nicht)
     } else {
       console.log(`[enrich] "${name}" ist Dublette — nicht persistiert.`);
     }
@@ -145,6 +147,95 @@ app.post("/enrich", async (req, res) => {
     console.error("[enrich]", err?.message || err);
     res.status(500).json({ error: "internal", message: String(err?.message || err) });
   }
+});
+
+// ─────────────────────────────────────────────────────────────────────────
+// Prio-2-Verifizierung: In-Process-Queue (Concurrency 1) + periodischer Sweep.
+// Blockiert nie den Erkennungs-/Enrich-Pfad. Status wird in extras-runtime.json
+// persistiert; der Client pollt die Datei und aktualisiert den Badge.
+// ─────────────────────────────────────────────────────────────────────────
+const VERIFY_MAX_ATTEMPTS = 3;
+const VERIFY_SWEEP_MS = 4 * 60 * 1000;
+const verifyQueue = [];
+const queued = new Set();
+let verifyRunning = false;
+
+function queueVerify(id) {
+  if (!id || queued.has(id) || !anthropic) return;
+  queued.add(id);
+  verifyQueue.push(id);
+  runVerifyWorker();
+}
+
+async function runVerifyWorker() {
+  if (verifyRunning || !anthropic) return;
+  verifyRunning = true;
+  try {
+    while (verifyQueue.length) {
+      const id = verifyQueue.shift();
+      queued.delete(id);
+      try { await verifyOne(id); } catch (e) { console.error("[verify] worker", e?.message || e); }
+    }
+  } finally {
+    verifyRunning = false;
+  }
+}
+
+function computeStatus(result, attempts) {
+  if (!result.ok) return attempts >= VERIFY_MAX_ATTEMPTS ? "fehlgeschlagen" : "pending";
+  if (result.contradiction) return "widerspruch";
+  if (result.sourceCount >= 5) return "valide";
+  if (result.sourceCount >= 1) return "teilverifiziert";
+  return attempts >= VERIFY_MAX_ATTEMPTS ? "fehlgeschlagen" : "pending";
+}
+
+async function verifyOne(id) {
+  const pre = loadExtras();
+  const entry = pre.entries.find((e) => e.id === id);
+  if (!entry || entry.source !== "ki") return;
+
+  const result = await verifyEntry(entry, { anthropic, model: MODEL });
+
+  // Store nach dem await neu laden (könnte sich geändert haben), dann mutieren.
+  const store = loadExtras();
+  const e2 = store.entries.find((x) => x.id === id);
+  if (!e2) return;
+  const attempts = (e2.verification?.attempts || 0) + 1;
+
+  if (result.ok && result.sources?.length) {
+    const existing = Array.isArray(e2.sources) ? e2.sources : [];
+    const seen = new Set(existing.map((s) => s.url));
+    for (const s of result.sources) if (!seen.has(s.url)) { seen.add(s.url); existing.push(s); }
+    e2.sources = existing;
+  }
+  e2.verification = {
+    status: computeStatus(result, attempts),
+    sourceCount: result.ok ? result.sourceCount : (e2.verification?.sourceCount || 0),
+    checkedAt: new Date().toISOString(),
+    attempts,
+  };
+  saveExtras(store);
+  console.log(`[verify] "${e2.wirkstoff}" → ${e2.verification.status} (${e2.verification.sourceCount} Quellen, Versuch ${attempts})`);
+}
+
+// Sweep: offene Einträge (pending / Altbestand ohne verification) erneut einreihen.
+function sweepVerify() {
+  if (!anthropic) return;
+  const store = loadExtras();
+  for (const e of store.entries) {
+    if (e.source !== "ki") continue;
+    const status = e.verification?.status;
+    if (!e.verification || status === "pending") queueVerify(e.id);
+  }
+}
+
+// Manueller Trigger (Prio-2 on demand, z. B. „Jetzt prüfen").
+app.post("/verify", (req, res) => {
+  if (!anthropic) return res.status(503).json({ error: "no_api_key" });
+  const { id } = req.body || {};
+  if (!id || typeof id !== "string") return res.status(400).json({ error: "missing_id" });
+  queueVerify(id);
+  res.json({ ok: true, queued: true });
 });
 
 // ─────────────────────────────────────────────────────────────────────────
@@ -294,4 +385,9 @@ app.post("/uebergabe/evaluate", async (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`[ki-proxy] http://localhost:${PORT}  (key: ${KEY ? "ja" : "FEHLT"}, model: ${MODEL})`);
+  // Prio-2-Verifizierung: initialer Sweep (greift Altbestand/pending auf) + Intervall.
+  if (anthropic) {
+    setTimeout(sweepVerify, 10_000);
+    setInterval(sweepVerify, VERIFY_SWEEP_MS);
+  }
 });

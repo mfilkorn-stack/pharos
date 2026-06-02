@@ -1,9 +1,12 @@
 www.pharos.team {
 	encode gzip
 
-	# API → Node-Proxy (Lexikon-KI + Übergabe-Trainer)
+	# API → Node-Proxy (Lexikon-KI + Übergabe-Trainer).
+	# WICHTIG: als handle-Block, damit die API-Pfade VOR dem SPA-Fallback matchen.
 	@api path /ki /enrich /health /uebergabe/*
-	reverse_proxy @api localhost:8787
+	handle @api {
+		reverse_proxy localhost:8787
+	}
 
 	# Live-Enrich-Cache direkt aus public/ servieren (umgeht dist/-Staleness:
 	# der Proxy schreibt KI-Anreicherungen nach public/data/extras-runtime.json)

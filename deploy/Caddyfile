@@ -3,7 +3,7 @@ www.pharos.team {
 
 	# API → Node-Proxy (Lexikon-KI + Übergabe-Trainer).
 	# WICHTIG: als handle-Block, damit die API-Pfade VOR dem SPA-Fallback matchen.
-	@api path /ki /enrich /health /uebergabe/*
+	@api path /ki /enrich /health /uebergabe/* /saa-check /saa-matrix
 	handle @api {
 		reverse_proxy localhost:8787
 	}

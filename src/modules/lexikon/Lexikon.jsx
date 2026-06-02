@@ -183,7 +183,15 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
 
   const enrichUnknownEntry = useCallback(async (name) => {
     const entry = await enrichName(name, { url: config.enrichProxyUrl });
-    if (!entry) return null;
+    if (!entry) {
+      // Kein echter Wirkstoff (z. B. Verpackungsform "Blister") oder nicht
+      // auffindbar → Platzhalter als "nicht erkannt" markieren statt endlos zu spinnen.
+      setPlanEntries((prev) => prev.map((p) =>
+        (p.source === "unknown" && p.wirkstoff === String(name).trim())
+          ? { ...p, source: "rejected", gruppe: "Nicht als Medikament erkannt" }
+          : p));
+      return null;
+    }
     const enriched = materialize(entry, data.groups);
     setPlanEntries((prev) => prev.map((p) => (p.id === `unknown:${entry.id.replace(/^unknown:/, "")}` || p.wirkstoff === name) ? enriched : p));
     reloadExtras();

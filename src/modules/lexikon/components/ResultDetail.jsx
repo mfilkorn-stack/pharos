@@ -65,6 +65,7 @@ export default function ResultDetail({ item, isFavorite, onToggleFavorite }) {
 
   const synonymStr = (item.synonyms || []).join(" · ");
   const isPending = item.source === "unknown";
+  const isRejected = item.source === "rejected";
   const isKI = item.source === "ki";
   const is0b = item.source === "0b";
   const isDrug = (item.group || "").startsWith("drogen_");
@@ -108,6 +109,11 @@ export default function ResultDetail({ item, isFavorite, onToggleFavorite }) {
             <span className="inline-block h-2 w-2 rounded-full bg-warning animate-pulse" />
             <span className="text-sm text-warning font-mono">Wird via KI angereichert …</span>
           </div>
+        ) : isRejected ? (
+          <div className="flex items-center gap-2 mt-3">
+            <span className="inline-block h-2 w-2 rounded-full bg-text-muted" />
+            <span className="text-sm text-text-muted">Kein Wirkstoff/Medikament — nichts angelegt.</span>
+          </div>
         ) : isKI ? (
           <Badge variant="critical" size="md" className="mt-3">KI-angereichert · ungeprüft</Badge>
         ) : is0b ? (
@@ -115,8 +121,8 @@ export default function ResultDetail({ item, isFavorite, onToggleFavorite }) {
         ) : null}
       </div>
 
-      {/* Wirkung — synthetic; bei Drogen ausgeblendet (redundant zu Toxidrom/Wirkdauer) */}
-      {!isDrug ? (
+      {/* Wirkung — synthetic; bei Drogen + Platzhalter/Reject ausgeblendet (kein echter Wirkstoff) */}
+      {!isDrug && !isPending && !isRejected ? (
         <Section icon="droplet" tint="info" title="Wirkung">
           <p className="text-sm text-text-secondary leading-relaxed">
             Wirkstoff der Gruppe {item.gruppe}.

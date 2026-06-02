@@ -35,7 +35,7 @@ const FULL_INSTRUCTION = (name) => [
   `- "gruppe": kurze Substanzgruppen-Bezeichnung auf Deutsch (z.B. "Thrombozytenaggregationshemmer", "Stimulans (Amphetamin-Typ)", "Illegales Opioid").`,
   `- "indikationen": Array typischer medizinischer Indikationen, je 2-5 Wörter; bei illegalen Drogen leeres Array.`,
   `- "notfall": Array notfallrelevanter Implikationen für Rettungspersonal (bei Drogen: Intoxikations-/Überdosis-Symptome, Antidot falls vorhanden). Maximal 3 Punkte, je ein knapper Satz. Format: [{"level":"hoch"|"mittel"|"info","text":"…"}].`,
-  `- "kategorie": "medikament" wenn es ein zugelassenes Arzneimittel/Wirkstoff ist, "droge" wenn es primär eine illegale/Freizeit-Substanz (psychoaktive Droge) ist.`,
+  `- "kategorie": "medikament" wenn es ein zugelassenes Arzneimittel/Wirkstoff ist, "droge" wenn es primär eine illegale/Freizeit-Substanz (psychoaktive Droge) ist, "kein_wirkstoff" wenn "${name}" KEIN echter Wirkstoff/Medikament/Substanz ist, sondern eine Verpackungs-/Darreichungsform (z.B. "Blister", "Tablette", "Ampulle"), ein generischer Begriff oder ein nicht identifizierbares Fragment. Bei "kein_wirkstoff" alle übrigen Felder leer lassen.`,
   `- "drogenklasse": NUR wenn kategorie="droge" — eine von: "opioide", "stimulanzien", "halluzinogene", "cannabinoide", "dissoziativa", "dampfdrogen" (GHB/GBL), "inhalantien" (Lachgas/Poppers). Sonst leer/null. Im Zweifel die pharmakologisch passendste wählen.`,
   ``,
   `KEINE patientenindividuelle Empfehlung, KEINE Dosierung, KEIN Markdown, KEINE Erklärung außerhalb der Felder.`,
@@ -75,7 +75,7 @@ async function generateFullEntry(name, anthropic) {
             .map((x) => ({ level: ["hoch", "mittel", "info"].includes(x.level) ? x.level : "info", text: x.text.trim() }))
             .slice(0, 3)
         : [],
-      kategorie: obj.kategorie === "droge" ? "droge" : "medikament",
+      kategorie: obj.kategorie === "droge" ? "droge" : obj.kategorie === "kein_wirkstoff" ? "kein_wirkstoff" : "medikament",
       drogenklasse: typeof obj.drogenklasse === "string" ? obj.drogenklasse.trim().toLowerCase() : "",
     };
     console.log(`[enrich] parsed for "${name}":`, JSON.stringify({ wirkstoff: result.wirkstoff, atc: result.atc, gruppe: result.gruppe, synCount: result.synonyms.length, indCount: result.indikationen.length, notfCount: result.notfall.length }));
@@ -97,6 +97,14 @@ export async function enrich(name, { anthropic }) {
   ]);
 
   if (!wiki && !ai) return null;
+
+  // Claude hat "${name}" als Nicht-Wirkstoff klassifiziert (Verpackungsform wie
+  // "Blister", generischer Begriff, unleserliches Fragment). Nicht anlegen —
+  // ein Blister ist eine Verpackung, kein Medikament.
+  if (ai?.kategorie === "kein_wirkstoff") {
+    console.warn(`[enrich] "${name}": kein echter Wirkstoff/Medikament (z. B. Verpackungsform) — verworfen.`);
+    return null;
+  }
 
   // Useful-Check: wenn weder ATC noch Notfall noch Indikationen vorhanden,
   // ist der Eintrag nutzlos (z.B. Fantasie-Wirkstoffname). Nicht persistieren.

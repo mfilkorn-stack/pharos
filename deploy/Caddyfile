@@ -8,9 +8,10 @@ www.pharos.team {
 		reverse_proxy localhost:8787
 	}
 
-	# Live-Enrich-Cache direkt aus public/ servieren (umgeht dist/-Staleness:
-	# der Proxy schreibt KI-Anreicherungen nach public/data/extras-runtime.json)
-	handle /data/extras-runtime.json {
+	# Live-Runtime-Caches direkt aus public/ servieren (umgeht dist/-Staleness:
+	# der Proxy schreibt KI-Anreicherungen + SAA-Matrix nach public/data/*.json)
+	@runtime path /data/extras-runtime.json /data/saa-matrix-runtime.json
+	handle @runtime {
 		root * /opt/pharos/public
 		file_server
 	}

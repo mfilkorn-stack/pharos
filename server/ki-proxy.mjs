@@ -12,6 +12,15 @@ import { saaCheck } from "./saa-check.mjs";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = join(HERE, "..");
 const EXTRAS_PATH = join(ROOT_DIR, "public/data/extras-runtime.json");
+const SAA_MATRIX_PATH = join(ROOT_DIR, "public/data/saa-matrix-runtime.json");
+
+// 29 SAA/BPR-Medikamente (für die Matrix-Berechnung) einmalig laden.
+const SAA_MEDS = (() => {
+  try {
+    const d = JSON.parse(readFileSync(join(ROOT_DIR, "src/modules/lexikon/data/saa.json"), "utf8"));
+    return (d.entries || []).map((e) => ({ id: e.id, name: e.name, kontra: e.kontra, relKontra: e.relKontra, uaw: e.uaw, besonderheiten: e.besonderheiten }));
+  } catch { return []; }
+})();
 
 function loadExtras() {
   try {
@@ -140,6 +149,7 @@ app.post("/enrich", async (req, res) => {
       store.entries.push(entry);
       saveExtras(store);
       queueVerify(entry.id); // Prio 2: zeitversetzt verifizieren (blockiert die Antwort nicht)
+      queueSaaMatrix(entry.wirkstoff); // Prio 2: SAA-Kontra-Matrix im Hintergrund vorberechnen
     } else {
       console.log(`[enrich] "${name}" ist Dublette — nicht persistiert.`);
     }
@@ -375,6 +385,69 @@ app.post("/uebergabe/parse", async (req, res) => {
     return res.status(400).json({ error: "transcript fehlt" });
   }
   await runTrainerPrompt(res, buildParsePrompt(transcript), 1500);
+});
+
+// ─────────────────────────────────────────────────────────────────────────
+// SAA-Matrix (Prio-1-Geschwindigkeit): pro Patienten-Medikament EINMAL gegen die
+// 29 SAA-Medis rechnen, in saa-matrix-runtime.json cachen. Der Client-Check liest
+// dann nur noch aus der Matrix (sofort, offline). KI läuft hier im Hintergrund.
+// ─────────────────────────────────────────────────────────────────────────
+function loadMatrix() {
+  try { return JSON.parse(readFileSync(SAA_MATRIX_PATH, "utf8")); }
+  catch { return { version: "saa-matrix-runtime-1", entries: {} }; }
+}
+function saveMatrix(store) {
+  mkdirSync(dirname(SAA_MATRIX_PATH), { recursive: true });
+  writeFileSync(SAA_MATRIX_PATH, JSON.stringify(store, null, 2));
+}
+
+const matrixQueue = [];
+const matrixQueued = new Set();
+let matrixRunning = false;
+
+function queueSaaMatrix(name) {
+  const key = normName(name);
+  if (!key || matrixQueued.has(key) || !anthropic || !SAA_MEDS.length) return;
+  // Schon gecacht? dann nicht erneut.
+  if (loadMatrix().entries[key]) return;
+  matrixQueued.add(key);
+  matrixQueue.push(name);
+  runMatrixWorker();
+}
+
+async function runMatrixWorker() {
+  if (matrixRunning || !anthropic) return;
+  matrixRunning = true;
+  try {
+    while (matrixQueue.length) {
+      const name = matrixQueue.shift();
+      matrixQueued.delete(normName(name));
+      try { await computeMatrixOne(name); } catch (e) { console.error("[saa-matrix] worker", e?.message || e); }
+    }
+  } finally {
+    matrixRunning = false;
+  }
+}
+
+async function computeMatrixOne(name) {
+  const key = normName(name);
+  if (!key) return;
+  const r = await saaCheck({ patientMeds: [name], saaMeds: SAA_MEDS }, { anthropic, model: MODEL });
+  if (!r.ok) return;
+  const flags = (r.results || []).filter((x) => x.level !== "ok").map((x) => ({ saaId: x.id, level: x.level, reason: x.reason }));
+  const store = loadMatrix();
+  store.entries[key] = { name, flags, checkedAt: new Date().toISOString() };
+  saveMatrix(store);
+  console.log(`[saa-matrix] "${name}" → ${flags.length} Flag(s) gecacht`);
+}
+
+// Trigger: Matrix für ein Med berechnen (fire-and-forget). Liefert evtl. bereits gecachte Flags.
+app.post("/saa-matrix", (req, res) => {
+  const { name } = req.body || {};
+  if (!name || typeof name !== "string") return res.status(400).json({ error: "missing_name" });
+  const cached = loadMatrix().entries[normName(name)];
+  if (!cached) queueSaaMatrix(name);
+  res.json({ cached: Boolean(cached), flags: cached?.flags || null });
 });
 
 app.post("/saa-check", async (req, res) => {

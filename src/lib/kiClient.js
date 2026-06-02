@@ -32,3 +32,9 @@ export function uebergabeEvaluate({ scenario, startChecks, inputs }) {
 export function saaCheck({ patientMeds, saaMeds }) {
   return post("/saa-check", { patientMeds, saaMeds });
 }
+
+// SAA-Matrix für EIN Med im Hintergrund berechnen/cachen lassen (fire-and-forget).
+// -> { cached, flags }
+export function saaMatrix(name) {
+  return post("/saa-matrix", { name });
+}

@@ -8,3 +8,4 @@ scripts/input/
 scripts/cache/
 public/tesseract/*.traineddata
 public/data/extras-runtime.json
+public/data/saa-matrix-runtime.json

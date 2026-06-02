@@ -1,91 +1,86 @@
-// SAA/BPR-Kontraindikations-Check — Client-Logik.
-// Schicht 1 (offline, deterministisch): Text-/Klassen-Treffer der Patienten-
-// Medikamente im offiziellen Kontra-Text der SAA-Medikamente.
-// Schicht 2 (online): KI-Tiefenprüfung via Proxy (saaCheck in kiClient) — gemerged.
+// SAA/BPR-Kontraindikations-Check — matrix-first (schnell & offline).
+// Der Check ist eine SOFORTIGE Aggregation aus der vorberechneten Matrix
+// (committet + Runtime). Nur unbekannte Medis fallen auf den deterministischen
+// Text-Matcher zurück und werden im Hintergrund nachberechnet (POST /saa-matrix).
 
-import { saaCheck as saaCheckApi } from "../../../lib/kiClient.js";
+import { saaMatrix as saaMatrixApi } from "../../../lib/kiClient.js";
 
-function norm(s) {
-  return (s || "").toLowerCase().normalize("NFD").replace(/\p{Mn}/gu, "");
+export function normKey(s) {
+  return (s || "").toLowerCase().normalize("NFD").replace(/\p{Mn}/gu, "").replace(/[^a-z0-9]/g, "");
 }
-
-// Patienten-Wirkstoff/-Marke → Wirkstoffklasse + Such-Tokens, die im SAA-Kontra-
-// Text auftauchen können. Bewusst kompakt; reiner Vorfilter (die KI bewertet voll).
-const CLASS_MAP = [
-  { re: /(marcumar|phenprocoumon|warfarin|coumadin|apixaban|rivaroxaban|edoxaban|dabigatran|eliquis|xarelto|lixiana|pradaxa|clopidogrel|prasugrel|ticagrelor|heparin|enoxaparin|clexane|tinzaparin)/, klasse: "Antikoagulation/Plättchenhemmung", tokens: ["blutung", "gerinnung", "antikoagul", "hamorrhag", "cumarin", "diathese"] },
-  { re: /(ibuprofen|diclofenac|naproxen|indometacin|nsar)/, klasse: "NSAR", tokens: ["nsar", "ulcus", "salicylat", "blutung"] },
-  { re: /(methotrexat|\bmtx\b)/, klasse: "Methotrexat", tokens: ["methotrexat"] },
-  { re: /(tranylcypromin|moclobemid|selegilin|rasagilin|mao-?hemmer)/, klasse: "MAO-Hemmer", tokens: ["mao-hemmer", "mao hemmer"] },
-  { re: /(metoprolol|bisoprolol|atenolol|nebivolol|carvedilol|propranolol|sotalol|betablocker)/, klasse: "Betablocker", tokens: ["betablock", "bradykard"] },
-  { re: /(amitriptylin|doxepin|clomipramin|nortriptylin|haloperidol|quetiapin|olanzapin|risperidon|promethazin|neuroleptik|antihistamin)/, klasse: "anticholinerg wirksam (Antidepressiva/Neuroleptika/Antihistaminika)", tokens: ["anticholinerg", "antidepressiva", "neuroleptik", "antihistaminik"] },
-];
 
 const RANK = { ok: 0, vorsicht: 1, absolut: 2 };
 
-// Schicht 1: deterministischer Text-/Klassen-Abgleich. Liefert nur Treffer
-// (absolut/vorsicht) als Map id -> { id, level, reason, triggers, det:true }.
-export function deterministicCheck(patientMeds, saaEntries) {
-  const pats = (patientMeds || []).map((m) => ({ raw: m, n: norm(m) })).filter((p) => p.n);
-  const out = {};
+// Deterministischer Text-/Klassen-Vorfilter (nur für Medis ohne Matrix-Eintrag).
+const CLASS_MAP = [
+  { re: /(marcumar|phenprocoumon|warfarin|coumadin|apixaban|rivaroxaban|edoxaban|dabigatran|eliquis|xarelto|lixiana|pradaxa|clopidogrel|prasugrel|ticagrelor|heparin|enoxaparin|clexane|tinzaparin)/, tokens: ["blutung", "gerinnung", "antikoagul", "hamorrhag", "cumarin", "diathese"] },
+  { re: /(ibuprofen|diclofenac|naproxen|indometacin|nsar)/, tokens: ["nsar", "ulcus", "salicylat", "blutung"] },
+  { re: /(methotrexat|\bmtx\b)/, tokens: ["methotrexat"] },
+  { re: /(tranylcypromin|moclobemid|selegilin|rasagilin|mao-?hemmer)/, tokens: ["mao-hemmer", "mao hemmer"] },
+  { re: /(metoprolol|bisoprolol|atenolol|nebivolol|carvedilol|propranolol|sotalol|betablocker)/, tokens: ["betablock", "bradykard"] },
+  { re: /(amitriptylin|doxepin|clomipramin|nortriptylin|haloperidol|quetiapin|olanzapin|risperidon|promethazin|neuroleptik|antihistamin)/, tokens: ["anticholinerg", "antidepressiva", "neuroleptik", "antihistaminik"] },
+];
+
+function deterministicFlags(med, saaEntries) {
+  const n = normKey(med);
+  const tokens = [n.slice(0, Math.max(4, n.length))].filter((t) => t.length >= 4);
+  for (const c of CLASS_MAP) if (c.re.test(med.toLowerCase())) tokens.push(...c.tokens);
+  const flags = [];
   for (const e of saaEntries || []) {
-    const kontraN = norm((e.kontra || []).join(" | "));
-    const relN = norm((e.relKontra || []).join(" | "));
-    const triggers = new Set();
-    let level = "ok";
-    let hitToken = "";
-    for (const p of pats) {
-      // Tokens: Patientenname selbst + Klassen-Tokens.
-      const tokens = [p.n.split(/[^a-z0-9]+/)[0]].filter((t) => t && t.length >= 4);
-      for (const c of CLASS_MAP) if (c.re.test(p.n)) tokens.push(...c.tokens);
-      for (const t of tokens) {
-        if (kontraN.includes(t)) { if (RANK.absolut > RANK[level]) { level = "absolut"; hitToken = t; } triggers.add(p.raw); }
-        else if (relN.includes(t)) { if (RANK.vorsicht > RANK[level]) { level = "vorsicht"; hitToken = t; } triggers.add(p.raw); }
-      }
-    }
-    if (level !== "ok") {
-      out[e.id] = {
-        id: e.id,
-        level,
-        reason: `Text-Treffer „${hitToken}" in den ${level === "absolut" ? "absoluten" : "relativen"} Kontraindikationen.`,
-        triggers: [...triggers],
-        det: true,
-      };
+    const k = (e.kontra || []).join(" | ").toLowerCase().normalize("NFD").replace(/\p{Mn}/gu, "");
+    const r = (e.relKontra || []).join(" | ").toLowerCase().normalize("NFD").replace(/\p{Mn}/gu, "");
+    for (const t of tokens) {
+      if (k.includes(t)) { flags.push({ saaId: e.id, level: "absolut", reason: `Text-Treffer „${t}" (Kontraindikation)` }); break; }
+      if (r.includes(t)) { flags.push({ saaId: e.id, level: "vorsicht", reason: `Text-Treffer „${t}" (relative KI)` }); break; }
     }
   }
-  return out;
+  return flags;
 }
 
-// Merge: höhere Stufe gewinnt; Begründungen/Trigger zusammenführen.
-export function mergeResults(detMap, aiResults) {
-  const byId = { ...detMap };
-  for (const r of aiResults || []) {
-    const prev = byId[r.id];
-    if (!prev) { byId[r.id] = { ...r, ai: true }; continue; }
-    const level = RANK[r.level] >= RANK[prev.level] ? r.level : prev.level;
-    const triggers = [...new Set([...(prev.triggers || []), ...(r.triggers || [])])];
-    const reason = r.reason && prev.reason ? `${r.reason} (Text: ${prev.reason})` : (r.reason || prev.reason);
-    byId[r.id] = { id: r.id, level, reason, triggers, det: prev.det, ai: true };
-  }
-  return Object.values(byId);
-}
+// Sofortige Aggregation. matrix = { [normKey]: { flags:[{saaId,level,reason}] } }.
+// saaEntries = Roh-SAA (für deterministischen Fallback). Gibt zurück:
+//   { results:[{id,level,reason,triggers[]}], pending:[meds ohne Matrix], cachedCount }
+export function aggregateCheck(patientMeds, matrix, saaEntries) {
+  const meds = (patientMeds || []).filter(Boolean);
+  const byId = {};
+  const pending = [];
+  let cachedCount = 0;
 
-// Voller Check: Schicht 1 sofort, Schicht 2 wenn online. saaEntries = Roh-SAA
-// (id, name, kontra, relKontra, uaw, besonderheiten).
-export async function runSaaCheck(patientMeds, saaEntries) {
-  const detMap = deterministicCheck(patientMeds, saaEntries);
-  if (!navigator.onLine) {
-    return { online: false, results: Object.values(detMap) };
+  const add = (saaId, level, med, reason) => {
+    const cur = byId[saaId];
+    if (!cur || RANK[level] > RANK[cur.level]) {
+      byId[saaId] = { id: saaId, level, reason: reason || cur?.reason || "", triggers: new Set(cur?.triggers || []) };
+    }
+    byId[saaId].triggers.add(med);
+  };
+
+  for (const med of meds) {
+    const rec = matrix?.[normKey(med)];
+    if (rec) {
+      cachedCount++;
+      for (const f of rec.flags || []) add(f.saaId, f.level, med, f.reason);
+    } else {
+      pending.push(med);
+      for (const f of deterministicFlags(med, saaEntries)) add(f.saaId, f.level, med, f.reason);
+    }
   }
-  try {
-    const saaMeds = saaEntries.map((e) => ({ id: e.id, name: e.name, kontra: e.kontra, relKontra: e.relKontra, uaw: e.uaw, besonderheiten: e.besonderheiten }));
-    const { results } = await saaCheckApi({ patientMeds, saaMeds });
-    return { online: true, results: mergeResults(detMap, results) };
-  } catch (e) {
-    // KI-Fehler → wenigstens deterministische Treffer zeigen.
-    return { online: true, error: String(e?.message || e), results: Object.values(detMap) };
-  }
+
+  const results = Object.values(byId).map((r) => ({ id: r.id, level: r.level, reason: r.reason, triggers: [...r.triggers] }));
+  return { results, pending, cachedCount };
 }
 
 export function sortBySeverity(results) {
   return [...results].sort((a, b) => (RANK[b.level] - RANK[a.level]) || a.id.localeCompare(b.id));
+}
+
+export function summarize(results) {
+  let absolut = 0, vorsicht = 0;
+  for (const r of results) { if (r.level === "absolut") absolut++; else if (r.level === "vorsicht") vorsicht++; }
+  return { absolut, vorsicht, total: results.length };
+}
+
+// Hintergrund: fehlende Medis zur Matrix-Berechnung anstoßen (fire-and-forget).
+export function triggerMatrixCompute(meds) {
+  if (!navigator.onLine) return;
+  for (const m of meds || []) saaMatrixApi(m).catch(() => {});
 }

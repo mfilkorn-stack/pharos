@@ -3,6 +3,7 @@ import data from "./data/data.json";
 import atcIndex from "./data/atc_index.json";
 import groupMap from "./data/atc_group_map.json";
 import saaData from "./data/saa.json";
+import saaMatrixSeed from "./data/saa-matrix.json";
 import SearchBar from "./components/SearchBar.jsx";
 import QuickFilters from "./components/QuickFilters.jsx";
 import ScanActions from "./components/ScanActions.jsx";
@@ -124,6 +125,7 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
   const [scanSource, setScanSource] = useState(null);
   const [planEntries, setPlanEntries] = useState([]);
   const [runtimeExtras, setRuntimeExtras] = useState([]);
+  const [saaMatrixRuntime, setSaaMatrixRuntime] = useState({});
   const [searchEnriching, setSearchEnriching] = useState(false);
   const [searchEnrichError, setSearchEnrichError] = useState("");
   const [activeView, setActiveView] = useState("suche"); // suche | favoriten | verlauf
@@ -218,6 +220,18 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
     // SAA-Block separat anhängen (NICHT gegen Seed deduplizieren — Protokoll-Sicht).
     return [...buildDedupedDB(SEED_DB, extras), ...SAA_DB];
   }, [runtimeExtras]);
+
+  // SAA-Matrix: committet (saaMatrixSeed) + Runtime-Ergänzungen (gemerged nach normKey).
+  const reloadSaaMatrix = useCallback(async () => {
+    try {
+      const res = await fetch("/data/saa-matrix-runtime.json", { cache: "no-store" });
+      if (!res.ok) return;
+      const d = await res.json();
+      setSaaMatrixRuntime(d?.entries || {});
+    } catch { /* ignore */ }
+  }, []);
+  useEffect(() => { reloadSaaMatrix(); }, [reloadSaaMatrix]);
+  const saaMatrix = useMemo(() => ({ ...(saaMatrixSeed.entries || {}), ...saaMatrixRuntime }), [saaMatrixRuntime]);
 
   const scanLookup = useMemo(
     () => makeScanLookup(fullDB, atcIndex, groupMap, data.groups),
@@ -371,20 +385,26 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
                   <span className="text-sm text-accent font-semibold">Plan-Auswahl · {results.length} Wirkstoffe</span>
                   <Button variant="ghost" size="sm" onClick={() => setPlanEntries([])}>Zurücksetzen</Button>
                 </div>
-                <SaaCheck patientMeds={planEntries.filter((p) => p.source !== "unknown" && p.source !== "rejected").map((p) => p.wirkstoff)} />
+                <SaaCheck patientMeds={planEntries.filter((p) => p.source !== "unknown" && p.source !== "rejected").map((p) => p.wirkstoff)} matrix={saaMatrix} />
               </div>
             ) : null}
 
             {/* View-Header (Favoriten / Verlauf) */}
             {activeView === "favoriten" ? (
-              <div className="flex items-center gap-3">
-                <span className="h-9 w-9 rounded-lg bg-warning/10 text-warning flex items-center justify-center flex-shrink-0">
-                  <StarIcon className="h-4 w-4" />
-                </span>
-                <div className="flex-1">
-                  <h2 className="text-base font-semibold text-text-primary">Favoriten</h2>
-                  <p className="text-xs text-text-muted">{favorites.length} markiert</p>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <span className="h-9 w-9 rounded-lg bg-warning/10 text-warning flex items-center justify-center flex-shrink-0">
+                    <StarIcon className="h-4 w-4" />
+                  </span>
+                  <div className="flex-1">
+                    <h2 className="text-base font-semibold text-text-primary">Favoriten</h2>
+                    <p className="text-xs text-text-muted">{favorites.length} markiert</p>
+                  </div>
                 </div>
+                {/* SAA-Check gegen die als Favorit markierten Patienten-Medikamente (ohne SAA-Einträge selbst) */}
+                {baseSet.some((d) => d.source !== "saa") ? (
+                  <SaaCheck patientMeds={baseSet.filter((d) => d.source !== "saa").map((d) => d.wirkstoff)} matrix={saaMatrix} />
+                ) : null}
               </div>
             ) : activeView === "verlauf" ? (
               <div className="flex items-center gap-3">

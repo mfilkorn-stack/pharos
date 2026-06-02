@@ -105,8 +105,10 @@ export default function ResultCard({ item, isActive, onOpen, isFavorite, onToggl
             ) : null}
           </div>
 
-          {/* Right: Notfallrelevanz + Snippet (sm+) */}
-          <div className="hidden sm:flex flex-col gap-3 min-w-0 w-[200px]">
+          {/* Right: Notfallrelevanz + Snippet — auf Mobile gestapelt sichtbar (Trennlinie),
+              ab sm in der rechten Spalte. Notfall-Info ist für die Triage zentral und
+              darf nicht erst hinter dem Detail-Klick auftauchen. */}
+          <div className="flex flex-col gap-3 min-w-0 sm:w-[200px] mt-3 pt-3 border-t border-border sm:mt-0 sm:pt-0 sm:border-t-0">
             <div>
               <div className="font-mono text-[10px] tracking-wider uppercase text-text-muted mb-1">
                 Notfallrelevanz

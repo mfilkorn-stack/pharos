@@ -133,6 +133,16 @@ export async function enrich(name, { anthropic }) {
     const k = t.toLowerCase();
     if (t && !seen.has(k)) { seen.add(k); synonyms.push(t); }
   }
+  // Den ursprünglich angefragten/gescannten Begriff (z. B. Handelsname wie
+  // "Soventol") als Synonym voranstellen, damit der Eintrag später unter genau
+  // diesem Namen gefunden wird — auch wenn KI/Wiki ihn nicht von sich aus listen.
+  // Vorne einfügen → überlebt das slice(0, 6)-Limit unten.
+  const qn = String(name || "").trim();
+  if (qn) {
+    const qk = norm(qn);
+    const known = qk === norm(wirkstoff) || synonyms.some((s) => norm(s) === qk);
+    if (qk && !known) synonyms.unshift(qn);
+  }
   // Indikationen: Claude bevorzugt (kuratiert + kurz), Wiki nur als Fallback.
   const indikationen = (ai?.indikationen && ai.indikationen.length) ? ai.indikationen : (wiki?.indikationen || []);
 

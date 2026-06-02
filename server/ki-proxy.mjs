@@ -73,7 +73,8 @@ app.get("/health", (req, res) => {
 const INSTRUCTION = [
   "Du erhältst ein Bild oder PDF einer Medikamentenpackung, eines Medikationsplans ODER eines Fundes psychoaktiver Substanzen (Drogen).",
   "Liste JEDES sichtbare Medikamenten-Produkt einzeln auf — auch wenn mehrere denselben Wirkstoff haben (z. B. Doliprane UND Efferalgan = beide Paracetamol → BEIDE auflisten).",
-  "Pro Produkt: bevorzugt den Wirkstoffnamen; wenn nur der Handelsname lesbar ist, dann den Handelsnamen.",
+  "Pro Produkt: liefere den Wirkstoffnamen, sofern lesbar (wichtig für den Datenbank-Abgleich).",
+  "Liefere ZUSÄTZLICH den gut lesbaren Handels-/Markennamen als EIGENEN Listeneintrag, sofern vorhanden (z. B. \"Soventol\", \"Fenistil\", \"Aspirin\") — Nutzer suchen meist nach der Marke. Ist nur eines von beidem lesbar, liefere dieses.",
   "Erfasse zur notfallmedizinischen Identifikation auch sichtbare illegale/Freizeit-Drogen: Ecstasy-/MDMA-Tabletten (oft mit Logo/Prägung), LSD-Blotter (bedrucktes Löschpapier), Pulver/Kristalle (Kokain, Amphetamin/Speed, Methamphetamin/Crystal Meth, Ketamin), Pflanzenmaterial (Cannabis, Pilze), Heroin, GHB/GBL-Flüssigkeit, Lachgas-Kartuschen/Ballons, Poppers-Fläschchen sowie Drug-Checking-/Analysebefunde.",
   "Wenn eine Droge nicht eindeutig identifizierbar ist, aber Prägung/Logo, Farbe/Form oder ein Begleittext (z. B. Drug-Checking-Befund) den Substanznamen nennt, liefere den Substanznamen (z. B. \"MDMA\", \"Kokain\", \"LSD\").",
   "Auch Produkte am Bildrand, schräg, teilweise verdeckt oder kleingedruckt sollen erfasst werden, sofern der Name bzw. die Substanz eindeutig erkennbar ist.",

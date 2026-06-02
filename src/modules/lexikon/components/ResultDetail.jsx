@@ -1,4 +1,5 @@
 import Badge from "./ui/Badge.jsx";
+import SaaDetail from "./SaaDetail.jsx";
 import {
   DropletIcon,
   CheckCircleIcon,
@@ -89,6 +90,11 @@ function mapNotfallLevel(level) {
 
 export default function ResultDetail({ item, isFavorite, onToggleFavorite }) {
   if (!item) return null;
+
+  // SAA/BPR-Medikamente: eigenes Detail-Layout.
+  if (item.source === "saa") {
+    return <SaaDetail item={item} isFavorite={isFavorite} onToggleFavorite={onToggleFavorite} />;
+  }
 
   const synonymStr = (item.synonyms || []).join(" · ");
   const isPending = item.source === "unknown";

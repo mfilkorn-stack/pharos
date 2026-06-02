@@ -7,6 +7,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { enrich } from "./enrich.mjs";
 import { verifyEntry } from "./verify.mjs";
+import { saaCheck } from "./saa-check.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = join(HERE, "..");
@@ -374,6 +375,14 @@ app.post("/uebergabe/parse", async (req, res) => {
     return res.status(400).json({ error: "transcript fehlt" });
   }
   await runTrainerPrompt(res, buildParsePrompt(transcript), 1500);
+});
+
+app.post("/saa-check", async (req, res) => {
+  if (!anthropic) return res.status(503).json({ error: "no_api_key" });
+  const { patientMeds, saaMeds } = req.body || {};
+  const r = await saaCheck({ patientMeds, saaMeds }, { anthropic, model: MODEL });
+  if (!r.ok) return res.status(r.error === "no_patient_meds" || r.error === "no_saa_meds" ? 400 : 502).json({ error: r.error });
+  res.json({ results: r.results });
 });
 
 app.post("/uebergabe/evaluate", async (req, res) => {

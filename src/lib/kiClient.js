@@ -26,3 +26,9 @@ export function uebergabeParse(transcript) {
 export function uebergabeEvaluate({ scenario, startChecks, inputs }) {
   return post("/uebergabe/evaluate", { scenario, startChecks, inputs });
 }
+
+// SAA/BPR-Kontraindikations-Check: Patienten-Medis vs. SAA-Medikamente.
+// -> { results: [{ id, level: "absolut"|"vorsicht"|"ok", reason, triggers[] }] }
+export function saaCheck({ patientMeds, saaMeds }) {
+  return post("/saa-check", { patientMeds, saaMeds });
+}

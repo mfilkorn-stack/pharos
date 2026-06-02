@@ -1,0 +1,840 @@
+{
+  "version": "saa-1",
+  "source": "NotsanTrainer2025/data.js (SAA/BPR 2025)",
+  "count": 29,
+  "entries": [
+    {
+      "id": "saa:ass",
+      "name": "Acetylsalicylsäure (ASS)",
+      "gruppe": "Thrombozytenaggregationshemmer",
+      "konzentration": "500 mg Trockensubstanz + 5 ml Lösungsmittel",
+      "indikationen": [
+        "Akutes Koronarsyndrom",
+        "Myokardinfarkt"
+      ],
+      "kontra": [
+        "Überempfindlichkeit gegen Wirkstoff/Salicylate",
+        "Aktuell bestehende innere Blutung",
+        "Trauma mit Gefahr nicht komprimierbarer Blutung",
+        "V.a. akutes Aortensyndrom",
+        "Blutungsneigung/hämorrhagische Diathese",
+        "Letztes Trimenon der Schwangerschaft"
+      ],
+      "relKontra": [
+        "Überempfindlichkeit gegen andere NSAR",
+        "Asthmaanfall",
+        "Aktuelles Ulcus ventriculi oder Ulcus duodeni",
+        "Schwere Leber- und Nierenfunktionsstörungen",
+        "Schwerer Glucose-6-Phosphat-Dehydrogenasemangel",
+        "Methotrexat-Einnahme",
+        "Schwangerschaft"
+      ],
+      "dosierung": "i.v.: 250 mg langsam i.v. | oral: 200 mg | keine Repetition",
+      "uaw": [
+        "Bronchospasmus",
+        "Blutungsgefahr",
+        "Gastrointestinale Beschwerden"
+      ],
+      "besonderheiten": "Wirkeintritt 10-15 min, Wirkdauer: Tage (Lebensdauer der Thrombozyten). Keine Anwendung < 18 Jahre.",
+      "alter": "< 18 Jahre: keine Anwendung"
+    },
+    {
+      "id": "saa:amiodaron",
+      "name": "Amiodaron",
+      "gruppe": "Antiarrhythmikum (Klasse 3)",
+      "konzentration": "50 mg/ml (Amp. 150 mg / 3 ml)",
+      "indikationen": [
+        "Reanimation: refraktäres Kammerflimmern",
+        "Pulslose ventrikuläre Tachykardie"
+      ],
+      "kontra": [
+        "Überempfindlichkeit gegen Wirkstoff",
+        "Bekannte Jod-Allergie"
+      ],
+      "relKontra": [],
+      "dosierung": "Nach 3. Defi: Erw. 300 mg, Kinder 5 mg/kgKG (max. 300 mg) i.v. | Nach 5. Defi: Erw. 150 mg, Kinder 5 mg/kgKG (max. 150 mg)",
+      "uaw": [
+        "Bradykardie",
+        "Überleitungsstörungen",
+        "Hypotonie"
+      ],
+      "besonderheiten": "Langsame i.v.-Injektion als Bolusgabe unter laufender Infusion. Alternatives Medikament: Lidocain. Säuglinge und Kinder < 3 Jahre (Benzylalkohol).",
+      "alter": "< 3 Jahre: Vorsicht (Benzylalkohol)"
+    },
+    {
+      "id": "saa:atropin",
+      "name": "Atropin",
+      "gruppe": "Parasympatholytikum",
+      "konzentration": "0,5 mg/ml oder 1 mg/ml",
+      "indikationen": [
+        "Instabile Bradykardie"
+      ],
+      "kontra": [
+        "Überempfindlichkeit gegen Wirkstoff",
+        "Engwinkelglaukom"
+      ],
+      "relKontra": [
+        "Myasthenia gravis",
+        "Ileus",
+        "Schwangerschaft"
+      ],
+      "dosierung": "0,5 mg i.v. | Repetition nach 3-5 min bis adäquater HF-Anstieg | Max. Gesamtdosis 3 mg",
+      "uaw": [
+        "Tachykardie, Arrhythmie",
+        "Mydriasis, Sehstörungen",
+        "Mundtrockenheit",
+        "Miktionsstörungen",
+        "Unruhe, Verwirrtheit"
+      ],
+      "besonderheiten": "Wechsel auf Epinephrin bei persistierender instabiler Bradykardie. Keine Anwendung < 18 Jahre.",
+      "alter": "< 18 Jahre: keine Anwendung"
+    },
+    {
+      "id": "saa:butylscopolamin",
+      "name": "Butylscopolamin",
+      "gruppe": "Parasympatholytikum",
+      "konzentration": "20 mg/ml (Amp. 20 mg / 1 ml)",
+      "indikationen": [
+        "Starke kolikartige abdominelle Schmerzen"
+      ],
+      "kontra": [
+        "Überempfindlichkeit",
+        "Tachykardie, Tachyarrhythmie",
+        "Engwinkelglaukom",
+        "Ileus",
+        "Mechanische Stenosen im Magen-Darmtrakt",
+        "Myasthenia gravis",
+        "Schwangerschaft, Stillzeit"
+      ],
+      "relKontra": [
+        "Kardiale Vorerkrankungen (z.B. KHK, hochgradige Herzklappenstenosen)",
+        "Harnverhalt",
+        "Vorbehandlung mit anticholinerg wirkenden Medikamenten (z.B. Antidepressiva, Neuroleptika, Antihistaminika)"
+      ],
+      "dosierung": "0,3 mg/kgKG langsam i.v. | Repetition nach 5 min | Max. 20 mg",
+      "uaw": [
+        "Allergische Reaktionen",
+        "Tachykardie, Blutdruckabfall",
+        "Mydriasis",
+        "Mundtrockenheit"
+      ],
+      "besonderheiten": "Wirkeintritt ca. 15 min, Wirkdauer ca. 5 h. Bei Nierenkoliken laut Leitlinie nicht mehr angezeigt. Keine Anwendung < 12 Jahre.",
+      "alter": "< 12 Jahre: keine Anwendung"
+    },
+    {
+      "id": "saa:dimenhydrinat",
+      "name": "Dimenhydrinat",
+      "gruppe": "Antihistaminikum / Antiemetikum",
+      "konzentration": "6,2 mg/ml (Amp. 62 mg / 10 ml) oder 40 mg Supp.",
+      "indikationen": [
+        "Übelkeit und Erbrechen"
+      ],
+      "kontra": [
+        "Überempfindlichkeit",
+        "Akute Bronchialobstruktion",
+        "Engwinkelglaukom",
+        "Krampfanfälle",
+        "Bekannte Porphyrie",
+        "Long-QT-Syndrom",
+        "Phäochromozytom",
+        "MAO-Hemmer-Therapie"
+      ],
+      "relKontra": [
+        "Schwangerschaft und Stillzeit (CAVE: keine Anwendung bei Wehentätigkeit)",
+        "Morbus Parkinson",
+        "Herzrhythmusstörungen und KHK"
+      ],
+      "dosierung": "Erw. + Kinder > 14 J.: 62 mg langsam i.v. | Kinder 6-14 J.: 40 mg langsam i.v. oder rectal | Kinder < 6 J.: 40 mg rectal",
+      "uaw": [
+        "ZNS-Dämpfung, Sedierung",
+        "Paradoxe Reaktionen",
+        "Tachykardie",
+        "Mydriasis"
+      ],
+      "besonderheiten": "Keine rectale Anwendung < 1 Jahr. Beeinträchtigung der Fahrtauglichkeit.",
+      "alter": "< 1 Jahr: keine rectale Anwendung"
+    },
+    {
+      "id": "saa:dimetinden",
+      "name": "Dimetinden",
+      "gruppe": "Antihistaminikum (H1-Rezeptor-Antagonist)",
+      "konzentration": "1 mg/ml (Amp. 4 mg / 4 ml)",
+      "indikationen": [
+        "Anaphylaxie"
+      ],
+      "kontra": [
+        "Überempfindlichkeit",
+        "Schwangerschaft und Stillzeit"
+      ],
+      "relKontra": [
+        "Glaukom",
+        "Epilepsie"
+      ],
+      "dosierung": "Erw. + Kinder > 12 J.: 4-8 mg i.v. (0,1 mg/kgKG, max. 8 mg) langsam i.v.",
+      "uaw": [
+        "Sedierung",
+        "Erregungszustand",
+        "Mydriasis",
+        "Mundtrockenheit"
+      ],
+      "besonderheiten": "Keine Anwendung < 12 Jahre. Beeinträchtigung der Fahrtauglichkeit.",
+      "alter": "< 12 Jahre: keine Anwendung"
+    },
+    {
+      "id": "saa:epinephrin",
+      "name": "Epinephrin (Adrenalin)",
+      "gruppe": "Sympathomimetikum",
+      "konzentration": "1 mg/ml (Amp. 1 mg / 1 ml)",
+      "indikationen": [
+        "Reanimation",
+        "Instabile Bradykardie",
+        "Anaphylaxie ab Stadium II",
+        "Laryngotracheobronchitis",
+        "Obstruktion obere Atemwege durch Schleimhautschwellung"
+      ],
+      "kontra": [
+        "Entfällt bei vitaler Gefährdung"
+      ],
+      "relKontra": [],
+      "dosierung": "Reanimation: Erw. 1 mg i.v./i.o., Kinder 0,01 mg/kgKG | VF/pVT: nach 3. Defi, dann alle 4 min | Asystolie/PEA: sofort, dann alle 4 min | Bradykardie: 1 mg in 100 ml NaCl (0,01 mg/ml), 0,5 ml (5 µg) bolusweise/min i.v. | Anaphylaxie: Erw./>12 J. 0,5 mg i.m., 6-12 J. 0,3 mg i.m., <6 J. 0,15 mg i.m. | Vernebelung: 4 mg, Repetition nach 10 min",
+      "uaw": [
+        "Angina pectoris",
+        "Hypertonie",
+        "Tachykardie/Rhythmusstörungen",
+        "Durchblutungsstörungen",
+        "Unruhe, Tremor"
+      ],
+      "besonderheiten": "Sehr kurze HWZ. Nicht gleichzeitig mit NaHCO₃ über einen Zugang. Keine Altersbegrenzung.",
+      "alter": "Keine Altersbegrenzung"
+    },
+    {
+      "id": "saa:esketamin",
+      "name": "Esketamin",
+      "gruppe": "Analgetikum / Anästhetikum",
+      "konzentration": "5 mg/ml und 25 mg/ml",
+      "indikationen": [
+        "Starker Schmerz (NRS ≥ 6)"
+      ],
+      "kontra": [
+        "Überempfindlichkeit",
+        "Schwere Bewusstseinsstörung (Sopor/Koma)",
+        "Intoxikation mit psychoaktiven Substanzen",
+        "ACS/Myokardinfarkt/Herzinsuffizienz",
+        "Gesteigerter Hirndruck",
+        "Schwangerschaft",
+        "Schwere hypertensive Entgleisung (>180/100)"
+      ],
+      "relKontra": [
+        "Bewusstseinsstörung – Somnolenz",
+        "RRsyst < 100 mmHg bei Volumenmangelschock",
+        "Pat. unter akutem Alkoholeinfluss, zentral dämpfenden oder psychotropen Substanzen in der Anamnese",
+        "Pat. mit schweren psychotischen Störungen",
+        "Erhöhter Augeninnendruck (Glaukom) und perforierende Augenverletzungen"
+      ],
+      "dosierung": "i.v.: 0,125 mg/kgKG, Repetition 0,125 mg/kgKG, max. 0,25 mg/kgKG | nasal/i.m.: 1 mg/kgKG, einmalige Repetition möglich",
+      "uaw": [
+        "Blutdrucksenkung bei Volumenmangel",
+        "Aufwachreaktionen, Albträume",
+        "Ateminsuffizienz",
+        "Speichelfluss, Übelkeit"
+      ],
+      "besonderheiten": "Kombination mit Midazolam bei i.v.-Gabe empfohlen. Wirkeintritt ca. 1 min, Wirkdauer ca. 20 min. Bei Ketamin: Dosisverdoppelung. Keine Anwendung < 10 kgKG.",
+      "alter": "< 10 kgKG (ca. 12 Monate): keine Anwendung"
+    },
+    {
+      "id": "saa:fentanyl",
+      "name": "Fentanyl",
+      "gruppe": "µ-Opioidrezeptoragonist (BtM)",
+      "konzentration": "50 µg/ml (Amp. 100 µg / 2 ml)",
+      "indikationen": [
+        "Starker Schmerz (NRS ≥ 6)"
+      ],
+      "kontra": [
+        "Überempfindlichkeit",
+        "Schwangerschaft",
+        "Schwere Bewusstseinsstörung",
+        "Atemdepression"
+      ],
+      "relKontra": [
+        "Bewusstseinsstörung – Somnolenz",
+        "Obstruktive Atemwegserkrankungen",
+        "Myasthenia gravis",
+        "Obstruktive Darmerkrankungen",
+        "Opioidabhängigkeit / Substitution mit Methadon"
+      ],
+      "dosierung": "i.v.: fraktioniert in 50-µg-Schritten alle 3-4 min, max. 2 µg/kgKG ideales Körpergewicht | nasal/i.m.: 2 µg/kgKG",
+      "uaw": [
+        "Übelkeit, Erbrechen",
+        "Atemdepression",
+        "Blutdruckabfall, Bradykardie",
+        "Thoraxrigidität bei schneller Applikation"
+      ],
+      "besonderheiten": "Vorsichtige Titration bei alten/multimorbiden Pat. Wirkungsverstärkung mit Alkohol/Benzodiazepinen. Keine Anwendung < 21 kgKG (ca. 6 Jahre).",
+      "alter": "< 21 kgKG (ca. 6 Jahre): keine Anwendung"
+    },
+    {
+      "id": "saa:furosemid",
+      "name": "Furosemid",
+      "gruppe": "Diuretikum",
+      "konzentration": "10 mg/ml (Amp. 20 mg / 2 ml, Amp. 40 mg / 4 ml)",
+      "indikationen": [
+        "Kardiales Lungenödem"
+      ],
+      "kontra": [
+        "Überempfindlichkeit",
+        "Hypovolämie, schwergradige Dehydratation",
+        "Nierenversagen mit Anurie",
+        "Leberversagen mit Bewusstseinsstörung",
+        "Schwere Hypokaliämie/Hyponatriämie",
+        "Stillzeit"
+      ],
+      "relKontra": [
+        "Schwangerschaft",
+        "Hypotonie"
+      ],
+      "dosierung": "20 mg langsam i.v. | Einmalige Repetition nach 15 min möglich",
+      "uaw": [
+        "Blutdruckabfall, Hypotonie",
+        "Elektrolytstörungen",
+        "Hörstörungen"
+      ],
+      "besonderheiten": "Keine Mischung mit anderen Substanzen (pH-Inkompatibilitäten). Wirkeintritt 2-15 min. Keine Anwendung < 12 Jahre.",
+      "alter": "< 12 Jahre: keine Anwendung"
+    },
+    {
+      "id": "saa:glucagon",
+      "name": "Glucagon",
+      "gruppe": "Hormon",
+      "konzentration": "i.m. 1 mg/ml | nasal 3 mg (Baqsimi®)",
+      "indikationen": [
+        "Hypoglykämie < 60 mg/dl bzw. 3,3 mmol/l (Fremdhilfe erforderlich)"
+      ],
+      "kontra": [
+        "Überempfindlichkeit",
+        "Leere Glykogenspeicher",
+        "Gleichzeitige Einnahme von Indometacin"
+      ],
+      "relKontra": [],
+      "dosierung": "Erw. + Kinder > 25 kgKG: 1 mg i.m. | Kinder < 25 kgKG: 0,5 mg i.m. | Nasal: 3 mg (ab 4 Jahren)",
+      "uaw": [
+        "Übelkeit, Erbrechen",
+        "Tachykardie, Hypertonie"
+      ],
+      "besonderheiten": "Dokumentation der Charge erforderlich. Nasal ab 4 Jahren.",
+      "alter": "Nasal ab 4 Jahren"
+    },
+    {
+      "id": "saa:glucose",
+      "name": "Glucose",
+      "gruppe": "Monosaccharid",
+      "konzentration": "10%, 20%, 40% verfügbar",
+      "indikationen": [
+        "Hypoglykämie < 60 mg/dl bzw. 3,3 mmol/l (Fremdhilfe erforderlich)"
+      ],
+      "kontra": [
+        "Entfällt"
+      ],
+      "relKontra": [],
+      "dosierung": "Erw. + Kinder > 30 kgKG: 8-10 g i.v. | Kinder: 0,2 g/kgKG | Max. 20%ige Lösung i.v. | Repetitionen möglich",
+      "uaw": [
+        "Venenreizung, Nekrosen bei paravasaler Gabe",
+        "Hyperglykämie",
+        "Hypokaliämie"
+      ],
+      "besonderheiten": "Verschiedene Konzentrationen verfügbar. Bei wachen Pat. orale Gabe bevorzugen. Keine Altersbegrenzung.",
+      "alter": "Keine Altersbegrenzung"
+    },
+    {
+      "id": "saa:glyceroltrinitrat",
+      "name": "Glyceroltrinitrat (Nitro)",
+      "gruppe": "Vasodilatator / Antianginosum",
+      "konzentration": "0,4 mg / Hub",
+      "indikationen": [
+        "Kardiales Lungenödem",
+        "Hypertensiver Notfall mit kardialer Symptomatik",
+        "Myokardinfarkt (keine routinemäßige Gabe)"
+      ],
+      "kontra": [
+        "Schock",
+        "Hypotonie RRsyst < 100 mmHg",
+        "Inferiorer Infarkt mit RV-Beteiligung",
+        "Phosphodiesterase-5-Hemmer",
+        "Schwere stenosierende Herzklappenfehler",
+        "HOCM",
+        "V.a. erhöhten intrakraniellen Druck"
+      ],
+      "relKontra": [
+        "Hypotonie, RRsyst ≤ 120 mmHg",
+        "Schwangerschaft und Stillzeit"
+      ],
+      "dosierung": "i.v.-Zugang vor Gabe anlegen! 1 Hub (0,4 mg) sublingual, Spray nicht schütteln | Einmalige Repetition nach 5 min möglich",
+      "uaw": [
+        "Blutdruckabfall, Tachykardie",
+        "Flush, Schwindel",
+        "Kopfschmerzen"
+      ],
+      "besonderheiten": "i.v.-Zugang vor Gabe anlegen! Spray nicht schütteln. Reflextachykardie möglich. Keine Anwendung < 12 Jahre.",
+      "alter": "< 12 Jahre: keine Anwendung"
+    },
+    {
+      "id": "saa:heparin",
+      "name": "Heparin",
+      "gruppe": "Antikoagulans",
+      "konzentration": "5.000 I.E./ml und 25.000 I.E./ml",
+      "indikationen": [
+        "Akutes Koronarsyndrom",
+        "Lungenarterienembolie",
+        "Akuter peripherer arterieller Verschluss"
+      ],
+      "kontra": [
+        "Überempfindlichkeit",
+        "Z.n. HIT",
+        "Erhöhte Blutungsgefahr",
+        "Z.n. großem OP/Trauma (4 Wochen)",
+        "Akute zerebrovaskuläre Erkrankung",
+        "GI/urogenitale Blutung",
+        "Akutes Aortensyndrom"
+      ],
+      "relKontra": [
+        "Schwangerschaft"
+      ],
+      "dosierung": "5.000 I.E. i.v. | Keine Repetition",
+      "uaw": [
+        "Allergische Reaktion",
+        "Blutungsgefahr",
+        "Heparin-induzierte Thrombozytopenie"
+      ],
+      "besonderheiten": "Verschiedene Konzentrationen verfügbar. Erhöhte Blutungsgefahr bei Kombination mit anderen Antikoagulanzien.",
+      "alter": "Entfällt"
+    },
+    {
+      "id": "saa:midazolam",
+      "name": "Midazolam",
+      "gruppe": "Benzodiazepin",
+      "konzentration": "1 mg/ml (i.v.) | 5 mg/ml (i.n./i.m./buccal)",
+      "indikationen": [
+        "Komplizierter Krampfanfall / Fieberkrampf",
+        "Analgosedierung (mit Esketamin)"
+      ],
+      "kontra": [
+        "Überempfindlichkeit",
+        "Primär hypoxisch bedingter Krampfanfall",
+        "Schwere Bewusstseinsstörung (Sopor/Koma)",
+        "Intoxikation",
+        "Atemdepression",
+        "Myasthenia gravis",
+        "Schwangerschaft"
+      ],
+      "relKontra": [
+        "Bewusstseinsstörung – Somnolenz (bei Analgosedierung)",
+        "Chron.-resp. Insuffizienz (bei Analgosedierung)",
+        "Schwere Leber- und/oder Nierenfunktionsstörung (bei Analgosedierung)",
+        "Schwere Herzinsuffizienz ab Klasse NYHA III (bei Analgosedierung)",
+        "Pat. unter akutem Alkoholeinfluss, zentral dämpfenden oder psychotropen Substanzen in der Anamnese (bei Analgosedierung)"
+      ],
+      "dosierung": "Antikonvulsiv Erw.: 0,1 mg/kgKG i.v. oder 10 mg i.m./nasal/buccal, max. 20 mg | Kinder buccal: 3-11 Mo. 2,5 mg, 1-4 J. 5 mg, 5-9 J. 7,5 mg, ab 10 J. 10 mg | Kinder nasal (MAD): bis 10 kg 2,5 mg, 10-20 kg 5 mg, >20 kg 10 mg | Kinder i.v.: 0,1 mg/kgKG, max. 1x Repetition | Analgosedierung: Erw. >50 kgKG 2 mg i.v., >60 J./<50 kgKG 1 mg i.v., Kinder >10 kgKG 1 mg i.v.",
+      "uaw": [
+        "Allergie",
+        "Müdigkeit, Amnesie",
+        "Atemdepression",
+        "Blutdruckabfall",
+        "Paradoxe Reaktionen"
+      ],
+      "besonderheiten": "Unterschiedliche Konzentrationen! Bei Krampfanfall adäquat hoch dosieren, nicht titrieren. Keine Anwendung < 3 Monate.",
+      "alter": "< 3 Monate: keine Anwendung"
+    },
+    {
+      "id": "saa:morphin",
+      "name": "Morphin",
+      "gruppe": "Opiat, µ-Rezeptoragonist (BtM)",
+      "konzentration": "10 mg/ml (Amp. 10 mg / 1 ml), 20 mg/ml (Amp. 20 mg / 1 ml)",
+      "indikationen": [
+        "Starke und stärkste Schmerzen NRS ≥ 6"
+      ],
+      "kontra": [
+        "Überempfindlichkeit",
+        "Schwere Bewusstseinsstörung",
+        "Atemdepression"
+      ],
+      "relKontra": [
+        "Bewusstseinsstörung – Somnolenz",
+        "Schwangerschaft, Stillzeit",
+        "Obstruktive Atemwegserkrankungen",
+        "Myasthenia gravis",
+        "Phäochromozytom",
+        "Obstruktive Erkrankungen des Gastrointestinaltraktes, Ileus",
+        "Epilepsie",
+        "Opioidabhängigkeit / Substitution mit Methadon"
+      ],
+      "dosierung": "Erw.: 2 mg fraktioniert, langsam i.v. alle 3-4 min | Kinder: 0,05 mg/kgKG | Max. 10 mg",
+      "uaw": [
+        "Übelkeit, Erbrechen",
+        "Atemdepression",
+        "Blutdruckabfall, Bradykardie",
+        "Histaminausschüttung"
+      ],
+      "besonderheiten": "Beim ACS zur Vorlastsenkung gut geeignet. Langsame Applikation vermindert Übelkeit. Keine Anwendung < 21 kgKG (ca. 6 Jahre).",
+      "alter": "< 21 kgKG (ca. 6 Jahre): keine Anwendung"
+    },
+    {
+      "id": "saa:naloxon",
+      "name": "Naloxon",
+      "gruppe": "Opioidrezeptorantagonist / Antidot",
+      "konzentration": "0,4 mg/ml (Amp. 0,4 mg / 1 ml)",
+      "indikationen": [
+        "Opioid-Intoxikation bei Versagen primärer Maßnahmen",
+        "Opioid-Überdosierung bei Versagen primärer Maßnahmen"
+      ],
+      "kontra": [
+        "Überempfindlichkeit gegen Wirkstoff"
+      ],
+      "relKontra": [],
+      "dosierung": "0,1 mg fraktioniert, langsam i.v. alle 2 min | Kinder: 0,01 mg/kgKG | Bis suffiziente Spontanatmung",
+      "uaw": [
+        "Akutes Entzugssyndrom bei Opioidabhängigkeit",
+        "Überschießende Reaktion",
+        "Auftreten von Schmerzen"
+      ],
+      "besonderheiten": "Primäre Maßnahmen zuerst: Kommandoatmung, O₂, Beatmung. Kürzere HWZ als Opioide → Rebound möglich. Keine Altersbegrenzung.",
+      "alter": "Keine Altersbegrenzung"
+    },
+    {
+      "id": "saa:prednisolon",
+      "name": "Prednisolon",
+      "gruppe": "Glukokortikoid",
+      "konzentration": "50 mg/ml (z.B. Amp. 250 mg / 5 ml), Supp./Rectalkapsel 100 mg",
+      "indikationen": [
+        "Anaphylaxie",
+        "Bronchialobstruktion",
+        "Pseudokrupp"
+      ],
+      "kontra": [
+        "Überempfindlichkeit gegen Wirkstoff"
+      ],
+      "relKontra": [
+        "Schwangerschaft"
+      ],
+      "dosierung": "Anaphylaxie: >12 J. 250 mg i.v., 30-60 kgKG 100 mg i.v./rectal, 15-30 kgKG 50 mg i.v./100 mg rectal | Bronchialobstruktion: >12 J. 80 mg i.v., ≤12 J. 2 mg/kgKG i.v. (max. 80 mg) oder 100 mg rectal | Pseudokrupp: Kleinkinder 100 mg rectal",
+      "uaw": [
+        "Hyperglykämie",
+        "Immunsuppression"
+      ],
+      "besonderheiten": "Wirkeintritt verzögert, unspezifische frühzeitige Effekte nach 10-20 min. Wirkdauer 4-6 Stunden. Keine Altersbegrenzung. Nutzen-Risiko-Abwägung bei Schwangerschaft.",
+      "alter": "Keine Altersbegrenzung"
+    },
+    {
+      "id": "saa:salbutamol",
+      "name": "Salbutamol",
+      "gruppe": "β₂-Sympathomimetikum",
+      "konzentration": "1,25 mg / 2,5 ml Fertiginhalat",
+      "indikationen": [
+        "Bronchialobstruktion"
+      ],
+      "kontra": [
+        "Überempfindlichkeit gegen Wirkstoff",
+        "Symptomatische Tachykardie / Tachyarrhythmie"
+      ],
+      "relKontra": [
+        "Schwere Herzerkrankungen – ACS, HOCM",
+        "Phäochromozytom",
+        "Schwangerschaft"
+      ],
+      "dosierung": ">12 J.: 2,5 mg inhalativ | 4-12 J.: 1,25 mg inhalativ | einmalige Repetition nach 10 min möglich",
+      "uaw": [
+        "Tachykardie, HRST, Extrasystolie",
+        "Unruhe, Schwindel, Tremor",
+        "Wehenhemmung"
+      ],
+      "besonderheiten": "Zubereitungen mit unterschiedlichen Konzentrationen verfügbar. Nutzen-Risiko bei schweren Herzerkrankungen (ACS, HOCM), Phäochromozytom, Schwangerschaft.",
+      "alter": "< 4 Jahre: keine Anwendung"
+    },
+    {
+      "id": "saa:urapidil",
+      "name": "Urapidil",
+      "gruppe": "Antihypertensivum",
+      "konzentration": "5 mg/ml (Amp. 25 mg / 5 ml, 50 mg / 10 ml)",
+      "indikationen": [
+        "Hypertensiver Notfall",
+        "Akutes Aortensyndrom",
+        "Schlaganfall"
+      ],
+      "kontra": [
+        "Überempfindlichkeit",
+        "Nicht korrigierte Aortenisthmusstenose",
+        "Schwangerschaft"
+      ],
+      "relKontra": [
+        "Leber- und Niereninsuffizienz",
+        "Aorten- oder Mitralklappenstenosen",
+        "Herzinsuffizienz"
+      ],
+      "dosierung": "5 mg langsam i.v. | Repetition möglich | Maximaldosis 25 mg",
+      "uaw": [
+        "Unerwartet starker Blutdruckabfall",
+        "Orthostatische Dysregulation",
+        "Kopfschmerzen, Schwindel, Müdigkeit",
+        "Übelkeit, Erbrechen"
+      ],
+      "besonderheiten": "Zielwert Aortensyndrom: RRsyst 100-120 mmHg. Schlaganfall: moderate Senkung, nicht unter RRsyst 180 mmHg. Wirkungsverstärkung bei Kombination mit anderen Antihypertensiva. Keine Anwendung < 12 Jahre.",
+      "alter": "< 12 Jahre: keine Anwendung"
+    },
+    {
+      "id": "saa:ibuprofen",
+      "name": "Ibuprofen",
+      "gruppe": "Nichtopioid-Analgetikum (NSAR)",
+      "konzentration": "20 mg/ml und 40 mg/ml Saft, Supp. 75-250 mg, i.v. 4 mg/ml (400 mg/100 ml) und 6 mg/ml (600 mg/100 ml)",
+      "indikationen": [
+        "Schmerzen NRS ≥ 3",
+        "Fieber beim Kind nach Krampfanfall/Fieberkrampf"
+      ],
+      "kontra": [
+        "Überempfindlichkeit gegen NSAR",
+        "Erhöhte Blutungsneigung / aktive Blutung",
+        "Ulcus ventriculi / duodeni",
+        "Schwere Nieren-/Leberinsuffizienz",
+        "Akutes Koronarsyndrom / schwere Herzinsuffizienz (NYHA IV)",
+        "Schwergradige Dehydratation",
+        "Schwangerschaft"
+      ],
+      "relKontra": [
+        "Kombination mit NSAR (Zeitfenster beachten)",
+        "Gastrointestinale Erkrankung in der Anamnese (Colitis ulcerosa, Morbus Crohn)",
+        "Herzinsuffizienz (NYHA II–III)",
+        "Ischämische Herzkrankheit",
+        "Niereninsuffizienz, Leberinsuffizienz (Dosisreduktion)",
+        "Dehydratation",
+        "Störung des Porphyrin-Stoffwechsels"
+      ],
+      "dosierung": "p.o. Suspension: 6-11 Mo (7-9 kg): 50 mg | 1-3 J (10-15 kg): 100 mg | 4-5 J (16-19 kg): 150 mg | 6-11 J (20-39 kg): 200 mg | > 12 J (> 40 kg): 7,5 mg/kgKG | i.v. ab 18 J: 600 mg | Keine Repetition",
+      "uaw": [
+        "Allergische Reaktion",
+        "Magen-Darm-Beschwerden",
+        "Schwindel, Tinnitus",
+        "Verschlechterung Herzinsuffizienz",
+        "Erhöhte Blutungsneigung"
+      ],
+      "besonderheiten": "Keine Repetition. Zeitabstand > 6 h zu letzter Gabe. Tageshöchstdosis Erwachsene 1.200 mg. Unterschiedliche Konzentrationen verfügbar!",
+      "alter": "< 6 Monate / < 7 kg: keine Anwendung"
+    },
+    {
+      "id": "saa:ipratropium",
+      "name": "Ipratropiumbromid",
+      "gruppe": "Inhalatives Parasympatholytikum",
+      "konzentration": "250 µg oder 500 µg / 2 ml Inhalationslösung",
+      "indikationen": [
+        "Bronchialobstruktion: Asthmaanfall",
+        "Exacerbation COPD"
+      ],
+      "kontra": [
+        "Überempfindlichkeit gegen Wirkstoff / Atropin / Atropinderivate",
+        "Symptomatische Tachykardie / Tachyarrhythmie",
+        "Engwinkelglaukom"
+      ],
+      "relKontra": [
+        "Schwangerschaft"
+      ],
+      "dosierung": "> 12 Jahre: 0,5 mg Inhalation | 6-12 Jahre: 0,25 mg Inhalation | Repetition nach 30 min möglich",
+      "uaw": [
+        "Allergie",
+        "Kopfschmerzen",
+        "Schwindel",
+        "Tachykardie",
+        "Mundtrockenheit",
+        "Harnverhalt"
+      ],
+      "besonderheiten": "Vernebelte Lösung darf nicht in die Augen gelangen – fester Sitz der Maske! Unterschiedliche Konzentrationen verfügbar. Keine Anwendung < 6 Jahre.",
+      "alter": "< 6 Jahre: keine Anwendung"
+    },
+    {
+      "id": "saa:lidocain",
+      "name": "Lidocain",
+      "gruppe": "Antiarrhythmikum (Klasse Ib)",
+      "konzentration": "Lidocain 2 %: 20 mg/ml (Amp. 100 mg / 5 ml), Lidocain 1 %: 10 mg/ml",
+      "indikationen": [
+        "Reanimation: Kammerflimmern / pulslose VT (gleichwertige Alternative zu Amiodaron)"
+      ],
+      "kontra": [
+        "Überempfindlichkeit gegen den Wirkstoff"
+      ],
+      "relKontra": [],
+      "dosierung": "Erw: 100 mg i.v. nach 3. Schock, 50 mg i.v. nach 5. Schock | Kinder: 1 mg/kgKG nach 3. Schock, 0,5 mg/kgKG nach 5. Schock",
+      "uaw": [
+        "Bradykardie",
+        "Überleitungsstörungen",
+        "Hypotonie"
+      ],
+      "besonderheiten": "Gleichwertige Alternative zu Amiodaron bei Reanimation. Cave: unterschiedliche Konzentrationen verfügbar!",
+      "alter": "Keine Altersbegrenzung"
+    },
+    {
+      "id": "saa:metoprolol",
+      "name": "Metoprolol",
+      "gruppe": "Betablocker",
+      "konzentration": "1 mg/ml (Amp. 5 mg / 5 ml)",
+      "indikationen": [
+        "STEMI / OMI mit nicht schmerzbedingter Tachyarrhythmie / Vorhofflimmern > 100/min",
+        "STEMI / OMI mit multiplen VES (mind. 1-2 / 15 sek)"
+      ],
+      "kontra": [
+        "Überempfindlichkeit",
+        "Vormedikation mit Verapamil-Typ Calciumantagonisten",
+        "Zeichen akuter Herzinsuffizienz / pulmonale Stauung",
+        "Hypotonie (RRsyst < 120 mmHg)",
+        "Bradykardie (< 60/min)",
+        "AV-Block II°/III°",
+        "V.a. Hyperkaliämie – BRASH-Syndrom"
+      ],
+      "relKontra": [
+        "Asthma bronchiale"
+      ],
+      "dosierung": "Erw: 2 mg i.v. | Repetition: 2 mg + 1 mg (max. Gesamtmenge 5 mg)",
+      "uaw": [
+        "Hypotonie",
+        "Bradykardie"
+      ],
+      "besonderheiten": "CAVE BRASH-Syndrom (positive Verstärkung Kreislaufdepression bei Hyperkaliämie + Betablockade). Nicht zeitgleich mit Glyceroltrinitrat (beide hypotensiv)!",
+      "alter": "< 18 Jahre: keine Anwendung"
+    },
+    {
+      "id": "saa:nalbuphin",
+      "name": "Nalbuphin",
+      "gruppe": "Opioid (µ-Partialantagonist / κ-Agonist), kein BtM",
+      "konzentration": "10 mg/ml (Amp. 20 mg / 2 ml)",
+      "indikationen": [
+        "Starke und stärkste Schmerzen NRS ≥ 6"
+      ],
+      "kontra": [
+        "Überempfindlichkeit",
+        "Schwere Bewusstseinsstörung (Sopor, Koma)",
+        "Atemdepression",
+        "Schwangerschaft",
+        "Schwere Leber-/Nierenschäden",
+        "Dauertherapie mit µ-Agonisten",
+        "Opioidabhängigkeit / Methadon-Substitution"
+      ],
+      "relKontra": [
+        "Bewusstseinsstörung – Somnolenz",
+        "Stillzeit",
+        "Obstruktive Atemwegserkrankungen",
+        "Obstruktive Erkrankungen des Gastrointestinaltraktes, Ileus",
+        "Epilepsie"
+      ],
+      "dosierung": "< 65 J: 0,2 mg/kgKG i.v. | ≥ 65 J: 0,1 mg/kgKG i.v. | Repetition bis max. 20 mg | Kinder: 0,2 mg/kgKG, keine Repetition | Auch nasal, i.m., s.c. möglich",
+      "uaw": [
+        "Übelkeit, Erbrechen",
+        "Sedierung",
+        "Atemdepression, Hypoventilation"
+      ],
+      "besonderheiten": "Ceiling-Effekt beachten: keine Wirkverstärkung bei Dosissteigerung. Geringes Risiko einer Atemdepression. Kein BtM nach BtMG. Überdosierung: Naloxon.",
+      "alter": "< 21 kg (ca. 6 Jahre): keine Anwendung"
+    },
+    {
+      "id": "saa:paracetamol",
+      "name": "Paracetamol",
+      "gruppe": "Nicht-Opioid-Analgetikum, Antipyretikum",
+      "konzentration": "10 mg/ml Kurzinfusion (1 g/100 ml, 0,5 g/50 ml), Supp. 75-500 mg",
+      "indikationen": [
+        "Schmerzen NRS ≥ 3",
+        "Fieber beim Kind nach Krampfanfall/Fieberkrampf"
+      ],
+      "kontra": [
+        "Überempfindlichkeit",
+        "Schwere Leberfunktionsstörung",
+        "Glucose-6-phosphat-Dehydrogenase-Mangel"
+      ],
+      "relKontra": [
+        "Schwere Niereninsuffizienz",
+        "Leberfunktionsstörung (z.B. bei schwerer Mangelernährung, Alkoholabusus)",
+        "Schwangerschaft, Stillzeit",
+        "Blutbildungsstörungen angeboren oder erworben"
+      ],
+      "dosierung": "Rektal: 6 Mo-2 J (7-12 kg): 125 mg | 2-8 J (13-25 kg): 250 mg | 8-12 J (26-43 kg): 500 mg | i.v. Kurzinfusion 15 min: 15-50 kg: 15 mg/kgKG | > 50 kg: 1.000 mg | Keine Repetition",
+      "uaw": [
+        "Verschlechterung Leberfunktion",
+        "Allergische Reaktionen",
+        "Hypotonie"
+      ],
+      "besonderheiten": "Hepatotoxisch bei Überdosierung! Nicht zu applizierende Menge vor Gabe abziehen und verwerfen. Einmalige Gabe, keine Repetition.",
+      "alter": "Siehe Dosierungstabelle nach Gewicht/Alter"
+    },
+    {
+      "id": "saa:sauerstoff",
+      "name": "Sauerstoff",
+      "gruppe": "Medizinisches Gas",
+      "konzentration": "0,5-15 l/min, FiO₂ 21-100 %",
+      "indikationen": [
+        "Hypoxämie",
+        "CO-Intoxikation",
+        "Tauchunfall / Dekompressionskrankheit"
+      ],
+      "kontra": [
+        "Entfällt"
+      ],
+      "relKontra": [],
+      "dosierung": "Nasenbrille: < 5 l/min | Maske: ≥ 5 l/min | Ohne Hyperkapnierisiko: Ziel SpO₂ 92-96% | Mit Hyperkapnierisiko (COPD etc.): Ziel SpO₂ 88-92% | Hochdosiert 15 l/min ohne Zielwert: Kreislaufstillstand, schwere Atemnot, CO-Intoxikation, Tauchunfall",
+      "uaw": [
+        "Hyperoxie mit Resorptionsatelektasen",
+        "Koronare und zerebrale Vasokonstriktion durch freie Radikale"
+      ],
+      "besonderheiten": "Hyperkapnierisiko bei: COPD, Mukoviszidose, Thoraxdeformitäten, neuromuskuläre Erkrankungen, Adipositas per magna (BMI > 40). Explosionsgefahr – CAVE bei Defibrillation!",
+      "alter": "Keine Altersbegrenzung"
+    },
+    {
+      "id": "saa:txa",
+      "name": "Tranexamsäure",
+      "gruppe": "Antifibrinolytikum",
+      "konzentration": "100 mg/ml (Amp. 500 mg/5 ml und 1.000 mg/10 ml)",
+      "indikationen": [
+        "Blutungen nach schwerem Trauma im hämorrhagischen Schock"
+      ],
+      "kontra": [
+        "Überempfindlichkeit",
+        "Schwangerschaft"
+      ],
+      "relKontra": [
+        "Akute arterielle/venöse Thrombosen / Lungenarterienembolie",
+        "Schwere Nierenfunktionsstörung"
+      ],
+      "dosierung": "15 mg/kgKG langsam i.v. (Kurzinfusion über 15 min), max. 1.000 mg | Keine Repetition",
+      "uaw": [
+        "Allergische Reaktion",
+        "Übelkeit, Erbrechen",
+        "Krampfanfälle",
+        "Sehstörungen",
+        "Hypotonie bei zu schneller Gabe",
+        "Arterielle/venöse Thrombosen"
+      ],
+      "besonderheiten": "Nur innerhalb der ersten 3 Stunden nach Trauma! Bei isoliertem SHT, intrazerebraler Blutung ohne Polytrauma oder GI-Blutungen NICHT empfohlen. Keine Anwendung < 6 Jahre.",
+      "alter": "< 6 Jahre: keine Anwendung"
+    },
+    {
+      "id": "saa:vel",
+      "name": "Vollelektrolytlösung (VEL)",
+      "gruppe": "Kristalloide Infusionslösung, balanciert",
+      "konzentration": "Fertige Infusionslösung (z.B. Ringer-Acetat, Sterofundin)",
+      "indikationen": [
+        "Hämorrhagischer Schock / Blutung",
+        "Schwergradige Dehydratation",
+        "Anaphylaxie / anaphylaktischer Schock",
+        "Sepsis / septischer Schock",
+        "Thermische Verletzung (Verbrennungen)",
+        "Kritische Hyperglykämie (Erw > 250, Kind > 200 mg/dl)",
+        "Schlaganfall"
+      ],
+      "kontra": [
+        "Hypervolämie (kardiale Dekompensation, Lungenödem)",
+        "Niereninsuffizienz mit Oligo-/Anurie"
+      ],
+      "relKontra": [
+        "Herzinsuffizienz, pulmonale Stauung"
+      ],
+      "dosierung": "> 12 Jahre: 500-1.000 ml i.v. | ≤ 12 Jahre: 10 ml/kgKG i.v. | Repetition möglich",
+      "uaw": [
+        "Hyperhydratation (Überwässerung)",
+        "Dilution (Verdünnung, ggf. Verstärkung einer Blutung)"
+      ],
+      "besonderheiten": "Relativ kurzzeitiger intravasaler Volumeneffekt (20-30 min). Thermische Verletzung: max. 1 l/h (Erw), 10 ml/kgKG/h (Kind). Sepsis: Ziel-MAP ≥ 65 mmHg.",
+      "alter": "Keine Altersbegrenzung"
+    }
+  ]
+}

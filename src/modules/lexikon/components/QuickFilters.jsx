@@ -58,6 +58,7 @@ export function matchesFilter(item, filterKey) {
   // Check new CATEGORIES (mockup style)
   const newCat = CATEGORIES.find((c) => c.key === filterKey);
   if (newCat) {
+    if (newCat.isSaa) return item.source === "saa";
     if (newCat.isCritical) {
       return (item.notfall || []).some((n) => n.level === "hoch");
     }

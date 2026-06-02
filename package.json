@@ -13,6 +13,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "data": "node scripts/build-data.mjs",
+    "data:saa": "node scripts/build-saa.mjs",
     "data:ocr": "node scripts/fetch-tesseract-model.mjs",
     "ki-proxy": "node --env-file=.env.local server/ki-proxy.mjs",
     "dev:all": "npm run ki-proxy & npm run dev"

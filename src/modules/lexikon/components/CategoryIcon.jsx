@@ -6,6 +6,7 @@ import {
   AlertTriangleIcon,
   PillIcon,
   FlaskIcon,
+  MedicalCrossIcon,
 } from "./ui/icons.jsx";
 
 // Categories from the spec (matches mockup filter categories)
@@ -59,6 +60,15 @@ export const CATEGORIES = [
     isCritical: true,
     groups: null,
   },
+  {
+    key: "saa",
+    label: "SAA/BPR",
+    emoji: "🚑",
+    tint: "accent",
+    Icon: MedicalCrossIcon,
+    isSaa: true,
+    groups: null,
+  },
 ];
 
 const TINT_CLASSES = {
@@ -75,6 +85,7 @@ const TINT_CLASSES = {
  * Returns the first matching category for an item, or null.
  */
 export function categoryFor(item) {
+  if (item.source === "saa") return CATEGORIES.find((c) => c.isSaa) || null;
   const isHighRisk = item.notfall?.some((n) => n.level === "hoch");
 
   // Check group-based categories first (excluding kritisch)

@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect, useCallback, forwardRef, useImperativeHan
 import data from "./data/data.json";
 import atcIndex from "./data/atc_index.json";
 import groupMap from "./data/atc_group_map.json";
+import saaData from "./data/saa.json";
 import SearchBar from "./components/SearchBar.jsx";
 import QuickFilters from "./components/QuickFilters.jsx";
 import ScanActions from "./components/ScanActions.jsx";
@@ -12,6 +13,7 @@ import SlideOver from "./components/ui/SlideOver.jsx";
 import StatusPill from "./components/StatusPill.jsx";
 import CloudBanner from "./components/CloudBanner.jsx";
 import Scanner from "./components/Scanner.jsx";
+import SaaCheck from "./components/SaaCheck.jsx";
 import Button from "./components/ui/Button.jsx";
 import { SparklesIcon } from "./components/ui/icons.jsx";
 import { lookup as lookupTier, unknownHit } from "./lib/lookup.js";
@@ -53,6 +55,40 @@ function materialize(entry, groups) {
 }
 
 const SEED_DB = data.substances.map((e) => materialize(e, data.groups));
+
+// SAA/BPR-Notfallmedikamente: eigener autoritativer Block (source "saa") mit
+// Rich-Feldern unter `saa` für das eigene Detail-Layout + den Kontra-Check.
+function materializeSaa(e) {
+  return {
+    id: e.id,
+    wirkstoff: e.name,
+    synonyms: [],
+    atc: null,
+    group: null,
+    gruppe: e.gruppe || "SAA/BPR-Medikament",
+    indikationen: e.indikationen || [],
+    notfall: [],
+    toxidrom: null,
+    antidot: [],
+    mischkonsum: [],
+    source: "saa",
+    quelle: "SAA/BPR 2025",
+    stand: null,
+    saa: {
+      konzentration: e.konzentration || "",
+      dosierung: e.dosierung || "",
+      indikationen: e.indikationen || [],
+      kontra: e.kontra || [],
+      relKontra: e.relKontra || [],
+      uaw: e.uaw || [],
+      besonderheiten: e.besonderheiten || "",
+      alter: e.alter || "",
+      gruppe: e.gruppe || "",
+    },
+  };
+}
+
+const SAA_DB = (saaData.entries || []).map(materializeSaa);
 
 // Rang für Sortierung nach Notfallrelevanz: hoch > mittel > info > keine.
 function notfallRank(item) {
@@ -179,7 +215,8 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
 
   const fullDB = useMemo(() => {
     const extras = runtimeExtras.map((e) => materialize(e, data.groups));
-    return buildDedupedDB(SEED_DB, extras);
+    // SAA-Block separat anhängen (NICHT gegen Seed deduplizieren — Protokoll-Sicht).
+    return [...buildDedupedDB(SEED_DB, extras), ...SAA_DB];
   }, [runtimeExtras]);
 
   const scanLookup = useMemo(
@@ -327,11 +364,14 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
               <QuickFilters active={activeFilter} onChange={setActiveFilter} counts={filterCounts} />
             ) : null}
 
-            {/* Plan mode banner */}
+            {/* Plan mode banner + SAA-Check gegen die Patienten-Medikamente */}
             {planEntries.length > 0 && !query.trim() ? (
-              <div className="flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl border border-accent/20 bg-accent/5">
-                <span className="text-sm text-accent font-semibold">Plan-Auswahl · {results.length} Wirkstoffe</span>
-                <Button variant="ghost" size="sm" onClick={() => setPlanEntries([])}>Zurücksetzen</Button>
+              <div className="space-y-3 px-4 py-3 rounded-xl border border-accent/20 bg-accent/5">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-sm text-accent font-semibold">Plan-Auswahl · {results.length} Wirkstoffe</span>
+                  <Button variant="ghost" size="sm" onClick={() => setPlanEntries([])}>Zurücksetzen</Button>
+                </div>
+                <SaaCheck patientMeds={planEntries.filter((p) => p.source !== "unknown" && p.source !== "rejected").map((p) => p.wirkstoff)} />
               </div>
             ) : null}
 

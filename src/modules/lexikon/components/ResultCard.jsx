@@ -30,6 +30,7 @@ const SOURCE_BADGE = {
   "0b": { variant: "neutral", label: "Gruppe" },
   ki: { variant: "critical", label: "KI" },
   unknown: { variant: "warning", label: "..." },
+  saa: { variant: "accent", label: "SAA/BPR" },
 };
 
 // KI-Karten zeigen den Verifizierungs-Status als Signal (Vertrauen auf einen Blick).

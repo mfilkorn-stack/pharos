@@ -1,0 +1,3532 @@
+{
+  "version": "2026.1",
+  "groups": {
+    "doak": {
+      "gruppe": "DOAK · Faktor-Xa-/Thrombin-Hemmer",
+      "notfall": [
+        {
+          "level": "hoch",
+          "text": "Erhöhtes Blutungsrisiko, auch ohne sichtbare Quelle."
+        },
+        {
+          "level": "mittel",
+          "text": "Eingeschränkt antagonisierbar; lange Restwirkung möglich."
+        }
+      ]
+    },
+    "vka": {
+      "gruppe": "Vitamin-K-Antagonist",
+      "notfall": [
+        {
+          "level": "hoch",
+          "text": "Stark verlängerte Gerinnung, lange Halbwertszeit."
+        },
+        {
+          "level": "info",
+          "text": "INR-gesteuert; Antagonisierung mit Vitamin K / PPSB."
+        }
+      ]
+    },
+    "tah": {
+      "gruppe": "Thrombozytenaggregationshemmer",
+      "notfall": [
+        {
+          "level": "mittel",
+          "text": "Erhöhte Blutungsneigung, besonders in dualer Hemmung (DAPT)."
+        }
+      ]
+    },
+    "betablocker": {
+      "gruppe": "Betablocker",
+      "notfall": [
+        {
+          "level": "mittel",
+          "text": "Bradykardie/Hypotonie möglich."
+        },
+        {
+          "level": "info",
+          "text": "Maskiert Hypoglykämie-Symptome; bei Intox Bradykardie/Hypotonie."
+        }
+      ]
+    },
+    "acehemmer": {
+      "gruppe": "ACE-Hemmer",
+      "notfall": [
+        {
+          "level": "mittel",
+          "text": "Hypotonie-Neigung; Angioödem als seltene Komplikation."
+        },
+        {
+          "level": "info",
+          "text": "Hyperkaliämie möglich, v. a. mit Diuretika."
+        }
+      ]
+    },
+    "sartan": {
+      "gruppe": "AT1-Antagonist (Sartan)",
+      "notfall": [
+        {
+          "level": "mittel",
+          "text": "Hypotonie-Neigung; Hyperkaliämie möglich."
+        }
+      ]
+    },
+    "ca_antagonist": {
+      "gruppe": "Calciumantagonist",
+      "notfall": [
+        {
+          "level": "info",
+          "text": "Ödeme; bei Intox ausgeprägte Vasodilatation/Hypotonie."
+        }
+      ]
+    },
+    "kalium_diuretikum": {
+      "gruppe": "Kaliumsparendes Diuretikum",
+      "notfall": [
+        {
+          "level": "mittel",
+          "text": "Hyperkaliämie-Risiko, v. a. mit ACE-Hemmer/Sartan."
+        }
+      ]
+    },
+    "schleifendiuretikum": {
+      "gruppe": "Schleifendiuretikum",
+      "notfall": [
+        {
+          "level": "info",
+          "text": "Marker für Herz-/Niereninsuffizienz; Elektrolytverschiebung/Exsikkose."
+        }
+      ]
+    },
+    "thiazid": {
+      "gruppe": "Thiaziddiuretikum",
+      "notfall": [
+        {
+          "level": "info",
+          "text": "Hyponatriämie/Hypokaliämie als mögliche Symptomursache."
+        }
+      ]
+    },
+    "glykosid": {
+      "gruppe": "Herzglykosid",
+      "notfall": [
+        {
+          "level": "hoch",
+          "text": "Geringe therapeutische Breite → Intoxikation mit Arrhythmien."
+        },
+        {
+          "level": "info",
+          "text": "Risiko steigt bei Hypokaliämie/Niereninsuffizienz."
+        }
+      ]
+    },
+    "antiarrhythmikum": {
+      "gruppe": "Antiarrhythmikum",
+      "notfall": [
+        {
+          "level": "mittel",
+          "text": "QT-Verlängerung und Proarrhythmie; Bradykardie-Neigung."
+        }
+      ]
+    },
+    "biguanid": {
+      "gruppe": "Biguanid (orales Antidiabetikum)",
+      "notfall": [
+        {
+          "level": "hoch",
+          "text": "Laktatazidose-Risiko bei Schock/Hypoxie/Niereninsuffizienz."
+        },
+        {
+          "level": "info",
+          "text": "Allein keine Hypoglykämie."
+        }
+      ]
+    },
+    "sglt2": {
+      "gruppe": "SGLT2-Hemmer",
+      "notfall": [
+        {
+          "level": "hoch",
+          "text": "Euglykäme Ketoazidose möglich (BZ kann normal sein)."
+        }
+      ]
+    },
+    "sulfonylharnstoff": {
+      "gruppe": "Sulfonylharnstoff",
+      "notfall": [
+        {
+          "level": "hoch",
+          "text": "Protrahierte, rezidivierende Hypoglykämie möglich."
+        }
+      ]
+    },
+    "insulin": {
+      "gruppe": "Insulin",
+      "notfall": [
+        {
+          "level": "hoch",
+          "text": "Hypoglykämie-Risiko."
+        }
+      ]
+    },
+    "statin": {
+      "gruppe": "Statin (CSE-Hemmer)",
+      "notfall": [
+        {
+          "level": "info",
+          "text": "Marker für kardiovaskuläres Risiko; selten Myopathie/Rhabdomyolyse."
+        }
+      ]
+    },
+    "ppi": {
+      "gruppe": "Protonenpumpeninhibitor (PPI)",
+      "notfall": [
+        {
+          "level": "info",
+          "text": "Oft Magenschutz → Hinweis auf TAH/NSAR/Antikoagulation."
+        }
+      ]
+    },
+    "saba": {
+      "gruppe": "Kurzwirksames β2-Mimetikum (SABA)",
+      "notfall": [
+        {
+          "level": "info",
+          "text": "Marker für obstruktive Atemwegserkrankung; Tachykardie/Tremor."
+        }
+      ]
+    },
+    "glukokortikoid": {
+      "gruppe": "Glukokortikoid (systemisch)",
+      "notfall": [
+        {
+          "level": "mittel",
+          "text": "Dauertherapie → Nebennierensuppression, Stressdosis bedenken."
+        }
+      ]
+    },
+    "antiepileptikum": {
+      "gruppe": "Antiepileptikum",
+      "notfall": [
+        {
+          "level": "info",
+          "text": "Marker für Krampfleiden; Adhärenz bei Anfall hinterfragen."
+        }
+      ]
+    },
+    "parkinson": {
+      "gruppe": "Parkinsonmittel (Levodopa)",
+      "notfall": [
+        {
+          "level": "info",
+          "text": "Strenge Einnahmezeiten; Auslassen → akute Rigidität/Immobilität."
+        }
+      ]
+    },
+    "ssri": {
+      "gruppe": "Antidepressivum (SSRI)",
+      "notfall": [
+        {
+          "level": "info",
+          "text": "Serotoninsyndrom-Risiko in Kombination; teils QT-Verlängerung."
+        }
+      ]
+    },
+    "benzodiazepin": {
+      "gruppe": "Benzodiazepin",
+      "notfall": [
+        {
+          "level": "mittel",
+          "text": "Sedierung/Atemdepression, verstärkt mit Opioiden/Alkohol."
+        },
+        {
+          "level": "info",
+          "text": "Antagonisierbar mit Flumazenil (cave Entzug/Krampf)."
+        }
+      ]
+    },
+    "nsar": {
+      "gruppe": "NSAR",
+      "notfall": [
+        {
+          "level": "info",
+          "text": "GI-Blutungs- und Nierenrisiko; kardiovaskuläres Risiko."
+        }
+      ]
+    },
+    "opioid": {
+      "gruppe": "Opioid-Analgetikum",
+      "notfall": [
+        {
+          "level": "hoch",
+          "text": "Atemdepression und Sedierung; antagonisierbar mit Naloxon."
+        }
+      ]
+    },
+    "schilddruese": {
+      "gruppe": "Schilddrüsenhormon",
+      "notfall": [
+        {
+          "level": "info",
+          "text": "Überdosierung/Intox → Tachykardie, Unruhe, Hyperthermie."
+        }
+      ]
+    },
+    "alphablocker": {
+      "gruppe": "Alpha-1-Blocker",
+      "notfall": [
+        {
+          "level": "info",
+          "text": "Orthostatische Hypotonie möglich."
+        }
+      ]
+    },
+    "antihistaminikum1": {
+      "gruppe": "H1-Antihistaminikum (1. Generation)",
+      "notfall": [
+        {
+          "level": "mittel",
+          "text": "Anticholinerg/sedierend; bei Intox Delir, Tachykardie, Krampfanfall."
+        }
+      ]
+    },
+    "makrolid": {
+      "gruppe": "Makrolid-Antibiotikum",
+      "notfall": [
+        {
+          "level": "mittel",
+          "text": "QT-Verlängerung; relevante CYP3A4-Interaktionen."
+        }
+      ]
+    },
+    "lmwh": {
+      "gruppe": "Niedermolekulares Heparin",
+      "notfall": [
+        { "level": "hoch", "text": "Protrahierte Antikoagulation, lange Halbwertszeit." },
+        { "level": "mittel", "text": "Nur teilweise antagonisierbar mit Protamin." },
+        { "level": "info", "text": "Renale Elimination — Akkumulation bei Niereninsuffizienz." }
+      ]
+    },
+    "heparin_unfrakt": {
+      "gruppe": "Unfraktioniertes Heparin (UFH)",
+      "notfall": [
+        { "level": "hoch", "text": "Hohes Blutungsrisiko, kurze HWZ." },
+        { "level": "info", "text": "Antagonisierbar mit Protamin (1 mg neutralisiert 100 IE Heparin)." },
+        { "level": "mittel", "text": "HIT-II-Risiko (4–14 Tage nach Beginn)." }
+      ]
+    },
+    "dpp4": {
+      "gruppe": "DPP-4-Hemmer (Gliptin)",
+      "notfall": [
+        { "level": "info", "text": "Allein keine Hypoglykämie." },
+        { "level": "info", "text": "Selten Pankreatitis beschrieben." },
+        { "level": "info", "text": "Dosisanpassung bei Niereninsuffizienz (außer Linagliptin)." }
+      ]
+    },
+    "glp1_ra": {
+      "gruppe": "GLP-1-Rezeptor-Agonist",
+      "notfall": [
+        { "level": "info", "text": "Übelkeit/Erbrechen häufig, besonders bei Dosistitration." },
+        { "level": "mittel", "text": "Pankreatitis-Risiko (selten)." },
+        { "level": "info", "text": "Verzögerte Magenentleerung — relevant bei Sedierung/Anästhesie (Aspirationsrisiko)." }
+      ]
+    },
+    "snri": {
+      "gruppe": "SNRI (Serotonin-Noradrenalin-Wiederaufnahme-Hemmer)",
+      "notfall": [
+        { "level": "mittel", "text": "Serotoninsyndrom-Risiko in Kombination mit anderen Serotonergika." },
+        { "level": "info", "text": "Diskontinuationssyndrom bei abruptem Absetzen." },
+        { "level": "mittel", "text": "Blutdruckerhöhung dosisabhängig (v.a. Venlafaxin)." }
+      ]
+    },
+    "mirtazapin": {
+      "gruppe": "Tetrazyklisches Antidepressivum (NaSSA)",
+      "notfall": [
+        { "level": "info", "text": "Stark sedierend in niedriger Dosis." },
+        { "level": "info", "text": "Anticholinerge Effekte gering." },
+        { "level": "info", "text": "In Kombination mit Opioiden/Benzodiazepinen Sedierung verstärkt." },
+        { "level": "mittel", "text": "Selten Agranulozytose, Leberwerterhöhung." }
+      ]
+    },
+    "trizyklisch": {
+      "gruppe": "Trizyklisches Antidepressivum (TCA)",
+      "notfall": [
+        { "level": "hoch", "text": "Kardiotoxisch bei Intoxikation: QRS-Verbreiterung, QT-Verlängerung, ventrikuläre Arrhythmien." },
+        { "level": "hoch", "text": "Anticholinerges Delir bei Überdosis (heiße/trockene Haut, Tachykardie, Mydriasis)." },
+        { "level": "mittel", "text": "Krampfschwelle herabgesetzt." },
+        { "level": "info", "text": "Bei Intox Natriumbikarbonat bei QRS > 100 ms erwägen." }
+      ]
+    },
+    "z_substanz": {
+      "gruppe": "Non-Benzodiazepin-Hypnotikum (Z-Substanz)",
+      "notfall": [
+        { "level": "mittel", "text": "Atemdepression in Kombination mit Opioiden/Alkohol." },
+        { "level": "info", "text": "Paradoxe Reaktionen, Schlafwandeln." },
+        { "level": "info", "text": "Abhängigkeitspotenzial, kürzer als Benzodiazepine." }
+      ]
+    },
+    "ics": {
+      "gruppe": "Inhalatives Kortikosteroid (ICS)",
+      "notfall": [
+        { "level": "info", "text": "Marker für obstruktive Atemwegserkrankung (Asthma, COPD)." },
+        { "level": "info", "text": "Lokal: orale Candidiasis, Heiserkeit." },
+        { "level": "info", "text": "Hohe Dauerdosen: systemische Effekte möglich (Hautatrophie, Nebennierensuppression)." }
+      ]
+    },
+    "lama": {
+      "gruppe": "LAMA (Anticholinergikum, COPD)",
+      "notfall": [
+        { "level": "info", "text": "Marker für COPD (selten Asthma-Add-on)." },
+        { "level": "mittel", "text": "Anticholinerg: Engwinkelglaukom auslösbar, Harnverhalt, Mundtrockenheit." },
+        { "level": "info", "text": "Tachykardie möglich." }
+      ]
+    },
+    "triptan": {
+      "gruppe": "Triptan",
+      "notfall": [
+        { "level": "mittel", "text": "Vasokonstriktion: kontraindiziert bei manifester KHK, Z.n. Schlaganfall, pAVK." },
+        { "level": "mittel", "text": "Serotoninsyndrom in Kombination mit SSRI/SNRI." },
+        { "level": "info", "text": "Wiederkehrender Kopfschmerz bei Übergebrauch (Medication-Overuse-Headache)." }
+      ]
+    },
+    "nonopioid_analget": {
+      "gruppe": "Nicht-Opioid-Analgetikum",
+      "notfall": [
+        { "level": "hoch", "text": "Paracetamol-Intox: Hepatotoxizität, Antidot N-Acetylcystein (möglichst < 10 h nach Einnahme)." },
+        { "level": "mittel", "text": "Metamizol: Agranulozytose-Risiko (selten), anaphylaktoide Reaktion (insb. i.v.)." },
+        { "level": "info", "text": "Beide: gut wirksam bei leichten bis mittleren Schmerzen, gute Verträglichkeit gegenüber NSAR." }
+      ]
+    },
+    "penicillin": {
+      "gruppe": "Beta-Lactam-Antibiotikum (Penicillin)",
+      "notfall": [
+        { "level": "mittel", "text": "Allergie-Risiko: 5–10 % berichten Penicillinallergie; echte Anaphylaxie selten (~0,01–0,05 %)." },
+        { "level": "info", "text": "GI-Nebenwirkungen, Clostridium-difficile-Risiko." },
+        { "level": "info", "text": "Bei i.v.-Gabe Kreuzreaktivität mit Cephalosporinen ~5 % beachten." }
+      ]
+    },
+    "cephalosporin": {
+      "gruppe": "Cephalosporin",
+      "notfall": [
+        { "level": "mittel", "text": "Allergie-Risiko, ~5–10 % Kreuzreaktivität bei Penicillin-Allergie." },
+        { "level": "info", "text": "C.-diff.-Risiko erhöht (insb. 3. Gen)." },
+        { "level": "info", "text": "Vitamin-K-abhängige Gerinnungsfaktoren ↓ (selten)." }
+      ]
+    },
+    "fluorchinolon": {
+      "gruppe": "Fluorchinolon",
+      "notfall": [
+        { "level": "mittel", "text": "QT-Verlängerung, insb. Moxifloxacin." },
+        { "level": "mittel", "text": "Sehnenruptur-Risiko (Achilles), v.a. bei älteren Patienten + Kortikosteroiden." },
+        { "level": "info", "text": "ZNS-NW: Krampfanfälle, Schlafstörungen." },
+        { "level": "info", "text": "Aortendissektion/-aneurysma-Risiko diskutiert." }
+      ]
+    },
+    "tetracyclin": {
+      "gruppe": "Tetracyclin",
+      "notfall": [
+        { "level": "info", "text": "Phototoxizität — Sonnenschutz." },
+        { "level": "info", "text": "Interaktion mit Antazida, Eisen, Milchprodukten (Resorption ↓)." },
+        { "level": "info", "text": "Verzicht in Schwangerschaft und bei Kindern < 8 J. (Zahnverfärbungen)." }
+      ]
+    },
+    "sulfonamid": {
+      "gruppe": "Sulfonamid-Kombination",
+      "notfall": [
+        { "level": "mittel", "text": "Stevens-Johnson-Syndrom, toxische epidermale Nekrolyse — selten aber schwer." },
+        { "level": "mittel", "text": "Hyperkaliämie, v.a. mit ACE-Hemmer / Sartan / Kalium-Diuretikum." },
+        { "level": "info", "text": "Verstärkt Cumarin-Wirkung (CYP2C9-Hemmung)." }
+      ]
+    },
+    "nitroimidazol": {
+      "gruppe": "Nitroimidazol",
+      "notfall": [
+        { "level": "info", "text": "Alkoholintoleranz (Disulfiram-ähnliche Reaktion) — bis 72 h nach letzter Einnahme." },
+        { "level": "info", "text": "Metallischer Geschmack." },
+        { "level": "info", "text": "Peripheres Neuropathie-Risiko bei Langzeittherapie." }
+      ]
+    },
+    "azol_antimykot": {
+      "gruppe": "Azol-Antimykotikum",
+      "notfall": [
+        { "level": "mittel", "text": "Stark CYP3A4-hemmend — viele Interaktionen (u.a. mit DOAK, Statin, Benzodiazepin)." },
+        { "level": "info", "text": "QT-Verlängerung (insb. Voriconazol)." },
+        { "level": "info", "text": "Hepatotoxizität — Leberwerte kontrollieren." }
+      ]
+    },
+    "h1_antihist2": {
+      "gruppe": "H1-Antihistaminikum (2. Generation)",
+      "notfall": [
+        { "level": "info", "text": "Kaum sedierend (gegenüber 1. Generation)." },
+        { "level": "info", "text": "Notfall-relevant v.a. als Komedikation, kaum eigenständige Akut-NW." }
+      ]
+    },
+    "5alpha_reduktase": {
+      "gruppe": "5α-Reduktase-Hemmer",
+      "notfall": [
+        { "level": "info", "text": "Marker für benigne Prostatahyperplasie." },
+        { "level": "info", "text": "PSA-Wert wird halbiert — Verlaufsbewertung anpassen." },
+        { "level": "info", "text": "Sexuelle Funktionsstörungen möglich." }
+      ]
+    },
+    "mineralstoff": {
+      "gruppe": "Mineralstoff (Mg, Ca, K)",
+      "notfall": [
+        { "level": "mittel", "text": "Magnesium i.v.: Hypotonie, AV-Block, neuromuskuläre Blockade verstärkt." },
+        { "level": "mittel", "text": "Kaliumchlorid i.v.: Arrhythmie bei zu schneller Gabe (max. 20 mmol/h peripher)." },
+        { "level": "info", "text": "Calcium i.v.: bei Digitalisintox kontraindiziert (stone heart)." }
+      ]
+    },
+    "vitamin_k": {
+      "gruppe": "Vitamin K (Antidot)",
+      "notfall": [
+        { "level": "info", "text": "Antagonisierung von VKA (Phenprocoumon, Warfarin). Wirkung erst nach 6–24 h." },
+        { "level": "info", "text": "Bei akuter Blutung: PPSB zusätzlich." }
+      ]
+    },
+    "gerinnungsfaktor": {
+      "gruppe": "Gerinnungsfaktor-Konzentrat / Antikoagulanzien-Antidot",
+      "notfall": [
+        { "level": "hoch", "text": "Antidot in akuter Blutung unter Antikoagulation." },
+        { "level": "info", "text": "PPSB (Vier-Faktor-PCC): bei VKA und schwerer Blutung." },
+        { "level": "info", "text": "Idarucizumab: spezifisch für Dabigatran." },
+        { "level": "info", "text": "Andexanet alfa: für Apixaban/Rivaroxaban — begrenzte Verfügbarkeit, teuer." }
+      ]
+    }
+  },
+  "substances": [
+    {
+      "id": "ass",
+      "wirkstoff": "Acetylsalicylsäure",
+      "synonyms": [
+        "ASS",
+        "Aspirin"
+      ],
+      "atc": "B01AC06",
+      "group": "tah",
+      "indikationen": [
+        "Sekundärprophylaxe KHK/Schlaganfall"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "amiodaron",
+      "wirkstoff": "Amiodaron",
+      "synonyms": [
+        "Cordarex"
+      ],
+      "atc": "C01BD01",
+      "group": "antiarrhythmikum",
+      "indikationen": [
+        "ventrikuläre/supraventrikuläre Tachyarrhythmien"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "amlodipin",
+      "wirkstoff": "Amlodipin",
+      "synonyms": [
+        "Norvasc"
+      ],
+      "atc": "C08CA01",
+      "group": "ca_antagonist",
+      "indikationen": [
+        "Hypertonie",
+        "KHK/Angina"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "apixaban",
+      "wirkstoff": "Apixaban",
+      "synonyms": [
+        "Eliquis"
+      ],
+      "atc": "B01AF02",
+      "group": "doak",
+      "indikationen": [
+        "Vorhofflimmern",
+        "VTE-Prophylaxe/-Therapie"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "atorvastatin",
+      "wirkstoff": "Atorvastatin",
+      "synonyms": [
+        "Sortis"
+      ],
+      "atc": "C10AA05",
+      "group": "statin",
+      "indikationen": [
+        "Hyperlipidämie",
+        "kardiovaskuläre Sekundärprophylaxe"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "bisoprolol",
+      "wirkstoff": "Bisoprolol",
+      "synonyms": [
+        "Concor"
+      ],
+      "atc": "C07AB07",
+      "group": "betablocker",
+      "indikationen": [
+        "Hypertonie",
+        "Herzinsuffizienz",
+        "KHK"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "candesartan",
+      "wirkstoff": "Candesartan",
+      "synonyms": [
+        "Blopress",
+        "Atacand"
+      ],
+      "atc": "C09CA06",
+      "group": "sartan",
+      "indikationen": [
+        "Hypertonie",
+        "Herzinsuffizienz"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "citalopram",
+      "wirkstoff": "Citalopram",
+      "synonyms": [
+        "Cipramil"
+      ],
+      "atc": "N06AB04",
+      "group": "ssri",
+      "indikationen": [
+        "Depression",
+        "Angststörung"
+      ],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Dosisabhängige QT-Verlängerung."
+        }
+      ],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "clarithromycin",
+      "wirkstoff": "Clarithromycin",
+      "synonyms": [
+        "Klacid"
+      ],
+      "atc": "J01FA09",
+      "group": "makrolid",
+      "indikationen": [
+        "bakterielle Atemwegsinfekte"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "clopidogrel",
+      "wirkstoff": "Clopidogrel",
+      "synonyms": [
+        "Plavix",
+        "Iscover"
+      ],
+      "atc": "B01AC04",
+      "group": "tah",
+      "indikationen": [
+        "nach Stent/ACS",
+        "pAVK"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "dabigatran",
+      "wirkstoff": "Dabigatran",
+      "synonyms": [
+        "Pradaxa"
+      ],
+      "atc": "B01AE07",
+      "group": "doak",
+      "indikationen": [
+        "Vorhofflimmern",
+        "VTE"
+      ],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Renale Elimination; spezifisches Antidot Idarucizumab."
+        }
+      ],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "diazepam",
+      "wirkstoff": "Diazepam",
+      "synonyms": [
+        "Valium"
+      ],
+      "atc": "N05BA01",
+      "group": "benzodiazepin",
+      "indikationen": [
+        "Angst",
+        "Krampfanfall",
+        "Spastik"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "diclofenac",
+      "wirkstoff": "Diclofenac",
+      "synonyms": [
+        "Voltaren"
+      ],
+      "atc": "M01AB05",
+      "group": "nsar",
+      "indikationen": [
+        "Schmerz",
+        "Entzündung"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "digoxin",
+      "wirkstoff": "Digoxin",
+      "synonyms": [
+        "Lanicor",
+        "Digacin"
+      ],
+      "atc": "C01AA05",
+      "group": "glykosid",
+      "indikationen": [
+        "Vorhofflimmern (Frequenzkontrolle)",
+        "Herzinsuffizienz"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "diphenhydramin",
+      "wirkstoff": "Diphenhydramin",
+      "synonyms": [
+        "Vivinox",
+        "Sediat"
+      ],
+      "atc": "R06AA02",
+      "group": "antihistaminikum1",
+      "indikationen": [
+        "Schlafstörungen (Selbstmedikation)",
+        "Allergie"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "edoxaban",
+      "wirkstoff": "Edoxaban",
+      "synonyms": [
+        "Lixiana"
+      ],
+      "atc": "B01AF03",
+      "group": "doak",
+      "indikationen": [
+        "Vorhofflimmern",
+        "VTE"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "empagliflozin",
+      "wirkstoff": "Empagliflozin",
+      "synonyms": [
+        "Jardiance"
+      ],
+      "atc": "A10BK03",
+      "group": "sglt2",
+      "indikationen": [
+        "Diabetes Typ 2",
+        "Herzinsuffizienz",
+        "CKD"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "fentanyl",
+      "wirkstoff": "Fentanyl",
+      "synonyms": [
+        "Durogesic"
+      ],
+      "atc": "N02AB03",
+      "group": "opioid",
+      "indikationen": [
+        "chronische starke Schmerzen (transdermal)"
+      ],
+      "extra": [
+        {
+          "level": "hoch",
+          "text": "Transdermales Depot; Resorption steigt bei Wärme/Fieber."
+        }
+      ],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "furosemid",
+      "wirkstoff": "Furosemid",
+      "synonyms": [
+        "Lasix"
+      ],
+      "atc": "C03CA01",
+      "group": "schleifendiuretikum",
+      "indikationen": [
+        "Herzinsuffizienz/Ödeme",
+        "Lungenödem"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "glimepirid",
+      "wirkstoff": "Glimepirid",
+      "synonyms": [
+        "Amaryl"
+      ],
+      "atc": "A10BB12",
+      "group": "sulfonylharnstoff",
+      "indikationen": [
+        "Diabetes mellitus Typ 2"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "hct",
+      "wirkstoff": "Hydrochlorothiazid",
+      "synonyms": [
+        "HCT",
+        "Esidrix"
+      ],
+      "atc": "C03AA03",
+      "group": "thiazid",
+      "indikationen": [
+        "Hypertonie",
+        "Ödeme"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "ibuprofen",
+      "wirkstoff": "Ibuprofen",
+      "synonyms": [
+        "Nurofen",
+        "Ibuflam"
+      ],
+      "atc": "M01AE01",
+      "group": "nsar",
+      "indikationen": [
+        "Schmerz",
+        "Entzündung",
+        "Fieber"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "insulin_aspart",
+      "wirkstoff": "Insulin aspart",
+      "synonyms": [
+        "NovoRapid",
+        "Fiasp"
+      ],
+      "atc": "A10AB05",
+      "group": "insulin",
+      "indikationen": [
+        "Diabetes mellitus (Bolus-/Mahlzeiteninsulin)"
+      ],
+      "extra": [
+        {
+          "level": "info",
+          "text": "Rascher Wirkeintritt."
+        }
+      ],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "insulin_glargin",
+      "wirkstoff": "Insulin glargin",
+      "synonyms": [
+        "Lantus",
+        "Toujeo"
+      ],
+      "atc": "A10AE04",
+      "group": "insulin",
+      "indikationen": [
+        "Diabetes mellitus (Basalinsulin)"
+      ],
+      "extra": [
+        {
+          "level": "info",
+          "text": "Langwirksam → protrahierte Hypoglykämie."
+        }
+      ],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "levetiracetam",
+      "wirkstoff": "Levetiracetam",
+      "synonyms": [
+        "Keppra"
+      ],
+      "atc": "N03AX14",
+      "group": "antiepileptikum",
+      "indikationen": [
+        "Epilepsie"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "levodopa",
+      "wirkstoff": "Levodopa/Carbidopa",
+      "synonyms": [
+        "Nacom",
+        "Isicom"
+      ],
+      "atc": "N04BA02",
+      "group": "parkinson",
+      "indikationen": [
+        "Morbus Parkinson"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "levothyroxin",
+      "wirkstoff": "Levothyroxin",
+      "synonyms": [
+        "L-Thyroxin",
+        "Euthyrox"
+      ],
+      "atc": "H03AA01",
+      "group": "schilddruese",
+      "indikationen": [
+        "Hypothyreose",
+        "Struma"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "lorazepam",
+      "wirkstoff": "Lorazepam",
+      "synonyms": [
+        "Tavor"
+      ],
+      "atc": "N05BA06",
+      "group": "benzodiazepin",
+      "indikationen": [
+        "Angst",
+        "Status epilepticus",
+        "Sedierung"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "metformin",
+      "wirkstoff": "Metformin",
+      "synonyms": [
+        "Glucophage"
+      ],
+      "atc": "A10BA02",
+      "group": "biguanid",
+      "indikationen": [
+        "Diabetes mellitus Typ 2"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "metoprolol",
+      "wirkstoff": "Metoprolol",
+      "synonyms": [
+        "Beloc",
+        "Beloc-Zok"
+      ],
+      "atc": "C07AB02",
+      "group": "betablocker",
+      "indikationen": [
+        "Hypertonie",
+        "KHK",
+        "Herzinsuffizienz",
+        "Tachyarrhythmie"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "morphin",
+      "wirkstoff": "Morphin",
+      "synonyms": [
+        "MST",
+        "Sevredol"
+      ],
+      "atc": "N02AA01",
+      "group": "opioid",
+      "indikationen": [
+        "starke Schmerzen",
+        "Tumorschmerz"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "oxycodon",
+      "wirkstoff": "Oxycodon",
+      "synonyms": [
+        "Oxygesic",
+        "Targin"
+      ],
+      "atc": "N02AA05",
+      "group": "opioid",
+      "indikationen": [
+        "starke Schmerzen"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "pantoprazol",
+      "wirkstoff": "Pantoprazol",
+      "synonyms": [
+        "Pantozol"
+      ],
+      "atc": "A02BC02",
+      "group": "ppi",
+      "indikationen": [
+        "Refluxkrankheit",
+        "Ulkus",
+        "Magenschutz"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "phenprocoumon",
+      "wirkstoff": "Phenprocoumon",
+      "synonyms": [
+        "Marcumar",
+        "Falithrom"
+      ],
+      "atc": "B01AA04",
+      "group": "vka",
+      "indikationen": [
+        "Vorhofflimmern",
+        "mechanische Herzklappe",
+        "VTE"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "prednisolon",
+      "wirkstoff": "Prednisolon",
+      "synonyms": [
+        "Decortin H"
+      ],
+      "atc": "H02AB06",
+      "group": "glukokortikoid",
+      "indikationen": [
+        "entzündliche/allergische Erkrankungen",
+        "Autoimmun",
+        "COPD/Asthma"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "ramipril",
+      "wirkstoff": "Ramipril",
+      "synonyms": [
+        "Delix",
+        "Vesdil"
+      ],
+      "atc": "C09AA05",
+      "group": "acehemmer",
+      "indikationen": [
+        "Hypertonie",
+        "Herzinsuffizienz",
+        "nach Myokardinfarkt"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "rivaroxaban",
+      "wirkstoff": "Rivaroxaban",
+      "synonyms": [
+        "Xarelto"
+      ],
+      "atc": "B01AF01",
+      "group": "doak",
+      "indikationen": [
+        "Vorhofflimmern",
+        "VTE",
+        "KHK/pAVK (niedrigdosiert)"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "salbutamol",
+      "wirkstoff": "Salbutamol",
+      "synonyms": [
+        "Sultanol",
+        "Ventolin"
+      ],
+      "atc": "R03AC02",
+      "group": "saba",
+      "indikationen": [
+        "Asthma",
+        "COPD (Bedarfsspray)"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "sertralin",
+      "wirkstoff": "Sertralin",
+      "synonyms": [
+        "Zoloft"
+      ],
+      "atc": "N06AB06",
+      "group": "ssri",
+      "indikationen": [
+        "Depression",
+        "Angststörung"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "simvastatin",
+      "wirkstoff": "Simvastatin",
+      "synonyms": [
+        "Zocor",
+        "Simva-Aristo"
+      ],
+      "atc": "C10AA01",
+      "group": "statin",
+      "indikationen": [
+        "Hyperlipidämie",
+        "kardiovaskuläre Sekundärprophylaxe"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "sotalol",
+      "wirkstoff": "Sotalol",
+      "synonyms": [
+        "Sotalex"
+      ],
+      "atc": "C07AA07",
+      "group": "betablocker",
+      "indikationen": [
+        "Herzrhythmusstörungen"
+      ],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Ausgeprägte QT-Verlängerung (Klasse-III-Wirkung)."
+        }
+      ],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "spironolacton",
+      "wirkstoff": "Spironolacton",
+      "synonyms": [
+        "Aldactone"
+      ],
+      "atc": "C03DA01",
+      "group": "kalium_diuretikum",
+      "indikationen": [
+        "Herzinsuffizienz",
+        "Ödeme",
+        "Hyperaldosteronismus"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "tamsulosin",
+      "wirkstoff": "Tamsulosin",
+      "synonyms": [
+        "Alna",
+        "Omnic"
+      ],
+      "atc": "G04CA02",
+      "group": "alphablocker",
+      "indikationen": [
+        "benigne Prostatahyperplasie"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "ticagrelor",
+      "wirkstoff": "Ticagrelor",
+      "synonyms": [
+        "Brilique"
+      ],
+      "atc": "B01AC24",
+      "group": "tah",
+      "indikationen": [
+        "nach ACS"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "torasemid",
+      "wirkstoff": "Torasemid",
+      "synonyms": [
+        "Torem",
+        "Unat"
+      ],
+      "atc": "C03CA04",
+      "group": "schleifendiuretikum",
+      "indikationen": [
+        "Herzinsuffizienz",
+        "Hypertonie",
+        "Ödeme"
+      ],
+      "extra": [],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "tramadol",
+      "wirkstoff": "Tramadol",
+      "synonyms": [
+        "Tramal"
+      ],
+      "atc": "N02AX02",
+      "group": "opioid",
+      "indikationen": [
+        "mäßige bis starke Schmerzen"
+      ],
+      "extra": [
+        {
+          "level": "info",
+          "text": "Senkt Krampfschwelle; Serotonin-Effekte."
+        }
+      ],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "valproat",
+      "wirkstoff": "Valproinsäure",
+      "synonyms": [
+        "Ergenyl",
+        "Orfiril"
+      ],
+      "atc": "N03AG01",
+      "group": "antiepileptikum",
+      "indikationen": [
+        "Epilepsie",
+        "bipolare Störung"
+      ],
+      "extra": [
+        {
+          "level": "info",
+          "text": "Hyperammonämie/Hepatotoxizität möglich."
+        }
+      ],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "verapamil",
+      "wirkstoff": "Verapamil",
+      "synonyms": [
+        "Isoptin"
+      ],
+      "atc": "C08DA01",
+      "group": "ca_antagonist",
+      "indikationen": [
+        "Tachyarrhythmie",
+        "Hypertonie",
+        "Angina"
+      ],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Bradykardie/AV-Block, negativ inotrop; cave mit Betablocker."
+        }
+      ],
+      "quelle": "MVP-Seed",
+      "stand": "2026-05"
+    },
+    {
+      "id": "warfarin",
+      "wirkstoff": "Warfarin",
+      "synonyms": ["Coumadin"],
+      "atc": "B01AA03",
+      "group": "vka",
+      "indikationen": ["Vorhofflimmern", "VTE", "mechanische Herzklappe"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "prasugrel",
+      "wirkstoff": "Prasugrel",
+      "synonyms": ["Efient"],
+      "atc": "B01AC22",
+      "group": "tah",
+      "indikationen": ["nach ACS mit PCI", "Schlaganfallprophylaxe"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "carvedilol",
+      "wirkstoff": "Carvedilol",
+      "synonyms": ["Dilatrend", "Querto"],
+      "atc": "C07AG02",
+      "group": "betablocker",
+      "indikationen": ["Herzinsuffizienz", "Hypertonie", "nach Myokardinfarkt"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "atenolol",
+      "wirkstoff": "Atenolol",
+      "synonyms": ["Tenormin"],
+      "atc": "C07AB03",
+      "group": "betablocker",
+      "indikationen": ["Hypertonie", "KHK", "Tachyarrhythmie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "nebivolol",
+      "wirkstoff": "Nebivolol",
+      "synonyms": ["Nebilet"],
+      "atc": "C07AB12",
+      "group": "betablocker",
+      "indikationen": ["Hypertonie", "Herzinsuffizienz"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "propranolol",
+      "wirkstoff": "Propranolol",
+      "synonyms": ["Dociton", "Inderal"],
+      "atc": "C07AA05",
+      "group": "betablocker",
+      "indikationen": ["Hypertonie", "Tachyarrhythmie", "Tremor", "Hyperthyreose"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "labetalol",
+      "wirkstoff": "Labetalol",
+      "synonyms": ["Trandate"],
+      "atc": "C07AG01",
+      "group": "betablocker",
+      "indikationen": ["hypertensive Krise", "Hypertonie in der Schwangerschaft"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "esmolol",
+      "wirkstoff": "Esmolol",
+      "synonyms": ["Brevibloc"],
+      "atc": "C07AB09",
+      "group": "betablocker",
+      "indikationen": ["supraventrikuläre Tachykardie", "perioperative Herzfrequenzkontrolle"],
+      "extra": [
+        {
+          "level": "info",
+          "text": "Ultrakurz wirksam (i.v.); HWZ ~9 Min."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "enalapril",
+      "wirkstoff": "Enalapril",
+      "synonyms": ["Xanef"],
+      "atc": "C09AA02",
+      "group": "acehemmer",
+      "indikationen": ["Hypertonie", "Herzinsuffizienz", "nach Myokardinfarkt"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "lisinopril",
+      "wirkstoff": "Lisinopril",
+      "synonyms": ["Acerbon"],
+      "atc": "C09AA03",
+      "group": "acehemmer",
+      "indikationen": ["Hypertonie", "Herzinsuffizienz", "diabetische Nephropathie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "perindopril",
+      "wirkstoff": "Perindopril",
+      "synonyms": ["Coversum"],
+      "atc": "C09AA04",
+      "group": "acehemmer",
+      "indikationen": ["Hypertonie", "stabile KHK", "Herzinsuffizienz"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "captopril",
+      "wirkstoff": "Captopril",
+      "synonyms": ["Lopirin"],
+      "atc": "C09AA01",
+      "group": "acehemmer",
+      "indikationen": ["Hypertonie", "Herzinsuffizienz"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "benazepril",
+      "wirkstoff": "Benazepril",
+      "synonyms": ["Cibacen"],
+      "atc": "C09AA07",
+      "group": "acehemmer",
+      "indikationen": ["Hypertonie", "Herzinsuffizienz"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "fosinopril",
+      "wirkstoff": "Fosinopril",
+      "synonyms": ["Fosinorm"],
+      "atc": "C09AA09",
+      "group": "acehemmer",
+      "indikationen": ["Hypertonie", "Herzinsuffizienz"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "quinapril",
+      "wirkstoff": "Quinapril",
+      "synonyms": ["Accupro"],
+      "atc": "C09AA06",
+      "group": "acehemmer",
+      "indikationen": ["Hypertonie", "Herzinsuffizienz"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "trandolapril",
+      "wirkstoff": "Trandolapril",
+      "synonyms": ["Udrik"],
+      "atc": "C09AA10",
+      "group": "acehemmer",
+      "indikationen": ["Hypertonie", "nach Myokardinfarkt"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "valsartan",
+      "wirkstoff": "Valsartan",
+      "synonyms": ["Diovan", "Provas"],
+      "atc": "C09CA03",
+      "group": "sartan",
+      "indikationen": ["Hypertonie", "Herzinsuffizienz", "nach Myokardinfarkt"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "losartan",
+      "wirkstoff": "Losartan",
+      "synonyms": ["Lorzaar"],
+      "atc": "C09CA01",
+      "group": "sartan",
+      "indikationen": ["Hypertonie", "diabetische Nephropathie", "Herzinsuffizienz"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "irbesartan",
+      "wirkstoff": "Irbesartan",
+      "synonyms": ["Aprovel", "Karvea"],
+      "atc": "C09CA04",
+      "group": "sartan",
+      "indikationen": ["Hypertonie", "diabetische Nephropathie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "telmisartan",
+      "wirkstoff": "Telmisartan",
+      "synonyms": ["Micardis", "Kinzalmono"],
+      "atc": "C09CA07",
+      "group": "sartan",
+      "indikationen": ["Hypertonie", "kardiovaskuläre Risikoreduktion"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "olmesartan",
+      "wirkstoff": "Olmesartan",
+      "synonyms": ["Olmetec", "Votum"],
+      "atc": "C09CA08",
+      "group": "sartan",
+      "indikationen": ["Hypertonie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "diltiazem",
+      "wirkstoff": "Diltiazem",
+      "synonyms": ["Dilzem"],
+      "atc": "C08DB01",
+      "group": "ca_antagonist",
+      "indikationen": ["Tachyarrhythmie", "Hypertonie", "Angina pectoris"],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Negativ chronotrop/dromotrop; cave mit Betablocker (AV-Block)."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "nifedipin",
+      "wirkstoff": "Nifedipin",
+      "synonyms": ["Adalat"],
+      "atc": "C08CA05",
+      "group": "ca_antagonist",
+      "indikationen": ["Hypertonie", "Angina pectoris", "Raynaud-Syndrom"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "lercanidipin",
+      "wirkstoff": "Lercanidipin",
+      "synonyms": ["Carmen", "Corifeo"],
+      "atc": "C08CA13",
+      "group": "ca_antagonist",
+      "indikationen": ["Hypertonie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "felodipin",
+      "wirkstoff": "Felodipin",
+      "synonyms": ["Modip", "Munobal"],
+      "atc": "C08CA02",
+      "group": "ca_antagonist",
+      "indikationen": ["Hypertonie", "stabile Angina"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "nitrendipin",
+      "wirkstoff": "Nitrendipin",
+      "synonyms": ["Bayotensin"],
+      "atc": "C08CA08",
+      "group": "ca_antagonist",
+      "indikationen": ["Hypertonie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "indapamid",
+      "wirkstoff": "Indapamid",
+      "synonyms": ["Natrilix"],
+      "atc": "C03BA11",
+      "group": "thiazid",
+      "indikationen": ["Hypertonie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "chlortalidon",
+      "wirkstoff": "Chlortalidon",
+      "synonyms": ["Hygroton"],
+      "atc": "C03BA04",
+      "group": "thiazid",
+      "indikationen": ["Hypertonie", "Herzinsuffizienz"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "xipamid",
+      "wirkstoff": "Xipamid",
+      "synonyms": ["Aquaphor"],
+      "atc": "C03BA10",
+      "group": "thiazid",
+      "indikationen": ["Hypertonie", "Ödeme"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "eplerenon",
+      "wirkstoff": "Eplerenon",
+      "synonyms": ["Inspra"],
+      "atc": "C03DA04",
+      "group": "kalium_diuretikum",
+      "indikationen": ["Herzinsuffizienz nach Myokardinfarkt", "Hypertonie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "amilorid",
+      "wirkstoff": "Amilorid",
+      "synonyms": ["Diursan"],
+      "atc": "C03DB01",
+      "group": "kalium_diuretikum",
+      "indikationen": ["Hypertonie", "Ödeme", "Hypokaliämie-Prophylaxe"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "insulinlispro",
+      "wirkstoff": "Insulin lispro",
+      "synonyms": ["Humalog"],
+      "atc": "A10AB04",
+      "group": "insulin",
+      "indikationen": ["Diabetes mellitus (Bolus-/Mahlzeiteninsulin)"],
+      "extra": [
+        {
+          "level": "info",
+          "text": "Rascher Wirkeintritt (schnellwirksames Analogon)."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "insulindetemir",
+      "wirkstoff": "Insulin detemir",
+      "synonyms": ["Levemir"],
+      "atc": "A10AE05",
+      "group": "insulin",
+      "indikationen": ["Diabetes mellitus (Basalinsulin)"],
+      "extra": [
+        {
+          "level": "info",
+          "text": "Langwirksam → protrahierte Hypoglykämie möglich."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "insulindegludec",
+      "wirkstoff": "Insulin degludec",
+      "synonyms": ["Tresiba"],
+      "atc": "A10AE06",
+      "group": "insulin",
+      "indikationen": ["Diabetes mellitus (Basalinsulin)"],
+      "extra": [
+        {
+          "level": "info",
+          "text": "Sehr langwirksam (>42 h) → protrahierte Hypoglykämie."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "nphinsulin",
+      "wirkstoff": "NPH-Insulin",
+      "synonyms": ["Insuman Basal", "Protaphane"],
+      "atc": "A10AC01",
+      "group": "insulin",
+      "indikationen": ["Diabetes mellitus (intermediäres Basalinsulin)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "insulinglulisin",
+      "wirkstoff": "Insulin glulisin",
+      "synonyms": ["Apidra"],
+      "atc": "A10AB06",
+      "group": "insulin",
+      "indikationen": ["Diabetes mellitus (Bolus-/Mahlzeiteninsulin)"],
+      "extra": [
+        {
+          "level": "info",
+          "text": "Rascher Wirkeintritt (schnellwirksames Analogon)."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "gliclazid",
+      "wirkstoff": "Gliclazid",
+      "synonyms": ["Diamicron"],
+      "atc": "A10BB09",
+      "group": "sulfonylharnstoff",
+      "indikationen": ["Diabetes mellitus Typ 2"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "glibenclamid",
+      "wirkstoff": "Glibenclamid",
+      "synonyms": ["Euglucon", "Maninil"],
+      "atc": "A10BB01",
+      "group": "sulfonylharnstoff",
+      "indikationen": ["Diabetes mellitus Typ 2"],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Besonders lang anhaltende Hypoglykämie-Gefahr (lange HWZ)."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "dapagliflozin",
+      "wirkstoff": "Dapagliflozin",
+      "synonyms": ["Forxiga", "Edistride"],
+      "atc": "A10BK01",
+      "group": "sglt2",
+      "indikationen": ["Diabetes Typ 2", "Herzinsuffizienz", "CKD"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "canagliflozin",
+      "wirkstoff": "Canagliflozin",
+      "synonyms": ["Invokana"],
+      "atc": "A10BK02",
+      "group": "sglt2",
+      "indikationen": ["Diabetes Typ 2", "kardiovaskuläre Risikoreduktion", "CKD"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "ertugliflozin",
+      "wirkstoff": "Ertugliflozin",
+      "synonyms": ["Steglatro"],
+      "atc": "A10BK04",
+      "group": "sglt2",
+      "indikationen": ["Diabetes Typ 2"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "rosuvastatin",
+      "wirkstoff": "Rosuvastatin",
+      "synonyms": ["Crestor"],
+      "atc": "C10AA07",
+      "group": "statin",
+      "indikationen": ["Hyperlipidämie", "kardiovaskuläre Sekundärprophylaxe"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "pravastatin",
+      "wirkstoff": "Pravastatin",
+      "synonyms": ["Pravasin"],
+      "atc": "C10AA03",
+      "group": "statin",
+      "indikationen": ["Hyperlipidämie", "kardiovaskuläre Sekundärprophylaxe"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "fluvastatin",
+      "wirkstoff": "Fluvastatin",
+      "synonyms": ["Locol", "Cranoc"],
+      "atc": "C10AA04",
+      "group": "statin",
+      "indikationen": ["Hyperlipidämie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "pitavastatin",
+      "wirkstoff": "Pitavastatin",
+      "synonyms": ["Livazo"],
+      "atc": "C10AA08",
+      "group": "statin",
+      "indikationen": ["Hyperlipidämie", "kardiovaskuläre Sekundärprophylaxe"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "omeprazol",
+      "wirkstoff": "Omeprazol",
+      "synonyms": ["Antra MUPS", "Gastrozol"],
+      "atc": "A02BC01",
+      "group": "ppi",
+      "indikationen": ["Refluxkrankheit", "Ulkus", "Magenschutz"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "lansoprazol",
+      "wirkstoff": "Lansoprazol",
+      "synonyms": ["Lanzor", "Agopton"],
+      "atc": "A02BC03",
+      "group": "ppi",
+      "indikationen": ["Refluxkrankheit", "Ulkus", "Magenschutz"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "esomeprazol",
+      "wirkstoff": "Esomeprazol",
+      "synonyms": ["Nexium"],
+      "atc": "A02BC05",
+      "group": "ppi",
+      "indikationen": ["Refluxkrankheit", "Ulkus", "Magenschutz"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "rabeprazol",
+      "wirkstoff": "Rabeprazol",
+      "synonyms": ["Pariet"],
+      "atc": "A02BC04",
+      "group": "ppi",
+      "indikationen": ["Refluxkrankheit", "Ulkus", "Magenschutz"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "fenoterol",
+      "wirkstoff": "Fenoterol",
+      "synonyms": ["Berotec"],
+      "atc": "R03AC04",
+      "group": "saba",
+      "indikationen": ["Asthma", "COPD (Bedarfsspray)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "terbutalin",
+      "wirkstoff": "Terbutalin",
+      "synonyms": ["Bricanyl"],
+      "atc": "R03AC03",
+      "group": "saba",
+      "indikationen": ["Asthma", "COPD", "vorzeitige Wehen (i.v.)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "dexamethason",
+      "wirkstoff": "Dexamethason",
+      "synonyms": ["Fortecortin"],
+      "atc": "H02AB02",
+      "group": "glukokortikoid",
+      "indikationen": ["Entzündung", "zerebrales Ödem", "Antiemese"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "methylprednisolon",
+      "wirkstoff": "Methylprednisolon",
+      "synonyms": ["Urbason"],
+      "atc": "H02AB04",
+      "group": "glukokortikoid",
+      "indikationen": ["Entzündung", "Autoimmunerkrankungen", "Anaphylaxie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "hydrocortison",
+      "wirkstoff": "Hydrocortison",
+      "synonyms": ["Hydrocortison-Rotexmedica"],
+      "atc": "H02AB09",
+      "group": "glukokortikoid",
+      "indikationen": ["Nebenniereninsuffizienz", "Stressdosis bei Dauertherapie", "Anaphylaxie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "triamcinolon",
+      "wirkstoff": "Triamcinolon",
+      "synonyms": ["Volon", "Delphicort"],
+      "atc": "H02AB08",
+      "group": "glukokortikoid",
+      "indikationen": ["Gelenkinjektionen", "entzündliche Hauterkrankungen"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "betamethason",
+      "wirkstoff": "Betamethason",
+      "synonyms": ["Celestamine"],
+      "atc": "H02AB01",
+      "group": "glukokortikoid",
+      "indikationen": ["Lungenreifung (Frühgeburt)", "schwere Entzündung"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "pregabalin",
+      "wirkstoff": "Pregabalin",
+      "synonyms": ["Lyrica"],
+      "atc": "N03AX16",
+      "group": "antiepileptikum",
+      "indikationen": ["neuropathischer Schmerz", "Epilepsie", "generalisierte Angststörung"],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Atemdepression mit Opioiden; Missbrauchs-/Abhängigkeitspotenzial."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "lamotrigin",
+      "wirkstoff": "Lamotrigin",
+      "synonyms": ["Lamictal"],
+      "atc": "N03AX09",
+      "group": "antiepileptikum",
+      "indikationen": ["Epilepsie", "bipolare Störung"],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Stevens-Johnson-Syndrom möglich; strenge Dosistitration."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "carbamazepin",
+      "wirkstoff": "Carbamazepin",
+      "synonyms": ["Tegretal", "Timonil"],
+      "atc": "N03AF01",
+      "group": "antiepileptikum",
+      "indikationen": ["Epilepsie", "Trigeminusneuralgie", "bipolare Störung"],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Starker CYP3A4-Induktor; Hyponatriämie-Risiko."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "oxcarbazepin",
+      "wirkstoff": "Oxcarbazepin",
+      "synonyms": ["Trileptal", "Apydan"],
+      "atc": "N03AF02",
+      "group": "antiepileptikum",
+      "indikationen": ["Epilepsie"],
+      "extra": [
+        {
+          "level": "info",
+          "text": "Hyponatriämie häufiger als unter Carbamazepin."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "topiramat",
+      "wirkstoff": "Topiramat",
+      "synonyms": ["Topamax"],
+      "atc": "N03AX11",
+      "group": "antiepileptikum",
+      "indikationen": ["Epilepsie", "Migräneprophylaxe"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "gabapentin",
+      "wirkstoff": "Gabapentin",
+      "synonyms": ["Neurontin"],
+      "atc": "N03AX12",
+      "group": "antiepileptikum",
+      "indikationen": ["neuropathischer Schmerz", "Epilepsie"],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Atemdepression mit Opioiden; Abhängigkeitspotenzial."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "phenytoin",
+      "wirkstoff": "Phenytoin",
+      "synonyms": ["Phenhydan", "Zentropil"],
+      "atc": "N03AB02",
+      "group": "antiepileptikum",
+      "indikationen": ["Epilepsie", "Status epilepticus"],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Schmale therapeutische Breite; Kardiotoxizität bei i.v.-Gabe."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "lacosamid",
+      "wirkstoff": "Lacosamid",
+      "synonyms": ["Vimpat"],
+      "atc": "N03AX18",
+      "group": "antiepileptikum",
+      "indikationen": ["fokale Epilepsie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "fluoxetin",
+      "wirkstoff": "Fluoxetin",
+      "synonyms": ["Fluctin"],
+      "atc": "N06AB03",
+      "group": "ssri",
+      "indikationen": ["Depression", "Angststörung", "Bulimie"],
+      "extra": [
+        {
+          "level": "info",
+          "text": "Starker CYP2D6-Hemmer; lange HWZ (aktiver Metabolit ~1 Woche)."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "paroxetin",
+      "wirkstoff": "Paroxetin",
+      "synonyms": ["Seroxat", "Tagonis"],
+      "atc": "N06AB05",
+      "group": "ssri",
+      "indikationen": ["Depression", "Angststörung", "PTBS"],
+      "extra": [
+        {
+          "level": "info",
+          "text": "Starker CYP2D6-Hemmer; abruptes Absetzen → Entzugssyndrom."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "escitalopram",
+      "wirkstoff": "Escitalopram",
+      "synonyms": ["Cipralex"],
+      "atc": "N06AB10",
+      "group": "ssri",
+      "indikationen": ["Depression", "Angststörung"],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Dosisabhängige QT-Verlängerung."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "fluvoxamin",
+      "wirkstoff": "Fluvoxamin",
+      "synonyms": ["Fevarin"],
+      "atc": "N06AB08",
+      "group": "ssri",
+      "indikationen": ["Depression", "Zwangsstörung"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "oxazepam",
+      "wirkstoff": "Oxazepam",
+      "synonyms": ["Adumbran", "Praxiten"],
+      "atc": "N05BA04",
+      "group": "benzodiazepin",
+      "indikationen": ["Angst", "Alkoholentzug"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "alprazolam",
+      "wirkstoff": "Alprazolam",
+      "synonyms": ["Tafil", "Xanax"],
+      "atc": "N05BA12",
+      "group": "benzodiazepin",
+      "indikationen": ["Angststörung", "Panikstörung"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "bromazepam",
+      "wirkstoff": "Bromazepam",
+      "synonyms": ["Lexotanil", "Normoc"],
+      "atc": "N05BA08",
+      "group": "benzodiazepin",
+      "indikationen": ["Angst", "Spannungszustände"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "clonazepam",
+      "wirkstoff": "Clonazepam",
+      "synonyms": ["Rivotril"],
+      "atc": "N03AE01",
+      "group": "benzodiazepin",
+      "indikationen": ["Epilepsie", "Panikstörung"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "midazolam",
+      "wirkstoff": "Midazolam",
+      "synonyms": ["Dormicum"],
+      "atc": "N05CD08",
+      "group": "benzodiazepin",
+      "indikationen": ["Sedierung/Narkoseeinleitung", "Status epilepticus"],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Rasch wirksam; Atemdepression bei Kombination mit Opioiden."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "tilidin",
+      "wirkstoff": "Tilidin/Naloxon",
+      "synonyms": ["Valoron N"],
+      "atc": "N02AX01",
+      "group": "opioid",
+      "indikationen": ["mäßige bis starke Schmerzen"],
+      "extra": [
+        {
+          "level": "info",
+          "text": "Naloxon-Zusatz verhindert bei oraler Gabe Missbrauch; bei Leberinsuffizienz unwirksam."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "codein",
+      "wirkstoff": "Codein",
+      "synonyms": ["Codipront", "Optipect"],
+      "atc": "N02AA59",
+      "group": "opioid",
+      "indikationen": ["Husten", "mäßige Schmerzen"],
+      "extra": [
+        {
+          "level": "info",
+          "text": "CYP2D6-abhängige Aktivierung zu Morphin; Ultraschnell-Metabolisierer → toxische Morphinkonzentration."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "buprenorphin",
+      "wirkstoff": "Buprenorphin",
+      "synonyms": ["Subutex", "Temgesic", "Transtec"],
+      "atc": "N02AE01",
+      "group": "opioid",
+      "indikationen": ["starke Schmerzen (transdermal)", "Opioid-Substitution"],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Partieller Agonist; Ceiling-Effekt bei Atemdepression; Naloxon weniger wirksam."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "hydromorphon",
+      "wirkstoff": "Hydromorphon",
+      "synonyms": ["Palladon", "Jurnista"],
+      "atc": "N02AA03",
+      "group": "opioid",
+      "indikationen": ["starke Schmerzen", "Tumorschmerz"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "piritramid",
+      "wirkstoff": "Piritramid",
+      "synonyms": ["Dipidolor"],
+      "atc": "N02AC03",
+      "group": "opioid",
+      "indikationen": ["postoperativer Schmerz", "starke Schmerzen"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "pethidin",
+      "wirkstoff": "Pethidin",
+      "synonyms": ["Dolantin"],
+      "atc": "N02AB02",
+      "group": "opioid",
+      "indikationen": ["starke Schmerzen", "Geburtsschmerz"],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Aktiver Metabolit Norpethidin → Krampfanfälle bei Akkumulation."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "pramipexol",
+      "wirkstoff": "Pramipexol",
+      "synonyms": ["Sifrol", "Mirapexin"],
+      "atc": "N04BC05",
+      "group": "parkinson",
+      "indikationen": ["Morbus Parkinson", "Restless-Legs-Syndrom"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "ropinirol",
+      "wirkstoff": "Ropinirol",
+      "synonyms": ["Requip", "Adartrel"],
+      "atc": "N04BC04",
+      "group": "parkinson",
+      "indikationen": ["Morbus Parkinson", "Restless-Legs-Syndrom"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "rasagilin",
+      "wirkstoff": "Rasagilin",
+      "synonyms": ["Azilect"],
+      "atc": "N04BD02",
+      "group": "parkinson",
+      "indikationen": ["Morbus Parkinson"],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "MAO-B-Hemmer → Serotoninsyndrom-Risiko mit Serotoninergen/Sympathomimetika."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "selegilin",
+      "wirkstoff": "Selegilin",
+      "synonyms": ["Movergan"],
+      "atc": "N04BD01",
+      "group": "parkinson",
+      "indikationen": ["Morbus Parkinson"],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "MAO-B-Hemmer → Serotoninsyndrom-Risiko; Interaktion mit Pethidin kontraindiziert."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "entacapon",
+      "wirkstoff": "Entacapon",
+      "synonyms": ["Comtess"],
+      "atc": "N04BX02",
+      "group": "parkinson",
+      "indikationen": ["Morbus Parkinson (Begleittherapie zu Levodopa)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "amantadin",
+      "wirkstoff": "Amantadin",
+      "synonyms": ["Amantadin AL", "PK-Merz"],
+      "atc": "N04BB01",
+      "group": "parkinson",
+      "indikationen": ["Morbus Parkinson", "akinetische Krise"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "liothyronin",
+      "wirkstoff": "Liothyronin",
+      "synonyms": ["Thybon"],
+      "atc": "H03AA02",
+      "group": "schilddruese",
+      "indikationen": ["Hypothyreose (kurzfristig)", "Myxödemkoma"],
+      "extra": [
+        {
+          "level": "info",
+          "text": "T3 — rascher Wirkeintritt und -verlust; kardiale NW bei Überdosis."
+        }
+      ],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "doxazosin",
+      "wirkstoff": "Doxazosin",
+      "synonyms": ["Cardular", "Diblocin"],
+      "atc": "C02CA04",
+      "group": "alphablocker",
+      "indikationen": ["Hypertonie", "benigne Prostatahyperplasie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "alfuzosin",
+      "wirkstoff": "Alfuzosin",
+      "synonyms": ["Urion", "UroXatral"],
+      "atc": "G04CA01",
+      "group": "alphablocker",
+      "indikationen": ["benigne Prostatahyperplasie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "terazosin",
+      "wirkstoff": "Terazosin",
+      "synonyms": ["Heitrin", "Flotrin"],
+      "atc": "G04CA03",
+      "group": "alphablocker",
+      "indikationen": ["Hypertonie", "benigne Prostatahyperplasie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "naproxen",
+      "wirkstoff": "Naproxen",
+      "synonyms": ["Proxen", "Naproxen AL"],
+      "atc": "M01AE02",
+      "group": "nsar",
+      "indikationen": ["Schmerz", "Entzündung", "Gicht"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "meloxicam",
+      "wirkstoff": "Meloxicam",
+      "synonyms": ["Mobec"],
+      "atc": "M01AC06",
+      "group": "nsar",
+      "indikationen": ["Arthrose", "rheumatoide Arthritis"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "etoricoxib",
+      "wirkstoff": "Etoricoxib",
+      "synonyms": ["Arcoxia"],
+      "atc": "M01AH05",
+      "group": "nsar",
+      "indikationen": ["Arthrose", "Gicht", "rheumatoide Arthritis"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "celecoxib",
+      "wirkstoff": "Celecoxib",
+      "synonyms": ["Celebrex"],
+      "atc": "M01AH01",
+      "group": "nsar",
+      "indikationen": ["Arthrose", "rheumatoide Arthritis"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "azithromycin",
+      "wirkstoff": "Azithromycin",
+      "synonyms": ["Zithromax"],
+      "atc": "J01FA10",
+      "group": "makrolid",
+      "indikationen": ["Atemwegsinfekte", "atypische Pneumonie", "Chlamydien"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "erythromycin",
+      "wirkstoff": "Erythromycin",
+      "synonyms": ["Erythrocin", "Paediathrocin"],
+      "atc": "J01FA01",
+      "group": "makrolid",
+      "indikationen": ["Atemwegsinfekte", "Penicillin-Allergie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "roxithromycin",
+      "wirkstoff": "Roxithromycin",
+      "synonyms": ["Rulid"],
+      "atc": "J01FA06",
+      "group": "makrolid",
+      "indikationen": ["Atemwegsinfekte", "HNO-Infekte"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "enoxaparin",
+      "wirkstoff": "Enoxaparin",
+      "synonyms": ["Clexane"],
+      "atc": "B01AB05",
+      "group": "lmwh",
+      "indikationen": ["VTE-Prophylaxe", "VTE-Therapie", "ACS-Begleittherapie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "dalteparin",
+      "wirkstoff": "Dalteparin",
+      "synonyms": ["Fragmin"],
+      "atc": "B01AB04",
+      "group": "lmwh",
+      "indikationen": ["VTE-Prophylaxe", "VTE-Therapie", "ACS-Begleittherapie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "tinzaparin",
+      "wirkstoff": "Tinzaparin",
+      "synonyms": ["Innohep"],
+      "atc": "B01AB10",
+      "group": "lmwh",
+      "indikationen": ["VTE-Prophylaxe", "VTE-Therapie", "ACS-Begleittherapie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "nadroparin",
+      "wirkstoff": "Nadroparin",
+      "synonyms": ["Fraxiparin"],
+      "atc": "B01AB06",
+      "group": "lmwh",
+      "indikationen": ["VTE-Prophylaxe", "VTE-Therapie", "ACS-Begleittherapie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "certoparin",
+      "wirkstoff": "Certoparin",
+      "synonyms": ["Mono-Embolex"],
+      "atc": "B01AB13",
+      "group": "lmwh",
+      "indikationen": ["VTE-Prophylaxe", "VTE-Therapie", "ACS-Begleittherapie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "heparin_natrium",
+      "wirkstoff": "Heparin-Natrium",
+      "synonyms": ["Liquemin", "Heparin-Rotexmedica"],
+      "atc": "B01AB01",
+      "group": "heparin_unfrakt",
+      "indikationen": ["akute VTE", "ACS", "extrakorporale Zirkulation"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "sitagliptin",
+      "wirkstoff": "Sitagliptin",
+      "synonyms": ["Januvia", "Xelevia"],
+      "atc": "A10BH01",
+      "group": "dpp4",
+      "indikationen": ["Diabetes mellitus Typ 2"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "saxagliptin",
+      "wirkstoff": "Saxagliptin",
+      "synonyms": ["Onglyza"],
+      "atc": "A10BH03",
+      "group": "dpp4",
+      "indikationen": ["Diabetes mellitus Typ 2"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "linagliptin",
+      "wirkstoff": "Linagliptin",
+      "synonyms": ["Trajenta"],
+      "atc": "A10BH05",
+      "group": "dpp4",
+      "indikationen": ["Diabetes mellitus Typ 2"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "vildagliptin",
+      "wirkstoff": "Vildagliptin",
+      "synonyms": ["Galvus"],
+      "atc": "A10BH02",
+      "group": "dpp4",
+      "indikationen": ["Diabetes mellitus Typ 2"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "liraglutid",
+      "wirkstoff": "Liraglutid",
+      "synonyms": ["Victoza", "Saxenda"],
+      "atc": "A10BJ02",
+      "group": "glp1_ra",
+      "indikationen": ["Diabetes mellitus Typ 2", "Adipositas (z.T.)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "dulaglutid",
+      "wirkstoff": "Dulaglutid",
+      "synonyms": ["Trulicity"],
+      "atc": "A10BJ05",
+      "group": "glp1_ra",
+      "indikationen": ["Diabetes mellitus Typ 2", "Adipositas (z.T.)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "semaglutid",
+      "wirkstoff": "Semaglutid",
+      "synonyms": ["Ozempic", "Rybelsus", "Wegovy"],
+      "atc": "A10BJ06",
+      "group": "glp1_ra",
+      "indikationen": ["Diabetes mellitus Typ 2", "Adipositas (z.T.)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "exenatid",
+      "wirkstoff": "Exenatid",
+      "synonyms": ["Byetta", "Bydureon"],
+      "atc": "A10BJ01",
+      "group": "glp1_ra",
+      "indikationen": ["Diabetes mellitus Typ 2", "Adipositas (z.T.)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "lixisenatid",
+      "wirkstoff": "Lixisenatid",
+      "synonyms": ["Lyxumia"],
+      "atc": "A10BJ03",
+      "group": "glp1_ra",
+      "indikationen": ["Diabetes mellitus Typ 2", "Adipositas (z.T.)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "venlafaxin",
+      "wirkstoff": "Venlafaxin",
+      "synonyms": ["Trevilor"],
+      "atc": "N06AX16",
+      "group": "snri",
+      "indikationen": ["Depression", "Angststörung", "neuropathischer Schmerz (Duloxetin)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "duloxetin",
+      "wirkstoff": "Duloxetin",
+      "synonyms": ["Cymbalta", "Ariclaim"],
+      "atc": "N06AX21",
+      "group": "snri",
+      "indikationen": ["Depression", "Angststörung", "neuropathischer Schmerz (Duloxetin)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "desvenlafaxin",
+      "wirkstoff": "Desvenlafaxin",
+      "synonyms": ["Pristiq"],
+      "atc": "N06AX23",
+      "group": "snri",
+      "indikationen": ["Depression", "Angststörung"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "mirtazapin",
+      "wirkstoff": "Mirtazapin",
+      "synonyms": ["Remergil", "Mirtazelon"],
+      "atc": "N06AX11",
+      "group": "mirtazapin",
+      "indikationen": ["Depression", "Schlafstörung (Off-Label)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "amitriptylin",
+      "wirkstoff": "Amitriptylin",
+      "synonyms": ["Saroten", "Equilibrin"],
+      "atc": "N06AA09",
+      "group": "trizyklisch",
+      "indikationen": ["Depression", "chronischer Schmerz", "Schlafstörung (niedrig dosiert)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "doxepin",
+      "wirkstoff": "Doxepin",
+      "synonyms": ["Aponal", "Sinquan"],
+      "atc": "N06AA12",
+      "group": "trizyklisch",
+      "indikationen": ["Depression", "chronischer Schmerz", "Schlafstörung (niedrig dosiert)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "clomipramin",
+      "wirkstoff": "Clomipramin",
+      "synonyms": ["Anafranil"],
+      "atc": "N06AA04",
+      "group": "trizyklisch",
+      "indikationen": ["Depression", "chronischer Schmerz", "Schlafstörung (niedrig dosiert)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "nortriptylin",
+      "wirkstoff": "Nortriptylin",
+      "synonyms": ["Nortrilen"],
+      "atc": "N06AA10",
+      "group": "trizyklisch",
+      "indikationen": ["Depression", "chronischer Schmerz", "Schlafstörung (niedrig dosiert)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "trimipramin",
+      "wirkstoff": "Trimipramin",
+      "synonyms": ["Stangyl"],
+      "atc": "N06AA06",
+      "group": "trizyklisch",
+      "indikationen": ["Depression", "chronischer Schmerz", "Schlafstörung (niedrig dosiert)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "opipramol",
+      "wirkstoff": "Opipramol",
+      "synonyms": ["Insidon"],
+      "atc": "N06AA05",
+      "group": "trizyklisch",
+      "indikationen": ["Depression", "chronischer Schmerz", "Schlafstörung (niedrig dosiert)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "imipramin",
+      "wirkstoff": "Imipramin",
+      "synonyms": ["Tofranil"],
+      "atc": "N06AA02",
+      "group": "trizyklisch",
+      "indikationen": ["Depression", "chronischer Schmerz", "Schlafstörung (niedrig dosiert)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "zolpidem",
+      "wirkstoff": "Zolpidem",
+      "synonyms": ["Stilnox", "Bikalm"],
+      "atc": "N05CF02",
+      "group": "z_substanz",
+      "indikationen": ["Schlafstörung"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "zopiclon",
+      "wirkstoff": "Zopiclon",
+      "synonyms": ["Ximovan"],
+      "atc": "N05CF01",
+      "group": "z_substanz",
+      "indikationen": ["Schlafstörung"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "zaleplon",
+      "wirkstoff": "Zaleplon",
+      "synonyms": ["Sonata"],
+      "atc": "N05CF03",
+      "group": "z_substanz",
+      "indikationen": ["Schlafstörung"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "budesonid_ics",
+      "wirkstoff": "Budesonid",
+      "synonyms": ["Pulmicort", "Budiair"],
+      "atc": "R03BA02",
+      "group": "ics",
+      "indikationen": ["Asthma bronchiale", "COPD (Add-on)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "fluticason",
+      "wirkstoff": "Fluticason",
+      "synonyms": ["Flutide", "Atemur"],
+      "atc": "R03BA05",
+      "group": "ics",
+      "indikationen": ["Asthma bronchiale", "COPD (Add-on)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "beclometason",
+      "wirkstoff": "Beclometason",
+      "synonyms": ["Junik", "Sanasthmax"],
+      "atc": "R03BA01",
+      "group": "ics",
+      "indikationen": ["Asthma bronchiale", "COPD (Add-on)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "mometason_ics",
+      "wirkstoff": "Mometason",
+      "synonyms": ["Asmanex"],
+      "atc": "R03BA07",
+      "group": "ics",
+      "indikationen": ["Asthma bronchiale", "COPD (Add-on)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "ciclesonid",
+      "wirkstoff": "Ciclesonid",
+      "synonyms": ["Alvesco"],
+      "atc": "R03BA08",
+      "group": "ics",
+      "indikationen": ["Asthma bronchiale", "COPD (Add-on)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "tiotropium",
+      "wirkstoff": "Tiotropium",
+      "synonyms": ["Spiriva"],
+      "atc": "R03BB04",
+      "group": "lama",
+      "indikationen": ["COPD", "Asthma (Add-on)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "ipratropium",
+      "wirkstoff": "Ipratropium",
+      "synonyms": ["Atrovent"],
+      "atc": "R03BB01",
+      "group": "lama",
+      "indikationen": ["COPD", "Asthma (Add-on)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "aclidinium",
+      "wirkstoff": "Aclidinium",
+      "synonyms": ["Bretaris", "Eklira"],
+      "atc": "R03BB05",
+      "group": "lama",
+      "indikationen": ["COPD", "Asthma (Add-on)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "glycopyrronium",
+      "wirkstoff": "Glycopyrronium",
+      "synonyms": ["Seebri"],
+      "atc": "R03BB06",
+      "group": "lama",
+      "indikationen": ["COPD", "Asthma (Add-on)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "umeclidinium",
+      "wirkstoff": "Umeclidinium",
+      "synonyms": ["Incruse"],
+      "atc": "R03BB07",
+      "group": "lama",
+      "indikationen": ["COPD", "Asthma (Add-on)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "sumatriptan",
+      "wirkstoff": "Sumatriptan",
+      "synonyms": ["Imigran"],
+      "atc": "N02CC01",
+      "group": "triptan",
+      "indikationen": ["akute Migräne-Attacke", "Cluster-Kopfschmerz (z.T.)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "zolmitriptan",
+      "wirkstoff": "Zolmitriptan",
+      "synonyms": ["AscoTop"],
+      "atc": "N02CC03",
+      "group": "triptan",
+      "indikationen": ["akute Migräne-Attacke", "Cluster-Kopfschmerz (z.T.)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "almotriptan",
+      "wirkstoff": "Almotriptan",
+      "synonyms": ["Almogran"],
+      "atc": "N02CC05",
+      "group": "triptan",
+      "indikationen": ["akute Migräne-Attacke", "Cluster-Kopfschmerz (z.T.)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "rizatriptan",
+      "wirkstoff": "Rizatriptan",
+      "synonyms": ["Maxalt"],
+      "atc": "N02CC04",
+      "group": "triptan",
+      "indikationen": ["akute Migräne-Attacke", "Cluster-Kopfschmerz (z.T.)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "frovatriptan",
+      "wirkstoff": "Frovatriptan",
+      "synonyms": ["Allegro"],
+      "atc": "N02CC07",
+      "group": "triptan",
+      "indikationen": ["akute Migräne-Attacke", "Cluster-Kopfschmerz (z.T.)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "eletriptan",
+      "wirkstoff": "Eletriptan",
+      "synonyms": ["Relpax"],
+      "atc": "N02CC06",
+      "group": "triptan",
+      "indikationen": ["akute Migräne-Attacke", "Cluster-Kopfschmerz (z.T.)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "naratriptan",
+      "wirkstoff": "Naratriptan",
+      "synonyms": ["Naramig"],
+      "atc": "N02CC02",
+      "group": "triptan",
+      "indikationen": ["akute Migräne-Attacke", "Cluster-Kopfschmerz (z.T.)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "paracetamol",
+      "wirkstoff": "Paracetamol",
+      "synonyms": ["ben-u-ron", "Perfalgan"],
+      "atc": "N02BE01",
+      "group": "nonopioid_analget",
+      "indikationen": ["leichter bis mäßiger Schmerz", "Fieber"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "metamizol",
+      "wirkstoff": "Metamizol",
+      "synonyms": ["Novalgin", "Berlosin"],
+      "atc": "N02BB02",
+      "group": "nonopioid_analget",
+      "indikationen": ["mäßiger bis starker Schmerz", "Kolikschmerz", "Fieber"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "phenazon",
+      "wirkstoff": "Phenazon",
+      "synonyms": ["Migräne-Kranit"],
+      "atc": "N02BB01",
+      "group": "nonopioid_analget",
+      "indikationen": ["leichter bis mäßiger Schmerz", "Fieber"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "amoxicillin",
+      "wirkstoff": "Amoxicillin",
+      "synonyms": ["Amoxypen", "Infectomox"],
+      "atc": "J01CA04",
+      "group": "penicillin",
+      "indikationen": ["bakterielle Infektionen (Atemwege, HNO, Haut, Harnwege)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "amoxicillin_clavulansaeure",
+      "wirkstoff": "Amoxicillin/Clavulansäure",
+      "synonyms": ["Augmentan", "Amoxiclav"],
+      "atc": "J01CR02",
+      "group": "penicillin",
+      "indikationen": ["bakterielle Infektionen (Atemwege, HNO, Haut, Harnwege)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "penicillin_v",
+      "wirkstoff": "Penicillin V",
+      "synonyms": ["Isocillin", "Penbeta"],
+      "atc": "J01CE02",
+      "group": "penicillin",
+      "indikationen": ["bakterielle Infektionen (Atemwege, HNO, Haut, Harnwege)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "piperacillin_tazobactam",
+      "wirkstoff": "Piperacillin/Tazobactam",
+      "synonyms": ["Tazobac"],
+      "atc": "J01CR05",
+      "group": "penicillin",
+      "indikationen": ["bakterielle Infektionen (Atemwege, HNO, Haut, Harnwege)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "ampicillin_sulbactam",
+      "wirkstoff": "Ampicillin/Sulbactam",
+      "synonyms": ["Unacid"],
+      "atc": "J01CR01",
+      "group": "penicillin",
+      "indikationen": ["bakterielle Infektionen (Atemwege, HNO, Haut, Harnwege)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "cefuroxim",
+      "wirkstoff": "Cefuroxim",
+      "synonyms": ["Zinnat", "Elobact"],
+      "atc": "J01DC02",
+      "group": "cephalosporin",
+      "indikationen": ["bakterielle Infektionen", "perioperative Prophylaxe"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "cefaclor",
+      "wirkstoff": "Cefaclor",
+      "synonyms": ["Panoral"],
+      "atc": "J01DC04",
+      "group": "cephalosporin",
+      "indikationen": ["bakterielle Infektionen", "perioperative Prophylaxe"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "ceftriaxon",
+      "wirkstoff": "Ceftriaxon",
+      "synonyms": ["Rocephin"],
+      "atc": "J01DD04",
+      "group": "cephalosporin",
+      "indikationen": ["bakterielle Infektionen", "perioperative Prophylaxe"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "cefotaxim",
+      "wirkstoff": "Cefotaxim",
+      "synonyms": ["Claforan"],
+      "atc": "J01DD01",
+      "group": "cephalosporin",
+      "indikationen": ["bakterielle Infektionen", "perioperative Prophylaxe"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "cefpodoxim",
+      "wirkstoff": "Cefpodoxim",
+      "synonyms": ["Orelox", "Podomexef"],
+      "atc": "J01DD13",
+      "group": "cephalosporin",
+      "indikationen": ["bakterielle Infektionen", "perioperative Prophylaxe"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "cefazolin",
+      "wirkstoff": "Cefazolin",
+      "synonyms": ["Cefazolin Hikma"],
+      "atc": "J01DB04",
+      "group": "cephalosporin",
+      "indikationen": ["bakterielle Infektionen", "perioperative Prophylaxe"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "cefiderocol",
+      "wirkstoff": "Cefiderocol",
+      "synonyms": ["Fetcroja"],
+      "atc": "J01DI04",
+      "group": "cephalosporin",
+      "indikationen": ["bakterielle Infektionen", "perioperative Prophylaxe"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "ciprofloxacin",
+      "wirkstoff": "Ciprofloxacin",
+      "synonyms": ["Ciprobay"],
+      "atc": "J01MA02",
+      "group": "fluorchinolon",
+      "indikationen": ["komplizierte Harnwegsinfektion", "Atemwegsinfektion", "bakterielle Gastroenteritis"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "levofloxacin",
+      "wirkstoff": "Levofloxacin",
+      "synonyms": ["Tavanic"],
+      "atc": "J01MA12",
+      "group": "fluorchinolon",
+      "indikationen": ["komplizierte Harnwegsinfektion", "Atemwegsinfektion", "bakterielle Gastroenteritis"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "moxifloxacin",
+      "wirkstoff": "Moxifloxacin",
+      "synonyms": ["Avalox"],
+      "atc": "J01MA14",
+      "group": "fluorchinolon",
+      "indikationen": ["komplizierte Harnwegsinfektion", "Atemwegsinfektion", "bakterielle Gastroenteritis"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "ofloxacin",
+      "wirkstoff": "Ofloxacin",
+      "synonyms": ["Tarivid"],
+      "atc": "J01MA01",
+      "group": "fluorchinolon",
+      "indikationen": ["komplizierte Harnwegsinfektion", "Atemwegsinfektion", "bakterielle Gastroenteritis"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "norfloxacin",
+      "wirkstoff": "Norfloxacin",
+      "synonyms": ["Barazan"],
+      "atc": "J01MA06",
+      "group": "fluorchinolon",
+      "indikationen": ["komplizierte Harnwegsinfektion", "Atemwegsinfektion", "bakterielle Gastroenteritis"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "doxycyclin",
+      "wirkstoff": "Doxycyclin",
+      "synonyms": ["Vibravenös", "Doxakne"],
+      "atc": "J01AA02",
+      "group": "tetracyclin",
+      "indikationen": ["Atemwegsinfektion", "Akne", "Lyme-Borreliose"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "minocyclin",
+      "wirkstoff": "Minocyclin",
+      "synonyms": ["Klinomycin"],
+      "atc": "J01AA08",
+      "group": "tetracyclin",
+      "indikationen": ["Atemwegsinfektion", "Akne", "Lyme-Borreliose"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "tetracyclin",
+      "wirkstoff": "Tetracyclin",
+      "synonyms": ["Tetracyclin Wolff"],
+      "atc": "J01AA07",
+      "group": "tetracyclin",
+      "indikationen": ["Atemwegsinfektion", "Akne", "Lyme-Borreliose"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "tigecyclin",
+      "wirkstoff": "Tigecyclin",
+      "synonyms": ["Tygacil"],
+      "atc": "J01AA12",
+      "group": "tetracyclin",
+      "indikationen": ["Atemwegsinfektion", "Akne", "Lyme-Borreliose"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "trimethoprim_sulfamethoxazol",
+      "wirkstoff": "Trimethoprim/Sulfamethoxazol",
+      "synonyms": ["Cotrim-ratiopharm", "Bactrim", "Eusaprim"],
+      "atc": "J01EE01",
+      "group": "sulfonamid",
+      "indikationen": ["unkomplizierte Harnwegsinfektion", "PCP-Prophylaxe (HIV)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "metronidazol",
+      "wirkstoff": "Metronidazol",
+      "synonyms": ["Clont", "Flagyl"],
+      "atc": "J01XD01",
+      "group": "nitroimidazol",
+      "indikationen": ["anaerobe Infektionen", "Trichomoniasis", "Giardiasis", "Helicobacter-Eradikation"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "tinidazol",
+      "wirkstoff": "Tinidazol",
+      "synonyms": ["Fasigyn"],
+      "atc": "J01XD02",
+      "group": "nitroimidazol",
+      "indikationen": ["anaerobe Infektionen", "Trichomoniasis", "Giardiasis", "Helicobacter-Eradikation"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "ornidazol",
+      "wirkstoff": "Ornidazol",
+      "synonyms": ["Tiberal"],
+      "atc": "J01XD03",
+      "group": "nitroimidazol",
+      "indikationen": ["anaerobe Infektionen", "Trichomoniasis", "Giardiasis", "Helicobacter-Eradikation"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "fluconazol",
+      "wirkstoff": "Fluconazol",
+      "synonyms": ["Diflucan", "Fungata"],
+      "atc": "J02AC01",
+      "group": "azol_antimykot",
+      "indikationen": ["Candidose", "invasive Mykose", "Aspergillose"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "itraconazol",
+      "wirkstoff": "Itraconazol",
+      "synonyms": ["Sempera", "Siros"],
+      "atc": "J02AC02",
+      "group": "azol_antimykot",
+      "indikationen": ["Candidose", "invasive Mykose", "Aspergillose"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "voriconazol",
+      "wirkstoff": "Voriconazol",
+      "synonyms": ["Vfend"],
+      "atc": "J02AC03",
+      "group": "azol_antimykot",
+      "indikationen": ["Candidose", "invasive Mykose", "Aspergillose"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "posaconazol",
+      "wirkstoff": "Posaconazol",
+      "synonyms": ["Noxafil"],
+      "atc": "J02AC04",
+      "group": "azol_antimykot",
+      "indikationen": ["Candidose", "invasive Mykose", "Aspergillose"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "cetirizin",
+      "wirkstoff": "Cetirizin",
+      "synonyms": ["Zyrtec", "Reactine"],
+      "atc": "R06AE07",
+      "group": "h1_antihist2",
+      "indikationen": ["allergische Rhinitis", "Urtikaria"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "levocetirizin",
+      "wirkstoff": "Levocetirizin",
+      "synonyms": ["Xusal"],
+      "atc": "R06AE09",
+      "group": "h1_antihist2",
+      "indikationen": ["allergische Rhinitis", "Urtikaria"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "loratadin",
+      "wirkstoff": "Loratadin",
+      "synonyms": ["Lisino"],
+      "atc": "R06AX13",
+      "group": "h1_antihist2",
+      "indikationen": ["allergische Rhinitis", "Urtikaria"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "desloratadin",
+      "wirkstoff": "Desloratadin",
+      "synonyms": ["Aerius"],
+      "atc": "R06AX27",
+      "group": "h1_antihist2",
+      "indikationen": ["allergische Rhinitis", "Urtikaria"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "fexofenadin",
+      "wirkstoff": "Fexofenadin",
+      "synonyms": ["Telfast"],
+      "atc": "R06AX26",
+      "group": "h1_antihist2",
+      "indikationen": ["allergische Rhinitis", "Urtikaria"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "bilastin",
+      "wirkstoff": "Bilastin",
+      "synonyms": ["Bitosen"],
+      "atc": "R06AX29",
+      "group": "h1_antihist2",
+      "indikationen": ["allergische Rhinitis", "Urtikaria"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "finasterid",
+      "wirkstoff": "Finasterid",
+      "synonyms": ["Proscar", "Propecia"],
+      "atc": "G04CB01",
+      "group": "5alpha_reduktase",
+      "indikationen": ["benigne Prostatahyperplasie", "androgenetische Alopezie (Finasterid niedrigdosiert)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "dutasterid",
+      "wirkstoff": "Dutasterid",
+      "synonyms": ["Avodart"],
+      "atc": "G04CB02",
+      "group": "5alpha_reduktase",
+      "indikationen": ["benigne Prostatahyperplasie", "androgenetische Alopezie (Finasterid niedrigdosiert)"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "magnesium",
+      "wirkstoff": "Magnesium",
+      "synonyms": ["Magnesium Verla", "Magnetrans", "Magnesium Inresa"],
+      "atc": "A12CC",
+      "group": "mineralstoff",
+      "indikationen": ["Hypomagnesiämie", "Eklampsie", "Torsade-de-Pointes-Tachykardie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "kaliumchlorid",
+      "wirkstoff": "Kaliumchlorid",
+      "synonyms": ["KCl Braun", "Kalinor"],
+      "atc": "A12BA01",
+      "group": "mineralstoff",
+      "indikationen": ["Hypokaliämie", "kardiale Arrhythmie-Prophylaxe"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "calciumgluconat",
+      "wirkstoff": "Calciumgluconat",
+      "synonyms": ["Calcium Sandoz", "Calciumgluconat-B.Braun"],
+      "atc": "A12AA03",
+      "group": "mineralstoff",
+      "indikationen": ["Hypokalziämie", "Hyperkaliämie (Membranstabilisierung)", "Antagonist bei Ca-Antagonisten-Intox"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "phytomenadion",
+      "wirkstoff": "Phytomenadion",
+      "synonyms": ["Konakion"],
+      "atc": "B02BA01",
+      "group": "vitamin_k",
+      "indikationen": ["VKA-Überdosierung", "Vitamin-K-Mangel-Koagulopathie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "ppsb",
+      "wirkstoff": "PPSB",
+      "synonyms": ["Beriplex P/N", "Octaplex"],
+      "atc": "B02BD10",
+      "group": "gerinnungsfaktor",
+      "indikationen": ["VKA-bedingte Blutung", "schwere Koagulopathie"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "idarucizumab",
+      "wirkstoff": "Idarucizumab",
+      "synonyms": ["Praxbind"],
+      "atc": "V03AB37",
+      "group": "gerinnungsfaktor",
+      "indikationen": ["lebensbedrohliche Blutung unter Dabigatran"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    },
+    {
+      "id": "andexanet_alfa",
+      "wirkstoff": "Andexanet alfa",
+      "synonyms": ["Ondexxya"],
+      "atc": "V03AB38",
+      "group": "gerinnungsfaktor",
+      "indikationen": ["lebensbedrohliche Blutung unter Apixaban/Rivaroxaban"],
+      "extra": [],
+      "quelle": "Top250-Erweiterung",
+      "stand": "2026-06-02"
+    }
+  ]
+}

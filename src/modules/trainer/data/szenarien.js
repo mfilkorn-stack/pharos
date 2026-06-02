@@ -1,0 +1,105 @@
+// Szenarien für den Übergabe-Trainer
+// Spätere Integration: Auf SAA/BPR 2025 NRW oder DBRD-Algorithmen rückkoppeln
+
+export const SZENARIEN = [
+  {
+    id: 'intern-1',
+    title: 'Akute Dyspnoe',
+    category: 'Internistisch',
+    glyph: '◐',
+    accent: '#4ECDC4',
+    einsatzort: 'Privatwohnung, 3. OG ohne Aufzug',
+    transport: 'ZNA Klinikum Köln-Merheim',
+    patient: 'Frau M., 78 J., weiblich',
+    situation: 'Notruf wegen akuter Atemnot seit ca. 2 h, deutlich zunehmend.',
+    anamnese:
+      'Bekannt: arterielle Hypertonie, paroxysmales Vorhofflimmern, Z.n. Herzinfarkt 2019. Medikation: Marcumar, Bisoprolol, Ramipril, Torasemid. Allergien: keine bekannt. Letzte Mahlzeit: Mittagessen 13:00 Uhr. Sozial: lebt mit Ehemann, Patientenverfügung vorhanden.',
+    befund: {
+      A: 'frei',
+      B: 'AF 32/min, feuchte RGs beidseits basal, Orthopnoe, SpO₂ 84 % RL',
+      C: 'RR 185/105, HF 128 arrhythmisch (TAA bei VHF), Rekap > 3 s, Beinödeme bds.',
+      D: 'GCS 15, wach, ängstlich, voll orientiert, BZ 142 mg/dl',
+      E: 'Temp 36,8 °C, kaltschweißig, periphere Zyanose, gestaute Halsvenen',
+    },
+    verdacht: 'Akute Linksherzdekompensation mit Lungenödem',
+    massnahmen: [
+      'O₂ 15 l/min Reservoirmaske → SpO₂-Anstieg auf 92 %',
+      'Oberkörperhochlagerung 90°',
+      'CPAP/NIV mit PEEP 7,5 mbar',
+      '2 × Glyceroltrinitrat 0,8 mg s.l.',
+      'Furosemid 40 mg i.v.',
+      'Großlumiger periphervenöser Zugang li. ACF',
+    ],
+    bewusstUnterlassen: 'Keine Morphingabe (Marcumar, Hypotonierisiko bei NIV+Nitro).',
+    verlauf: 'Unter Therapie SpO₂ auf 94 %, RR aktuell 155/90, HF 110, Dyspnoe deutlich gebessert.',
+    modelHandover: 'Start. — Ich übergebe: Frau M., 78 Jahre, weiblich. — Notfallereignis: Akute Dyspnoe seit zwei Stunden, deutlich zunehmend. Ursache: bekannte Herzinsuffizienz, Verdacht auf akute Linksherzdekompensation. — Notfallpriorität: A frei. B: Atemfrequenz 32, SpO2 84 Prozent unter Raumluft, feuchte Rasselgeräusche basal beidseits, Orthopnoe. C: Blutdruck 185 zu 105, Herzfrequenz 128 arrhythmisch, tachyarrhythmia absoluta bei Vorhofflimmern, Rekapillarisierungszeit über 3 Sekunden, Beinödeme beidseits. D: GCS 15, wach, ängstlich, voll orientiert, Blutzucker 142. E: kaltschweißig, periphere Zyanose, gestaute Halsvenen. — Handlung: Sauerstoff 15 Liter Reservoirmaske, SpO2-Anstieg auf 92 Prozent. Oberkörperhochlagerung 90 Grad. CPAP NIV mit PEEP 7,5 Millibar. Glyceroltrinitrat 2-mal 0,8 Milligramm sublingual. Furosemid 40 Milligramm intravenös. Großlumiger Zugang linke Ellenbeuge. Kein Morphin — bewusst unterlassen: Marcumar-Patientin, Hypotonierisiko unter NIV und Nitraten. — Anamnese: Bekannte arterielle Hypertonie, paroxysmales Vorhofflimmern, Zustand nach Myokardinfarkt 2019. Dauermedikation: Marcumar, Bisoprolol, Ramipril, Torasemid. Keine Allergien bekannt. Letzte Mahlzeit heute Mittag 13 Uhr. Patientenverfügung vorhanden, Ehemann ist anwesend.',
+  },
+  {
+    id: 'trauma-1',
+    title: 'Motorradunfall',
+    category: 'Trauma',
+    glyph: '◉',
+    accent: '#E76F51',
+    einsatzort: 'B59 außerorts, Kreuzung',
+    transport: 'Schockraum Uniklinik Köln',
+    patient: 'Herr K., 24 J., männlich',
+    situation:
+      'Motorrad gegen abbiegenden PKW. Aufprallgeschwindigkeit ca. 70 km/h. Patient ca. 8 m weit geschleudert. Helm getragen, Helm intakt. Ereignis vor ca. 35 min.',
+    anamnese:
+      'Keine Vorerkrankungen bekannt, keine Dauermedikation, keine Allergien. Sozial: alleinlebend, Eltern informiert.',
+    befund: {
+      A: 'frei, HWS-Immobilisation',
+      B: 'AF 26/min, abgeschwächtes AG re., paradoxe Atembewegung re. Thorax, SpO₂ 93 % RL',
+      C: 'RR 92/58, HF 132, Rekap 4 s, Beckenkompressionsschmerz +, offene Femurfraktur re. mit starker Blutung',
+      D: 'GCS 14 (V4), Pupillen iso/mittelweit/prompt, BZ 118 mg/dl, leichte zeitliche Desorientierung',
+      E: 'Temp 35,9 °C, blass, kalt-schweißig, pFAST: freie Flüssigkeit perihepatisch',
+    },
+    verdacht:
+      'Polytrauma: Thoraxtrauma re. (V.a. Rippenserienfraktur, Hämato-/Pneumothorax), Beckenfraktur, offene Femurfraktur re., V.a. SHT',
+    massnahmen: [
+      'O₂ 15 l/min Reservoirmaske',
+      'Beckenschlinge (T-POD) angelegt',
+      'Vakuummatratze, HWS-Immobilisation',
+      '2 × großlumige periphervenöse Zugänge',
+      'Tranexamsäure 1 g i.v.',
+      'Esketamin 25 mg i.v., bedarfsadaptiert nachtitriert',
+      'Druckverband Oberschenkel re.',
+      '500 ml Vollelektrolyt → RR-Anstieg auf 98/62',
+    ],
+    bewusstUnterlassen: 'Keine prophylaktische Thoraxdrainage (kein Spannungspneu, kurze Anfahrt Schockraum).',
+    verlauf: 'Schockraum voravisiert, ETA 8 min. Kreislauf grenzwertig stabil, RR aktuell 98/62, HF 124.',
+    modelHandover: 'Start. — Ich übergebe: Herr K., 24 Jahre, männlich. — Notfallereignis: Motorradunfall gegen abbiegenden PKW auf der Bundesstraße 59. Aufprallgeschwindigkeit circa 70 Stundenkilometer. Patient wurde circa 8 Meter weit geschleudert. Helm getragen, Helm intakt. Ereignis vor 35 Minuten. — Notfallpriorität: A frei, HWS-Immobilisation. B: Atemfrequenz 26, abgeschwächtes Atemgeräusch rechts, paradoxe Atembewegung rechter Thorax, SpO2 93 Prozent unter Raumluft. C: Blutdruck 92 zu 58, Herzfrequenz 132, Rekapillarisierungszeit 4 Sekunden, Beckenkompressionsschmerz positiv, offene Femurfraktur rechts mit starker Blutung, im pFAST freie Flüssigkeit perihepatisch. D: GCS 14, Verbal 4, Pupillen isokor mittelweit und prompte Reaktion, Blutzucker 118, leichte zeitliche Desorientierung. E: Temperatur 35,9, blass, kaltschweißig. — Handlung: Sauerstoff 15 Liter Reservoirmaske. Beckenschlinge T-POD angelegt. Vakuummatratze mit HWS-Immobilisation. Zwei großlumige Venenzugänge. Tranexamsäure 1 Gramm intravenös. Esketamin 25 Milligramm intravenös, bedarfsadaptiert nachtitriert. Druckverband Oberschenkel rechts. 500 Milliliter Vollelektrolyt, Blutdruck-Anstieg auf 98 zu 62. Keine prophylaktische Thoraxdrainage — bewusst unterlassen: kein Spannungspneumothorax, kurze Anfahrt zum Schockraum, ETA 8 Minuten. — Anamnese: Keine Vorerkrankungen bekannt, keine Dauermedikation, keine Allergien. Sozialanamnese: alleinlebend, Eltern sind informiert.',
+  },
+  {
+    id: 'neuro-1',
+    title: 'Verdacht auf Stroke',
+    category: 'Neurologisch',
+    glyph: '◑',
+    accent: '#F4A261',
+    einsatzort: 'Café in der Innenstadt',
+    transport: 'Stroke Unit Klinikum Köln',
+    patient: 'Herr W., 67 J., männlich',
+    situation:
+      'Symptombeginn durch Ehefrau beobachtet vor 42 min: plötzliche Sprachstörung und Fallneigung nach rechts. Last-seen-well 14:15 Uhr.',
+    anamnese:
+      'Bekannt: Hypertonie, Diabetes mellitus Typ 2, Vorhofflimmern. Medikation: Apixaban 5 mg 1-0-1, Metformin, Ramipril. Allergien: keine. Apixaban heute Morgen eingenommen. Sozial: Ehefrau anwesend, voll geschäftsfähig.',
+    befund: {
+      A: 'frei',
+      B: 'AF 16, unauffällig, SpO₂ 97 %',
+      C: 'RR 198/108, HF 96 arrhythmisch',
+      D: 'GCS 14 (V4), Fazialisparese re., Armvorhalteversuch re. pos., Hemiparese re. KG 2/5, globale Aphasie, FAST-Test 3/3 pos., NIHSS präklinisch ca. 12, BZ 168 mg/dl',
+      E: 'Temp 36,9 °C, warm, rosig',
+    },
+    verdacht: 'Akuter ischämischer Schlaganfall, Mediastromgebiet links, im Lysefenster',
+    massnahmen: [
+      'O₂ bedarfsadaptiert (SpO₂-Ziel > 94 %)',
+      'Großlumiger Zugang li.',
+      'NaCl 500 ml',
+      '12-Kanal-EKG (bestätigt VHF)',
+      'Stroke-Voranmeldung mit Symptombeginn-Uhrzeit',
+    ],
+    bewusstUnterlassen: 'RR bewusst NICHT gesenkt (Grenzwert < 220/120 beim ischämischen Insult).',
+    verlauf: 'Stabil unter Transport, Symptome unverändert. ETA Stroke Unit 6 min, CT angemeldet.',
+    modelHandover: 'Start. — Ich übergebe: Herr W., 67 Jahre, männlich. — Notfallereignis: Plötzlicher Beginn von Sprachstörung und Fallneigung nach rechts. Ereignis durch Ehefrau beobachtet vor 42 Minuten. Last-seen-well heute 14 Uhr 15. — Notfallpriorität: A frei. B: Atemfrequenz 16, SpO2 97 Prozent, unauffällig. C: Blutdruck 198 zu 108, Herzfrequenz 96 arrhythmisch, Vorhofflimmern im EKG bestätigt. D: GCS 14, Verbal 4, Fazialisparese rechts, Armvorhalteversuch rechts positiv, Hemiparese rechts Kraftgrad 2 von 5, globale Aphasie, FAST-Test 3 von 3 positiv, NIHSS präklinisch circa 12, Blutzucker 168. E: Temperatur 36,9, warm und rosig. — Handlung: Sauerstoff bedarfsadaptiert, Ziel SpO2 über 94 Prozent. Großlumiger Venenzugang links. NaCl 500 Milliliter. 12-Kanal-EKG. Stroke-Voranmeldung mit exakter Symptombeginn-Uhrzeit ist erfolgt, CT ist angemeldet. Blutdruck bewusst NICHT gesenkt — unterlassen: beim ischämischen Insult gilt Grenzwert unter 220 zu 120, dieser ist noch nicht erreicht, Senkung wäre kontraindiziert. — Anamnese: Bekannte arterielle Hypertonie, Diabetes mellitus Typ 2, Vorhofflimmern. Dauermedikation: Apixaban 5 Milligramm 1-0-1, Metformin, Ramipril. Keine Allergien. Apixaban heute Morgen eingenommen. Ehefrau ist anwesend, Patient voll geschäftsfähig.',
+  },
+];

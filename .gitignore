@@ -1,0 +1,10 @@
+node_modules
+dist
+.DS_Store
+*.log
+.env
+.env.local
+scripts/input/
+scripts/cache/
+public/tesseract/*.traineddata
+public/data/extras-runtime.json

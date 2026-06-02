@@ -1,0 +1,7 @@
+<MP v="029" U="..." l="de-DE">
+  <P g="Mustermann" v="Max" b="19550101"/>
+  <O n="Praxis Dr. Test"/>
+  <S w="Apixaban" h="Eliquis" d="2x5mg" g="Vorhofflimmern"/>
+  <S w="Metoprolol" h="Beloc-Zok" d="1x47.5mg" g="Hypertonie"/>
+  <S w="Ramipril" d="1x5mg" g="Herzinsuffizienz"/>
+</MP>

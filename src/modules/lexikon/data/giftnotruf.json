@@ -1,0 +1,15 @@
+{
+  "_quelle": "BfR-Verzeichnis der Giftinformationszentren (https://www.bfr.bund.de/cm/343/verzeichnis-der-giftinformationszentren.pdf). Vor produktivem Einsatz erneut abgleichen.",
+  "_stand": "2026-06",
+  "notruf": { "label": "Notruf", "tel": "112", "hinweis": "Bei vitaler Bedrohung immer zuerst 112." },
+  "giz": [
+    { "region": "Berlin / Brandenburg", "ort": "Berlin (Charité)", "tel": "030 19240" },
+    { "region": "Niedersachsen / Bremen / Hamburg / Schleswig-Holstein", "ort": "Göttingen (GIZ-Nord)", "tel": "0551 19240" },
+    { "region": "Nordrhein-Westfalen", "ort": "Bonn", "tel": "0228 19240" },
+    { "region": "Rheinland-Pfalz / Hessen", "ort": "Mainz", "tel": "06131 19240" },
+    { "region": "Baden-Württemberg", "ort": "Freiburg (VIZ)", "tel": "0761 19240" },
+    { "region": "Bayern", "ort": "München", "tel": "089 19240" },
+    { "region": "Saarland", "ort": "Homburg/Saar", "tel": "06841 19240" },
+    { "region": "Thüringen / Sachsen / Sachsen-Anhalt / Mecklenburg-Vorpommern", "ort": "Erfurt (GGIZ)", "tel": "0361 730730" }
+  ]
+}

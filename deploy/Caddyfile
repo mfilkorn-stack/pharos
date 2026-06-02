@@ -1,0 +1,26 @@
+www.pharos.team {
+	encode gzip
+
+	# API → Node-Proxy (Lexikon-KI + Übergabe-Trainer)
+	@api path /ki /enrich /health /uebergabe/*
+	reverse_proxy @api localhost:8787
+
+	# Live-Enrich-Cache direkt aus public/ servieren (umgeht dist/-Staleness:
+	# der Proxy schreibt KI-Anreicherungen nach public/data/extras-runtime.json)
+	handle /data/extras-runtime.json {
+		root * /opt/pharos/public
+		file_server
+	}
+
+	# Statische PWA + SPA-Fallback
+	handle {
+		root * /opt/pharos/dist
+		try_files {path} /index.html
+		file_server
+	}
+}
+
+# Apex → www (optional, nur falls A-Record für pharos.team existiert)
+pharos.team {
+	redir https://www.pharos.team{uri} permanent
+}

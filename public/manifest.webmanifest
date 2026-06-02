@@ -1,0 +1,9 @@
+{
+  "name": "Pharos · Wirkstoff-Lexikon",
+  "short_name": "Pharos",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050816",
+  "theme_color": "#050816",
+  "icons": []
+}

@@ -4,7 +4,7 @@ import { useSyncExternalStore, useCallback } from "react";
 import saa from "../lexikon/data/saa.json";
 import dosing from "./data/dosing.json";
 import { getWizard, patchWizard, resetWizard, subscribeWizard } from "./lib/wizard.js";
-import { getCaseMeds, subscribeCaseMeds, caseMedNames } from "../../lib/caseMeds.js";
+import { getCaseMeds, subscribeCaseMeds, caseMedNames, clearCaseMeds } from "../../lib/caseMeds.js";
 import { StepFrame } from "./components/bits.jsx";
 import Step1Medikament from "./components/Step1Medikament.jsx";
 import Step2Indikation from "./components/Step2Indikation.jsx";
@@ -12,7 +12,10 @@ import Step3Patient from "./components/Step3Patient.jsx";
 import Step4Kontra from "./components/Step4Kontra.jsx";
 import Step5Aufklaerung, { AUFKL_ITEMS } from "./components/Step5Aufklaerung.jsx";
 import Step6Dosierung from "./components/Step6Dosierung.jsx";
+import Step7SechsR, { sechsRItems } from "./components/Step7SechsR.jsx";
+import Step8Doku from "./components/Step8Doku.jsx";
 import Button from "../lexikon/components/ui/Button.jsx";
+import { computeDose, computeVolume, fmt } from "./lib/dose.js";
 import { kiOutcome, dauermedRows } from "./lib/ki.js";
 import { normKey } from "../lexikon/lib/saaCheck.js";
 import saaMatrixData from "../lexikon/data/saa-matrix.json";
@@ -119,8 +122,46 @@ export default function Medigabe({ onJumpToMedScan }) {
         Weiter → 6-R-Regel
       </Button>
     );
-  } else {
-    body = <p className="text-sm text-text-secondary">Schritt {w.step} — folgt.</p>;
+  } else if ((w.step === 7 || w.step === 8) && ind && w.dosier.weg != null && w.dosier.prep != null) {
+    const route = ind.routen[w.dosier.weg];
+    const prep = route.preps[w.dosier.prep];
+    const kg = Number(w.patient.kg);
+    const alterJahre = w.patient.alterEinheit === "monate" ? Number(w.patient.alter) / 12 : Number(w.patient.alter);
+    const dose = computeDose({ dosis: route.dosis, kg, alterJahre, maxMgProKg: route.maxMgProKg, maxMgAbsolut: route.maxMgAbsolut });
+    const vol = computeVolume({ mg: dose.mg, mgPerMl: prep.mgPerMl, maxMg: dose.maxMg });
+    const items = sechsRItems({ saaEntry, ind, route, prep, patient: w.patient, mgEffektiv: fmt(vol.mgEffektiv), ml: fmt(vol.ml) });
+
+    if (w.step === 7) {
+      const all = items.every((_, i) => w.sechsR[i]);
+      body = <Step7SechsR items={items} sechsR={w.sechsR} onToggle={(i) => patchWizard({ sechsR: { ...getWizard().sechsR, [i]: !getWizard().sechsR[i] } })} />;
+      footer = (
+        <Button size="lg" className="w-full" disabled={!all}
+          onClick={() => patchWizard({ step: 8, freigabeZeit: new Date().toISOString() })}>
+          6× Ja — Freigabe zur Durchführung
+        </Button>
+      );
+    } else {
+      const zeit = w.freigabeZeit ? new Date(w.freigabeZeit).toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" }) : "—";
+      const zusammenfassung = [
+        ["Medikament", `${saaEntry.name} (${prep.ampulle})`],
+        ["Indikation", ind.label],
+        ["Patient", items[0].wert],
+        ["Dosis", `${fmt(vol.mgEffektiv)} mg = ${fmt(vol.ml)} ml ${route.weg}`],
+        ["Lösung", prep.ergebnis],
+        ["Repetition", route.repetition || "—"],
+        ["6-R bestätigt", `${zeit} Uhr`],
+        ["UAW beachten", (saaEntry.uaw || []).join(", ")],
+      ];
+      body = (
+        <Step8Doku
+          zusammenfassung={zusammenfassung}
+          durchf={w.durchf}
+          onToggle={(k) => patchWizard({ durchf: { ...getWizard().durchf, [k]: !getWizard().durchf[k] } })}
+          onNeuerPatient={() => { clearCaseMeds(); resetWizard(); }}
+        />
+      );
+      footer = null;
+    }
   }
 
   return (

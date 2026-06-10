@@ -3,7 +3,7 @@
 import { useSyncExternalStore, useCallback, useEffect } from "react";
 import saa from "../lexikon/data/saa.json";
 import dosing from "./data/dosing.json";
-import { getWizard, patchWizard, patchGabe, resetWizard, subscribeWizard } from "./lib/wizard.js";
+import { getWizard, patchWizard, resetWizard, subscribeWizard } from "./lib/wizard.js";
 import { getCaseMeds, subscribeCaseMeds, caseMedNames, clearCaseMeds } from "../../lib/caseMeds.js";
 import { StepFrame } from "./components/bits.jsx";
 import Step1Medikament from "./components/Step1Medikament.jsx";
@@ -51,8 +51,12 @@ export default function Medigabe({ onJumpToMedScan }) {
   const ind = gabe && dosingEntry ? dosingEntry.indikationen.find((i) => i.id === gabe.indId) || null : null;
 
   const context = [];
-  if (saaEntry) context.push(saaEntry.name);
-  if (ind) context.push(ind.label);
+  w.gaben.forEach((g) => {
+    const se = saa.entries.find((e) => e.id === g.medId);
+    const de = dosing.entries.find((e) => e.id === g.medId);
+    const i = de?.indikationen.find((x) => x.id === g.indId);
+    if (se) context.push(se.name + (i ? ` · ${i.label}` : ""));
+  });
   if (w.step > 3 && w.patient.kg) context.push(`${w.patient.kg} kg · ${w.patient.geschlecht || "?"} · ${w.patient.alter} ${w.patient.alterEinheit === "monate" ? "Mon" : "J"}`);
 
   let body = null;
@@ -64,28 +68,37 @@ export default function Medigabe({ onJumpToMedScan }) {
   if (w.step === 1) {
     body = (
       <Step1Medikament
-        value={gabe?.medId}
-        onPick={(medId) => patchWizard({
-          gaben: [{ medId, indId: null, dosier: { weg: null, prep: null }, sechsR: {} }],
-          ki: {},
-          aufkl: { items: {}, faehig: null, einwilligung: null, mutmasslich: false },
-          durchf: {}, freigabeZeit: null,
-        })}
-      />
-    );
-    footer = <Button size="lg" className="w-full" disabled={!gabe?.medId} onClick={() => patchWizard({ step: 2 })}>Weiter</Button>;
-  } else if (w.step === 2) {
-    body = (
-      <Step2Indikation
-        medId={gabe?.medId}
-        value={gabe?.indId}
-        onPick={(indId) => {
-          patchGabe(0, { indId, dosier: { weg: null, prep: null }, sechsR: {} });
-          patchWizard({ ki: {}, freigabeZeit: null });
+        values={w.gaben.map((g) => g.medId)}
+        onToggle={(medId) => {
+          const cur = getWizard().gaben;
+          const next = cur.some((g) => g.medId === medId)
+            ? cur.filter((g) => g.medId !== medId)
+            : cur.length >= 3 ? cur : [...cur, { medId, indId: null, dosier: { weg: null, prep: null }, sechsR: {} }];
+          patchWizard({
+            gaben: next,
+            ki: {},
+            aufkl: { items: {}, faehig: null, einwilligung: null, mutmasslich: false },
+            durchf: {}, freigabeZeit: null,
+          });
         }}
       />
     );
-    footer = <Button size="lg" className="w-full" disabled={!gabe?.indId} onClick={() => patchWizard({ step: 3 })}>Weiter</Button>;
+    footer = (
+      <Button size="lg" className="w-full" disabled={!w.gaben.length} onClick={() => patchWizard({ step: 2 })}>
+        {w.gaben.length > 1 ? `Weiter (${w.gaben.length} Medikamente)` : "Weiter"}
+      </Button>
+    );
+  } else if (w.step === 2) {
+    body = (
+      <Step2Indikation
+        gaben={w.gaben}
+        onPick={(gi, indId) => patchWizard({
+          gaben: getWizard().gaben.map((g, i) => (i === gi ? { ...g, indId, dosier: { weg: null, prep: null }, sechsR: {} } : g)),
+          ki: {}, freigabeZeit: null,
+        })}
+      />
+    );
+    footer = <Button size="lg" className="w-full" disabled={!w.gaben.length || w.gaben.some((g) => !g.indId)} onClick={() => patchWizard({ step: 3 })}>Weiter</Button>;
   } else if (w.step === 3) {
     const p = w.patient;
     const kg = Number(p.kg);
@@ -190,10 +203,10 @@ export default function Medigabe({ onJumpToMedScan }) {
         cave={dosingEntry.cave}
         patient={w.patient}
         dosier={gabe.dosier}
-        onPatch={(patch) => {
-          patchGabe(0, { dosier: { ...getWizard().gaben[0].dosier, ...patch }, sechsR: {} });
-          patchWizard({ freigabeZeit: null });
-        }}
+        onPatch={(patch) => patchWizard({
+          gaben: getWizard().gaben.map((g, i) => (i === 0 ? { ...g, dosier: { ...g.dosier, ...patch }, sechsR: {} } : g)),
+          freigabeZeit: null,
+        })}
       />
     );
     footer = (
@@ -216,7 +229,9 @@ export default function Medigabe({ onJumpToMedScan }) {
         <Step7SechsR
           items={items}
           sechsR={gabe.sechsR}
-          onToggle={(i) => patchGabe(0, { sechsR: { ...getWizard().gaben[0].sechsR, [i]: !getWizard().gaben[0].sechsR[i] } })}
+          onToggle={(i) => patchWizard({
+            gaben: getWizard().gaben.map((g, idx) => idx === 0 ? { ...g, sechsR: { ...g.sechsR, [i]: !g.sechsR[i] } } : g),
+          })}
         />
       );
       footer = (

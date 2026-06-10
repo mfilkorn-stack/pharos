@@ -103,3 +103,50 @@ describe("computeVolume", () => {
     expect(r.mgEffektiv).toBe(250);
   });
 });
+
+describe("computeDose: Stufen-Bedingungen V2 (Midazolam-Fälle)", () => {
+  const buccal = [
+    { wennAlterUnter: 1, fixMg: 2.5, repetition: "Keine Repetition" },
+    { wennAlterUnter: 5, fixMg: 5, repetition: "Keine Repetition" },
+    { wennAlterUnter: 10, fixMg: 7.5, repetition: "Einmalige Repetition möglich" },
+    { fixMg: 10, repetition: "Einmalige Repetition möglich" },
+  ];
+  it("Altersbänder: 4 Jahre → 5 mg, Stufe trägt eigene Repetition", () => {
+    const r = computeDose({ dosis: { stufen: buccal }, kg: 18, alterJahre: 4 });
+    expect(r.mg).toBe(5);
+    expect(r.stufe.repetition).toBe("Keine Repetition");
+  });
+  it("Altersbänder: 7 Jahre → 7,5 mg mit Repetition", () => {
+    const r = computeDose({ dosis: { stufen: buccal }, kg: 25, alterJahre: 7 });
+    expect(r.mg).toBe(7.5);
+    expect(r.stufe.repetition).toBe("Einmalige Repetition möglich");
+  });
+  it("kg-Stufen (nasal): 8 kg → 2,5 mg; 15 kg → 5 mg; 70 kg → 10 mg", () => {
+    const nasal = [
+      { wennKgUnter: 10, fixMg: 2.5 },
+      { wennKgUnter: 20, fixMg: 5 },
+      { fixMg: 10 },
+    ];
+    expect(computeDose({ dosis: { stufen: nasal }, kg: 8, alterJahre: 0.5 }).mg).toBe(2.5);
+    expect(computeDose({ dosis: { stufen: nasal }, kg: 15, alterJahre: 3 }).mg).toBe(5);
+    expect(computeDose({ dosis: { stufen: nasal }, kg: 70, alterJahre: 40 }).mg).toBe(10);
+  });
+  it("Analgosedierung: ≥ 60 J → 1 mg; < 50 kg → 1 mg; sonst 2 mg", () => {
+    const sed = [
+      { wennAlterAb: 60, fixMg: 1 },
+      { wennKgUnter: 50, fixMg: 1 },
+      { fixMg: 2 },
+    ];
+    expect(computeDose({ dosis: { stufen: sed }, kg: 80, alterJahre: 72 }).mg).toBe(1);
+    expect(computeDose({ dosis: { stufen: sed }, kg: 45, alterJahre: 30 }).mg).toBe(1);
+    expect(computeDose({ dosis: { stufen: sed }, kg: 70, alterJahre: 45 }).mg).toBe(2);
+  });
+  it("UND-Verknüpfung mehrerer Bedingungen in einer Stufe", () => {
+    const s = [{ wennAlterAb: 6, wennKgUnter: 40, fixMg: 1 }, { fixMg: 2 }];
+    expect(computeDose({ dosis: { stufen: s }, kg: 30, alterJahre: 8 }).mg).toBe(1);
+    expect(computeDose({ dosis: { stufen: s }, kg: 50, alterJahre: 8 }).mg).toBe(2);
+  });
+  it("ohne Stufen ist stufe null (Bestand unverändert)", () => {
+    expect(computeDose({ dosis: { mgProKg: 0.125 }, kg: 70 }).stufe).toBeNull();
+  });
+});

@@ -11,18 +11,27 @@ export function fmt(n) {
   return String(n).replace(".", ",");
 }
 
-// Löst dosis.stufen anhand des Alters auf (erste passende Stufe gewinnt).
-function resolveStufe(dosis, alterJahre) {
-  if (!Array.isArray(dosis.stufen)) return dosis;
+// Löst dosis.stufen anhand Alter UND Gewicht auf (Bedingungen UND-verknüpft,
+// erste passende Stufe gewinnt, letzte Stufe = Default).
+function stufePasst(s, alterJahre, kg) {
+  if (s.wennAlterUnter != null && !(alterJahre != null && alterJahre < s.wennAlterUnter)) return false;
+  if (s.wennAlterAb != null && !(alterJahre != null && alterJahre >= s.wennAlterAb)) return false;
+  if (s.wennKgUnter != null && !(kg != null && kg < s.wennKgUnter)) return false;
+  if (s.wennKgAb != null && !(kg != null && kg >= s.wennKgAb)) return false;
+  return true;
+}
+function resolveStufe(dosis, alterJahre, kg) {
+  if (!Array.isArray(dosis.stufen)) return { d: dosis, stufe: null };
   for (const s of dosis.stufen) {
-    if (s.wennAlterUnter == null || (alterJahre != null && alterJahre < s.wennAlterUnter)) return s;
+    if (stufePasst(s, alterJahre, kg)) return { d: s, stufe: s };
   }
-  return dosis.stufen[dosis.stufen.length - 1];
+  const last = dosis.stufen[dosis.stufen.length - 1];
+  return { d: last, stufe: last };
 }
 
-// → { mg, maxMg|null, gekappt, schritte[] }
+// → { mg, maxMg|null, gekappt, schritte[], stufe|null }
 export function computeDose({ dosis, kg, alterJahre, maxMgProKg, maxMgAbsolut }) {
-  const d = resolveStufe(dosis, alterJahre);
+  const { d, stufe } = resolveStufe(dosis, alterJahre, kg);
   const schritte = [];
   let mg;
   if (d.fixMg != null) {
@@ -50,7 +59,7 @@ export function computeDose({ dosis, kg, alterJahre, maxMgProKg, maxMgAbsolut })
       schritte.push(`Maximaldosis ${fmt(maxMg)} mg ✓`);
     }
   }
-  return { mg, maxMg, gekappt, schritte };
+  return { mg, maxMg, gekappt, schritte, stufe };
 }
 
 const r1 = (n) => Math.round(n * 10) / 10;

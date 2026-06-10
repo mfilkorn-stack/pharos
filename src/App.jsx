@@ -5,6 +5,7 @@ import DesktopSidebar from "./shell/DesktopSidebar.jsx";
 import BottomTabBar from "./shell/BottomTabBar.jsx";
 import Lexikon from "./modules/lexikon/Lexikon.jsx";
 import Trainer from "./modules/trainer/Trainer.jsx";
+import Medigabe from "./modules/medigabe/Medigabe.jsx";
 import ConsentGate, { CONSENT_TEXT } from "./modules/lexikon/components/ConsentGate.jsx";
 import { isAccepted } from "./modules/lexikon/lib/consent.js";
 import { config } from "./modules/lexikon/config.js";
@@ -17,6 +18,19 @@ export default function App() {
   // Lexikon-Navigationszustand (von der Shell gespiegelt fuer Hervorhebung + Zaehler).
   const [lexNav, setLexNav] = useState({ active: "suche", counts: {} });
   const lexRef = useRef(null);
+
+  // Medigabe → MedScan-Sprung (Scannen/Suchen): Ziel-Tab merken, nach Mount navigieren.
+  const pendingLexNav = useRef(null);
+  useEffect(() => {
+    if (mode === "lexikon" && pendingLexNav.current) {
+      lexRef.current?.nav(pendingLexNav.current);
+      pendingLexNav.current = null;
+    }
+  }, [mode]);
+  const jumpToMedScan = useCallback((tab) => {
+    pendingLexNav.current = tab;
+    setMode("lexikon");
+  }, [setMode]);
 
   // Consent einmalig auf App-Ebene (gilt fuer beide Module).
   useEffect(() => {
@@ -55,6 +69,7 @@ export default function App() {
       <div className="flex-1 flex flex-col min-w-0">
         {mode === "lexikon" ? <Lexikon ref={lexRef} onNavState={onNavState} /> : null}
         {mode === "trainer" ? <Trainer /> : null}
+        {mode === "medigabe" ? <Medigabe onJumpToMedScan={jumpToMedScan} /> : null}
       </div>
 
       {/* Mobile-Navigation (< lg) */}

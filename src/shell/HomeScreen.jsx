@@ -1,4 +1,4 @@
-import { PharosLogo, MagnifyingGlassIcon, ClipboardCheckIcon, ArrowRightIcon, WifiIcon } from "../modules/lexikon/components/ui/icons.jsx";
+import { PharosLogo, MagnifyingGlassIcon, ClipboardCheckIcon, SyringeIcon, ArrowRightIcon, WifiIcon } from "../modules/lexikon/components/ui/icons.jsx";
 
 const TILES = [
   {
@@ -14,6 +14,13 @@ const TILES = [
     desc: "SINNHAFT-Übergabe einsprechen, KI parst & bewertet wie das ZNA-Team.",
     Icon: ClipboardCheckIcon,
     tag: "Trainieren",
+  },
+  {
+    key: "medigabe",
+    title: "Medigabe",
+    desc: "SAA-konform durch die Medikamentengabe — Indikation, KI-Check, Dosis, 6-R.",
+    Icon: SyringeIcon,
+    tag: "Durchführen",
   },
 ];
 
@@ -39,7 +46,7 @@ export default function HomeScreen({ onPick }) {
           Was brauchst du<span className="text-accent">?</span>
         </h1>
         <p className="text-text-secondary text-base mb-10 max-w-xl leading-relaxed">
-          Zwei Werkzeuge, ein Ort. Wähle, womit du startest — du kannst jederzeit wechseln.
+          Drei Werkzeuge, ein Ort. Wähle, womit du startest — du kannst jederzeit wechseln.
         </p>
 
         {/* Tiles */}

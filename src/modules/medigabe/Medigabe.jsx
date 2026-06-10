@@ -11,6 +11,7 @@ import Step2Indikation from "./components/Step2Indikation.jsx";
 import Step3Patient from "./components/Step3Patient.jsx";
 import Step4Kontra from "./components/Step4Kontra.jsx";
 import Step5Aufklaerung, { AUFKL_ITEMS } from "./components/Step5Aufklaerung.jsx";
+import Step6Dosierung from "./components/Step6Dosierung.jsx";
 import Button from "../lexikon/components/ui/Button.jsx";
 import { kiOutcome, dauermedRows } from "./lib/ki.js";
 import { normKey } from "../lexikon/lib/saaCheck.js";
@@ -102,6 +103,21 @@ export default function Medigabe({ onJumpToMedScan }) {
       <Button variant="subtle" size="lg" className="w-full" onClick={() => resetWizard()}>Beenden — keine Gabe</Button>
     ) : (
       <Button size="lg" className="w-full" disabled={!ok} onClick={() => patchWizard({ step: 6 })}>Weiter</Button>
+    );
+  } else if (w.step === 6 && ind) {
+    body = (
+      <Step6Dosierung
+        ind={ind}
+        cave={dosingEntry.cave}
+        patient={w.patient}
+        dosier={w.dosier}
+        onPatch={(patch) => patchWizard({ dosier: { ...getWizard().dosier, ...patch } })}
+      />
+    );
+    footer = (
+      <Button size="lg" className="w-full" disabled={w.dosier.weg == null || w.dosier.prep == null} onClick={() => patchWizard({ step: 7 })}>
+        Weiter → 6-R-Regel
+      </Button>
     );
   } else {
     body = <p className="text-sm text-text-secondary">Schritt {w.step} — folgt.</p>;

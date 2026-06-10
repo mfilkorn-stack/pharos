@@ -141,6 +141,11 @@ describe("computeDose: Stufen-Bedingungen V2 (Midazolam-Fälle)", () => {
     expect(computeDose({ dosis: { stufen: sed }, kg: 45, alterJahre: 30 }).mg).toBe(1);
     expect(computeDose({ dosis: { stufen: sed }, kg: 70, alterJahre: 45 }).mg).toBe(2);
   });
+  it("wennKgAb: ab 50 kg greift die Erwachsenen-Stufe", () => {
+    const s = [{ wennKgAb: 50, fixMg: 10 }, { fixMg: 5 }];
+    expect(computeDose({ dosis: { stufen: s }, kg: 60, alterJahre: 30 }).mg).toBe(10);
+    expect(computeDose({ dosis: { stufen: s }, kg: 40, alterJahre: 30 }).mg).toBe(5);
+  });
   it("UND-Verknüpfung mehrerer Bedingungen in einer Stufe", () => {
     const s = [{ wennAlterAb: 6, wennKgUnter: 40, fixMg: 1 }, { fixMg: 2 }];
     expect(computeDose({ dosis: { stufen: s }, kg: 30, alterJahre: 8 }).mg).toBe(1);

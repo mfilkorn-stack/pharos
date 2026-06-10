@@ -3,13 +3,10 @@
 
 const initial = () => ({
   step: 1,
-  medId: null,
-  indId: null,
+  gaben: [],
   patient: { geschlecht: null, alter: "", alterEinheit: "jahre", kg: "", dauerStatus: null },
   ki: {},
   aufkl: { items: {}, faehig: null, einwilligung: null, mutmasslich: false },
-  dosier: { weg: null, prep: null },
-  sechsR: {},
   durchf: {},
   freigabeZeit: null,
   // Fingerprint der Einsatzliste zum Zeitpunkt der Dauermedikations-Bestätigung.
@@ -23,8 +20,13 @@ const subs = new Set();
 const emit = () => [...subs].forEach((fn) => fn());
 
 export function getWizard() { return state; }
-// Flacher Spread: verschachtelte Felder (patient, aufkl, dosier, …) muss der
+// Flacher Spread: verschachtelte Felder (patient, aufkl, gaben, …) muss der
 // Caller selbst spreaden: patchWizard({ patient: { ...getWizard().patient, kg: "70" } })
 export function patchWizard(patch) { state = { ...state, ...patch }; emit(); }
+// Aktualisiert eine Gabe immutable; verschachtelte Felder (dosier, sechsR) spreaden Caller.
+export function patchGabe(index, patch) {
+  state = { ...state, gaben: state.gaben.map((g, i) => (i === index ? { ...g, ...patch } : g)) };
+  emit();
+}
 export function resetWizard() { state = initial(); emit(); }
 export function subscribeWizard(fn) { subs.add(fn); return () => subs.delete(fn); }

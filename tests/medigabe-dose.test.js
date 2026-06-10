@@ -1,6 +1,6 @@
 // tests/medigabe-dose.test.js
 import { describe, it, expect } from "vitest";
-import { computeDose, fmt } from "../src/modules/medigabe/lib/dose.js";
+import { computeDose, computeVolume, fmt } from "../src/modules/medigabe/lib/dose.js";
 
 describe("fmt", () => {
   it("konvertiert nur das Dezimalzeichen — rundet NICHT (0,125 mg/kg muss exakt bleiben)", () => {
@@ -75,5 +75,31 @@ describe("computeDose: fixMg + stufen", () => {
     const r = computeDose({ dosis: { stufen }, kg: 80 });
     expect(r.mg).toBe(300); // fällt auf Default-Stufe (Erwachsene)
     expect(r.gekappt).toBe(false);
+  });
+});
+
+describe("computeVolume", () => {
+  it("Esketamin 8,75 mg bei 10 mg/ml → 0,9 ml, effektiv 9 mg", () => {
+    const r = computeVolume({ mg: 8.75, mgPerMl: 10, maxMg: 17.5 });
+    expect(r.mlRoh).toBe(0.875);
+    expect(r.ml).toBe(0.9);
+    expect(r.mgEffektiv).toBe(9);
+    expect(r.schritte[0]).toBe("8,75 mg ÷ 10 mg/ml = 0,875 ml → aufgerundet 0,9 ml (= 9 mg)");
+  });
+  it("Esketamin 8,75 mg bei 5 mg/ml → 1,8 ml", () => {
+    const r = computeVolume({ mg: 8.75, mgPerMl: 5, maxMg: 17.5 });
+    expect(r.ml).toBe(1.8);
+    expect(r.mgEffektiv).toBe(9);
+  });
+  it("rundet AB, wenn Aufrunden die Maximaldosis überschreiten würde (17,5 mg @ 10 mg/ml → 1,7 ml)", () => {
+    const r = computeVolume({ mg: 17.5, mgPerMl: 10, maxMg: 17.5 });
+    expect(r.ml).toBe(1.7); // 1,75 → 1,8 wären 18 mg > 17,5 → abrunden
+    expect(r.mgEffektiv).toBe(17);
+    expect(r.schritte.some((s) => s.includes("Maximaldosis"))).toBe(true);
+  });
+  it("glattes Volumen bleibt unverändert (250 mg @ 100 mg/ml → 2,5 ml)", () => {
+    const r = computeVolume({ mg: 250, mgPerMl: 100 });
+    expect(r.ml).toBe(2.5);
+    expect(r.mgEffektiv).toBe(250);
   });
 });

@@ -20,9 +20,11 @@ export function dauermedRows({ meds, matrix, saaEntry }) {
 }
 
 // Index des offiziellen Kontra-Punkts, der die Substanz namentlich nennt, sonst -1.
+// Nur fürs Hervorheben (kein Block). Kurz-Tokens < 5 Zeichen matchen nicht —
+// Abkürzungen wie „Met" würden sonst in beliebigen KI-Texten falsch anschlagen.
 export function kontraMatchIndex(medName, kontraList) {
   const n = normKey(medName);
-  if (!n) return -1;
+  if (!n || n.length < 5) return -1;
   return (kontraList || []).findIndex((k) => normKey(k).includes(n));
 }
 
@@ -46,5 +48,6 @@ export function kiOutcome({ answers, nAbs, nRel, flaggedMeds }) {
     if (!answers[`m:${m}`]) complete = false;
     else confirm = true; // geflaggtes Dauermedikament → Abwäge-Dialog wie bei relativer KI
   }
+  // stop überwiegt confirm: Caller zeigt bei stop=true den Stopp-Screen, kein Dialog.
   return { complete, stop, confirm };
 }

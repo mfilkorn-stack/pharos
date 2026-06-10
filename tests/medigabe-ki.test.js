@@ -36,6 +36,9 @@ describe("kontraMatchIndex", () => {
   it("liefert -1 ohne Namenstreffer", () => {
     expect(kontraMatchIndex("Metoprolol", saaEntry.kontra)).toBe(-1);
   });
+  it("liefert -1 für Kurz-Abkürzungen (< 5 Zeichen) — kein irreführendes Highlighting", () => {
+    expect(kontraMatchIndex("Met", saaEntry.kontra)).toBe(-1);
+  });
 });
 
 describe("kiOutcome", () => {

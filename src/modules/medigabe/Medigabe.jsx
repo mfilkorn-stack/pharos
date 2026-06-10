@@ -36,11 +36,23 @@ export default function Medigabe({ onJumpToMedScan }) {
   let body = null;
   let footer = null;
 
+  // Sicherheitsregel: Jede Änderung an Werten, die in spätere Bestätigungen einfließen
+  // (Medikament, Indikation, Patient, Ampulle/Weg), verwirft die nachgelagerten Haken —
+  // 6-R und Aufklärung dürfen nie für veraltete Werte vorbestätigt sein.
   if (w.step === 1) {
-    body = <Step1Medikament value={w.medId} onPick={(medId) => patchWizard({ medId, indId: null, ki: {}, dosier: { weg: null, prep: null } })} />;
+    body = (
+      <Step1Medikament
+        value={w.medId}
+        onPick={(medId) => patchWizard({
+          medId, indId: null, ki: {}, dosier: { weg: null, prep: null },
+          aufkl: { items: {}, faehig: null, einwilligung: null, mutmasslich: false },
+          sechsR: {}, durchf: {}, freigabeZeit: null,
+        })}
+      />
+    );
     footer = <Button size="lg" className="w-full" disabled={!w.medId} onClick={() => patchWizard({ step: 2 })}>Weiter</Button>;
   } else if (w.step === 2) {
-    body = <Step2Indikation medId={w.medId} value={w.indId} onPick={(indId) => patchWizard({ indId })} />;
+    body = <Step2Indikation medId={w.medId} value={w.indId} onPick={(indId) => patchWizard({ indId, dosier: { weg: null, prep: null }, sechsR: {}, freigabeZeit: null })} />;
     footer = <Button size="lg" className="w-full" disabled={!w.indId} onClick={() => patchWizard({ step: 3 })}>Weiter</Button>;
   } else if (w.step === 3) {
     const p = w.patient;
@@ -55,7 +67,7 @@ export default function Medigabe({ onJumpToMedScan }) {
     body = (
       <Step3Patient
         patient={p}
-        onPatch={(patch) => patchWizard({ patient: { ...getWizard().patient, ...patch } })}
+        onPatch={(patch) => patchWizard({ patient: { ...getWizard().patient, ...patch }, sechsR: {}, freigabeZeit: null })}
         minKg={dosingEntry?.minKg}
         minKgHinweis={dosingEntry?.minKgHinweis}
         onJumpToMedScan={onJumpToMedScan}
@@ -114,7 +126,7 @@ export default function Medigabe({ onJumpToMedScan }) {
         cave={dosingEntry.cave}
         patient={w.patient}
         dosier={w.dosier}
-        onPatch={(patch) => patchWizard({ dosier: { ...getWizard().dosier, ...patch } })}
+        onPatch={(patch) => patchWizard({ dosier: { ...getWizard().dosier, ...patch }, sechsR: {}, freigabeZeit: null })}
       />
     );
     footer = (

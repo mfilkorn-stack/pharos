@@ -19,6 +19,8 @@ const subs = new Set();
 const emit = () => [...subs].forEach((fn) => fn());
 
 export function getWizard() { return state; }
+// Flacher Spread: verschachtelte Felder (patient, aufkl, dosier, …) muss der
+// Caller selbst spreaden: patchWizard({ patient: { ...getWizard().patient, kg: "70" } })
 export function patchWizard(patch) { state = { ...state, ...patch }; emit(); }
 export function resetWizard() { state = initial(); emit(); }
 export function subscribeWizard(fn) { subs.add(fn); return () => subs.delete(fn); }

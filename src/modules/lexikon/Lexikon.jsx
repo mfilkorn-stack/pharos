@@ -28,6 +28,7 @@ import { matchesFilter } from "./components/QuickFilters.jsx";
 import { CATEGORIES } from "./components/CategoryIcon.jsx";
 import GiftnotrufBanner from "./components/GiftnotrufBanner.jsx";
 import SymptomChips from "./components/SymptomChips.jsx";
+import { getCaseMeds, setCaseMeds, clearCaseMeds } from "../../lib/caseMeds.js";
 
 // Build runtime DB entry: inherits group Notfall + appends extras
 function materialize(entry, groups) {
@@ -123,7 +124,7 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
   const [scanSource, setScanSource] = useState(null);
-  const [planEntries, setPlanEntries] = useState([]);
+  const [planEntries, setPlanEntries] = useState(() => getCaseMeds());
   const [runtimeExtras, setRuntimeExtras] = useState([]);
   const [saaMatrixRuntime, setSaaMatrixRuntime] = useState({});
   const [searchEnriching, setSearchEnriching] = useState(false);
@@ -186,6 +187,11 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
 
   // OCR-Modell vorwaermen (Consent ist auf Shell-Ebene bereits erteilt).
   useEffect(() => { prewarmOCR(); }, []);
+
+  // Einsatzliste teilen: Scan-/Suchergebnisse für Medigabe verfügbar machen.
+  useEffect(() => {
+    if (planEntries.length) setCaseMeds(planEntries);
+  }, [planEntries]);
 
   // ⌘K / Strg+K fokussiert das Suchfeld (passend zum Hint in der SearchBar).
   useEffect(() => {
@@ -395,7 +401,7 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
               <div className="space-y-3 px-4 py-3 rounded-xl border border-accent/20 bg-accent/5">
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-sm text-accent font-semibold">Plan-Auswahl · {results.length} Wirkstoffe</span>
-                  <Button variant="ghost" size="sm" onClick={() => setPlanEntries([])}>Zurücksetzen</Button>
+                  <Button variant="ghost" size="sm" onClick={() => { setPlanEntries([]); clearCaseMeds(); }}>Zurücksetzen</Button>
                 </div>
                 <SaaCheck patientMeds={planEntries.filter((p) => p.source !== "unknown" && p.source !== "rejected").map((p) => p.wirkstoff)} matrix={saaMatrix} />
               </div>

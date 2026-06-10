@@ -7,6 +7,7 @@ import { getWizard, patchWizard, subscribeWizard } from "./lib/wizard.js";
 import { StepFrame } from "./components/bits.jsx";
 import Step1Medikament from "./components/Step1Medikament.jsx";
 import Step2Indikation from "./components/Step2Indikation.jsx";
+import Step3Patient from "./components/Step3Patient.jsx";
 import Button from "../lexikon/components/ui/Button.jsx";
 
 export default function Medigabe({ onJumpToMedScan }) {
@@ -30,6 +31,25 @@ export default function Medigabe({ onJumpToMedScan }) {
   } else if (w.step === 2) {
     body = <Step2Indikation medId={w.medId} value={w.indId} onPick={(indId) => patchWizard({ indId })} />;
     footer = <Button size="lg" className="w-full" disabled={!w.indId} onClick={() => patchWizard({ step: 3 })}>Weiter</Button>;
+  } else if (w.step === 3) {
+    const p = w.patient;
+    const kg = Number(p.kg);
+    const alterJahre = p.alterEinheit === "monate" ? Number(p.alter) / 12 : Number(p.alter);
+    const valid =
+      p.geschlecht && p.alter !== "" && p.kg !== "" &&
+      kg >= 1 && kg <= 250 && alterJahre >= 0 && alterJahre <= 120 &&
+      (dosingEntry?.minKg == null || kg >= dosingEntry.minKg) &&
+      (p.dauerStatus === "keine" || p.dauerStatus === "uebernommen");
+    body = (
+      <Step3Patient
+        patient={p}
+        onPatch={(patch) => patchWizard({ patient: { ...getWizard().patient, ...patch } })}
+        minKg={dosingEntry?.minKg}
+        minKgHinweis={dosingEntry?.minKgHinweis}
+        onJumpToMedScan={onJumpToMedScan}
+      />
+    );
+    footer = <Button size="lg" className="w-full" disabled={!valid} onClick={() => patchWizard({ step: 4 })}>Weiter</Button>;
   } else {
     body = <p className="text-sm text-text-secondary">Schritt {w.step} — folgt.</p>;
   }

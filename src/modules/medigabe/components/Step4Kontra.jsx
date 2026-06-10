@@ -11,7 +11,7 @@ const FERTILE = (p) => {
   return p.geschlecht === "w" && j >= 12 && j <= 55;
 };
 
-export default function Step4Kontra({ saaEntry, kontra, relKontra, patient, medNames, matrix, answers, onAnswer }) {
+export default function Step4Kontra({ saaEntry, kontra, relKontra, patient, medNames, matrix, answers, onAnswer, onAnswerMany }) {
   const rows = useMemo(
     () => dauermedRows({ meds: medNames, matrix, saaEntry }),
     [medNames.join("|"), saaEntry.id, matrix]
@@ -32,7 +32,16 @@ export default function Step4Kontra({ saaEntry, kontra, relKontra, patient, medN
   return (
     <div className="flex flex-col gap-6">
       <section>
-        <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-critical mb-2">Absolut — liegt das vor?</div>
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-critical">Absolut — liegt das vor?</div>
+          <button
+            type="button"
+            onClick={() => onAnswerMany(Object.fromEntries(kontra.map((_, i) => [`a:${i}`, "nein"])))}
+            className="h-9 px-3 rounded-lg border border-success/40 bg-success/5 text-success text-xs font-medium hover:bg-success/10 transition-colors flex-shrink-0"
+          >
+            Keine liegt vor — alle „Nein"
+          </button>
+        </div>
         <div className="flex flex-col gap-2">
           {kontra.map((text, i) => (
             <JaNeinRow
@@ -51,7 +60,16 @@ export default function Step4Kontra({ saaEntry, kontra, relKontra, patient, medN
 
       {relKontra.length ? (
         <section>
-          <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-warning mb-2">Relativ — liegt das vor?</div>
+          <div className="flex items-center justify-between gap-2 mb-2">
+            <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-warning">Relativ — liegt das vor?</div>
+            <button
+              type="button"
+              onClick={() => onAnswerMany(Object.fromEntries(relKontra.map((_, i) => [`r:${i}`, "nein"])))}
+              className="h-9 px-3 rounded-lg border border-success/40 bg-success/5 text-success text-xs font-medium hover:bg-success/10 transition-colors flex-shrink-0"
+            >
+              Keine liegt vor — alle „Nein"
+            </button>
+          </div>
           <div className="flex flex-col gap-2">
             {relKontra.map((text, i) => (
               <JaNeinRow key={i} text={text} value={answers[`r:${i}`]} onChange={(v) => onAnswer(`r:${i}`, v)} />

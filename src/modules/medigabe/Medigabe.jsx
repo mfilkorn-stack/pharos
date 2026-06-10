@@ -123,6 +123,7 @@ export default function Medigabe({ onJumpToMedScan }) {
         matrix={saaMatrix}
         answers={w.ki}
         onAnswer={(k, v) => patchWizard({ ki: { ...getWizard().ki, [k]: v } })}
+        onAnswerMany={(patch) => patchWizard({ ki: { ...getWizard().ki, ...patch } })}
       />
     );
     footer = out.stop ? (

@@ -3,13 +3,17 @@
 import { useSyncExternalStore, useCallback } from "react";
 import saa from "../lexikon/data/saa.json";
 import dosing from "./data/dosing.json";
-import { getWizard, patchWizard, subscribeWizard } from "./lib/wizard.js";
-import { getCaseMeds, subscribeCaseMeds } from "../../lib/caseMeds.js";
+import { getWizard, patchWizard, resetWizard, subscribeWizard } from "./lib/wizard.js";
+import { getCaseMeds, subscribeCaseMeds, caseMedNames } from "../../lib/caseMeds.js";
 import { StepFrame } from "./components/bits.jsx";
 import Step1Medikament from "./components/Step1Medikament.jsx";
 import Step2Indikation from "./components/Step2Indikation.jsx";
 import Step3Patient from "./components/Step3Patient.jsx";
+import Step4Kontra from "./components/Step4Kontra.jsx";
 import Button from "../lexikon/components/ui/Button.jsx";
+import { kiOutcome, dauermedRows } from "./lib/ki.js";
+import { normKey } from "../lexikon/lib/saaCheck.js";
+import saaMatrixData from "../lexikon/data/saa-matrix.json";
 
 export default function Medigabe({ onJumpToMedScan }) {
   const w = useSyncExternalStore(subscribeWizard, getWizard);
@@ -53,6 +57,38 @@ export default function Medigabe({ onJumpToMedScan }) {
       />
     );
     footer = <Button size="lg" className="w-full" disabled={!valid} onClick={() => patchWizard({ step: 4 })}>Weiter</Button>;
+  } else if (w.step === 4 && saaEntry) {
+    const medNames = w.patient.dauerStatus === "uebernommen" ? caseMedNames(meds) : [];
+    const rows = dauermedRows({ meds: medNames, matrix: saaMatrixData.entries, saaEntry });
+    const flaggedMeds = rows.filter((r) => r.level !== "ok").map((r) => normKey(r.med));
+    const out = kiOutcome({ answers: w.ki, nAbs: saaEntry.kontra.length, nRel: saaEntry.relKontra.length, flaggedMeds });
+
+    body = (
+      <Step4Kontra
+        saaEntry={saaEntry}
+        patient={w.patient}
+        medNames={medNames}
+        answers={w.ki}
+        onAnswer={(k, v) => patchWizard({ ki: { ...getWizard().ki, [k]: v } })}
+      />
+    );
+    footer = out.stop ? (
+      <div className="w-full border border-critical/50 bg-critical/10 rounded-lg p-4 text-center">
+        <div className="text-sm font-semibold text-critical mb-1">Absolute Kontraindikation — keine Gabe</div>
+        <p className="text-xs text-text-secondary mb-3">Vorgehen nach BPR (Alternativen / NA-Nachforderung). Wizard hier beenden.</p>
+        <Button variant="subtle" size="lg" className="w-full" onClick={() => { resetWizard(); }}>Beenden &amp; zurücksetzen</Button>
+      </div>
+    ) : (
+      <Button
+        size="lg" className="w-full" disabled={!out.complete}
+        onClick={() => {
+          if (out.confirm && !window.confirm("Relative Kontraindikation(en) bzw. Dauermedikations-Hinweise liegen vor. Nutzen-Risiko abgewogen? Begründung dokumentieren.")) return;
+          patchWizard({ step: 5 });
+        }}
+      >
+        Weiter
+      </Button>
+    );
   } else {
     body = <p className="text-sm text-text-secondary">Schritt {w.step} — folgt.</p>;
   }

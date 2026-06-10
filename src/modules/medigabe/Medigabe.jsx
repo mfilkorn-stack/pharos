@@ -45,17 +45,17 @@ export default function Medigabe({ onJumpToMedScan }) {
     });
   }, [medsKey]);
 
-  const gabe = w.gaben[0] || null;
-  const saaEntry = gabe ? saa.entries.find((e) => e.id === gabe.medId) || null : null;
-  const dosingEntry = gabe ? dosing.entries.find((e) => e.id === gabe.medId) || null : null;
-  const ind = gabe && dosingEntry ? dosingEntry.indikationen.find((i) => i.id === gabe.indId) || null : null;
+  // Vollständige Ableitung pro Gabe — eine Quelle für Schritte 6–8 und Kontext.
+  const gabenInfo = w.gaben.map((g, gi) => {
+    const saaEntry = saa.entries.find((e) => e.id === g.medId) || null;
+    const dosingEntry = dosing.entries.find((e) => e.id === g.medId) || null;
+    const ind = dosingEntry?.indikationen.find((i) => i.id === g.indId) || null;
+    return { g, gi, saaEntry, dosingEntry, ind };
+  });
 
   const context = [];
-  w.gaben.forEach((g) => {
-    const se = saa.entries.find((e) => e.id === g.medId);
-    const de = dosing.entries.find((e) => e.id === g.medId);
-    const i = de?.indikationen.find((x) => x.id === g.indId);
-    if (se) context.push(se.name + (i ? ` · ${i.label}` : ""));
+  gabenInfo.forEach(({ saaEntry, ind }) => {
+    if (saaEntry) context.push(saaEntry.name + (ind ? ` · ${ind.label}` : ""));
   });
   if (w.step > 3 && w.patient.kg) context.push(`${w.patient.kg} kg · ${w.patient.geschlecht || "?"} · ${w.patient.alter} ${w.patient.alterEinheit === "monate" ? "Mon" : "J"}`);
 
@@ -147,10 +147,7 @@ export default function Medigabe({ onJumpToMedScan }) {
     );
     footer = <Button size="lg" className="w-full" disabled={!valid} onClick={() => patchWizard({ step: 4 })}>Weiter</Button>;
   } else if (w.step === 4 && w.gaben.length) {
-    const kiGaben = w.gaben.map((g) => ({
-      saaEntry: saa.entries.find((e) => e.id === g.medId),
-      ind: dosing.entries.find((e) => e.id === g.medId)?.indikationen.find((i) => i.id === g.indId) || null,
-    })).filter((x) => x.saaEntry);
+    const kiGaben = gabenInfo.filter((x) => x.saaEntry).map(({ saaEntry, ind }) => ({ saaEntry, ind }));
     const punkte = kiPunkte(kiGaben);
     const medNames = w.patient.dauerStatus === "uebernommen" ? caseMedNames(meds) : [];
     const rows = dauermedRowsMulti({ meds: medNames, matrix: saaMatrix, saaEntries: kiGaben.map((x) => x.saaEntry) });
@@ -208,61 +205,80 @@ export default function Medigabe({ onJumpToMedScan }) {
     ) : (
       <Button size="lg" className="w-full" disabled={!ok} onClick={() => patchWizard({ step: 6 })}>Weiter</Button>
     );
-  } else if (w.step === 6 && ind) {
+  } else if (w.step === 6 && gabenInfo.length && gabenInfo.every((x) => x.ind)) {
     body = (
-      <Step6Dosierung
-        ind={ind}
-        cave={dosingEntry.cave}
-        patient={w.patient}
-        dosier={gabe.dosier}
-        onPatch={(patch) => patchWizard({
-          gaben: getWizard().gaben.map((g, i) => (i === 0 ? { ...g, dosier: { ...g.dosier, ...patch }, sechsR: {} } : g)),
-          freigabeZeit: null,
-        })}
-      />
+      <div className="flex flex-col gap-8">
+        {gabenInfo.map(({ g, gi, saaEntry, dosingEntry, ind }) => (
+          <section key={g.medId}>
+            {w.gaben.length > 1 ? (
+              <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-accent mb-3">{saaEntry?.name}</div>
+            ) : null}
+            <Step6Dosierung
+              ind={ind}
+              cave={dosingEntry?.cave}
+              patient={w.patient}
+              dosier={g.dosier}
+              onPatch={(patch) => patchWizard({
+                gaben: getWizard().gaben.map((x, i) => (i === gi ? { ...x, dosier: { ...x.dosier, ...patch }, sechsR: {} } : x)),
+                freigabeZeit: null,
+              })}
+            />
+          </section>
+        ))}
+      </div>
     );
-    footer = (
-      <Button size="lg" className="w-full" disabled={gabe.dosier.weg == null || gabe.dosier.prep == null} onClick={() => patchWizard({ step: 7 })}>
-        Weiter → 6-R-Regel
-      </Button>
-    );
-  } else if ((w.step === 7 || w.step === 8) && ind && gabe.dosier.weg != null && gabe.dosier.prep != null) {
-    const route = ind.routen[gabe.dosier.weg];
-    const prep = route.preps[gabe.dosier.prep];
+    const fertig = w.gaben.every((g) => g.dosier.weg != null && g.dosier.prep != null);
+    footer = <Button size="lg" className="w-full" disabled={!fertig} onClick={() => patchWizard({ step: 7 })}>Weiter → 6-R-Regel</Button>;
+  } else if ((w.step === 7 || w.step === 8) && gabenInfo.length && gabenInfo.every((x) => x.ind && x.g.dosier.weg != null && x.g.dosier.prep != null)) {
     const kg = Number(w.patient.kg);
     const alterJahre = w.patient.alterEinheit === "monate" ? Number(w.patient.alter) / 12 : Number(w.patient.alter);
-    const dose = computeDose({ dosis: route.dosis, kg, alterJahre, maxMgProKg: route.maxMgProKg, maxMgAbsolut: route.maxMgAbsolut });
-    const vol = computeVolume({ mg: dose.mg, mgPerMl: prep.mgPerMl, maxMg: dose.maxMg });
-    const items = sechsRItems({ saaEntry, ind, route, prep, patient: w.patient, mgEffektiv: fmt(vol.mgEffektiv), ml: fmt(vol.ml) });
+    const berechnet = gabenInfo.map(({ g, gi, saaEntry, ind }) => {
+      const route = ind.routen[g.dosier.weg];
+      const prep = route.preps[g.dosier.prep];
+      const dose = computeDose({ dosis: route.dosis, kg, alterJahre, maxMgProKg: route.maxMgProKg, maxMgAbsolut: route.maxMgAbsolut });
+      const vol = computeVolume({ mg: dose.mg, mgPerMl: prep.mgPerMl, maxMg: dose.maxMg });
+      const items = sechsRItems({ saaEntry, ind, route, prep, patient: w.patient, mgEffektiv: fmt(vol.mgEffektiv), ml: fmt(vol.ml) });
+      return { g, gi, saaEntry, ind, route, prep, dose, vol, items };
+    });
 
     if (w.step === 7) {
-      const all = items.every((_, i) => gabe.sechsR[i]);
+      const all = berechnet.every((b) => b.items.every((_, i) => b.g.sechsR[i]));
       body = (
-        <Step7SechsR
-          items={items}
-          sechsR={gabe.sechsR}
-          onToggle={(i) => patchWizard({
-            gaben: getWizard().gaben.map((g, idx) => idx === 0 ? { ...g, sechsR: { ...g.sechsR, [i]: !g.sechsR[i] } } : g),
-          })}
-        />
+        <div className="flex flex-col gap-8">
+          {berechnet.map((b) => (
+            <section key={b.g.medId}>
+              {w.gaben.length > 1 ? (
+                <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-accent mb-3">{b.saaEntry?.name}</div>
+              ) : null}
+              <Step7SechsR
+                items={b.items}
+                sechsR={b.g.sechsR}
+                onToggle={(i) => patchWizard({
+                  gaben: getWizard().gaben.map((x, idx) => (idx === b.gi ? { ...x, sechsR: { ...x.sechsR, [i]: !x.sechsR[i] } } : x)),
+                })}
+              />
+            </section>
+          ))}
+        </div>
       );
       footer = (
         <Button size="lg" className="w-full" disabled={!all}
           onClick={() => patchWizard({ step: 8, freigabeZeit: new Date().toISOString() })}>
-          6× Ja — Freigabe zur Durchführung
+          {w.gaben.length > 1 ? `${w.gaben.length * 6}× Ja — Freigabe zur Durchführung` : "6× Ja — Freigabe zur Durchführung"}
         </Button>
       );
     } else {
       const zeit = w.freigabeZeit ? new Date(w.freigabeZeit).toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" }) : "—";
       const zusammenfassung = [
-        ["Medikament", `${saaEntry.name} (${prep.ampulle})`],
-        ["Indikation", ind.label],
-        ["Patient", items[0].wert],
-        ["Dosis", `${fmt(vol.mgEffektiv)} mg = ${fmt(vol.ml)} ml ${route.weg}`],
-        ["Lösung", prep.ergebnis],
-        ["Repetition", route.repetition || "—"],
+        ["Patient", `${w.patient.geschlecht || "?"} · ${w.patient.alter} ${w.patient.alterEinheit === "monate" ? "Monate" : "Jahre"} · ${w.patient.kg} kg`],
+        ...berechnet.flatMap((b) => [
+          [b.saaEntry?.name || b.g.medId, `${fmt(b.vol.mgEffektiv)} mg = ${fmt(b.vol.ml)} ml ${b.route.weg} (${b.prep.ampulle})`],
+          ["· Indikation", b.ind.label],
+          ["· Lösung", b.prep.ergebnis],
+          ["· Repetition", (b.dose?.stufe?.repetition ?? b.route.repetition) || "—"],
+        ]),
         ["6-R bestätigt", `${zeit} Uhr`],
-        ["UAW beachten", (saaEntry.uaw || []).join(", ")],
+        ["UAW beachten", [...new Set(berechnet.flatMap((b) => b.saaEntry?.uaw || []))].join(", ")],
       ];
       body = (
         <Step8Doku

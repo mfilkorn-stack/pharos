@@ -23,8 +23,8 @@ export default function Step8Doku({ zusammenfassung, durchf, onToggle, onNeuerPa
       <section className="border border-border bg-card rounded-lg p-4">
         <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-text-muted mb-2">Doku-Zusammenfassung</div>
         <dl className="text-sm leading-relaxed">
-          {zusammenfassung.map(([k, v]) => (
-            <div key={k} className="flex gap-3 py-0.5">
+          {zusammenfassung.map(([k, v], i) => (
+            <div key={i} className="flex gap-3 py-0.5">
               <dt className="w-32 flex-shrink-0 text-text-muted text-xs pt-0.5">{k}</dt>
               <dd className="text-text-primary">{v}</dd>
             </div>

@@ -611,9 +611,14 @@ describe("kiOutcome", () => {
     const r = kiOutcome({ answers, ...base });
     expect(r).toMatchObject({ complete: true, stop: false, confirm: true });
   });
-  it("ok ohne jegliche Treffer", () => {
+  it("confirm auch ohne relative KI, wenn ein Dauermed-Flag abgehakt wurde (Spec: Abwägung nötig)", () => {
     const answers = { "a:0": "nein", "a:1": "nein", "r:0": "nein", "m:theophyllin": true };
     const r = kiOutcome({ answers, ...base });
+    expect(r).toMatchObject({ complete: true, stop: false, confirm: true });
+  });
+  it("ok ohne jegliche Treffer (keine geflaggten Dauermedis)", () => {
+    const answers = { "a:0": "nein", "a:1": "nein", "r:0": "nein" };
+    const r = kiOutcome({ answers, nAbs: 2, nRel: 1, flaggedMeds: [] });
     expect(r).toMatchObject({ complete: true, stop: false, confirm: false });
   });
 });

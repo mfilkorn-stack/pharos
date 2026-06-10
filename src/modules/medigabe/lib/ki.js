@@ -44,6 +44,7 @@ export function kiOutcome({ answers, nAbs, nRel, flaggedMeds }) {
   }
   for (const m of flaggedMeds || []) {
     if (!answers[`m:${m}`]) complete = false;
+    else confirm = true; // geflaggtes Dauermedikament → Abwäge-Dialog wie bei relativer KI
   }
   return { complete, stop, confirm };
 }

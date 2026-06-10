@@ -38,6 +38,7 @@ export default function Step1Medikament({ value, onPick }) {
               key={e.id}
               type="button"
               disabled={!ready}
+              aria-pressed={active}
               onClick={() => onPick(e.id)}
               className={`min-h-[56px] px-3 py-2.5 rounded-lg border text-left transition-colors ${
                 active ? "border-accent bg-accent/10" : "border-border bg-card hover:bg-card-hover"

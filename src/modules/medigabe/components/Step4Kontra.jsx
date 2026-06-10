@@ -1,7 +1,7 @@
 // src/modules/medigabe/components/Step4Kontra.jsx
-import { useMemo, useEffect } from "react";
+import { useEffect } from "react";
 import { normKey, triggerMatrixCompute } from "../../lexikon/lib/saaCheck.js";
-import { dauermedRows, kontraMatchIndex } from "../lib/ki.js";
+import { kontraMatchIndex } from "../lib/ki.js";
 import { JaNeinRow, CheckRow } from "./bits.jsx";
 import Badge from "../../lexikon/components/ui/Badge.jsx";
 import { AlertTriangleIcon, CheckCircleIcon } from "../../lexikon/components/ui/icons.jsx";
@@ -11,11 +11,7 @@ const FERTILE = (p) => {
   return p.geschlecht === "w" && j >= 12 && j <= 55;
 };
 
-export default function Step4Kontra({ saaEntry, kontra, relKontra, patient, medNames, matrix, answers, onAnswer, onAnswerMany }) {
-  const rows = useMemo(
-    () => dauermedRows({ meds: medNames, matrix, saaEntry }),
-    [medNames.join("|"), saaEntry.id, matrix]
-  );
+export default function Step4Kontra({ punkte, rows, kombi, patient, answers, onAnswer, onAnswerMany }) {
   const flagged = rows.filter((r) => r.level !== "ok");
   // „Unbekannt" ist nicht „unkritisch": Medis ohne Matrix-Eintrag eigene Kategorie.
   const unknown = rows.filter((r) => r.pending && r.level === "ok");
@@ -23,10 +19,12 @@ export default function Step4Kontra({ saaEntry, kontra, relKontra, patient, medN
   const pending = rows.filter((r) => r.pending).map((r) => r.med);
   useEffect(() => { if (pending.length) triggerMatrixCompute(pending); }, [pending.join("|")]);
 
-  // Offizielle KI-Punkte, die eine geflaggte Substanz namentlich nennen → hervorheben.
-  const highlightIdx = new Set(
-    flagged.map((r) => kontraMatchIndex(r.med, kontra)).filter((i) => i >= 0)
-  );
+  // Offizielle absolut-KI-Punkte, die eine geflaggte Substanz namentlich nennen → hervorheben.
+  const highlightKeys = new Set();
+  flagged.forEach((r) => {
+    const i = kontraMatchIndex(r.med, punkte.abs.map((p) => p.text));
+    if (i >= 0) highlightKeys.add(punkte.abs[i].key);
+  });
   const fertile = FERTILE(patient);
 
   return (
@@ -36,20 +34,27 @@ export default function Step4Kontra({ saaEntry, kontra, relKontra, patient, medN
           <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-critical">Absolut — liegt das vor?</div>
           <button
             type="button"
-            onClick={() => onAnswerMany(Object.fromEntries(kontra.map((_, i) => [`a:${i}`, "nein"])))}
+            onClick={() => onAnswerMany(Object.fromEntries(punkte.abs.map((p) => [p.key, "nein"])))}
             className="h-9 px-3 rounded-lg border border-success/40 bg-success/5 text-success text-xs font-medium hover:bg-success/10 transition-colors flex-shrink-0"
           >
             Keine liegt vor — alle „Nein"
           </button>
         </div>
         <div className="flex flex-col gap-2">
-          {kontra.map((text, i) => (
+          {punkte.abs.map((p) => (
             <JaNeinRow
-              key={i}
-              text={text}
-              value={answers[`a:${i}`]}
-              onChange={(v) => onAnswer(`a:${i}`, v)}
-              highlight={highlightIdx.has(i) || (fertile && /schwanger/i.test(text))}
+              key={p.key}
+              text={kombi ? (
+                <span>
+                  {p.text}
+                  <span className="ml-2 inline-flex gap-1 align-middle">
+                    {p.meds.map((m) => <Badge key={m} variant="neutral" size="sm">{m}</Badge>)}
+                  </span>
+                </span>
+              ) : p.text}
+              value={answers[p.key]}
+              onChange={(v) => onAnswer(p.key, v)}
+              highlight={highlightKeys.has(p.key) || (fertile && /schwanger/i.test(p.text))}
             />
           ))}
         </div>
@@ -58,21 +63,33 @@ export default function Step4Kontra({ saaEntry, kontra, relKontra, patient, medN
         ) : null}
       </section>
 
-      {relKontra.length ? (
+      {punkte.rel.length ? (
         <section>
           <div className="flex items-center justify-between gap-2 mb-2">
             <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-warning">Relativ — liegt das vor?</div>
             <button
               type="button"
-              onClick={() => onAnswerMany(Object.fromEntries(relKontra.map((_, i) => [`r:${i}`, "nein"])))}
+              onClick={() => onAnswerMany(Object.fromEntries(punkte.rel.map((p) => [p.key, "nein"])))}
               className="h-9 px-3 rounded-lg border border-success/40 bg-success/5 text-success text-xs font-medium hover:bg-success/10 transition-colors flex-shrink-0"
             >
               Keine liegt vor — alle „Nein"
             </button>
           </div>
           <div className="flex flex-col gap-2">
-            {relKontra.map((text, i) => (
-              <JaNeinRow key={i} text={text} value={answers[`r:${i}`]} onChange={(v) => onAnswer(`r:${i}`, v)} />
+            {punkte.rel.map((p) => (
+              <JaNeinRow
+                key={p.key}
+                text={kombi ? (
+                  <span>
+                    {p.text}
+                    <span className="ml-2 inline-flex gap-1 align-middle">
+                      {p.meds.map((m) => <Badge key={m} variant="neutral" size="sm">{m}</Badge>)}
+                    </span>
+                  </span>
+                ) : p.text}
+                value={answers[p.key]}
+                onChange={(v) => onAnswer(p.key, v)}
+              />
             ))}
           </div>
         </section>
@@ -99,7 +116,11 @@ export default function Step4Kontra({ saaEntry, kontra, relKontra, patient, medN
                   </Badge>
                   {r.pending ? <Badge variant="neutral" size="sm">vorläufig</Badge> : null}
                 </div>
-                <p className="text-sm text-text-secondary leading-relaxed mb-2">{r.reason}</p>
+                {r.gruende.map((g2, j) => (
+                  <p key={j} className="text-sm text-text-secondary leading-relaxed mb-1">
+                    {kombi ? <span className="font-semibold">{g2.medName}: </span> : null}{g2.reason}
+                  </p>
+                ))}
                 {r.level === "absolut" ? (
                   <p className="text-xs text-critical mb-2">→ Entspricht einem absoluten KI-Punkt oben — dort entscheiden.</p>
                 ) : null}
@@ -120,7 +141,7 @@ export default function Step4Kontra({ saaEntry, kontra, relKontra, patient, medN
             {okCount ? (
               <div className="flex items-center gap-2 border border-border bg-card rounded-lg px-3 py-2.5">
                 <CheckCircleIcon className="h-4 w-4 text-success flex-shrink-0" />
-                <span className="text-xs text-text-secondary">{okCount} Medikament(e) unkritisch gegenüber {saaEntry.name}.</span>
+                <span className="text-xs text-text-secondary">{okCount} Medikament(e) unkritisch gegenüber der Auswahl.</span>
               </div>
             ) : null}
             {!rows.length ? (

@@ -4,21 +4,6 @@
 
 import { normKey, aggregateCheck } from "../../lexikon/lib/saaCheck.js";
 
-// Pro Patienten-Medi: Flag-Level gegen GENAU das gewählte SAA-Medikament.
-// → [{ med, level, reason, pending }]
-export function dauermedRows({ meds, matrix, saaEntry }) {
-  return (meds || []).map((med) => {
-    const { results, pending } = aggregateCheck([med], matrix, [saaEntry]);
-    const hit = results.find((r) => r.id === saaEntry.id);
-    return {
-      med,
-      level: hit ? hit.level : "ok",
-      reason: hit ? hit.reason : "",
-      pending: pending.length > 0,
-    };
-  });
-}
-
 // Index des offiziellen Kontra-Punkts, der die Substanz namentlich nennt, sonst -1.
 // Nur fürs Hervorheben (kein Block). Kurz-Tokens < 5 Zeichen matchen nicht —
 // Abkürzungen wie „Met" würden sonst in beliebigen KI-Texten falsch anschlagen.
@@ -37,19 +22,66 @@ export function kiListen(saaEntry, ind) {
   };
 }
 
-// answers: { "a:i": "ja"|"nein", "r:i": "ja"|"nein", "m:<normKey>": true }
+// Gemergte KI-Punktlisten über alle Gaben: identische Texte dedupliziert
+// (Key aus normKey), meds[] sammelt die Namen der betroffenen Medikamente.
+// gaben: [{ saaEntry, ind }]
+export function kiPunkte(gaben) {
+  const mk = (prefix) => {
+    const map = new Map();
+    return {
+      add(text, medName) {
+        const key = `${prefix}:${normKey(text)}`;
+        const cur = map.get(key);
+        if (cur) { if (!cur.meds.includes(medName)) cur.meds.push(medName); }
+        else map.set(key, { key, text, meds: [medName] });
+      },
+      list: () => [...map.values()],
+    };
+  };
+  const abs = mk("a");
+  const rel = mk("r");
+  for (const { saaEntry, ind } of gaben) {
+    const { kontra, relKontra } = kiListen(saaEntry, ind);
+    for (const t of kontra) abs.add(t, saaEntry.name);
+    for (const t of relKontra) rel.add(t, saaEntry.name);
+  }
+  return { abs: abs.list(), rel: rel.list() };
+}
+
+const LEVEL_RANG = { ok: 0, vorsicht: 1, absolut: 2 };
+
+// Dauermed-Abgleich gegen ALLE gewählten Medikamente: höchstes Level gewinnt,
+// gruende führt jeden Treffer mit Medikamentenname auf.
+export function dauermedRowsMulti({ meds, matrix, saaEntries }) {
+  return (meds || []).map((med) => {
+    const { results, pending } = aggregateCheck([med], matrix, saaEntries);
+    const gruende = [];
+    let level = "ok";
+    for (const e of saaEntries) {
+      const hit = results.find((r) => r.id === e.id);
+      if (hit && hit.level !== "ok") {
+        gruende.push({ medName: e.name, level: hit.level, reason: hit.reason });
+        if (LEVEL_RANG[hit.level] > LEVEL_RANG[level]) level = hit.level;
+      }
+    }
+    return { med, level, gruende, pending: pending.length > 0 };
+  });
+}
+
+// answers: { "<absKey>": "ja"|"nein", "<relKey>": "ja"|"nein", "m:<normKey>": true }
+// absKeys/relKeys: stable string keys (a:<normKey(text)>) aus kiPunkte().
 // flaggedMeds: normKeys der Dauermed-Zeilen mit level !== "ok" (nur die brauchen Haken).
-export function kiOutcome({ answers, nAbs, nRel, flaggedMeds }) {
+export function kiOutcome({ answers, absKeys, relKeys, flaggedMeds }) {
   let complete = true;
   let stop = false;
   let confirm = false;
-  for (let i = 0; i < nAbs; i++) {
-    const a = answers[`a:${i}`];
+  for (const k of absKeys || []) {
+    const a = answers[k];
     if (a !== "ja" && a !== "nein") complete = false;
     if (a === "ja") stop = true;
   }
-  for (let i = 0; i < nRel; i++) {
-    const a = answers[`r:${i}`];
+  for (const k of relKeys || []) {
+    const a = answers[k];
     if (a !== "ja" && a !== "nein") complete = false;
     if (a === "ja") confirm = true;
   }

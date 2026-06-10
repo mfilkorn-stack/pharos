@@ -16,7 +16,7 @@ import Step7SechsR, { sechsRItems } from "./components/Step7SechsR.jsx";
 import Step8Doku from "./components/Step8Doku.jsx";
 import Button from "../lexikon/components/ui/Button.jsx";
 import { computeDose, computeVolume, fmt } from "./lib/dose.js";
-import { kiOutcome, dauermedRows, kiListen } from "./lib/ki.js";
+import { kiOutcome, dauermedRowsMulti, kiPunkte } from "./lib/ki.js";
 import { normKey } from "../lexikon/lib/saaCheck.js";
 import { useSaaMatrix } from "../../lib/saaMatrix.js";
 
@@ -103,11 +103,21 @@ export default function Medigabe({ onJumpToMedScan }) {
     const p = w.patient;
     const kg = Number(p.kg);
     const alterJahre = p.alterEinheit === "monate" ? Number(p.alter) / 12 : Number(p.alter);
-    const effMinKg = Math.max(dosingEntry?.minKg ?? 0, ind?.minKg ?? 0) || null;
-    const effMinKgHinweis = (ind?.minKg ?? 0) >= (dosingEntry?.minKg ?? 0)
-      ? (ind?.minKgHinweis ?? dosingEntry?.minKgHinweis)
-      : (dosingEntry?.minKgHinweis ?? ind?.minKgHinweis);
-    const minAlterMonate = dosingEntry?.minAlterMonate ?? null;
+    // Strengste Gewichts- und Altersgrenzen über alle Gaben aggregieren.
+    let effMinKg = null, effMinKgHinweis = null, minAlterMonate = null, minAlterHinweis = null;
+    for (const g of w.gaben) {
+      const de = dosing.entries.find((e) => e.id === g.medId);
+      const gi = de?.indikationen.find((i) => i.id === g.indId);
+      const mk = Math.max(de?.minKg ?? 0, gi?.minKg ?? 0) || null;
+      if (mk != null && (effMinKg == null || mk > effMinKg)) {
+        effMinKg = mk;
+        effMinKgHinweis = (gi?.minKg ?? 0) >= (de?.minKg ?? 0) ? (gi?.minKgHinweis ?? de?.minKgHinweis) : (de?.minKgHinweis ?? gi?.minKgHinweis);
+      }
+      if (de?.minAlterMonate != null && (minAlterMonate == null || de.minAlterMonate > minAlterMonate)) {
+        minAlterMonate = de.minAlterMonate;
+        minAlterHinweis = de.minAlterHinweis;
+      }
+    }
     const valid =
       p.geschlecht && p.alter !== "" && p.kg !== "" &&
       kg >= 1 && kg <= 250 && alterJahre >= 0 && alterJahre <= 120 &&
@@ -131,26 +141,28 @@ export default function Medigabe({ onJumpToMedScan }) {
         minKg={effMinKg}
         minKgHinweis={effMinKgHinweis}
         minAlterMonate={minAlterMonate}
-        minAlterHinweis={dosingEntry?.minAlterHinweis}
+        minAlterHinweis={minAlterHinweis}
         onJumpToMedScan={onJumpToMedScan}
       />
     );
     footer = <Button size="lg" className="w-full" disabled={!valid} onClick={() => patchWizard({ step: 4 })}>Weiter</Button>;
-  } else if (w.step === 4 && saaEntry) {
+  } else if (w.step === 4 && w.gaben.length) {
+    const kiGaben = w.gaben.map((g) => ({
+      saaEntry: saa.entries.find((e) => e.id === g.medId),
+      ind: dosing.entries.find((e) => e.id === g.medId)?.indikationen.find((i) => i.id === g.indId) || null,
+    })).filter((x) => x.saaEntry);
+    const punkte = kiPunkte(kiGaben);
     const medNames = w.patient.dauerStatus === "uebernommen" ? caseMedNames(meds) : [];
-    const rows = dauermedRows({ meds: medNames, matrix: saaMatrix, saaEntry });
+    const rows = dauermedRowsMulti({ meds: medNames, matrix: saaMatrix, saaEntries: kiGaben.map((x) => x.saaEntry) });
     const flaggedMeds = rows.filter((r) => r.level !== "ok").map((r) => normKey(r.med));
-    const { kontra, relKontra } = kiListen(saaEntry, ind);
-    const out = kiOutcome({ answers: w.ki, nAbs: kontra.length, nRel: relKontra.length, flaggedMeds });
+    const out = kiOutcome({ answers: w.ki, absKeys: punkte.abs.map((p) => p.key), relKeys: punkte.rel.map((p) => p.key), flaggedMeds });
 
     body = (
       <Step4Kontra
-        saaEntry={saaEntry}
-        kontra={kontra}
-        relKontra={relKontra}
+        punkte={punkte}
+        rows={rows}
+        kombi={w.gaben.length > 1}
         patient={w.patient}
-        medNames={medNames}
-        matrix={saaMatrix}
         answers={w.ki}
         onAnswer={(k, v) => patchWizard({ ki: { ...getWizard().ki, [k]: v } })}
         onAnswerMany={(patch) => patchWizard({ ki: { ...getWizard().ki, ...patch } })}

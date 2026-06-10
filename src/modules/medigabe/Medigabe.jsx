@@ -10,6 +10,7 @@ import Step1Medikament from "./components/Step1Medikament.jsx";
 import Step2Indikation from "./components/Step2Indikation.jsx";
 import Step3Patient from "./components/Step3Patient.jsx";
 import Step4Kontra from "./components/Step4Kontra.jsx";
+import Step5Aufklaerung, { AUFKL_ITEMS } from "./components/Step5Aufklaerung.jsx";
 import Button from "../lexikon/components/ui/Button.jsx";
 import { kiOutcome, dauermedRows } from "./lib/ki.js";
 import { normKey } from "../lexikon/lib/saaCheck.js";
@@ -88,6 +89,19 @@ export default function Medigabe({ onJumpToMedScan }) {
       >
         Weiter
       </Button>
+    );
+  } else if (w.step === 5) {
+    const a = w.aufkl;
+    const itemsOk = AUFKL_ITEMS.every((_, i) => a.items[i]);
+    const verweigert = a.faehig === "ja" && a.einwilligung === "nein";
+    const ok =
+      (a.faehig === "ja" && a.einwilligung === "ja" && itemsOk) ||
+      ((a.faehig === "nein" || a.faehig === "unklar") && a.mutmasslich);
+    body = <Step5Aufklaerung aufkl={a} onPatch={(patch) => patchWizard({ aufkl: { ...getWizard().aufkl, ...patch } })} />;
+    footer = verweigert ? (
+      <Button variant="subtle" size="lg" className="w-full" onClick={() => resetWizard()}>Beenden — keine Gabe</Button>
+    ) : (
+      <Button size="lg" className="w-full" disabled={!ok} onClick={() => patchWizard({ step: 6 })}>Weiter</Button>
     );
   } else {
     body = <p className="text-sm text-text-secondary">Schritt {w.step} — folgt.</p>;

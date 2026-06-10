@@ -3,7 +3,8 @@
 
 let entries = [];
 const subs = new Set();
-const emit = () => subs.forEach((fn) => fn());
+// Snapshot vor Iteration: Unsubscribe während emit darf andere Subscriber nicht überspringen.
+const emit = () => [...subs].forEach((fn) => fn());
 const key = (s) => (s || "").trim().toLowerCase();
 
 export function getCaseMeds() { return entries; }

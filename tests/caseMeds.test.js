@@ -32,6 +32,10 @@ describe("caseMeds Store", () => {
     addCaseMed({ wirkstoff: "Y", source: "t" });
     expect(n).toBe(1);
   });
+  it("getSnapshot ist referenzstabil zwischen Mutationen (useSyncExternalStore-Kontrakt)", () => {
+    addCaseMed({ wirkstoff: "X", source: "t" });
+    expect(getCaseMeds()).toBe(getCaseMeds());
+  });
   it("caseMedNames filtert unknown/rejected (wie SaaCheck)", () => {
     const list = [
       { wirkstoff: "Metoprolol", source: "0a" },

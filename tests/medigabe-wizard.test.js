@@ -9,6 +9,7 @@ describe("wizard Store", () => {
     expect(w.step).toBe(1);
     expect(w.medId).toBeNull();
     expect(w.patient.dauerStatus).toBeNull();
+    expect(w.medsFingerprint).toBeNull();
   });
   it("patcht flach und benachrichtigt Subscriber", () => {
     let n = 0;

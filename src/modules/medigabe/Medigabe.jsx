@@ -1,6 +1,6 @@
 // src/modules/medigabe/Medigabe.jsx
 // Medigabe nach SAA — geführter 8-Schritte-Wizard (SAA S. 41 Standardvorgehen).
-import { useSyncExternalStore, useCallback } from "react";
+import { useSyncExternalStore, useCallback, useEffect } from "react";
 import saa from "../lexikon/data/saa.json";
 import dosing from "./data/dosing.json";
 import { getWizard, patchWizard, resetWizard, subscribeWizard } from "./lib/wizard.js";
@@ -18,12 +18,32 @@ import Button from "../lexikon/components/ui/Button.jsx";
 import { computeDose, computeVolume, fmt } from "./lib/dose.js";
 import { kiOutcome, dauermedRows } from "./lib/ki.js";
 import { normKey } from "../lexikon/lib/saaCheck.js";
-import saaMatrixData from "../lexikon/data/saa-matrix.json";
+import { useSaaMatrix } from "../../lib/saaMatrix.js";
 
 export default function Medigabe({ onJumpToMedScan }) {
   const w = useSyncExternalStore(subscribeWizard, getWizard);
   const meds = useSyncExternalStore(subscribeCaseMeds, getCaseMeds);
+  const { matrix: saaMatrix } = useSaaMatrix();
   const back = useCallback(() => patchWizard({ step: Math.max(1, getWizard().step - 1) }), []);
+
+  // Wächter: Weicht die Einsatz-Medikationsliste vom bestätigten Stand ab (z. B. Scan
+  // in MedScan mitten im Wizard — auch während Medigabe unmounted war), verfällt die
+  // Übernahme: zurück zu Schritt 3, 6-R und Freigabe verworfen. Sonst umginge das
+  // neue Medikament den KI-Check. Vergleichsbasis ist der im Store gespeicherte
+  // Fingerprint, damit der Check auch beim Re-Mount greift.
+  const medsKey = caseMedNames(meds).map(normKey).sort().join("|");
+  useEffect(() => {
+    const cur = getWizard();
+    if (cur.patient.dauerStatus == null) return; // noch nichts bestätigt — nichts zu verwerfen
+    if (medsKey === (cur.medsFingerprint ?? "")) return;
+    patchWizard({
+      step: Math.min(cur.step, 3),
+      patient: { ...cur.patient, dauerStatus: null },
+      medsFingerprint: null,
+      sechsR: {},
+      freigabeZeit: null,
+    });
+  }, [medsKey]);
   const saaEntry = saa.entries.find((e) => e.id === w.medId) || null;
   const dosingEntry = dosing.entries.find((e) => e.id === w.medId) || null;
   const ind = dosingEntry?.indikationen.find((i) => i.id === w.indId) || null;
@@ -37,8 +57,8 @@ export default function Medigabe({ onJumpToMedScan }) {
   let footer = null;
 
   // Sicherheitsregel: Jede Änderung an Werten, die in spätere Bestätigungen einfließen
-  // (Medikament, Indikation, Patient, Ampulle/Weg), verwirft die nachgelagerten Haken —
-  // 6-R und Aufklärung dürfen nie für veraltete Werte vorbestätigt sein.
+  // (Medikament, Indikation, Patient, Ampulle/Weg), verwirft die nachgelagerten 6-R-Haken
+  // und die Freigabe; der Medikamentenwechsel zusätzlich KI-Antworten und Aufklärung.
   if (w.step === 1) {
     body = (
       <Step1Medikament
@@ -67,7 +87,11 @@ export default function Medigabe({ onJumpToMedScan }) {
     body = (
       <Step3Patient
         patient={p}
-        onPatch={(patch) => patchWizard({ patient: { ...getWizard().patient, ...patch }, sechsR: {}, freigabeZeit: null })}
+        onPatch={(patch) => {
+          // Bestätigung der Dauermedikation pinnt den Listen-Fingerprint im Store.
+          const fp = patch.dauerStatus === "uebernommen" ? medsKey : patch.dauerStatus === "keine" ? "" : getWizard().medsFingerprint;
+          patchWizard({ patient: { ...getWizard().patient, ...patch }, medsFingerprint: fp, sechsR: {}, freigabeZeit: null });
+        }}
         minKg={dosingEntry?.minKg}
         minKgHinweis={dosingEntry?.minKgHinweis}
         onJumpToMedScan={onJumpToMedScan}
@@ -76,7 +100,7 @@ export default function Medigabe({ onJumpToMedScan }) {
     footer = <Button size="lg" className="w-full" disabled={!valid} onClick={() => patchWizard({ step: 4 })}>Weiter</Button>;
   } else if (w.step === 4 && saaEntry) {
     const medNames = w.patient.dauerStatus === "uebernommen" ? caseMedNames(meds) : [];
-    const rows = dauermedRows({ meds: medNames, matrix: saaMatrixData.entries, saaEntry });
+    const rows = dauermedRows({ meds: medNames, matrix: saaMatrix, saaEntry });
     const flaggedMeds = rows.filter((r) => r.level !== "ok").map((r) => normKey(r.med));
     const out = kiOutcome({ answers: w.ki, nAbs: saaEntry.kontra.length, nRel: saaEntry.relKontra.length, flaggedMeds });
 
@@ -85,6 +109,7 @@ export default function Medigabe({ onJumpToMedScan }) {
         saaEntry={saaEntry}
         patient={w.patient}
         medNames={medNames}
+        matrix={saaMatrix}
         answers={w.ki}
         onAnswer={(k, v) => patchWizard({ ki: { ...getWizard().ki, [k]: v } })}
       />

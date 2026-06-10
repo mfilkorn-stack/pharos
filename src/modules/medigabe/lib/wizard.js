@@ -12,6 +12,10 @@ const initial = () => ({
   sechsR: {},
   durchf: {},
   freigabeZeit: null,
+  // Fingerprint der Einsatzliste zum Zeitpunkt der Dauermedikations-Bestätigung.
+  // Im Store (nicht in der Komponente), damit Änderungen während eines
+  // MedScan-Besuchs beim Rückkehr-Mount erkannt werden.
+  medsFingerprint: null,
 });
 
 let state = initial();

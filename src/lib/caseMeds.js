@@ -23,6 +23,18 @@ export function removeCaseMed(wirkstoff) {
   emit();
 }
 
+// Ergänzt/aktualisiert per Wirkstoffname statt zu ersetzen — ein neuer Scan in
+// MedScan darf zuvor erfasste Einsatz-Medikation nicht stillschweigend löschen.
+export function upsertCaseMeds(list) {
+  if (!list?.length) return;
+  const incoming = new Map(list.filter((e) => e?.wirkstoff).map((e) => [key(e.wirkstoff), e]));
+  entries = [
+    ...entries.map((e) => incoming.get(key(e.wirkstoff)) || e),
+    ...list.filter((e) => e?.wirkstoff && !entries.some((x) => key(x.wirkstoff) === key(e.wirkstoff))),
+  ];
+  emit();
+}
+
 export function clearCaseMeds() { entries = []; emit(); }
 
 export function subscribeCaseMeds(fn) { subs.add(fn); return () => subs.delete(fn); }

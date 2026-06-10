@@ -1,6 +1,5 @@
 // src/modules/medigabe/components/Step4Kontra.jsx
 import { useMemo, useEffect } from "react";
-import saaMatrixData from "../../lexikon/data/saa-matrix.json";
 import { normKey, triggerMatrixCompute } from "../../lexikon/lib/saaCheck.js";
 import { dauermedRows, kontraMatchIndex } from "../lib/ki.js";
 import { JaNeinRow, CheckRow } from "./bits.jsx";
@@ -12,13 +11,15 @@ const FERTILE = (p) => {
   return p.geschlecht === "w" && j >= 12 && j <= 55;
 };
 
-export default function Step4Kontra({ saaEntry, patient, medNames, answers, onAnswer }) {
+export default function Step4Kontra({ saaEntry, patient, medNames, matrix, answers, onAnswer }) {
   const rows = useMemo(
-    () => dauermedRows({ meds: medNames, matrix: saaMatrixData.entries, saaEntry }),
-    [medNames.join("|"), saaEntry.id]
+    () => dauermedRows({ meds: medNames, matrix, saaEntry }),
+    [medNames.join("|"), saaEntry.id, matrix]
   );
   const flagged = rows.filter((r) => r.level !== "ok");
-  const okCount = rows.length - flagged.length;
+  // „Unbekannt" ist nicht „unkritisch": Medis ohne Matrix-Eintrag eigene Kategorie.
+  const unknown = rows.filter((r) => r.pending && r.level === "ok");
+  const okCount = rows.length - flagged.length - unknown.length;
   const pending = rows.filter((r) => r.pending).map((r) => r.med);
   useEffect(() => { if (pending.length) triggerMatrixCompute(pending); }, [pending.join("|")]);
 
@@ -89,6 +90,15 @@ export default function Step4Kontra({ saaEntry, patient, medNames, answers, onAn
                 </CheckRow>
               </div>
             ))}
+            {unknown.length ? (
+              <div className="flex items-center gap-2 border border-warning/30 bg-card rounded-lg px-3 py-2.5">
+                <AlertTriangleIcon className="h-4 w-4 text-warning flex-shrink-0" />
+                <span className="text-xs text-text-secondary">
+                  {unknown.map((r) => r.med).join(", ")}: KI-Abgleich ausstehend — eigenständig prüfen.
+                </span>
+                <Badge variant="neutral" size="sm">vorläufig</Badge>
+              </div>
+            ) : null}
             {okCount ? (
               <div className="flex items-center gap-2 border border-border bg-card rounded-lg px-3 py-2.5">
                 <CheckCircleIcon className="h-4 w-4 text-success flex-shrink-0" />

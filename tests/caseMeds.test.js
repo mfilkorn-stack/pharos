@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import {
   getCaseMeds, setCaseMeds, addCaseMed, removeCaseMed,
-  clearCaseMeds, subscribeCaseMeds, caseMedNames,
+  clearCaseMeds, subscribeCaseMeds, caseMedNames, upsertCaseMeds,
 } from "../src/lib/caseMeds.js";
 
 beforeEach(() => clearCaseMeds());
@@ -31,6 +31,18 @@ describe("caseMeds Store", () => {
     un();
     addCaseMed({ wirkstoff: "Y", source: "t" });
     expect(n).toBe(1);
+  });
+  it("upsertCaseMeds ergänzt statt zu ersetzen — bestehende Einträge bleiben", () => {
+    setCaseMeds([{ wirkstoff: "Ramipril", source: "medigabe" }]);
+    upsertCaseMeds([{ wirkstoff: "Metoprolol", source: "0a" }]);
+    expect(getCaseMeds().map((e) => e.wirkstoff)).toEqual(["Ramipril", "Metoprolol"]);
+  });
+  it("upsertCaseMeds aktualisiert gleichnamige Einträge (neuer gewinnt, case-insensitive)", () => {
+    setCaseMeds([{ wirkstoff: "metoprolol", source: "medigabe" }]);
+    upsertCaseMeds([{ wirkstoff: "Metoprolol", source: "0a", id: "metoprolol" }]);
+    const list = getCaseMeds();
+    expect(list).toHaveLength(1);
+    expect(list[0].source).toBe("0a");
   });
   it("getSnapshot ist referenzstabil zwischen Mutationen (useSyncExternalStore-Kontrakt)", () => {
     addCaseMed({ wirkstoff: "X", source: "t" });

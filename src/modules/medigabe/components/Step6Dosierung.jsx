@@ -9,9 +9,10 @@ export default function Step6Dosierung({ ind, cave, patient, dosier, onPatch }) 
   const prep = route && dosier.prep != null ? route.preps[dosier.prep] : null;
   const kg = Number(patient.kg);
   const alterJahre = patient.alterEinheit === "monate" ? Number(patient.alter) / 12 : Number(patient.alter);
+  const eingabenOk = Number.isFinite(kg) && kg > 0 && Number.isFinite(alterJahre);
 
   let dose = null, vol = null;
-  if (route && prep) {
+  if (route && prep && eingabenOk) {
     dose = computeDose({ dosis: route.dosis, kg, alterJahre, maxMgProKg: route.maxMgProKg, maxMgAbsolut: route.maxMgAbsolut });
     vol = computeVolume({ mg: dose.mg, mgPerMl: prep.mgPerMl, maxMg: dose.maxMg });
   }
@@ -62,6 +63,10 @@ export default function Step6Dosierung({ ind, cave, patient, dosier, onPatch }) 
         </div>
       ) : null}
 
+      {route && prep && !eingabenOk ? (
+        <p className="text-sm text-critical">Patientendaten unvollständig — zurück zu Schritt 3.</p>
+      ) : null}
+
       {route && prep && dose && vol ? (
         <>
           {prep.zugabe ? (
@@ -91,7 +96,8 @@ export default function Step6Dosierung({ ind, cave, patient, dosier, onPatch }) 
             {[...dose.schritte, ...vol.schritte].map((s, i) => (<div key={i}>{s}</div>))}
           </div>
 
-          {route.repetition ? <p className="text-xs text-text-secondary"><span className="font-semibold">Repetition:</span> {route.repetition}</p> : null}
+          {(() => { const repetition = dose?.stufe?.repetition ?? route.repetition; return repetition ? <p className="text-xs text-text-secondary"><span className="font-semibold">Repetition:</span> {repetition}</p> : null; })()}
+          {dose?.stufe?.hinweis ? <p className="text-xs text-warning">{dose.stufe.hinweis}</p> : null}
           {route.hinweise?.map((h, i) => (<p key={i} className="text-xs text-text-secondary">• {h}</p>))}
         </>
       ) : null}

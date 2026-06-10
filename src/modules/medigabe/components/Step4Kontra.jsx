@@ -11,7 +11,7 @@ const FERTILE = (p) => {
   return p.geschlecht === "w" && j >= 12 && j <= 55;
 };
 
-export default function Step4Kontra({ saaEntry, patient, medNames, matrix, answers, onAnswer }) {
+export default function Step4Kontra({ saaEntry, kontra, relKontra, patient, medNames, matrix, answers, onAnswer }) {
   const rows = useMemo(
     () => dauermedRows({ meds: medNames, matrix, saaEntry }),
     [medNames.join("|"), saaEntry.id, matrix]
@@ -25,7 +25,7 @@ export default function Step4Kontra({ saaEntry, patient, medNames, matrix, answe
 
   // Offizielle KI-Punkte, die eine geflaggte Substanz namentlich nennen → hervorheben.
   const highlightIdx = new Set(
-    flagged.map((r) => kontraMatchIndex(r.med, saaEntry.kontra)).filter((i) => i >= 0)
+    flagged.map((r) => kontraMatchIndex(r.med, kontra)).filter((i) => i >= 0)
   );
   const fertile = FERTILE(patient);
 
@@ -34,7 +34,7 @@ export default function Step4Kontra({ saaEntry, patient, medNames, matrix, answe
       <section>
         <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-critical mb-2">Absolut — liegt das vor?</div>
         <div className="flex flex-col gap-2">
-          {saaEntry.kontra.map((text, i) => (
+          {kontra.map((text, i) => (
             <JaNeinRow
               key={i}
               text={text}
@@ -49,11 +49,11 @@ export default function Step4Kontra({ saaEntry, patient, medNames, matrix, answe
         ) : null}
       </section>
 
-      {saaEntry.relKontra.length ? (
+      {relKontra.length ? (
         <section>
           <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-warning mb-2">Relativ — liegt das vor?</div>
           <div className="flex flex-col gap-2">
-            {saaEntry.relKontra.map((text, i) => (
+            {relKontra.map((text, i) => (
               <JaNeinRow key={i} text={text} value={answers[`r:${i}`]} onChange={(v) => onAnswer(`r:${i}`, v)} />
             ))}
           </div>

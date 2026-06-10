@@ -16,7 +16,7 @@ import Step7SechsR, { sechsRItems } from "./components/Step7SechsR.jsx";
 import Step8Doku from "./components/Step8Doku.jsx";
 import Button from "../lexikon/components/ui/Button.jsx";
 import { computeDose, computeVolume, fmt } from "./lib/dose.js";
-import { kiOutcome, dauermedRows } from "./lib/ki.js";
+import { kiOutcome, dauermedRows, kiListen } from "./lib/ki.js";
 import { normKey } from "../lexikon/lib/saaCheck.js";
 import { useSaaMatrix } from "../../lib/saaMatrix.js";
 
@@ -72,16 +72,22 @@ export default function Medigabe({ onJumpToMedScan }) {
     );
     footer = <Button size="lg" className="w-full" disabled={!w.medId} onClick={() => patchWizard({ step: 2 })}>Weiter</Button>;
   } else if (w.step === 2) {
-    body = <Step2Indikation medId={w.medId} value={w.indId} onPick={(indId) => patchWizard({ indId, dosier: { weg: null, prep: null }, sechsR: {}, freigabeZeit: null })} />;
+    body = <Step2Indikation medId={w.medId} value={w.indId} onPick={(indId) => patchWizard({ indId, ki: {}, dosier: { weg: null, prep: null }, sechsR: {}, freigabeZeit: null })} />;
     footer = <Button size="lg" className="w-full" disabled={!w.indId} onClick={() => patchWizard({ step: 3 })}>Weiter</Button>;
   } else if (w.step === 3) {
     const p = w.patient;
     const kg = Number(p.kg);
     const alterJahre = p.alterEinheit === "monate" ? Number(p.alter) / 12 : Number(p.alter);
+    const effMinKg = Math.max(dosingEntry?.minKg ?? 0, ind?.minKg ?? 0) || null;
+    const effMinKgHinweis = (ind?.minKg ?? 0) >= (dosingEntry?.minKg ?? 0)
+      ? (ind?.minKgHinweis ?? dosingEntry?.minKgHinweis)
+      : (dosingEntry?.minKgHinweis ?? ind?.minKgHinweis);
+    const minAlterMonate = dosingEntry?.minAlterMonate ?? null;
     const valid =
       p.geschlecht && p.alter !== "" && p.kg !== "" &&
       kg >= 1 && kg <= 250 && alterJahre >= 0 && alterJahre <= 120 &&
-      (dosingEntry?.minKg == null || kg >= dosingEntry.minKg) &&
+      (effMinKg == null || kg >= effMinKg) &&
+      (minAlterMonate == null || alterJahre * 12 >= minAlterMonate) &&
       // Status muss zur Liste passen: „keine" nur bei leerer Liste, „übernommen" nur mit Einträgen.
       (p.dauerStatus === "keine" ? meds.length === 0 : p.dauerStatus === "uebernommen" && meds.length > 0);
     body = (
@@ -92,8 +98,10 @@ export default function Medigabe({ onJumpToMedScan }) {
           const fp = patch.dauerStatus === "uebernommen" ? medsKey : patch.dauerStatus === "keine" ? "" : getWizard().medsFingerprint;
           patchWizard({ patient: { ...getWizard().patient, ...patch }, medsFingerprint: fp, sechsR: {}, freigabeZeit: null });
         }}
-        minKg={dosingEntry?.minKg}
-        minKgHinweis={dosingEntry?.minKgHinweis}
+        minKg={effMinKg}
+        minKgHinweis={effMinKgHinweis}
+        minAlterMonate={minAlterMonate}
+        minAlterHinweis={dosingEntry?.minAlterHinweis}
         onJumpToMedScan={onJumpToMedScan}
       />
     );
@@ -102,11 +110,14 @@ export default function Medigabe({ onJumpToMedScan }) {
     const medNames = w.patient.dauerStatus === "uebernommen" ? caseMedNames(meds) : [];
     const rows = dauermedRows({ meds: medNames, matrix: saaMatrix, saaEntry });
     const flaggedMeds = rows.filter((r) => r.level !== "ok").map((r) => normKey(r.med));
-    const out = kiOutcome({ answers: w.ki, nAbs: saaEntry.kontra.length, nRel: saaEntry.relKontra.length, flaggedMeds });
+    const { kontra, relKontra } = kiListen(saaEntry, ind);
+    const out = kiOutcome({ answers: w.ki, nAbs: kontra.length, nRel: relKontra.length, flaggedMeds });
 
     body = (
       <Step4Kontra
         saaEntry={saaEntry}
+        kontra={kontra}
+        relKontra={relKontra}
         patient={w.patient}
         medNames={medNames}
         matrix={saaMatrix}

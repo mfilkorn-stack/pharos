@@ -1,6 +1,6 @@
 // tests/medigabe-ki.test.js
 import { describe, it, expect } from "vitest";
-import { dauermedRows, kontraMatchIndex, kiOutcome } from "../src/modules/medigabe/lib/ki.js";
+import { dauermedRows, kontraMatchIndex, kiOutcome, kiListen } from "../src/modules/medigabe/lib/ki.js";
 
 const saaEntry = {
   id: "saa:esketamin",
@@ -66,5 +66,19 @@ describe("kiOutcome", () => {
     const answers = { "a:0": "nein", "a:1": "nein", "r:0": "nein" };
     const r = kiOutcome({ answers, nAbs: 2, nRel: 1, flaggedMeds: [] });
     expect(r).toMatchObject({ complete: true, stop: false, confirm: false });
+  });
+});
+
+describe("kiListen (Indikations-Override)", () => {
+  const entry = { id: "x", kontra: ["A", "B"], relKontra: ["R"] };
+  it("nutzt Indikations-Listen, wenn vorhanden", () => {
+    const ind = { kontra: ["Nur K1"], relKontra: [] };
+    expect(kiListen(entry, ind)).toEqual({ kontra: ["Nur K1"], relKontra: [] });
+  });
+  it("fällt auf saa.json zurück, wenn Indikation keine Listen definiert", () => {
+    expect(kiListen(entry, {})).toEqual({ kontra: ["A", "B"], relKontra: ["R"] });
+  });
+  it("verträgt fehlende Indikation (null)", () => {
+    expect(kiListen(entry, null)).toEqual({ kontra: ["A", "B"], relKontra: ["R"] });
   });
 });

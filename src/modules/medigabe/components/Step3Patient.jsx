@@ -8,7 +8,7 @@ import { CameraIcon, MagnifyingGlassIcon, XIcon } from "../../lexikon/components
 
 const KG_CHIPS = [50, 60, 70, 80, 90, 100];
 
-export default function Step3Patient({ patient, onPatch, minKg, minKgHinweis, onJumpToMedScan }) {
+export default function Step3Patient({ patient, onPatch, minKg, minKgHinweis, minAlterMonate, minAlterHinweis, onJumpToMedScan }) {
   const meds = useSyncExternalStore(subscribeCaseMeds, getCaseMeds);
   const [medInput, setMedInput] = useState("");
   const names = caseMedNames(meds);
@@ -26,6 +26,7 @@ export default function Step3Patient({ patient, onPatch, minKg, minKgHinweis, on
   const kgInvalid = patient.kg !== "" && (!(kg > 0) || kg < 1 || kg > 250);
   const alterInvalid = patient.alter !== "" && (!(alterJahre >= 0) || alterJahre > 120);
   const unterMinKg = minKg != null && patient.kg !== "" && kg >= 1 && kg < minKg;
+  const unterMinAlter = minAlterMonate != null && patient.alter !== "" && alterJahre * 12 < minAlterMonate;
 
   return (
     <div className="flex flex-col gap-5">
@@ -80,7 +81,13 @@ export default function Step3Patient({ patient, onPatch, minKg, minKgHinweis, on
 
       {unterMinKg ? (
         <div className="border border-critical/40 bg-critical/10 rounded-lg p-3 text-sm text-text-primary">
-          <span className="font-semibold text-critical">Altersgrenze: </span>{minKgHinweis}
+          <span className="font-semibold text-critical">Gewichtsgrenze: </span>{minKgHinweis}
+        </div>
+      ) : null}
+
+      {unterMinAlter ? (
+        <div className="border border-critical/40 bg-critical/10 rounded-lg p-3 text-sm text-text-primary">
+          <span className="font-semibold text-critical">Altersgrenze: </span>{minAlterHinweis}
         </div>
       ) : null}
 

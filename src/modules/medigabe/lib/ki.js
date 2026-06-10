@@ -28,6 +28,15 @@ export function kontraMatchIndex(medName, kontraList) {
   return (kontraList || []).findIndex((k) => normKey(k).includes(n));
 }
 
+// KI-Punktquellen einer Gabe: Indikations-Override (SAA scoped Listen, z. B.
+// Midazolam „bei Analgosedierung") — sonst die globalen saa.json-Listen.
+export function kiListen(saaEntry, ind) {
+  return {
+    kontra: ind?.kontra ?? saaEntry.kontra ?? [],
+    relKontra: ind?.relKontra ?? saaEntry.relKontra ?? [],
+  };
+}
+
 // answers: { "a:i": "ja"|"nein", "r:i": "ja"|"nein", "m:<normKey>": true }
 // flaggedMeds: normKeys der Dauermed-Zeilen mit level !== "ok" (nur die brauchen Haken).
 export function kiOutcome({ answers, nAbs, nRel, flaggedMeds }) {

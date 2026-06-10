@@ -48,6 +48,17 @@ export default function Step6Dosierung({ ind, cave, patient, dosier, onPatch }) 
               </button>
             ))}
           </div>
+          {/* Cave direkt bei der Ampullen-Wahl — Verwechslungswarnungen müssen VOR dem Griff zur Ampulle sichtbar sein. */}
+          {cave?.length ? (
+            <div className="mt-2 border border-warning/40 bg-warning/5 rounded-lg p-3 flex flex-col gap-1.5">
+              {cave.map((c, i) => (
+                <div key={i} className="flex items-start gap-2">
+                  <AlertTriangleIcon className="h-4 w-4 text-warning flex-shrink-0 mt-0.5" />
+                  <span className="text-xs text-text-primary leading-snug">{c}</span>
+                </div>
+              ))}
+            </div>
+          ) : null}
         </div>
       ) : null}
 
@@ -82,17 +93,6 @@ export default function Step6Dosierung({ ind, cave, patient, dosier, onPatch }) 
 
           {route.repetition ? <p className="text-xs text-text-secondary"><span className="font-semibold">Repetition:</span> {route.repetition}</p> : null}
           {route.hinweise?.map((h, i) => (<p key={i} className="text-xs text-text-secondary">• {h}</p>))}
-
-          {cave?.length ? (
-            <div className="border border-warning/40 bg-warning/5 rounded-lg p-3 flex flex-col gap-1.5">
-              {cave.map((c, i) => (
-                <div key={i} className="flex items-start gap-2">
-                  <AlertTriangleIcon className="h-4 w-4 text-warning flex-shrink-0 mt-0.5" />
-                  <span className="text-xs text-text-primary leading-snug">{c}</span>
-                </div>
-              ))}
-            </div>
-          ) : null}
         </>
       ) : null}
     </div>

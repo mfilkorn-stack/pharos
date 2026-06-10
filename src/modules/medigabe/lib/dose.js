@@ -11,6 +11,16 @@ export function fmt(n) {
   return String(n).replace(".", ",");
 }
 
+// Alter in Jahren aus den Patient-Eingaben — null bei leerer/ungültiger Eingabe.
+// WICHTIG: Number("") wäre 0 und würde Säuglingsstufen (wennAlterUnter) fälschlich
+// treffen; stufePasst behandelt null korrekt als „Bedingung nicht erfüllt".
+export function alterInJahren(patient) {
+  if (patient.alter === "" || patient.alter == null) return null;
+  const n = Number(patient.alter);
+  if (!Number.isFinite(n)) return null;
+  return patient.alterEinheit === "monate" ? n / 12 : n;
+}
+
 // Löst dosis.stufen anhand Alter UND Gewicht auf (Bedingungen UND-verknüpft,
 // erste passende Stufe gewinnt, letzte Stufe = Default).
 function stufePasst(s, alterJahre, kg) {

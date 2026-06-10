@@ -15,7 +15,7 @@ import Step6Dosierung from "./components/Step6Dosierung.jsx";
 import Step7SechsR, { sechsRItems } from "./components/Step7SechsR.jsx";
 import Step8Doku from "./components/Step8Doku.jsx";
 import Button from "../lexikon/components/ui/Button.jsx";
-import { computeDose, computeVolume, fmt } from "./lib/dose.js";
+import { computeDose, computeVolume, fmt, alterInJahren } from "./lib/dose.js";
 import { kiOutcome, dauermedRowsMulti, kiPunkte } from "./lib/ki.js";
 import { normKey } from "../lexikon/lib/saaCheck.js";
 import { useSaaMatrix } from "../../lib/saaMatrix.js";
@@ -102,7 +102,7 @@ export default function Medigabe({ onJumpToMedScan }) {
   } else if (w.step === 3) {
     const p = w.patient;
     const kg = Number(p.kg);
-    const alterJahre = p.alterEinheit === "monate" ? Number(p.alter) / 12 : Number(p.alter);
+    const alterJahre = alterInJahren(p);
     // Strengste Gewichts- und Altersgrenzen über alle Gaben aggregieren.
     let effMinKg = null, effMinKgHinweis = null, minAlterMonate = null, minAlterHinweis = null;
     for (const g of w.gaben) {
@@ -120,7 +120,7 @@ export default function Medigabe({ onJumpToMedScan }) {
     }
     const valid =
       p.geschlecht && p.alter !== "" && p.kg !== "" &&
-      kg >= 1 && kg <= 250 && alterJahre >= 0 && alterJahre <= 120 &&
+      kg >= 1 && kg <= 250 && alterJahre != null && alterJahre >= 0 && alterJahre <= 120 &&
       (effMinKg == null || kg >= effMinKg) &&
       (minAlterMonate == null || alterJahre * 12 >= minAlterMonate) &&
       // Status muss zur Liste passen: „keine" nur bei leerer Liste, „übernommen" nur mit Einträgen.
@@ -231,7 +231,7 @@ export default function Medigabe({ onJumpToMedScan }) {
     footer = <Button size="lg" className="w-full" disabled={!fertig} onClick={() => patchWizard({ step: 7 })}>Weiter → 6-R-Regel</Button>;
   } else if ((w.step === 7 || w.step === 8) && gabenInfo.length && gabenInfo.every((x) => x.ind && x.g.dosier.weg != null && x.g.dosier.prep != null)) {
     const kg = Number(w.patient.kg);
-    const alterJahre = w.patient.alterEinheit === "monate" ? Number(w.patient.alter) / 12 : Number(w.patient.alter);
+    const alterJahre = alterInJahren(w.patient);
     const berechnet = gabenInfo.map(({ g, gi, saaEntry, ind }) => {
       const route = ind.routen[g.dosier.weg];
       const prep = route.preps[g.dosier.prep];

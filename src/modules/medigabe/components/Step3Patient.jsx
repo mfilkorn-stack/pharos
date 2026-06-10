@@ -1,6 +1,7 @@
 // src/modules/medigabe/components/Step3Patient.jsx
 import { useState, useSyncExternalStore } from "react";
 import { getCaseMeds, addCaseMed, removeCaseMed, clearCaseMeds, subscribeCaseMeds, caseMedNames } from "../../../lib/caseMeds.js";
+import { alterInJahren } from "../lib/dose.js";
 import { SegPick } from "./bits.jsx";
 import Button from "../../lexikon/components/ui/Button.jsx";
 import Badge from "../../lexikon/components/ui/Badge.jsx";
@@ -22,11 +23,11 @@ export default function Step3Patient({ patient, onPatch, minKg, minKgHinweis, mi
   };
 
   const kg = Number(patient.kg);
-  const alterJahre = patient.alterEinheit === "monate" ? Number(patient.alter) / 12 : Number(patient.alter);
+  const alterJahre = alterInJahren(patient);
   const kgInvalid = patient.kg !== "" && (!(kg > 0) || kg < 1 || kg > 250);
-  const alterInvalid = patient.alter !== "" && (!(alterJahre >= 0) || alterJahre > 120);
+  const alterInvalid = patient.alter !== "" && (alterJahre == null || alterJahre < 0 || alterJahre > 120);
   const unterMinKg = minKg != null && patient.kg !== "" && kg >= 1 && kg < minKg;
-  const unterMinAlter = minAlterMonate != null && patient.alter !== "" && alterJahre * 12 < minAlterMonate;
+  const unterMinAlter = minAlterMonate != null && alterJahre != null && alterJahre * 12 < minAlterMonate;
 
   return (
     <div className="flex flex-col gap-5">

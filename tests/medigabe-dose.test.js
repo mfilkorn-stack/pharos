@@ -1,6 +1,25 @@
 // tests/medigabe-dose.test.js
 import { describe, it, expect } from "vitest";
-import { computeDose, computeVolume, fmt } from "../src/modules/medigabe/lib/dose.js";
+import { computeDose, computeVolume, fmt, alterInJahren } from "../src/modules/medigabe/lib/dose.js";
+
+describe("alterInJahren", () => {
+  it("leere Eingabe → null, NICHT 0 (Number('') wäre 0 und träfe Säuglingsstufen)", () => {
+    expect(alterInJahren({ alter: "", alterEinheit: "jahre" })).toBeNull();
+    expect(alterInJahren({ alter: "", alterEinheit: "monate" })).toBeNull();
+  });
+  it("rechnet Monate in Jahre um", () => {
+    expect(alterInJahren({ alter: "6", alterEinheit: "monate" })).toBe(0.5);
+    expect(alterInJahren({ alter: "45", alterEinheit: "jahre" })).toBe(45);
+  });
+  it("nicht-numerische Eingabe → null", () => {
+    expect(alterInJahren({ alter: "abc", alterEinheit: "jahre" })).toBeNull();
+  });
+  it("null-Alter mit Säuglingsstufen wählt die Default-Stufe, nie die Säuglingsdosis", () => {
+    const stufen = [{ wennAlterUnter: 1, fixMg: 2.5 }, { fixMg: 10 }];
+    const r = computeDose({ dosis: { stufen }, kg: 70, alterJahre: alterInJahren({ alter: "", alterEinheit: "jahre" }) });
+    expect(r.mg).toBe(10);
+  });
+});
 
 describe("fmt", () => {
   it("konvertiert nur das Dezimalzeichen — rundet NICHT (0,125 mg/kg muss exakt bleiben)", () => {

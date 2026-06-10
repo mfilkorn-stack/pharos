@@ -1,5 +1,5 @@
 // src/modules/medigabe/components/Step6Dosierung.jsx
-import { computeDose, computeVolume, fmt } from "../lib/dose.js";
+import { computeDose, computeVolume, fmt, alterInJahren } from "../lib/dose.js";
 import { SegPick } from "./bits.jsx";
 import Badge from "../../lexikon/components/ui/Badge.jsx";
 import { AlertTriangleIcon, DropletIcon } from "../../lexikon/components/ui/icons.jsx";
@@ -8,8 +8,8 @@ export default function Step6Dosierung({ ind, cave, patient, dosier, onPatch }) 
   const route = dosier.weg != null ? ind.routen[dosier.weg] : null;
   const prep = route && dosier.prep != null ? route.preps[dosier.prep] : null;
   const kg = Number(patient.kg);
-  const alterJahre = patient.alterEinheit === "monate" ? Number(patient.alter) / 12 : Number(patient.alter);
-  const eingabenOk = Number.isFinite(kg) && kg > 0 && Number.isFinite(alterJahre);
+  const alterJahre = alterInJahren(patient);
+  const eingabenOk = Number.isFinite(kg) && kg > 0 && alterJahre != null;
 
   let dose = null, vol = null;
   if (route && prep && eingabenOk) {

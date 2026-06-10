@@ -2,13 +2,14 @@
 import { useEffect } from "react";
 import { normKey, triggerMatrixCompute } from "../../lexikon/lib/saaCheck.js";
 import { kontraMatchIndex } from "../lib/ki.js";
+import { alterInJahren } from "../lib/dose.js";
 import { JaNeinRow, CheckRow } from "./bits.jsx";
 import Badge from "../../lexikon/components/ui/Badge.jsx";
 import { AlertTriangleIcon, CheckCircleIcon } from "../../lexikon/components/ui/icons.jsx";
 
 const FERTILE = (p) => {
-  const j = p.alterEinheit === "monate" ? Number(p.alter) / 12 : Number(p.alter);
-  return p.geschlecht === "w" && j >= 12 && j <= 55;
+  const j = alterInJahren(p);
+  return p.geschlecht === "w" && j != null && j >= 12 && j <= 55;
 };
 
 export default function Step4Kontra({ punkte, rows, kombi, patient, answers, onAnswer, onAnswerMany }) {

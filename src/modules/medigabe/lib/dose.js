@@ -68,7 +68,7 @@ export function computeVolume({ mg, mgPerMl, maxMg }) {
     ml = Math.floor(mlRoh * 10) / 10;
     mgEffektiv = r2(ml * mgPerMl);
     schritte.push(`${fmt(mg)} mg ÷ ${fmt(mgPerMl)} mg/ml = ${fmt(mlRoh)} ml`);
-    schritte.push(`Aufrunden überschritte Maximaldosis ${fmt(maxMg)} mg → abgerundet ${fmt(ml)} ml (= ${fmt(mgEffektiv)} mg)`);
+    schritte.push(`Aufrunden würde Maximaldosis ${fmt(maxMg)} mg überschreiten → abgerundet ${fmt(ml)} ml (= ${fmt(mgEffektiv)} mg)`);
   } else if (ml !== mlRoh) {
     const richtung = ml > mlRoh ? "aufgerundet" : "abgerundet";
     schritte.push(`${fmt(mg)} mg ÷ ${fmt(mgPerMl)} mg/ml = ${fmt(mlRoh)} ml → ${richtung} ${fmt(ml)} ml (= ${fmt(mgEffektiv)} mg)`);

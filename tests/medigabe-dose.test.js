@@ -37,6 +37,15 @@ describe("computeDose: Kappung", () => {
     expect(r.mg).toBe(20);
     expect(r.gekappt).toBe(true);
   });
+  it("strengste Grenze gewinnt, wenn alle drei Cap-Quellen gesetzt sind", () => {
+    const r = computeDose({
+      dosis: { stufen: [{ wennAlterUnter: 18, mgProKg: 5, maxMgAbsolut: 200 }] },
+      kg: 50, alterJahre: 10, maxMgProKg: 10, maxMgAbsolut: 300,
+    });
+    expect(r.mg).toBe(200); // 5×50=250 → Stufen-Cap 200 ist strenger als 10×50=500 und 300
+    expect(r.maxMg).toBe(200);
+    expect(r.gekappt).toBe(true);
+  });
 });
 
 describe("computeDose: fixMg + stufen", () => {
@@ -53,8 +62,18 @@ describe("computeDose: fixMg + stufen", () => {
     const kind = computeDose({ dosis: { stufen }, kg: 80, alterJahre: 12 });
     expect(kind.mg).toBe(300); // 5×80=400 → Kappung 300
     expect(kind.gekappt).toBe(true);
+    expect(kind.maxMg).toBe(300);
     const erw = computeDose({ dosis: { stufen }, kg: 80, alterJahre: 45 });
     expect(erw.mg).toBe(300);
     expect(erw.gekappt).toBe(false);
+  });
+  it("stufen ohne alterJahre → letzte Stufe als Fallback (Verhalten gepinnt)", () => {
+    const stufen = [
+      { wennAlterUnter: 18, mgProKg: 5, maxMgAbsolut: 300 },
+      { fixMg: 300 },
+    ];
+    const r = computeDose({ dosis: { stufen }, kg: 80 });
+    expect(r.mg).toBe(300); // fällt auf Default-Stufe (Erwachsene)
+    expect(r.gekappt).toBe(false);
   });
 });

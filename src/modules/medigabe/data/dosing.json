@@ -1,0 +1,68 @@
+{
+  "version": "dosing-1",
+  "quelle": "SAA und BPR 2025 (6-Länder-AG), Stand 30.04.2025",
+  "entries": [
+    {
+      "id": "saa:esketamin",
+      "saaSeite": 50,
+      "verifiziert": "2026-06-10",
+      "minKg": 10,
+      "minKgHinweis": "Keine Anwendung bei Kindern < 10 kgKG (ca. 12 Monate)",
+      "indikationen": [
+        {
+          "id": "schmerz",
+          "label": "Starker Schmerz (NRS ≥ 6)",
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": { "mgProKg": 0.125 },
+              "maxMgProKg": 0.25,
+              "repetition": "Repetition 0,125 mg/kgKG, bis Maximaldosis 0,25 mg/kgKG",
+              "preps": [
+                {
+                  "ampulle": "50 mg / 2 ml (25 mg/ml)",
+                  "zugabe": "3 ml NaCl 0,9 %",
+                  "ergebnis": "5 ml à 10 mg/ml",
+                  "mgPerMl": 10,
+                  "quelle": "praxis",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "25 mg / 5 ml (5 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5 mg/ml)",
+                  "mgPerMl": 5,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": ["Kombination von Midazolam und Esketamin bei i.v.-Gabe empfohlen"]
+            },
+            {
+              "weg": "nasal / i.m.",
+              "dosis": { "mgProKg": 1 },
+              "maxMgProKg": null,
+              "repetition": "Einmalige Repetition 1 mg/kgKG möglich",
+              "preps": [
+                {
+                  "ampulle": "50 mg / 2 ml (25 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (25 mg/ml) — kleines Volumen für MAD",
+                  "mgPerMl": 25,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": []
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Ampullen mit unterschiedlichen Konzentrationen verfügbar (5 und 25 mg/ml)",
+        "Bei Verwendung von Ketamin: Dosisverdopplung",
+        "Hohe Geräusch- und Lichtempfindlichkeit; Wirkeintritt ca. 1 min, Wirkdauer ca. 20 min"
+      ]
+    }
+  ]
+}

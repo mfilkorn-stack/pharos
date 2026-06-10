@@ -10,14 +10,14 @@ export const AUFKL_ITEMS = [
   "Für den Patienten verständlich erklärt",
 ];
 
-export default function Step5Aufklaerung({ aufkl, onPatch }) {
+export default function Step5Aufklaerung({ aufkl, onPatch, onToggleItem }) {
   return (
     <div className="flex flex-col gap-5">
       <section>
         <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-text-muted mb-2">Situationsgerechte Aufklärung (BPR S. 14)</div>
         <div className="flex flex-col gap-2">
           {AUFKL_ITEMS.map((text, i) => (
-            <CheckRow key={i} checked={!!aufkl.items[i]} onToggle={() => onPatch({ items: { ...aufkl.items, [i]: !aufkl.items[i] } })}>
+            <CheckRow key={i} checked={!!aufkl.items[i]} onToggle={() => onToggleItem(i)}>
               {text}
             </CheckRow>
           ))}

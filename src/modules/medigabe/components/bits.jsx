@@ -78,9 +78,9 @@ export function JaNeinRow({ text, value, onChange, highlight }) {
     </button>
   );
   return (
-    <div className={`flex items-center gap-3 px-3 py-2.5 bg-card border rounded-lg ${highlight ? "border-critical/60" : "border-border"}`}>
-      <span className="flex-1 text-sm text-text-primary leading-snug">{text}</span>
-      <div className="flex gap-1.5 flex-shrink-0">
+    <div className={`flex flex-wrap items-center gap-3 px-3 py-2.5 bg-card border rounded-lg ${highlight ? "border-critical/60" : "border-border"}`}>
+      <span className="flex-1 min-w-[55%] text-sm text-text-primary leading-snug">{text}</span>
+      <div className="flex gap-1.5 flex-shrink-0 ml-auto">
         {seg("nein", "Nein", "border-success/50 bg-success/10 text-success")}
         {seg("ja", "Ja", "border-critical/50 bg-critical/10 text-critical")}
       </div>

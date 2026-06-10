@@ -113,7 +113,17 @@ export default function Medigabe({ onJumpToMedScan }) {
     const ok =
       (a.faehig === "ja" && a.einwilligung === "ja" && itemsOk) ||
       ((a.faehig === "nein" || a.faehig === "unklar") && a.mutmasslich);
-    body = <Step5Aufklaerung aufkl={a} onPatch={(patch) => patchWizard({ aufkl: { ...getWizard().aufkl, ...patch } })} />;
+    body = (
+      <Step5Aufklaerung
+        aufkl={a}
+        onPatch={(patch) => patchWizard({ aufkl: { ...getWizard().aufkl, ...patch } })}
+        onToggleItem={(i) => {
+          // Immer vom frischen Store spreaden — Render-Closure würde schnelle Folge-Toggles verlieren.
+          const cur = getWizard().aufkl;
+          patchWizard({ aufkl: { ...cur, items: { ...cur.items, [i]: !cur.items[i] } } });
+        }}
+      />
+    );
     footer = verweigert ? (
       <Button variant="subtle" size="lg" className="w-full" onClick={() => resetWizard()}>Beenden — keine Gabe</Button>
     ) : (

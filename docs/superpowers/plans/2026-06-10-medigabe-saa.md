@@ -22,7 +22,7 @@ computeDose({ dosis, kg, alterJahre, maxMgProKg, maxMgAbsolut })
 // → { mg:Number, maxMg:Number|null, gekappt:Boolean, schritte:String[] }
 computeVolume({ mg, mgPerMl, maxMg })
 // → { ml:Number, mlRoh:Number, mgEffektiv:Number, schritte:String[] }
-fmt(n) // 8.75 → "8,75" (max. 2 Nachkommastellen, deutsches Komma)
+fmt(n) // 8.75 → "8,75" — NUR Dezimalzeichen, kein Runden (Rundung in compute-Funktionen)
 ```
 
 **`caseMeds.js`:** `getCaseMeds()`, `setCaseMeds(list)`, `addCaseMed(entry)`, `removeCaseMed(wirkstoff)`, `clearCaseMeds()`, `subscribeCaseMeds(fn)`, `caseMedNames(list)`. Einträge sind Objekte mit mind. `{ wirkstoff, source }` (Lexikon legt seine reichen `planEntries`-Objekte unverändert ab).

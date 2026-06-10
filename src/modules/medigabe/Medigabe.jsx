@@ -4,6 +4,7 @@ import { useSyncExternalStore, useCallback } from "react";
 import saa from "../lexikon/data/saa.json";
 import dosing from "./data/dosing.json";
 import { getWizard, patchWizard, subscribeWizard } from "./lib/wizard.js";
+import { getCaseMeds, subscribeCaseMeds } from "../../lib/caseMeds.js";
 import { StepFrame } from "./components/bits.jsx";
 import Step1Medikament from "./components/Step1Medikament.jsx";
 import Step2Indikation from "./components/Step2Indikation.jsx";
@@ -12,6 +13,7 @@ import Button from "../lexikon/components/ui/Button.jsx";
 
 export default function Medigabe({ onJumpToMedScan }) {
   const w = useSyncExternalStore(subscribeWizard, getWizard);
+  const meds = useSyncExternalStore(subscribeCaseMeds, getCaseMeds);
   const back = useCallback(() => patchWizard({ step: Math.max(1, getWizard().step - 1) }), []);
   const saaEntry = saa.entries.find((e) => e.id === w.medId) || null;
   const dosingEntry = dosing.entries.find((e) => e.id === w.medId) || null;
@@ -39,7 +41,8 @@ export default function Medigabe({ onJumpToMedScan }) {
       p.geschlecht && p.alter !== "" && p.kg !== "" &&
       kg >= 1 && kg <= 250 && alterJahre >= 0 && alterJahre <= 120 &&
       (dosingEntry?.minKg == null || kg >= dosingEntry.minKg) &&
-      (p.dauerStatus === "keine" || p.dauerStatus === "uebernommen");
+      // Status muss zur Liste passen: „keine" nur bei leerer Liste, „übernommen" nur mit Einträgen.
+      (p.dauerStatus === "keine" ? meds.length === 0 : p.dauerStatus === "uebernommen" && meds.length > 0);
     body = (
       <Step3Patient
         patient={p}

@@ -1,6 +1,7 @@
 # Medigabe nach SAA — Design
 
-**Datum:** 2026-06-10 · **Status:** Entwurf zur Review
+**Datum:** 2026-06-10 · **Status:** Phase 1 umgesetzt (Esketamin) · V2 in Arbeit
+**V2 (2026-06-10, nach Praxistest):** Mehrfach-Gabe + Midazolam + Sammel-Bestätigung — siehe Abschnitt „V2" am Ende.
 **Quelle:** SAA und BPR 2025 (6-Länder-AG, Stand 30.04.2025), insb. S. 41 „Standardvorgehen bei Medikamentengabe"
 
 ## Ziel
@@ -244,3 +245,53 @@ Reine Funktionen, per TDD entwickelt:
 - Wizard: Komponententest für Stopp-Logik (absolute KI → kein Weiter;
   6-R unvollständig → keine Freigabe).
 - Manuell: Esketamin-Durchlauf mobil (Touch, Handschuh-Tauglichkeit).
+
+## V2 — Mehrfach-Gabe, Midazolam, Sammel-Bestätigung
+
+**Nutzerentscheidungen (2026-06-10):** Freie Mehrfachauswahl (1–3 Medikamente);
+Sammel-Button setzt ausnahmslos ALLE Ja/Nein-Punkte der Sektion auf „Nein"
+(auch hervorgehobene). Dauermedikations-Abwäge-Haken bleiben einzeln.
+
+### Schema-Erweiterungen (`dosing.json`, abwärtskompatibel)
+
+- **KI pro Indikation:** Indikation kann eigene `kontra`/`relKontra`-Listen
+  tragen (Override der saa.json-Listen). Grund: Midazolam-KIs gelten laut
+  SAA S. 61 überwiegend nur „bei Analgosedierung" — beim Krampfanfall nur
+  Überempfindlichkeit + primär hypoxischer Krampf. Fehlt das Feld, gilt
+  weiter saa.json (Esketamin unverändert).
+- **`minAlterMonate`** auf Eintragsebene (Midazolam: 3); **`minKg` auch auf
+  Indikationsebene** (Analgosedierung: 10 kg — Krampf hat keine kg-Grenze).
+- **Stufen-Bedingungen erweitert:** `wennAlterUnter`, `wennAlterAb`,
+  `wennKgUnter`, `wennKgAb` (UND-verknüpft, erste passende Stufe gewinnt,
+  letzte = Default) + optionale stufeneigene `repetition` (Midazolam buccal:
+  „keine Repetition" < 5 J, danach „einmalige möglich") und `hinweis`
+  (z. B. „> 60 J / < 50 kg / einschränkende Erkrankungen: 1 mg langsam i.v.").
+
+### Midazolam (SAA S. 61, zu verifizieren beim Daten-Task)
+
+- Indikation „Komplizierter Krampfanfall / Fieberkrampf": Routen buccal
+  (Buccolam 5 mg/ml, Altersstufen 2,5/5/7,5/10 mg), nasal MAD (5 mg/ml,
+  kg-Stufen 2,5/5/10 mg), i.v. (1 mg/ml, 0,1 mg/kg, max. 20 mg gesamt),
+  i.m. (5 mg/ml, 10 mg Erwachsene).
+- Indikation „Analgosedierung (in Kombination mit Esketamin)": i.v. 1 mg/ml;
+  Stufen: ≥ 60 J → 1 mg; < 50 kg → 1 mg; sonst 2 mg; langsam i.v.; minKg 10.
+
+### Flow-Änderungen (Mehrfach-Gabe)
+
+- **Wizard-State:** `medId/indId/dosier/sechsR` → `gaben: [{ medId, indId,
+  dosier: { weg, prep }, sechsR: {} }]` (Einzelgabe = Array mit 1 Eintrag).
+  Aufklärung, Patient, KI-Antworten, Freigabezeit bleiben global.
+- **Schritt 1:** Mehrfachauswahl per Toggle (max. 3), CTA „Weiter (n)".
+- **Schritt 2:** Indikationswahl pro gewähltem Medikament (Sektionen).
+- **Schritt 4:** Gemergte Checklisten. Punktquelle pro Gabe = Indikations-
+  Override sonst saa.json; identische Texte dedupliziert (Key
+  `a:<normKey(text)>`), Medikament-Badges zeigen Zugehörigkeit.
+  Dauermed-Abgleich läuft gegen ALLE gewählten Medikamente (Zeile zeigt
+  höchstes Level + Begründungen je Medikament).
+  **Sammel-Buttons** je Sektion: „Keine liegt vor — alle auf Nein".
+- **Schritt 6:** Dosierungs-Sektion pro Gabe (Weg/Ampulle/Vorbereitung/
+  Rechenweg einzeln); Weiter erst, wenn jede Gabe vollständig gewählt.
+- **Schritt 7:** 6-R-Block pro Gabe; eine Freigabe, wenn alle Blöcke voll.
+- **Schritt 8:** Eine Doku-Zusammenfassung mit allen Gaben.
+- Wertänderungs-Wächter unverändert, wirken pro Gabe (Dosier-Änderung
+  verwirft nur deren 6-R; Patient/Listen-Änderung verwirft alle).

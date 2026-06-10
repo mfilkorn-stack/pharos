@@ -63,6 +63,111 @@
         "Bei Verwendung von Ketamin: Dosisverdopplung",
         "Hohe Geräusch- und Lichtempfindlichkeit; Wirkeintritt ca. 1 min, Wirkdauer ca. 20 min"
       ]
+    },
+    {
+      "id": "saa:midazolam",
+      "saaSeite": 61,
+      "verifiziert": "2026-06-10",
+      "minAlterMonate": 3,
+      "minAlterHinweis": "Keine Anwendung bei Pat. < 3 Monate",
+      "indikationen": [
+        {
+          "id": "krampf",
+          "label": "Komplizierter Krampfanfall / Fieberkrampf",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "Primär hypoxisch bedingter Krampfanfall"
+          ],
+          "relKontra": [],
+          "routen": [
+            {
+              "weg": "buccal",
+              "dosis": { "stufen": [
+                { "wennAlterUnter": 1, "fixMg": 2.5, "repetition": "Keine Repetition" },
+                { "wennAlterUnter": 5, "fixMg": 5, "repetition": "Keine Repetition" },
+                { "wennAlterUnter": 10, "fixMg": 7.5, "repetition": "Einmalige Repetition möglich" },
+                { "fixMg": 10, "repetition": "Einmalige Repetition möglich" }
+              ] },
+              "preps": [
+                { "ampulle": "Buccolam Fertigspritze (5 mg/ml)", "zugabe": null, "ergebnis": "unverdünnt (5 mg/ml) buccal", "mgPerMl": 5, "quelle": "saa", "freigegeben": true }
+              ],
+              "hinweise": ["Antikonvulsive Therapie: adäquat hohe Dosierung erforderlich, nicht titrieren"]
+            },
+            {
+              "weg": "nasal (MAD)",
+              "dosis": { "stufen": [
+                { "wennKgUnter": 10, "fixMg": 2.5, "repetition": "Repetition erst bei Kindern > 10 kgKG" },
+                { "wennKgUnter": 20, "fixMg": 5, "repetition": "Einmalige Repetition möglich" },
+                { "fixMg": 10, "repetition": "Einmalige Repetition möglich" }
+              ] },
+              "preps": [
+                { "ampulle": "5 mg/ml (zur i.n.-Gabe)", "zugabe": null, "ergebnis": "unverdünnt (5 mg/ml) — max. 1 ml = 5 mg pro Nasenloch", "mgPerMl": 5, "quelle": "saa", "freigegeben": true }
+              ],
+              "hinweise": ["Nasal per MAD ab dem 3. Lebensmonat"]
+            },
+            {
+              "weg": "i.v.",
+              "dosis": { "mgProKg": 0.1 },
+              "maxMgProKg": null,
+              "maxMgAbsolut": 20,
+              "repetition": "Einmalige Repetition möglich (Erwachsene, Maximaldosis 20 mg); Kinder max. 1 × Repetition",
+              "preps": [
+                { "ampulle": "1 mg/ml (zur i.v.-Gabe)", "zugabe": null, "ergebnis": "unverdünnt (1 mg/ml)", "mgPerMl": 1, "quelle": "saa", "freigegeben": true }
+              ],
+              "hinweise": []
+            },
+            {
+              "weg": "i.m.",
+              "dosis": { "fixMg": 10 },
+              "repetition": "Einmalige Repetition möglich, Maximaldosis 20 mg",
+              "preps": [
+                { "ampulle": "5 mg/ml (zur i.m.-Gabe)", "zugabe": null, "ergebnis": "unverdünnt (5 mg/ml)", "mgPerMl": 5, "quelle": "saa", "freigegeben": true }
+              ],
+              "hinweise": ["Erwachsene: 10 mg i.m."]
+            }
+          ]
+        },
+        {
+          "id": "analgosedierung",
+          "label": "Analgosedierung (in Kombination mit Esketamin)",
+          "minKg": 10,
+          "minKgHinweis": "Bei Analgosedierung keine Anwendung bei Pat. < 10 kgKG (ca. 12 Monate)",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "Schwere Bewusstseinsstörung – Sopor, Koma",
+            "Intoxikation mit psychoaktiven Substanzen, Alkohol, Opioiden",
+            "Atemdepression",
+            "Myasthenia gravis",
+            "Obstruktive Schlafapnoe (OSAS)",
+            "Schwangerschaft"
+          ],
+          "relKontra": [
+            "Bewusstseinsstörung – Somnolenz",
+            "Chronisch-respiratorische Insuffizienz",
+            "Schwere Leber- und / oder Nierenfunktionsstörung",
+            "Schwere Herzinsuffizienz (ab Klasse NYHA III)",
+            "Pat. unter akutem Alkoholeinfluss, zentral dämpfenden oder psychotropen Substanzen in der Anamnese"
+          ],
+          "routen": [
+            {
+              "weg": "i.v. (langsam)",
+              "dosis": { "stufen": [
+                { "wennAlterAb": 60, "fixMg": 1, "hinweis": "Pat. > 60 Jahre und / oder < 50 kgKG und / oder mit einschränkenden Krankheiten: 1 mg langsam i.v." },
+                { "wennKgUnter": 50, "fixMg": 1, "hinweis": "Pat. < 50 kgKG (inkl. Kinder > 10 kgKG): 1 mg langsam i.v." },
+                { "fixMg": 2 }
+              ] },
+              "repetition": null,
+              "preps": [
+                { "ampulle": "1 mg/ml (zur i.v.-Gabe)", "zugabe": null, "ergebnis": "unverdünnt (1 mg/ml)", "mgPerMl": 1, "quelle": "saa", "freigegeben": true }
+              ],
+              "hinweise": ["Langsam i.v. injizieren"]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Unterschiedliche Konzentrationen verfügbar (1 mg/ml i.v.; 5 mg/ml i.n./i.m./buccal)"
+      ]
     }
   ]
 }

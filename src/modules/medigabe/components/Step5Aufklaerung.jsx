@@ -10,11 +10,20 @@ export const AUFKL_ITEMS = [
   "Für den Patienten verständlich erklärt",
 ];
 
-export default function Step5Aufklaerung({ aufkl, onPatch, onToggleItem }) {
+export default function Step5Aufklaerung({ aufkl, onPatch, onToggleItem, onAllItems }) {
   return (
     <div className="flex flex-col gap-5">
       <section>
-        <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-text-muted mb-2">Situationsgerechte Aufklärung (BPR S. 14)</div>
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-text-muted">Situationsgerechte Aufklärung (BPR S. 14)</div>
+          <button
+            type="button"
+            onClick={onAllItems}
+            className="h-9 px-3 rounded-lg border border-accent/40 bg-accent/5 text-accent text-xs font-medium hover:bg-accent/10 transition-colors flex-shrink-0"
+          >
+            Alle abhaken
+          </button>
+        </div>
         <div className="flex flex-col gap-2">
           {AUFKL_ITEMS.map((text, i) => (
             <CheckRow key={i} checked={!!aufkl.items[i]} onToggle={() => onToggleItem(i)}>

@@ -198,6 +198,11 @@ export default function Medigabe({ onJumpToMedScan }) {
           const cur = getWizard().aufkl;
           patchWizard({ aufkl: { ...cur, items: { ...cur.items, [i]: !cur.items[i] } } });
         }}
+        onAllItems={() => {
+          // Alle Punkte in EINEM Patch setzen (kein Lost-Update wie bei n Einzel-Toggles).
+          const cur = getWizard().aufkl;
+          patchWizard({ aufkl: { ...cur, items: Object.fromEntries(AUFKL_ITEMS.map((_, i) => [i, true])) } });
+        }}
       />
     );
     footer = verweigert ? (

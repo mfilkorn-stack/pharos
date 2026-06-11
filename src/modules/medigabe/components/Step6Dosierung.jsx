@@ -63,6 +63,12 @@ export default function Step6Dosierung({ ind, cave, patient, dosier, onPatch }) 
         </div>
       ) : null}
 
+      {route && dosier.prep == null ? (
+        <div className="border-2 border-dashed border-accent/40 rounded-xl bg-accent/5 p-4 text-center">
+          <p className="text-sm font-medium text-accent">Ampulle wählen, um die Dosis zu berechnen.</p>
+        </div>
+      ) : null}
+
       {route && prep && !eingabenOk ? (
         <p className="text-sm text-critical">Patientendaten unvollständig — zurück zu Schritt 3.</p>
       ) : null}

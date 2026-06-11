@@ -295,3 +295,19 @@ Sammel-Button setzt ausnahmslos ALLE Ja/Nein-Punkte der Sektion auf „Nein"
 - **Schritt 8:** Eine Doku-Zusammenfassung mit allen Gaben.
 - Wertänderungs-Wächter unverändert, wirken pro Gabe (Dosier-Änderung
   verwirft nur deren 6-R; Patient/Listen-Änderung verwirft alle).
+
+## V3 — Mobile-Optimierung (Schritt 1: Sticky Aktions-Leiste)
+
+**Problem (Praxistest am Handy):** Die Aktions-Zeile (Zurück/Weiter/Stopp/
+Freigabe) liegt am Ende des Schritt-Inhalts — bei langen Schritten bis zu
+~1400 px unterhalb des Viewports. Jede Bestätigung erfordert Scrollen.
+
+**Lösung:** `StepFrame` rendert den `footer`-Slot in einer fixierten Leiste
+am unteren Rand (mobil über der Tab-Leiste inkl. Safe-Area, Desktop neben
+der Sidebar am Seitenende), transluzent mit oberer Trennlinie. Damit sitzen
+ALLE Schritt-Aktionen (Weiter, roter KI-Stopp, Beenden, 6-R-Freigabe,
+„Neuer Patient") immer im Daumenbereich. Der Disclaimer bleibt im
+Scroll-Inhalt; der Inhalt erhält unteren Puffer. Schritt 8 zieht
+„Neuer Patient" aus dem Body in den Footer-Slot (Konsistenz).
+Bekannte Grenze: Bei offener Bildschirmtastatur (Schritt 3) kann die Leiste
+verdeckt sein — nach Schließen der Tastatur wieder sichtbar; akzeptiert.

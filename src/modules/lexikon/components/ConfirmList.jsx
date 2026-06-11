@@ -1,7 +1,7 @@
 import Section from "./ui/Section.jsx";
 import Button from "./ui/Button.jsx";
 
-export default function ConfirmList({ matched, unmatched, codeNote, onPick, onPickUnknown, onPickAll, onClose }) {
+export default function ConfirmList({ matched, unmatched, codeNote, onPick, onPickUnknown, onPickAll, onClose, onRetry }) {
   const totalCount = (matched?.length || 0) + (unmatched?.length || 0);
 
   return (
@@ -62,15 +62,24 @@ export default function ConfirmList({ matched, unmatched, codeNote, onPick, onPi
         </p>
       ) : null}
 
-      <div className="flex flex-col gap-2">
+      {/* Sticky im Modal-Scroll: Übernehmen/Abbrechen bleiben bei langen
+          Scan-Listen (Medikationsplan) sichtbar, ohne ans Ende zu scrollen. */}
+      <div className="sticky bottom-0 -mx-5 sm:-mx-6 -mb-5 sm:-mb-6 px-5 sm:px-6 py-3 bg-bg-secondary border-t border-border flex flex-col gap-2">
         {totalCount > 1 ? (
           <Button variant="primary" size="md" onClick={() => onPickAll(matched || [], unmatched || [])}>
             Alle {totalCount} übernehmen
           </Button>
         ) : null}
-        <Button variant="ghost" size="md" onClick={onClose}>
-          Abbrechen
-        </Button>
+        <div className="flex gap-2">
+          {onRetry ? (
+            <Button variant="ghost" size="md" onClick={onRetry} className="flex-1">
+              Neu aufnehmen
+            </Button>
+          ) : null}
+          <Button variant="ghost" size="md" onClick={onClose} className="flex-1">
+            Abbrechen
+          </Button>
+        </div>
       </div>
     </div>
   );

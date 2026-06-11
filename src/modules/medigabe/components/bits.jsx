@@ -5,10 +5,12 @@ import { ChevronLeftIcon } from "../../lexikon/components/ui/icons.jsx";
 
 export const STEP_LABELS = ["Medikament", "Indikation", "Patient", "Kontraindikationen", "Aufklärung", "Dosierung", "6-R-Regel", "Durchführung"];
 
-// Rahmen jedes Schritts: Fortschritt, Kontext-Chip, Inhalt, Footer-CTA.
+// Rahmen jedes Schritts: Fortschritt, Kontext-Chip, Inhalt — und die Aktions-Leiste
+// FIXIERT am unteren Rand (mobil über der Tab-Leiste inkl. Safe-Area, Desktop neben
+// der Sidebar): Weiter/Stopp/Freigabe liegen immer im Daumenbereich, nie hinterm Scroll.
 export function StepFrame({ step, context, children, onBack, footer }) {
   return (
-    <div className="max-w-2xl mx-auto px-4 pt-5 pb-32 w-full">
+    <div className="max-w-2xl mx-auto px-4 pt-5 pb-48 w-full">
       <div className="flex items-center justify-between mb-2">
         <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-text-muted">Schritt {step} / 8</span>
         <span className="text-xs text-text-secondary">{STEP_LABELS[step - 1]}</span>
@@ -26,17 +28,20 @@ export function StepFrame({ step, context, children, onBack, footer }) {
         </div>
       ) : null}
       {children}
-      <div className="mt-6 flex items-center gap-3">
-        {step > 1 ? (
-          <Button variant="ghost" size="lg" onClick={onBack}>
-            <ChevronLeftIcon className="h-4 w-4" /> Zurück
-          </Button>
-        ) : null}
-        <div className="flex-1">{footer}</div>
-      </div>
       <p className="mt-6 text-xs text-text-muted border-t border-border pt-3">
         Entscheidungsunterstützung — kein Ersatz für ärztliche Anordnung / gültige SAA-Freigabe.
       </p>
+
+      <div className="fixed bottom-[calc(3.5rem+env(safe-area-inset-bottom))] lg:bottom-0 inset-x-0 lg:left-[260px] z-30 border-t border-border bg-bg-secondary/95 backdrop-blur-sm">
+        <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
+          {step > 1 ? (
+            <Button variant="ghost" size="lg" onClick={onBack}>
+              <ChevronLeftIcon className="h-4 w-4" /> Zurück
+            </Button>
+          ) : null}
+          <div className="flex-1">{footer}</div>
+        </div>
+      </div>
     </div>
   );
 }

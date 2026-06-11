@@ -294,10 +294,13 @@ export default function Medigabe({ onJumpToMedScan }) {
           zusammenfassung={zusammenfassung}
           durchf={w.durchf}
           onToggle={(k) => patchWizard({ durchf: { ...getWizard().durchf, [k]: !getWizard().durchf[k] } })}
-          onNeuerPatient={() => { clearCaseMeds(); resetWizard(); }}
         />
       );
-      footer = null;
+      footer = (
+        <Button variant="subtle" size="lg" className="w-full" onClick={() => { clearCaseMeds(); resetWizard(); }}>
+          Neuer Patient — alles zurücksetzen
+        </Button>
+      );
     }
   }
 

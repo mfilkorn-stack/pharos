@@ -1,6 +1,5 @@
 // src/modules/medigabe/components/Step8Doku.jsx
 import { CheckRow } from "./bits.jsx";
-import Button from "../../lexikon/components/ui/Button.jsx";
 
 const DURCHF = [
   { key: "divi", text: "Spritze eindeutig gekennzeichnet (DIVI-ISO-Aufkleber)" },
@@ -8,7 +7,7 @@ const DURCHF = [
   { key: "komm", text: "Anordnung mündlich wiederholt (gesicherte Kommunikation)" },
 ];
 
-export default function Step8Doku({ zusammenfassung, durchf, onToggle, onNeuerPatient }) {
+export default function Step8Doku({ zusammenfassung, durchf, onToggle }) {
   return (
     <div className="flex flex-col gap-5">
       <section>
@@ -34,10 +33,6 @@ export default function Step8Doku({ zusammenfassung, durchf, onToggle, onNeuerPa
           Ins Einsatzprotokoll übernehmen — inkl. Befunde, Aufklärung/Einwilligung, Wirkungskontrolle. Verlaufskontrolle: gewünschte Wirkung erreicht? Sonst Folgemaßnahmen/Repetition gemäß SAA.
         </p>
       </section>
-
-      <Button variant="subtle" size="lg" className="w-full" onClick={onNeuerPatient}>
-        Neuer Patient — alles zurücksetzen
-      </Button>
     </div>
   );
 }

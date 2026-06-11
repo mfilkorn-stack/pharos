@@ -261,6 +261,10 @@ export default function Medigabe({ onJumpToMedScan }) {
                 onToggle={(i) => patchWizard({
                   gaben: getWizard().gaben.map((x, idx) => (idx === b.gi ? { ...x, sechsR: { ...x.sechsR, [i]: !x.sechsR[i] } } : x)),
                 })}
+                onAll={() => patchWizard({
+                  // Alle 6 R dieser Gabe in EINEM Patch (kein Lost-Update).
+                  gaben: getWizard().gaben.map((x, idx) => (idx === b.gi ? { ...x, sechsR: Object.fromEntries(b.items.map((_, i) => [i, true])) } : x)),
+                })}
               />
             </section>
           ))}

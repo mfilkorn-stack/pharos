@@ -14,9 +14,18 @@ export function sechsRItems({ saaEntry, ind, route, prep, patient, mgEffektiv, m
   ];
 }
 
-export default function Step7SechsR({ items, sechsR, onToggle }) {
+export default function Step7SechsR({ items, sechsR, onToggle, onAll }) {
   return (
     <div className="flex flex-col gap-2">
+      <div className="flex justify-end">
+        <button
+          type="button"
+          onClick={onAll}
+          className="h-9 px-3 rounded-lg border border-accent/40 bg-accent/5 text-accent text-xs font-medium hover:bg-accent/10 transition-colors"
+        >
+          Alle abhaken
+        </button>
+      </div>
       {items.map((it, i) => (
         <CheckRow key={i} checked={!!sechsR[i]} onToggle={() => onToggle(i)}>
           <span className="font-semibold">{it.titel}</span>

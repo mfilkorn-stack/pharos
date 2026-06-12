@@ -1063,9 +1063,9 @@
                 },
                 {
                   "ampulle": "Glucose 40 % (0,4 g/ml)",
-                  "zugabe": "verdünnen auf max. 20 %",
-                  "ergebnis": "auf max. 20 % verdünnen vor i.v.-Gabe",
-                  "mgPerMl": 0.4,
+                  "zugabe": "1:1 mit NaCl 0,9 % verdünnen (gleiches Volumen)",
+                  "ergebnis": "verdünnt auf 20 % (0,2 g/ml) — SAA: max. 20 %ige Glucose i.v.",
+                  "mgPerMl": 0.2,
                   "quelle": "saa",
                   "freigegeben": true
                 }

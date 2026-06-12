@@ -1777,6 +1777,375 @@
       "cave": [
         "Unterschiedliche Konzentrationen verfügbar (250 µg/2 ml und 500 µg/2 ml)"
       ]
+    },
+    {
+      "id": "saa:lidocain",
+      "saaSeite": 59,
+      "verifiziert": "2026-06-12",
+      "indikationen": [
+        {
+          "id": "rea-defibrillierbar",
+          "label": "Reanimation: refraktäres Kammerflimmern, pulslose ventrikuläre Tachykardie (gleichwertige Alternative zu Amiodaron)",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff"
+          ],
+          "relKontra": [],
+          "kiHinweis": "Kontraindikationen: entfallen bei vitaler Gefährdung",
+          "routen": [
+            {
+              "weg": "i.v. (Bolus)",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 18,
+                    "mgProKg": 1,
+                    "maxMgAbsolut": 100,
+                    "hinweis": "Säuglinge und Kinder: 1 mg/kgKG — Gabe nach der 3. Defibrillation"
+                  },
+                  {
+                    "fixMg": 100,
+                    "hinweis": "Erwachsene: 100 mg — Gabe nach der 3. Defibrillation"
+                  }
+                ]
+              },
+              "repetition": "Repetition nach der 5. Defibrillation: Kinder 0,5 mg/kgKG, Erwachsene 50 mg",
+              "preps": [
+                {
+                  "ampulle": "100 mg / 5 ml (20 mg/ml = 2 %)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (20 mg/ml) — Erwachsenendosis 100 mg = 5 ml",
+                  "mgPerMl": 20,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Lidocain 2 % (20 mg/ml): Amp. 100 mg / 5 ml",
+                "Lidocain 1 % (10 mg/ml) ebenfalls verfügbar — Cave: unterschiedliche Konzentrationen",
+                "Mit Vollelektrolytlösung nachspülen"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Cave: unterschiedliche Konzentrationen verfügbar — Lidocain 2 % = 20 mg/ml (Amp. 100 mg/5 ml) und Lidocain 1 % = 10 mg/ml",
+        "Bradykardie, Überleitungsstörungen, Hypotonie möglich"
+      ]
+    },
+    {
+      "id": "saa:metoprolol",
+      "saaSeite": 60,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 216,
+      "minAlterHinweis": "Keine Anwendung bei Pat. < 18 Jahren",
+      "indikationen": [
+        {
+          "id": "tachykardie-acs",
+          "label": "STEMI/OMI mit nicht schmerzbedingtem tachykardem Vorhofflimmern (> 100/min) oder multiplen VES (Richtwert mind. 1–2/15 sek)",
+          "kontra": [
+            "bekannte Allergie bzw. Unverträglichkeit (auch gegen enthaltene Konservierungsmittel)",
+            "Vormedikation mit Calcium-Antagonisten vom Verapamil-Typ",
+            "Zeichen einer akuten Herzinsuffizienz, z.B. pulmonale Stauung",
+            "Hypotonie (RRsys < 120 mmHg)",
+            "Bradykardie (< 60/min)",
+            "AV-Block II° / III°",
+            "Hinweise auf Hyperkaliämie im EKG → Cave: BRASH-Syndrom (pos. Verstärkung einer Kreislaufdepression bis -stillstand bei Hyperkaliämie und Betablockade)"
+          ],
+          "relKontra": [
+            "Asthma bronchiale"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "fixMg": 2
+              },
+              "repetition": "Repetition: 2 mg i.v. und 1 mg i.v. (maximale Gesamtmenge 5 mg)",
+              "preps": [
+                {
+                  "ampulle": "5 mg / 5 ml (1 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (1 mg/ml)",
+                  "mgPerMl": 1,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Erwachsene: 2 mg i.v.; Repetition 2 mg i.v. und 1 mg i.v. (max. Gesamtmenge 5 mg)",
+                "Metoprolol und Glyceroltrinitrat sind beide hypotensiv wirksam — keine zeitgleiche Gabe"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Metoprolol und Glyceroltrinitrat: beide hypotensiv wirksam — keine zeitgleiche Gabe",
+        "Hypotonie und Bradykardie möglich"
+      ]
+    },
+    {
+      "id": "saa:morphin",
+      "saaSeite": 62,
+      "verifiziert": "2026-06-12",
+      "minKg": 21,
+      "minKgHinweis": "Keine Anwendung bei Kindern < 21 kgKG (ca. 6 Jahre)",
+      "indikationen": [
+        {
+          "id": "schmerz",
+          "label": "Starke und stärkste Schmerzen NRS ≥ 6",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "schwere Bewusstseinsstörung – Sopor, Koma",
+            "Atemdepression"
+          ],
+          "relKontra": [
+            "Bewusstseinsstörung – Somnolenz",
+            "Schwangerschaft, Stillzeit",
+            "obstruktive Atemwegserkrankungen",
+            "Myasthenia gravis",
+            "Phäochromozytom",
+            "obstruktive Erkrankungen des Gastrointestinaltraktes, Ileus",
+            "Epilepsie",
+            "Opioidabhängigkeit / Substitution mit Methadon"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 18,
+                    "mgProKg": 0.05,
+                    "maxMgAbsolut": 10,
+                    "hinweis": "Kinder: 0,05 mg/kgKG alle 3–4 Minuten, Maximaldosis 10 mg"
+                  },
+                  {
+                    "fixMg": 2,
+                    "maxMgAbsolut": 10,
+                    "hinweis": "Erwachsene: 2 mg fraktioniert, langsam i.v. alle 3–4 Minuten, Maximaldosis 10 mg"
+                  }
+                ]
+              },
+              "maxMgAbsolut": 10,
+              "repetition": "Fraktionierte, langsame Gabe alle 3–4 Minuten; Maximaldosis 10 mg",
+              "preps": [
+                {
+                  "ampulle": "10 mg / 1 ml (10 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (10 mg/ml)",
+                  "mgPerMl": 10,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "20 mg / 1 ml (20 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (20 mg/ml) — Cave: höhere Konzentration",
+                  "mgPerMl": 20,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Fraktionierte, langsame Applikation vermindert Übelkeit",
+                "Maximaldosis 10 mg",
+                "Bei Übelkeit und Erbrechen: SAA Dimenhydrinat",
+                "Bei Überdosierung: Naloxon titrieren",
+                "Insbesondere beim ACS zur Vorlastsenkung und Sedierung gut geeignet"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Ampullen mit unterschiedlichen Konzentrationen verfügbar (10 mg/ml und 20 mg/ml)",
+        "Wirkungsverstärkung und erhöhtes Risiko von Atemdepression in Kombination mit Alkohol, Drogenkonsum / zentral dämpfenden Medikamenten (Benzodiazepine o.ä.)",
+        "BtM-pflichtig"
+      ]
+    },
+    {
+      "id": "saa:nalbuphin",
+      "saaSeite": 63,
+      "verifiziert": "2026-06-12",
+      "minKg": 21,
+      "minKgHinweis": "Keine Anwendung bei Kindern < 21 kgKG (ca. 6 Jahre)",
+      "indikationen": [
+        {
+          "id": "schmerz",
+          "label": "Starke und stärkste Schmerzen NRS ≥ 6",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "Schwere Bewusstseinsstörung – Sopor, Koma",
+            "Atemdepression",
+            "Schwangerschaft",
+            "schwere Leber- und Nierenschäden",
+            "Dauertherapie mit µ-Rezeptor-Agonisten",
+            "Opioidabhängigkeit / Substitution mit Methadon"
+          ],
+          "relKontra": [
+            "Bewusstseinsstörung – Somnolenz",
+            "Stillzeit",
+            "obstruktive Atemwegserkrankungen",
+            "obstruktive Erkrankungen des Gastrointestinaltraktes, Ileus",
+            "Epilepsie"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterAb": 65,
+                    "mgProKg": 0.1,
+                    "maxMgAbsolut": 20,
+                    "hinweis": "Pat. ≥ 65 Jahre: 0,1 mg/kgKG i.v."
+                  },
+                  {
+                    "mgProKg": 0.2,
+                    "maxMgAbsolut": 20,
+                    "hinweis": "Pat. < 65 Jahre: 0,2 mg/kgKG i.v."
+                  }
+                ]
+              },
+              "maxMgAbsolut": 20,
+              "repetition": "Repetition bis zur Maximaldosis 20 mg; Kinder und Jugendliche keine Repetition",
+              "preps": [
+                {
+                  "ampulle": "20 mg / 2 ml (10 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (10 mg/ml)",
+                  "mgPerMl": 10,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Pat. < 65 Jahre: 0,2 mg/kgKG i.v.",
+                "Pat. ≥ 65 Jahre: 0,1 mg/kgKG i.v.",
+                "Kinder und Jugendliche: keine Repetition",
+                "Ceiling-Effekt beachten = keine Wirkungsverstärkung bei Dosissteigerung",
+                "Kein BtM"
+              ]
+            },
+            {
+              "weg": "nasal / i.m. / s.c.",
+              "dosis": {
+                "mgProKg": 0.2
+              },
+              "maxMgAbsolut": 20,
+              "repetition": "Repetition bis zur Maximaldosis 20 mg; Kinder und Jugendliche keine Repetition",
+              "preps": [
+                {
+                  "ampulle": "20 mg / 2 ml (10 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (10 mg/ml) — nasal / i.m. / s.c.",
+                  "mgPerMl": 10,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Nasal, i.m. und s.c. möglich: 0,2 mg/kgKG",
+                "i.m. Gabe schmerzhaft"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Ceiling-Effekt: keine Wirkungsverstärkung bei Dosissteigerung",
+        "Geringes Risiko einer Atemdepression",
+        "i.m. Gabe schmerzhaft",
+        "Kein BtM nach BtMG"
+      ]
+    },
+    {
+      "id": "saa:naloxon",
+      "saaSeite": 64,
+      "verifiziert": "2026-06-12",
+      "indikationen": [
+        {
+          "id": "opioid-intoxikation",
+          "label": "Opioid-Intoxikation / Opioid-Überdosierung bei Versagen der primären Maßnahmen",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff"
+          ],
+          "relKontra": [],
+          "kiHinweis": "Anwendung nach sorgfältiger Nutzen-/Risiko-Abwägung: entfällt",
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 18,
+                    "mgProKg": 0.01,
+                    "hinweis": "Kinder: 0,01 mg/kgKG alle 2 Minuten"
+                  },
+                  {
+                    "fixMg": 0.1,
+                    "hinweis": "Erwachsene: 0,1 mg fraktioniert, langsam i.v. alle 2 Minuten"
+                  }
+                ]
+              },
+              "repetition": "Fraktionierte Gabe alle 2 min, bis suffiziente Spontanatmung und Schutzreflexe vorhanden sind",
+              "preps": [
+                {
+                  "ampulle": "0,4 mg / 1 ml (0,4 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (0,4 mg/ml) — fraktioniert titrieren",
+                  "mgPerMl": 0.4,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Primäre Maßnahmen zuerst: Kommandoatmung, Sauerstoff, Beutel-Maske-Beatmung",
+                "Fraktionierte, langsame Titration i.v. alle 2 Minuten",
+                "Kinder: 0,01 mg/kgKG alle 2 Minuten"
+              ]
+            },
+            {
+              "weg": "i.m. / nasal",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 18,
+                    "mgProKg": 0.01,
+                    "hinweis": "Kinder: 0,01 mg/kgKG i.m. / nasal"
+                  },
+                  {
+                    "fixMg": 0.4,
+                    "hinweis": "Erwachsene: 0,4 mg i.m. / nasal (Dosisanpassung beachten)"
+                  }
+                ]
+              },
+              "repetition": "Dosisanpassung bei i.m. und nasaler Gabe beachten",
+              "preps": [
+                {
+                  "ampulle": "0,4 mg / 1 ml (0,4 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (0,4 mg/ml) — i.m. / nasal",
+                  "mgPerMl": 0.4,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "i.m.- und intranasale Gabe möglich (Dosisanpassung)"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Wirkeintritt schnell, innerhalb von 1–2 Minuten",
+        "Auslösen eines akuten Entzugssyndroms bei Opioidabhängigkeit möglich",
+        "Erneute Opioidwirkung nach Abbau von Naloxon möglich → fortgesetzte Überwachung zwingend erforderlich",
+        "Überschießende Reaktion möglich: Schwindel, Schwitzen, Tremor, Muskelkrämpfe, Tachykardie, Blutdruckanstieg"
+      ]
     }
   ]
 }

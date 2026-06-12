@@ -433,6 +433,369 @@
         "Ampullen mit unterschiedlichen Konzentrationen verfügbar (0,5 und 1 mg/ml)",
         "Wechsel auf Epinephrin bei persistierender instabiler Bradykardie"
       ]
+    },
+    {
+      "id": "saa:butylscopolamin",
+      "saaSeite": 46,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 144,
+      "minAlterHinweis": "Keine Anwendung bei Kindern < 12 Jahren",
+      "indikationen": [
+        {
+          "id": "kolik",
+          "label": "Starke kolikartige abdominelle Schmerzen",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "Tachykardie, Tachyarrhythmie",
+            "Engwinkelglaukom",
+            "Ileus",
+            "mechanische Stenosen im Magen-Darmtrakt",
+            "Myasthenia gravis",
+            "Schwangerschaft, Stillzeit"
+          ],
+          "relKontra": [
+            "kardiale Vorerkrankungen, z.B. KHK und hochgradige Herzklappenstenosen",
+            "Harnverhalt",
+            "Vorbehandlung mit anticholinerg wirkenden Medikamenten (z.B. Antidepressiva, Neuroleptika, Antihistaminika)"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "mgProKg": 0.3
+              },
+              "maxMgAbsolut": 20,
+              "repetition": "Repetition nach 5 min; max. 20 mg",
+              "preps": [
+                {
+                  "ampulle": "20 mg / 1 ml (20 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (20 mg/ml) — langsam i.v.",
+                  "mgPerMl": 20,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Langsam i.v. injizieren"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Wirkeintritt nach ca. 15 Minuten, Wirkdauer ca. 5 Stunden",
+        "Bei Nierenkoliken laut Leitlinie (AWMF 043-025) nicht mehr angezeigt"
+      ]
+    },
+    {
+      "id": "saa:dimenhydrinat",
+      "saaSeite": 47,
+      "verifiziert": "2026-06-12",
+      "indikationen": [
+        {
+          "id": "uebelkeit",
+          "label": "Übelkeit und Erbrechen",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "akute Bronchialobstruktion (Asthma / COPD)",
+            "Engwinkelglaukom",
+            "Krampfanfälle (Epilepsie, Eklampsie)",
+            "bekannte Porphyrie",
+            "bekanntes Long-QT-Syndrom",
+            "Phäochromozytom",
+            "Therapie mit MAO Hemmern"
+          ],
+          "relKontra": [
+            "Schwangerschaft und Stillzeit (CAVE: keine Anwendung bei Wehentätigkeit)",
+            "Morbus Parkinson",
+            "Herzrhythmusstörungen und KHK"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 6,
+                    "fixMg": 40,
+                    "hinweis": "Kinder < 6 Jahre: rectal (kein i.v.)"
+                  },
+                  {
+                    "wennAlterUnter": 14,
+                    "fixMg": 40
+                  },
+                  {
+                    "fixMg": 62
+                  }
+                ]
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "62 mg / 10 ml (6,2 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (6,2 mg/ml) — langsam i.v.",
+                  "mgPerMl": 6.2,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Kinder < 6 Jahre: nur rectal (keine i.v.-Gabe)",
+                "Kinder 6–14 Jahre: 40 mg langsam i.v.",
+                "Erwachsene und Kinder > 14 Jahre: 62 mg langsam i.v."
+              ]
+            },
+            {
+              "weg": "rectal",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 14,
+                    "fixMg": 40
+                  },
+                  {
+                    "fixMg": 40,
+                    "hinweis": "Rectal nur bei Kindern < 6 Jahre obligat; ältere Kinder und Erwachsene bevorzugt i.v."
+                  }
+                ]
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "40 mg Suppositorium",
+                  "zugabe": null,
+                  "ergebnis": "rectal",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Keine rectale Anwendung bei Kindern < 1 Jahr",
+                "Kinder < 6 Jahre: 40 mg rectal"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Keine rectale Anwendung bei Kindern < 1 Jahr",
+        "Beeinträchtigung der Fahrtauglichkeit und Reaktionsfähigkeit",
+        "ZNS-Dämpfung verstärkt unter Alkoholeinfluss"
+      ]
+    },
+    {
+      "id": "saa:dimetinden",
+      "saaSeite": 48,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 144,
+      "minAlterHinweis": "Keine Anwendung bei Kindern < 12 Jahren",
+      "indikationen": [
+        {
+          "id": "anaphylaxie",
+          "label": "Anaphylaxie",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "Schwangerschaft und Stillzeit"
+          ],
+          "relKontra": [
+            "Glaukom",
+            "Epilepsie"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "mgProKg": 0.1
+              },
+              "maxMgAbsolut": 8,
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "4 mg / 4 ml (1 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (1 mg/ml) — langsam i.v.",
+                  "mgPerMl": 1,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "4–8 mg i.v. (0,1 mg/kgKG, max. 8 mg) langsam i.v.",
+                "Erwachsene und Kinder > 12 Jahre"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Beeinträchtigung der Fahrtauglichkeit und Reaktionsfähigkeit"
+      ]
+    },
+    {
+      "id": "saa:epinephrin",
+      "saaSeite": 49,
+      "verifiziert": "2026-06-12",
+      "indikationen": [
+        {
+          "id": "reanimation",
+          "label": "Reanimation",
+          "kontra": [
+            "Entfällt bei vitaler Gefährdung"
+          ],
+          "routen": [
+            {
+              "weg": "i.v. / i.o.",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 18,
+                    "mgProKg": 0.01
+                  },
+                  {
+                    "fixMg": 1
+                  }
+                ]
+              },
+              "repetition": "Bei VF: nach der 3. Defibrillation, danach alle 4 min; bei Asystolie / PEA: so früh wie möglich, danach alle 4 min",
+              "preps": [
+                {
+                  "ampulle": "1 mg / 1 ml (1 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (1 mg/ml)",
+                  "mgPerMl": 1,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "Stechamp. 25 mg / 25 ml (1 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (1 mg/ml)",
+                  "mgPerMl": 1,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Erwachsene: 1 mg i.v. / i.o.",
+                "Kinder: 0,01 mg/kgKG i.v. / i.o."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "bradykardie",
+          "label": "Instabile Bradykardie",
+          "kontra": [
+            "Entfällt bei vitaler Gefährdung"
+          ],
+          "routen": [
+            {
+              "weg": "i.v. (Perfusor oder Bolusgabe)",
+              "dosis": {
+                "fixMg": 1
+              },
+              "repetition": "0,5 ml (5 µg) bolusweise jede Minute i.v. bis adäquater Herzfrequenzanstieg; danach regelmäßige Evaluation — bei Abfall der HF erneut 0,5 ml (5 µg) i.v.; alternativ Perfusor: 1 mg Epinephrin in 100 ml NaCl 0,9 %, Laufrate 30 ml/h",
+              "preps": [
+                {
+                  "ampulle": "1 mg / 1 ml (1 mg/ml)",
+                  "zugabe": "99 ml NaCl 0,9 %",
+                  "ergebnis": "100 ml à 0,01 mg/ml (= 10 µg/ml)",
+                  "mgPerMl": 0.01,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "1 mg Epinephrin in 100 ml NaCl 0,9 % (0,01 mg/ml = 10 µg/ml)",
+                "0,5 ml (5 µg) bolusweise jede Minute i.v. bis adäquater Herzfrequenzanstieg",
+                "Alternativ Perfusor: Laufrate 30 ml/h"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "anaphylaxie",
+          "label": "Anaphylaxie ab Stadium II mit Atemstörung oder Schock",
+          "kontra": [
+            "Entfällt bei vitaler Gefährdung"
+          ],
+          "routen": [
+            {
+              "weg": "i.m.",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 6,
+                    "fixMg": 0.15
+                  },
+                  {
+                    "wennAlterUnter": 12,
+                    "fixMg": 0.3
+                  },
+                  {
+                    "fixMg": 0.5
+                  }
+                ]
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "1 mg / 1 ml (1 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (1 mg/ml) — i.m.",
+                  "mgPerMl": 1,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Erwachsene und Kinder > 12 Jahre: 0,5 mg i.m.",
+                "Kinder 6–12 Jahre: 0,3 mg i.m.",
+                "Kinder < 6 Jahre: 0,15 mg i.m."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "atemweg-inhalation",
+          "label": "Obstruktion der oberen Atemwege durch Schleimhautschwellung, Anaphylaxie mit A- oder B-Problem, Laryngotracheobronchitis",
+          "kontra": [
+            "Entfällt bei vitaler Gefährdung"
+          ],
+          "routen": [
+            {
+              "weg": "inhalativ (vernebeln)",
+              "einheit": "mg",
+              "dosis": {
+                "fixMg": 4
+              },
+              "repetition": "Repetition nach 10 min möglich",
+              "preps": [
+                {
+                  "ampulle": "1 mg / 1 ml (1 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "4 ml unverdünnt vernebeln (1 mg/ml)",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "4 mg Epinephrin vernebeln",
+                "Gilt auch für Laryngotracheobronchitis"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Sehr kurze Halbwertszeit",
+        "Interaktionen: Abschwächung der Epinephrin-Wirkung durch NaHCO₃",
+        "Nicht gleichzeitig mit NaHCO₃ über einen Zugang geben"
+      ]
     }
   ]
 }

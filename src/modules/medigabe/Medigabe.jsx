@@ -160,6 +160,7 @@ export default function Medigabe({ onJumpToMedScan }) {
         rows={rows}
         kombi={w.gaben.length > 1}
         patient={w.patient}
+        kiHinweise={kiGaben.map((x) => x.ind?.kiHinweis).filter(Boolean)}
         answers={w.ki}
         onAnswer={(k, v) => patchWizard({ ki: { ...getWizard().ki, [k]: v } })}
         onAnswerMany={(patch) => patchWizard({ ki: { ...getWizard().ki, ...patch } })}
@@ -232,9 +233,20 @@ export default function Medigabe({ onJumpToMedScan }) {
         ))}
       </div>
     );
-    const fertig = w.gaben.every((g) => g.dosier.weg != null && g.dosier.prep != null);
+    // Route muss existieren UND fürs Patientenalter zulässig sein (route.minAlterMonate).
+    const alterJ6 = alterInJahren(w.patient);
+    const routeZulaessig = (x) => {
+      const r = x.ind?.routen[x.g.dosier.weg];
+      return r != null && (r.minAlterMonate == null || (alterJ6 != null && alterJ6 * 12 >= r.minAlterMonate));
+    };
+    const fertig = gabenInfo.every((x) => x.g.dosier.weg != null && x.g.dosier.prep != null && routeZulaessig(x));
     footer = <Button size="lg" className="w-full" disabled={!fertig} onClick={() => patchWizard({ step: 7 })}>Weiter → 6-R-Regel</Button>;
-  } else if ((w.step === 7 || w.step === 8) && gabenInfo.length && gabenInfo.every((x) => x.ind && x.g.dosier.weg != null && x.g.dosier.prep != null)) {
+  } else if ((w.step === 7 || w.step === 8) && gabenInfo.length && gabenInfo.every((x) => {
+    const r = x.ind?.routen[x.g.dosier.weg];
+    const aj = alterInJahren(w.patient);
+    return x.ind && x.g.dosier.weg != null && x.g.dosier.prep != null &&
+      r != null && (r.minAlterMonate == null || (aj != null && aj * 12 >= r.minAlterMonate));
+  })) {
     const kg = Number(w.patient.kg);
     const alterJahre = alterInJahren(w.patient);
     const berechnet = gabenInfo.map(({ g, gi, saaEntry, ind }) => {

@@ -11,9 +11,12 @@ export default function Step6Dosierung({ ind, cave, patient, dosier, onPatch }) 
   const alterJahre = alterInJahren(patient);
   const eingabenOk = Number.isFinite(kg) && kg > 0 && alterJahre != null;
   const einheit = route?.einheit || "mg";
+  // Routen-Altersgrenze (z. B. Dimenhydrinat i.v. erst ab 6 J — darunter rectal).
+  const routeOk = (r) => r.minAlterMonate == null || (alterJahre != null && alterJahre * 12 >= r.minAlterMonate);
+  const routeGesperrt = route ? !routeOk(route) : false;
 
   let dose = null, vol = null;
-  if (route && prep && eingabenOk) {
+  if (route && prep && eingabenOk && !routeGesperrt) {
     dose = computeDose({ dosis: route.dosis, kg, alterJahre, maxMgProKg: route.maxMgProKg, maxMgAbsolut: route.maxMgAbsolut, einheit });
     // mgPerMl null = Darreichung ohne ml-Rechnung (Tablette, Hub, Inhalation).
     vol = prep.mgPerMl != null ? computeVolume({ mg: dose.mg, mgPerMl: prep.mgPerMl, maxMg: dose.maxMg, einheit }) : null;
@@ -24,10 +27,13 @@ export default function Step6Dosierung({ ind, cave, patient, dosier, onPatch }) 
       <div>
         <div className="text-xs text-text-muted mb-2">Applikationsweg</div>
         <SegPick
-          options={ind.routen.map((r, i) => ({ value: i, label: r.weg }))}
+          options={ind.routen.map((r, i) => ({ value: i, label: r.weg, disabled: !routeOk(r) }))}
           value={dosier.weg}
           onChange={(weg) => onPatch({ weg, prep: ind.routen[weg].preps.length === 1 ? 0 : null })}
         />
+        {ind.routen.filter((r) => !routeOk(r) && r.minAlterHinweis).map((r, i) => (
+          <p key={i} className="text-xs text-warning mt-2">{r.weg}: {r.minAlterHinweis}</p>
+        ))}
       </div>
 
       {route ? (
@@ -71,7 +77,11 @@ export default function Step6Dosierung({ ind, cave, patient, dosier, onPatch }) 
         </div>
       ) : null}
 
-      {route && prep && !eingabenOk ? (
+      {route && routeGesperrt ? (
+        <p className="text-sm text-critical">{route.minAlterHinweis || "Dieser Applikationsweg ist für das Patientenalter nicht zugelassen."} — anderen Weg wählen.</p>
+      ) : null}
+
+      {route && prep && !eingabenOk && !routeGesperrt ? (
         <p className="text-sm text-critical">Patientendaten unvollständig — zurück zu Schritt 3.</p>
       ) : null}
 

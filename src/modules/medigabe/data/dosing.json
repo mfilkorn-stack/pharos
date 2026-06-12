@@ -517,11 +517,6 @@
               "dosis": {
                 "stufen": [
                   {
-                    "wennAlterUnter": 6,
-                    "fixMg": 40,
-                    "hinweis": "Kinder < 6 Jahre: rectal (kein i.v.)"
-                  },
-                  {
                     "wennAlterUnter": 14,
                     "fixMg": 40
                   },
@@ -545,7 +540,9 @@
                 "Kinder < 6 Jahre: nur rectal (keine i.v.-Gabe)",
                 "Kinder 6–14 Jahre: 40 mg langsam i.v.",
                 "Erwachsene und Kinder > 14 Jahre: 62 mg langsam i.v."
-              ]
+              ],
+              "minAlterMonate": 72,
+              "minAlterHinweis": "Kinder < 6 Jahre: 40 mg rectal (keine i.v.-Gabe)"
             },
             {
               "weg": "rectal",
@@ -575,7 +572,9 @@
               "hinweise": [
                 "Keine rectale Anwendung bei Kindern < 1 Jahr",
                 "Kinder < 6 Jahre: 40 mg rectal"
-              ]
+              ],
+              "minAlterMonate": 12,
+              "minAlterHinweis": "Keine rectale Anwendung bei Kindern < 1 Jahr"
             }
           ]
         }
@@ -642,9 +641,7 @@
         {
           "id": "reanimation",
           "label": "Reanimation",
-          "kontra": [
-            "Entfällt bei vitaler Gefährdung"
-          ],
+          "kontra": [],
           "routen": [
             {
               "weg": "i.v. / i.o.",
@@ -683,14 +680,14 @@
                 "Kinder: 0,01 mg/kgKG i.v. / i.o."
               ]
             }
-          ]
+          ],
+          "relKontra": [],
+          "kiHinweis": "Kontraindikationen: entfallen bei vitaler Gefährdung"
         },
         {
           "id": "bradykardie",
           "label": "Instabile Bradykardie",
-          "kontra": [
-            "Entfällt bei vitaler Gefährdung"
-          ],
+          "kontra": [],
           "routen": [
             {
               "weg": "i.v. (Perfusor oder Bolusgabe)",
@@ -714,14 +711,14 @@
                 "Alternativ Perfusor: Laufrate 30 ml/h"
               ]
             }
-          ]
+          ],
+          "relKontra": [],
+          "kiHinweis": "Kontraindikationen: entfallen bei vitaler Gefährdung"
         },
         {
           "id": "anaphylaxie",
           "label": "Anaphylaxie ab Stadium II mit Atemstörung oder Schock",
-          "kontra": [
-            "Entfällt bei vitaler Gefährdung"
-          ],
+          "kontra": [],
           "routen": [
             {
               "weg": "i.m.",
@@ -757,14 +754,14 @@
                 "Kinder < 6 Jahre: 0,15 mg i.m."
               ]
             }
-          ]
+          ],
+          "relKontra": [],
+          "kiHinweis": "Kontraindikationen: entfallen bei vitaler Gefährdung"
         },
         {
           "id": "atemweg-inhalation",
           "label": "Obstruktion der oberen Atemwege durch Schleimhautschwellung, Anaphylaxie mit A- oder B-Problem, Laryngotracheobronchitis",
-          "kontra": [
-            "Entfällt bei vitaler Gefährdung"
-          ],
+          "kontra": [],
           "routen": [
             {
               "weg": "inhalativ (vernebeln)",
@@ -788,7 +785,9 @@
                 "Gilt auch für Laryngotracheobronchitis"
               ]
             }
-          ]
+          ],
+          "relKontra": [],
+          "kiHinweis": "Kontraindikationen: entfallen bei vitaler Gefährdung"
         }
       ],
       "cave": [

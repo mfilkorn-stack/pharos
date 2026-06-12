@@ -92,7 +92,8 @@ export function JaNeinRow({ text, value, onChange, highlight }) {
   );
 }
 
-// Segment-Auswahl (z. B. Applikationsweg, Geschlecht).
+// Segment-Auswahl (z. B. Applikationsweg, Geschlecht). Optionen können
+// disabled sein (z. B. Route unterhalb der Altersgrenze gesperrt).
 export function SegPick({ options, value, onChange }) {
   return (
     <div className="flex gap-2 flex-wrap">
@@ -100,9 +101,10 @@ export function SegPick({ options, value, onChange }) {
         <button
           key={o.value}
           type="button"
+          disabled={!!o.disabled}
           onClick={() => onChange(o.value)}
           aria-pressed={value === o.value}
-          className={`min-h-[44px] px-4 rounded-lg border text-sm font-medium transition-colors ${
+          className={`min-h-[44px] px-4 rounded-lg border text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:line-through ${
             value === o.value
               ? "bg-accent text-bg-primary border-transparent"
               : "bg-card text-text-secondary border-border hover:bg-card-hover"

@@ -12,7 +12,7 @@ const FERTILE = (p) => {
   return p.geschlecht === "w" && j != null && j >= 12 && j <= 55;
 };
 
-export default function Step4Kontra({ punkte, rows, kombi, patient, answers, onAnswer, onAnswerMany }) {
+export default function Step4Kontra({ punkte, rows, kombi, patient, kiHinweise = [], answers, onAnswer, onAnswerMany }) {
   const flagged = rows.filter((r) => r.level !== "ok");
   // „Unbekannt" ist nicht „unkritisch": Medis ohne Matrix-Eintrag eigene Kategorie.
   const unknown = rows.filter((r) => r.pending && r.level === "ok");
@@ -30,17 +30,31 @@ export default function Step4Kontra({ punkte, rows, kombi, patient, answers, onA
 
   return (
     <div className="flex flex-col gap-6">
+      {kiHinweise.length ? (
+        <div className="border border-info/30 bg-info/5 rounded-lg p-3 flex flex-col gap-1">
+          {kiHinweise.map((h, i) => (
+            <p key={i} className="text-sm text-text-primary leading-snug">
+              <span className="font-mono text-[10px] tracking-widest uppercase text-info mr-2">SAA</span>{h}
+            </p>
+          ))}
+        </div>
+      ) : null}
       <section>
         <div className="flex items-center justify-between gap-2 mb-2">
           <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-critical">Absolut — liegt das vor?</div>
-          <button
-            type="button"
-            onClick={() => onAnswerMany(Object.fromEntries(punkte.abs.map((p) => [p.key, "nein"])))}
-            className="h-9 px-3 rounded-lg border border-success/40 bg-success/5 text-success text-xs font-medium hover:bg-success/10 transition-colors flex-shrink-0"
-          >
-            Keine liegt vor — alle „Nein"
-          </button>
+          {punkte.abs.length ? (
+            <button
+              type="button"
+              onClick={() => onAnswerMany(Object.fromEntries(punkte.abs.map((p) => [p.key, "nein"])))}
+              className="h-9 px-3 rounded-lg border border-success/40 bg-success/5 text-success text-xs font-medium hover:bg-success/10 transition-colors flex-shrink-0"
+            >
+              Keine liegt vor — alle „Nein"
+            </button>
+          ) : null}
         </div>
+        {!punkte.abs.length ? (
+          <p className="text-sm text-text-secondary">Keine absoluten Kontraindikationen hinterlegt.</p>
+        ) : null}
         <div className="flex flex-col gap-2">
           {punkte.abs.map((p) => (
             <JaNeinRow

@@ -28,10 +28,17 @@ describe("dosing.json Schema", () => {
         for (const ind of e.indikationen) {
           expect(ind.id).toBeTruthy();
           expect(ind.label).toBeTruthy();
-          // V2: optionale KI-Overrides + minKg pro Indikation
-          if (ind.kontra) { expect(Array.isArray(ind.kontra)).toBe(true); expect(ind.kontra.length).toBeGreaterThan(0); for (const k of ind.kontra) expect(typeof k).toBe("string"); }
+          // V2: optionale KI-Overrides + minKg pro Indikation.
+          // Leerer Override (= „keine KI") nur mit erklärendem kiHinweis zulässig.
+          if (ind.kontra) {
+            expect(Array.isArray(ind.kontra)).toBe(true);
+            if (ind.kontra.length === 0) expect(typeof ind.kiHinweis).toBe("string");
+            for (const k of ind.kontra) expect(typeof k).toBe("string");
+          }
           if (ind.relKontra) { expect(Array.isArray(ind.relKontra)).toBe(true); for (const k of ind.relKontra) expect(typeof k).toBe("string"); }
           if (ind.minKg != null) expect(typeof ind.minKg).toBe("number");
+          // V3: SAA-Hinweis statt KI-Punkten (z. B. „Entfällt bei vitaler Gefährdung")
+          if (ind.kiHinweis != null) expect(typeof ind.kiHinweis).toBe("string");
           expect(ind.routen.length).toBeGreaterThan(0);
           for (const r of ind.routen) {
             expect(r.weg).toBeTruthy();
@@ -47,6 +54,11 @@ describe("dosing.json Schema", () => {
             }
             // V3: optionale Anzeige-Einheit (µg, I.E., g, Hub, …)
             if (r.einheit != null) expect(typeof r.einheit).toBe("string");
+            // V3: Routen-Altersgrenze (z. B. Dimenhydrinat i.v. erst ab 6 J)
+            if (r.minAlterMonate != null) {
+              expect(typeof r.minAlterMonate).toBe("number");
+              expect(typeof r.minAlterHinweis).toBe("string");
+            }
             expect(r.preps.length).toBeGreaterThan(0);
             for (const p of r.preps) {
               // V3: mgPerMl null = Darreichung ohne ml-Rechnung (Tablette, Hub, Inhalation)

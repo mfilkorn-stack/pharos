@@ -71,7 +71,7 @@ Bekannte Sonderfälle: Epinephrin (Rea 1:10-Verdünnung — siehe Tabelle; Anaph
 | Esketamin i.v. | 50 mg / 2 ml | + 3 ml NaCl 0,9 % | 5 ml à 10 mg/ml | ✅ freigegeben (Nutzer, 2026-06-10) |
 | Morphin i.v. | 10 mg / 1 ml | + 9 ml NaCl 0,9 % | 10 ml à 1 mg/ml | 🟡 VORSCHLAG — Freigabe ausstehend |
 | Epinephrin i.v. (Rea) | 1 mg / 1 ml | + 9 ml NaCl 0,9 % | 10 ml à 0,1 mg/ml | 🟡 VORSCHLAG — Freigabe ausstehend |
-| Naloxon i.v. | 0,4 mg / 1 ml | + 3 ml NaCl 0,9 % | 4 ml à 0,1 mg/ml | per BPR S. 42 → `quelle: "saa"` |
+| Naloxon i.v. | 0,4 mg / 1 ml | + 3 ml NaCl 0,9 % | 4 ml à 0,1 mg/ml | 🟡 SAA-Seite 64 nennt sie NICHT (nur BPR-Karte S. 42) → wie Praxis-Schema behandeln, Freigabe ausstehend; bis dahin unverdünnt (0,1 mg = 0,25 ml) |
 | Fentanyl / Urapidil / Metoprolol / Amiodaron (Rea) / Atropin | — | unverdünnt | — | kein Schema nötig |
 
 Vorschläge werden erst nach Chat-Freigabe mit `freigegeben: true` committet; bis dahin bleiben die Routen auf den unverdünnten SAA-Preps nutzbar.

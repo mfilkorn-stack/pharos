@@ -795,6 +795,319 @@
         "Interaktionen: Abschwächung der Epinephrin-Wirkung durch NaHCO₃",
         "Nicht gleichzeitig mit NaHCO₃ über einen Zugang geben"
       ]
+    },
+    {
+      "id": "saa:fentanyl",
+      "saaSeite": 51,
+      "verifiziert": "2026-06-12",
+      "minKg": 21,
+      "minKgHinweis": "Keine Anwendung bei Kindern < 21 kgKG (ca. 6 Jahre)",
+      "indikationen": [
+        {
+          "id": "schmerz",
+          "label": "Starker Schmerz (NRS ≥ 6)",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "Schwangerschaft",
+            "schwere Bewusstseinsstörung – Sopor, Koma",
+            "Atemdepression"
+          ],
+          "relKontra": [
+            "Bewusstseinsstörung – Somnolenz",
+            "obstruktive Atemwegserkrankungen",
+            "Myasthenia gravis",
+            "obstruktive Darmerkrankungen",
+            "Opioidabhängigkeit / Substitution mit Methadon"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "einheit": "µg",
+              "dosis": {
+                "mgProKg": 1
+              },
+              "maxMgProKg": 2,
+              "repetition": "Fraktionierte, langsame Gabe im Abstand von 3–4 Minuten in 50-µg-Schritten; Maximaldosis 2 µg/kgKG ideales Körpergewicht",
+              "preps": [
+                {
+                  "ampulle": "100 µg / 2 ml (50 µg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (50 µg/ml)",
+                  "mgPerMl": 50,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "500 µg / 10 ml (50 µg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (50 µg/ml)",
+                  "mgPerMl": 50,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Fraktionierte, langsame Gabe im Abstand von 3–4 Minuten in 50-µg-Schritten",
+                "Maximaldosis 2 µg/kgKG ideales Körpergewicht"
+              ]
+            },
+            {
+              "weg": "nasal / i.m.",
+              "einheit": "µg",
+              "dosis": {
+                "mgProKg": 2
+              },
+              "maxMgProKg": null,
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "100 µg / 2 ml (50 µg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (50 µg/ml)",
+                  "mgPerMl": 50,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Nasale und i.m. Gabe: 2 µg/kgKG"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Cave: vorsichtige Titration bei alten und multimorbiden Pat.",
+        "Cave: Wirkungsverstärkung und erhöhtes Risiko von Atemdepression in Kombination mit Alkohol- / Drogenkonsum / zentral dämpfenden Medikamenten (Benzodiazepine, Gabapentin, Pregabalin, o.ä.)",
+        "Muskelsteifheit, insbesondere Thoraxrigidität bei schneller Applikation",
+        "Bei Überdosierung: Naloxon titrieren"
+      ]
+    },
+    {
+      "id": "saa:furosemid",
+      "saaSeite": 52,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 144,
+      "minAlterHinweis": "Keine Anwendung bei Pat. < 12 J.",
+      "indikationen": [
+        {
+          "id": "lungenoedeme",
+          "label": "Kardiales Lungenödem",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "Hypovolämie, schwergradige Dehydratation",
+            "Nierenversagen mit Anurie",
+            "Leberversagen mit Bewusstseinsstörung (Praecoma / Coma hepaticum)",
+            "schwere Hypokaliämie, Hyponatriämie",
+            "Stillzeit"
+          ],
+          "relKontra": [
+            "Schwangerschaft",
+            "Hypotonie"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "fixMg": 20
+              },
+              "repetition": "Einmalige Repetition nach 15 min möglich",
+              "preps": [
+                {
+                  "ampulle": "20 mg / 2 ml (10 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (10 mg/ml) — langsam i.v.",
+                  "mgPerMl": 10,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "40 mg / 4 ml (10 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (10 mg/ml) — 2 ml entnehmen für 20 mg",
+                  "mgPerMl": 10,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "20 mg Furosemid langsam i.v.",
+                "Cave: Inkompatibilitäten (pH) → keine Mischung und / oder gleichzeitige Injektion mit anderen Substanzen"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Cave: Inkompatibilitäten (pH) → keine Mischung und / oder gleichzeitige Injektion mit anderen Substanzen",
+        "Wirkeintritt nach 2–15 min"
+      ]
+    },
+    {
+      "id": "saa:glucagon",
+      "saaSeite": 53,
+      "verifiziert": "2026-06-12",
+      "indikationen": [
+        {
+          "id": "hypoglykamie",
+          "label": "Hypoglykämie < 60 mg/dl bzw. 3,3 mmol/l (Fremdhilfe erforderlich)",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "leere Glykogenspeicher (schwere Leberfunktionsstörung, Alkoholmissbrauch etc.)",
+            "gleichzeitige Einnahme von Indometacin (paradoxe Wirkung möglich)"
+          ],
+          "relKontra": [],
+          "routen": [
+            {
+              "weg": "i.m.",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennKgUnter": 25,
+                    "fixMg": 0.5,
+                    "hinweis": "Kinder unter 25 kg KG: 0,5 mg i.m."
+                  },
+                  {
+                    "fixMg": 1,
+                    "hinweis": "Erwachsene und Kinder über 25 kg KG (ca. 8 Jahre): 1 mg i.m."
+                  }
+                ]
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "1 mg Pulver + 1 ml Lösungsmittel (1 mg/ml nach Rekonstitution)",
+                  "zugabe": null,
+                  "ergebnis": "1 mg/ml nach Auflösen des Pulvers",
+                  "mgPerMl": 1,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Erwachsene und Kinder über 25 kg KG (ca. 8 Jahre): 1 mg i.m.",
+                "Kinder unter 25 kg KG: 0,5 mg i.m.",
+                "Dokumentation der Charge erforderlich"
+              ]
+            },
+            {
+              "weg": "nasal (i.n.)",
+              "einheit": "mg",
+              "dosis": {
+                "fixMg": 3
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "Baqsimi 3 mg Nasenspray",
+                  "zugabe": null,
+                  "ergebnis": "3 mg nasal (1 Hub = 3 mg)",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "3 mg Glucagon (Baqsimi®) i.n.",
+                "Nasale Gabe ab 4 Jahren"
+              ],
+              "minAlterMonate": 48,
+              "minAlterHinweis": "Nasale Anwendung ab 4 Jahren"
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Dokumentation der Charge erforderlich",
+        "Nasale Anwendung (Baqsimi) ab 4 Jahren"
+      ]
+    },
+    {
+      "id": "saa:glucose",
+      "saaSeite": 54,
+      "verifiziert": "2026-06-12",
+      "indikationen": [
+        {
+          "id": "hypoglykamie",
+          "label": "Hypoglykämie < 60 mg/dl bzw. 3,3 mmol/l (Fremdhilfe erforderlich)",
+          "kontra": [],
+          "relKontra": [],
+          "kiHinweis": "Kontraindikationen: entfällt",
+          "routen": [
+            {
+              "weg": "i.v.",
+              "einheit": "g",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennKgUnter": 30,
+                    "mgProKg": 0.2,
+                    "hinweis": "Kinder: 0,2 g/kgKG i.v."
+                  },
+                  {
+                    "fixMg": 8,
+                    "hinweis": "Erwachsene und Kinder > 30 kgKG: 8–10 g Glucose i.v. (Einzeldosis)"
+                  }
+                ]
+              },
+              "maxMgAbsolut": 10,
+              "repetition": "Repetitionen möglich",
+              "preps": [
+                {
+                  "ampulle": "Glucose 20 % (0,2 g/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (0,2 g/ml) i.v. — max. 20 %ige Lösung; höherkonzentrierte vorher verdünnen",
+                  "mgPerMl": 0.2,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "Glucose 40 % (0,4 g/ml)",
+                  "zugabe": "verdünnen auf max. 20 %",
+                  "ergebnis": "auf max. 20 % verdünnen vor i.v.-Gabe",
+                  "mgPerMl": 0.4,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Auf sichere intravasale Lage des Venenzugangs achten",
+                "Höherkonzentrierte Lösungen verdünnen, max. 20 %ige Glucose i.v.",
+                "Glucose i.v. zusammen mit einlaufender Vollelektrolytlösung applizieren",
+                "Bei wachen Pat. mit erhaltenen Schutzreflexen und Schluckfähigkeit: Glucose per os"
+              ]
+            },
+            {
+              "weg": "oral",
+              "einheit": "g",
+              "dosis": {
+                "fixMg": 8
+              },
+              "maxMgAbsolut": 10,
+              "repetition": "Repetitionen möglich",
+              "preps": [
+                {
+                  "ampulle": "Diverse orale Darreichungsformen (Traubenzucker, Glucosegele etc.)",
+                  "zugabe": null,
+                  "ergebnis": "oral",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Bei wachen Pat. mit erhaltenen Schutzreflexen und Schluckfähigkeit: Glucose per os"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Cave: unterschiedliche Konzentrationen verfügbar (10 %, 20 %, 40 % und weitere)",
+        "Höherkonzentrierte Lösungen (> 20 %) vor i.v.-Gabe verdünnen",
+        "Venenreizung, Nekrosen bei paravasaler Gabe",
+        "Alternativen lt. BPR „Hypoglykämie“ prüfen (Glucagon)"
+      ]
     }
   ]
 }

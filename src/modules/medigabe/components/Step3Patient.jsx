@@ -7,7 +7,10 @@ import Button from "../../lexikon/components/ui/Button.jsx";
 import Badge from "../../lexikon/components/ui/Badge.jsx";
 import { CameraIcon, MagnifyingGlassIcon, XIcon } from "../../lexikon/components/ui/icons.jsx";
 
-const KG_CHIPS = [50, 60, 70, 80, 90, 100];
+const PRESETS = [
+  { label: "Mann", sub: "1,80 m · 80 kg", geschlecht: "m", kg: "80" },
+  { label: "Frau", sub: "1,66 m · 70 kg", geschlecht: "w", kg: "70" },
+];
 
 export default function Step3Patient({ patient, onPatch, minKg, minKgHinweis, minAlterMonate, minAlterHinweis, onJumpToMedScan }) {
   const meds = useSyncExternalStore(subscribeCaseMeds, getCaseMeds);
@@ -42,21 +45,14 @@ export default function Step3Patient({ patient, onPatch, minKg, minKgHinweis, mi
 
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <div className="text-xs text-text-muted mb-2">Alter</div>
-          <div className="flex gap-2">
-            <input
-              type="number" inputMode="numeric" min="0"
-              value={patient.alter}
-              onChange={(e) => onPatch({ alter: e.target.value })}
-              className="w-full h-12 px-3 bg-card border border-border rounded-lg text-sm text-text-primary"
-              placeholder={patient.alterEinheit === "monate" ? "Monate" : "Jahre"}
-            />
-            <SegPick
-              options={[{ value: "jahre", label: "J" }, { value: "monate", label: "Mon" }]}
-              value={patient.alterEinheit}
-              onChange={(alterEinheit) => onPatch({ alterEinheit })}
-            />
-          </div>
+          <div className="text-xs text-text-muted mb-2">Alter (Jahre)</div>
+          <input
+            type="number" inputMode="numeric" min="0"
+            value={patient.alter}
+            onChange={(e) => onPatch({ alter: e.target.value })}
+            className="w-full h-12 px-3 bg-card border border-border rounded-lg text-sm text-text-primary"
+            placeholder="Jahre"
+          />
           {alterInvalid ? <p className="text-xs text-critical mt-1">Unplausibel (0–120 Jahre).</p> : null}
         </div>
         <div>
@@ -71,13 +67,18 @@ export default function Step3Patient({ patient, onPatch, minKg, minKgHinweis, mi
           {kgInvalid ? <p className="text-xs text-critical mt-1">Unplausibel (1–250 kg).</p> : null}
         </div>
       </div>
-      <div className="flex gap-1.5 flex-wrap -mt-2">
-        {KG_CHIPS.map((c) => (
-          <button key={c} type="button" aria-pressed={Number(patient.kg) === c} onClick={() => onPatch({ kg: String(c) })}
-            className={`h-9 px-3 rounded-lg border text-xs font-mono transition-colors ${Number(patient.kg) === c ? "border-accent text-accent bg-accent/10" : "border-border text-text-muted hover:text-text-secondary"}`}>
-            {c}
-          </button>
-        ))}
+      <div className="flex gap-2 -mt-2">
+        {PRESETS.map((p) => {
+          const active = patient.geschlecht === p.geschlecht && String(patient.kg) === p.kg;
+          return (
+            <button key={p.label} type="button"
+              onClick={() => onPatch({ geschlecht: p.geschlecht, kg: p.kg })}
+              className={`flex-1 flex flex-col items-center py-2.5 rounded-lg border text-xs transition-colors ${active ? "border-accent text-accent bg-accent/10" : "border-border text-text-muted hover:text-text-secondary"}`}>
+              <span className="font-medium">{p.label}</span>
+              <span className="opacity-70 mt-0.5">{p.sub}</span>
+            </button>
+          );
+        })}
       </div>
 
       {unterMinKg ? (

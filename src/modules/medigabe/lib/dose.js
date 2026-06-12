@@ -40,16 +40,18 @@ function resolveStufe(dosis, alterJahre, kg) {
 }
 
 // → { mg, maxMg|null, gekappt, schritte[], stufe|null }
-export function computeDose({ dosis, kg, alterJahre, maxMgProKg, maxMgAbsolut }) {
+// einheit ist reine Anzeige (µg/I.E./g/…) — gerechnet wird einheitenagnostisch;
+// bewusst KEINE Umrechnung (z. B. µg→mg): Originaleinheit = Verwechslungsschutz.
+export function computeDose({ dosis, kg, alterJahre, maxMgProKg, maxMgAbsolut, einheit = "mg" }) {
   const { d, stufe } = resolveStufe(dosis, alterJahre, kg);
   const schritte = [];
   let mg;
   if (d.fixMg != null) {
     mg = r2(d.fixMg);
-    schritte.push(`Fixdosis ${fmt(mg)} mg`);
+    schritte.push(`Fixdosis ${fmt(mg)} ${einheit}`);
   } else {
     mg = r2(d.mgProKg * kg);
-    schritte.push(`${fmt(d.mgProKg)} mg/kg × ${fmt(kg)} kg = ${fmt(mg)} mg`);
+    schritte.push(`${fmt(d.mgProKg)} ${einheit}/kg × ${fmt(kg)} kg = ${fmt(mg)} ${einheit}`);
   }
 
   // Max-Grenzen: pro kg, absolut (Eintrag) und absolut (Stufe) — strengste gilt.
@@ -63,10 +65,10 @@ export function computeDose({ dosis, kg, alterJahre, maxMgProKg, maxMgAbsolut })
   if (maxMg != null) {
     if (mg > maxMg) {
       gekappt = true;
-      schritte.push(`Über Maximaldosis ${fmt(maxMg)} mg → gekappt auf ${fmt(maxMg)} mg`);
+      schritte.push(`Über Maximaldosis ${fmt(maxMg)} ${einheit} → gekappt auf ${fmt(maxMg)} ${einheit}`);
       mg = maxMg;
     } else {
-      schritte.push(`Maximaldosis ${fmt(maxMg)} mg ✓`);
+      schritte.push(`Maximaldosis ${fmt(maxMg)} ${einheit} ✓`);
     }
   }
   return { mg, maxMg, gekappt, schritte, stufe };
@@ -77,7 +79,7 @@ const r3 = (n) => Math.round(n * 1000) / 1000;
 
 // Volumen auf 0,1 ml gerundet; niemals über maxMg runden (dann abrunden).
 // → { ml, mlRoh, mgEffektiv, schritte[] }
-export function computeVolume({ mg, mgPerMl, maxMg }) {
+export function computeVolume({ mg, mgPerMl, maxMg, einheit = "mg" }) {
   const mlRoh = r3(mg / mgPerMl);
   let ml = r1(mlRoh);
   const schritte = [];
@@ -86,13 +88,13 @@ export function computeVolume({ mg, mgPerMl, maxMg }) {
   if (maxMg != null && mgEffektiv > maxMg) {
     ml = Math.floor(mlRoh * 10) / 10;
     mgEffektiv = r2(ml * mgPerMl);
-    schritte.push(`${fmt(mg)} mg ÷ ${fmt(mgPerMl)} mg/ml = ${fmt(mlRoh)} ml`);
-    schritte.push(`Aufrunden würde Maximaldosis ${fmt(maxMg)} mg überschreiten → abgerundet ${fmt(ml)} ml (= ${fmt(mgEffektiv)} mg)`);
+    schritte.push(`${fmt(mg)} ${einheit} ÷ ${fmt(mgPerMl)} ${einheit}/ml = ${fmt(mlRoh)} ml`);
+    schritte.push(`Aufrunden würde Maximaldosis ${fmt(maxMg)} ${einheit} überschreiten → abgerundet ${fmt(ml)} ml (= ${fmt(mgEffektiv)} ${einheit})`);
   } else if (ml !== mlRoh) {
     const richtung = ml > mlRoh ? "aufgerundet" : "abgerundet";
-    schritte.push(`${fmt(mg)} mg ÷ ${fmt(mgPerMl)} mg/ml = ${fmt(mlRoh)} ml → ${richtung} ${fmt(ml)} ml (= ${fmt(mgEffektiv)} mg)`);
+    schritte.push(`${fmt(mg)} ${einheit} ÷ ${fmt(mgPerMl)} ${einheit}/ml = ${fmt(mlRoh)} ml → ${richtung} ${fmt(ml)} ml (= ${fmt(mgEffektiv)} ${einheit})`);
   } else {
-    schritte.push(`${fmt(mg)} mg ÷ ${fmt(mgPerMl)} mg/ml = ${fmt(ml)} ml`);
+    schritte.push(`${fmt(mg)} ${einheit} ÷ ${fmt(mgPerMl)} ${einheit}/ml = ${fmt(ml)} ml`);
   }
   return { ml, mlRoh, mgEffektiv, schritte };
 }

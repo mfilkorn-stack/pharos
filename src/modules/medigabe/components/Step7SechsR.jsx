@@ -2,12 +2,13 @@
 import { CheckRow } from "./bits.jsx";
 
 // Sechs R mit den konkreten Werten dieses Durchlaufs (SAA S. 41).
-export function sechsRItems({ saaEntry, ind, route, prep, patient, mgEffektiv, ml }) {
+// ml ist null bei Darreichungen ohne ml-Rechnung (Tablette, Hub, Inhalation).
+export function sechsRItems({ saaEntry, ind, route, prep, patient, mgEffektiv, ml, einheit = "mg" }) {
   const alterTxt = `${patient.alter} ${patient.alterEinheit === "monate" ? "Monate" : "Jahre"}`;
   return [
     { titel: "Richtiger Patient?", wert: `${patient.geschlecht || "?"} · ${alterTxt} · ${patient.kg} kg` },
     { titel: "Richtiges Medikament?", wert: `${saaEntry.name} — Ampulle ${prep.ampulle}` },
-    { titel: "Richtige Dosierung?", wert: `${mgEffektiv} mg = ${ml} ml` },
+    { titel: "Richtige Dosierung?", wert: ml != null ? `${mgEffektiv} ${einheit} = ${ml} ml` : `${mgEffektiv} ${einheit}` },
     { titel: "Richtiger Zeitpunkt?", wert: `Jetzt indiziert: ${ind.label}` },
     { titel: "Richtige Konzentration?", wert: prep.ergebnis },
     { titel: "Richtige Applikationsart?", wert: route.weg },

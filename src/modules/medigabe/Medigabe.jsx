@@ -240,10 +240,11 @@ export default function Medigabe({ onJumpToMedScan }) {
     const berechnet = gabenInfo.map(({ g, gi, saaEntry, ind }) => {
       const route = ind.routen[g.dosier.weg];
       const prep = route.preps[g.dosier.prep];
-      const dose = computeDose({ dosis: route.dosis, kg, alterJahre, maxMgProKg: route.maxMgProKg, maxMgAbsolut: route.maxMgAbsolut });
-      const vol = computeVolume({ mg: dose.mg, mgPerMl: prep.mgPerMl, maxMg: dose.maxMg });
-      const items = sechsRItems({ saaEntry, ind, route, prep, patient: w.patient, mgEffektiv: fmt(vol.mgEffektiv), ml: fmt(vol.ml) });
-      return { g, gi, saaEntry, ind, route, prep, dose, vol, items };
+      const einheit = route.einheit || "mg";
+      const dose = computeDose({ dosis: route.dosis, kg, alterJahre, maxMgProKg: route.maxMgProKg, maxMgAbsolut: route.maxMgAbsolut, einheit });
+      const vol = prep.mgPerMl != null ? computeVolume({ mg: dose.mg, mgPerMl: prep.mgPerMl, maxMg: dose.maxMg, einheit }) : null;
+      const items = sechsRItems({ saaEntry, ind, route, prep, patient: w.patient, mgEffektiv: fmt(vol ? vol.mgEffektiv : dose.mg), ml: vol ? fmt(vol.ml) : null, einheit });
+      return { g, gi, saaEntry, ind, route, prep, einheit, dose, vol, items };
     });
 
     if (w.step === 7) {
@@ -281,7 +282,9 @@ export default function Medigabe({ onJumpToMedScan }) {
       const zusammenfassung = [
         ["Patient", `${w.patient.geschlecht || "?"} · ${w.patient.alter} ${w.patient.alterEinheit === "monate" ? "Monate" : "Jahre"} · ${w.patient.kg} kg`],
         ...berechnet.flatMap((b) => [
-          [b.saaEntry?.name || b.g.medId, `${fmt(b.vol.mgEffektiv)} mg = ${fmt(b.vol.ml)} ml ${b.route.weg} (${b.prep.ampulle})`],
+          [b.saaEntry?.name || b.g.medId, b.vol
+            ? `${fmt(b.vol.mgEffektiv)} ${b.einheit} = ${fmt(b.vol.ml)} ml ${b.route.weg} (${b.prep.ampulle})`
+            : `${fmt(b.dose.mg)} ${b.einheit} ${b.route.weg} (${b.prep.ampulle})`],
           ["· Indikation", b.ind.label],
           ["· Lösung", b.prep.ergebnis],
           ["· Repetition", (b.dose?.stufe?.repetition ?? b.route.repetition) || "—"],

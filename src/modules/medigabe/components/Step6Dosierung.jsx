@@ -10,11 +10,13 @@ export default function Step6Dosierung({ ind, cave, patient, dosier, onPatch }) 
   const kg = Number(patient.kg);
   const alterJahre = alterInJahren(patient);
   const eingabenOk = Number.isFinite(kg) && kg > 0 && alterJahre != null;
+  const einheit = route?.einheit || "mg";
 
   let dose = null, vol = null;
   if (route && prep && eingabenOk) {
-    dose = computeDose({ dosis: route.dosis, kg, alterJahre, maxMgProKg: route.maxMgProKg, maxMgAbsolut: route.maxMgAbsolut });
-    vol = computeVolume({ mg: dose.mg, mgPerMl: prep.mgPerMl, maxMg: dose.maxMg });
+    dose = computeDose({ dosis: route.dosis, kg, alterJahre, maxMgProKg: route.maxMgProKg, maxMgAbsolut: route.maxMgAbsolut, einheit });
+    // mgPerMl null = Darreichung ohne ml-Rechnung (Tablette, Hub, Inhalation).
+    vol = prep.mgPerMl != null ? computeVolume({ mg: dose.mg, mgPerMl: prep.mgPerMl, maxMg: dose.maxMg, einheit }) : null;
   }
 
   return (
@@ -73,7 +75,7 @@ export default function Step6Dosierung({ ind, cave, patient, dosier, onPatch }) 
         <p className="text-sm text-critical">Patientendaten unvollständig — zurück zu Schritt 3.</p>
       ) : null}
 
-      {route && prep && dose && vol ? (
+      {route && prep && dose ? (
         <>
           {prep.zugabe ? (
             <div className="border border-border bg-card rounded-lg p-3">
@@ -87,19 +89,25 @@ export default function Step6Dosierung({ ind, cave, patient, dosier, onPatch }) 
 
           <div className="border-2 border-accent rounded-xl bg-card p-4">
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-bold text-text-primary leading-none">{fmt(vol.mgEffektiv)}</span>
-              <span className="text-base text-text-secondary">mg</span>
+              <span className="text-3xl font-bold text-text-primary leading-none">{fmt(vol ? vol.mgEffektiv : dose.mg)}</span>
+              <span className="text-base text-text-secondary">{einheit}</span>
               {dose.gekappt ? <Badge variant="warning" size="sm">gekappt</Badge> : null}
             </div>
             <div className="flex items-center gap-2 mt-2">
               <DropletIcon className="h-5 w-5 text-accent" />
-              <span className="text-lg font-semibold text-accent">{fmt(vol.ml)} ml</span>
-              <span className="text-xs text-text-muted">aus {prep.ergebnis} aufziehen</span>
+              {vol ? (
+                <>
+                  <span className="text-lg font-semibold text-accent">{fmt(vol.ml)} ml</span>
+                  <span className="text-xs text-text-muted">aus {prep.ergebnis} aufziehen</span>
+                </>
+              ) : (
+                <span className="text-sm font-semibold text-accent">{prep.ergebnis}</span>
+              )}
             </div>
           </div>
 
           <div className="border border-border bg-bg-secondary rounded-lg p-3 font-mono text-xs leading-relaxed text-text-secondary">
-            {[...dose.schritte, ...vol.schritte].map((s, i) => (<div key={i}>{s}</div>))}
+            {[...dose.schritte, ...(vol ? vol.schritte : [])].map((s, i) => (<div key={i}>{s}</div>))}
           </div>
 
           {(() => { const repetition = dose?.stufe?.repetition ?? route.repetition; return repetition ? <p className="text-xs text-text-secondary"><span className="font-semibold">Repetition:</span> {repetition}</p> : null; })()}

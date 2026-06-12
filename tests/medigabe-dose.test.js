@@ -97,6 +97,23 @@ describe("computeDose: fixMg + stufen", () => {
   });
 });
 
+describe("Einheiten ≠ mg (V3)", () => {
+  it("computeDose trägt die Einheit in den Rechenweg (Fentanyl-µg-Fall)", () => {
+    const r = computeDose({ dosis: { mgProKg: 1 }, kg: 70, maxMgProKg: 2, einheit: "µg" });
+    expect(r.schritte[0]).toBe("1 µg/kg × 70 kg = 70 µg");
+    expect(r.schritte[1]).toBe("Maximaldosis 140 µg ✓");
+  });
+  it("computeVolume trägt die Einheit (50 µg/ml)", () => {
+    const r = computeVolume({ mg: 70, mgPerMl: 50, einheit: "µg" });
+    expect(r.ml).toBe(1.4);
+    expect(r.schritte[0]).toBe("70 µg ÷ 50 µg/ml = 1,4 ml");
+  });
+  it("Default bleibt mg (Bestandsverhalten)", () => {
+    const r = computeDose({ dosis: { fixMg: 250 }, kg: 70 });
+    expect(r.schritte[0]).toBe("Fixdosis 250 mg");
+  });
+});
+
 describe("computeVolume", () => {
   it("Esketamin 8,75 mg bei 10 mg/ml → 0,9 ml, effektiv 9 mg", () => {
     const r = computeVolume({ mg: 8.75, mgPerMl: 10, maxMg: 17.5 });

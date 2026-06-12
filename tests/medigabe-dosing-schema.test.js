@@ -45,9 +45,12 @@ describe("dosing.json Schema", () => {
               expect(last.wennAlterUnter == null && last.wennAlterAb == null && last.wennKgUnter == null && last.wennKgAb == null).toBe(true); // letzte Stufe = bedingungsloser Default
               for (const s of d.stufen) expect(s.fixMg != null || s.mgProKg != null).toBe(true);
             }
+            // V3: optionale Anzeige-Einheit (µg, I.E., g, Hub, …)
+            if (r.einheit != null) expect(typeof r.einheit).toBe("string");
             expect(r.preps.length).toBeGreaterThan(0);
             for (const p of r.preps) {
-              expect(p.mgPerMl).toBeGreaterThan(0);
+              // V3: mgPerMl null = Darreichung ohne ml-Rechnung (Tablette, Hub, Inhalation)
+              expect(p.mgPerMl === null || p.mgPerMl > 0).toBe(true);
               expect(["saa", "praxis"]).toContain(p.quelle);
               expect(typeof p.freigegeben).toBe("boolean");
               expect(p.ampulle).toBeTruthy();

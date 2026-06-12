@@ -660,6 +660,14 @@
               "preps": [
                 {
                   "ampulle": "1 mg / 1 ml (1 mg/ml)",
+                  "zugabe": "9 ml NaCl 0,9 %",
+                  "ergebnis": "10 ml à 0,1 mg/ml",
+                  "mgPerMl": 0.1,
+                  "quelle": "praxis",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "1 mg / 1 ml (1 mg/ml)",
                   "zugabe": null,
                   "ergebnis": "unverdünnt (1 mg/ml)",
                   "mgPerMl": 1,
@@ -692,15 +700,15 @@
             {
               "weg": "i.v. (Perfusor oder Bolusgabe)",
               "dosis": {
-                "fixMg": 1
+                "fixMg": 5
               },
-              "repetition": "0,5 ml (5 µg) bolusweise jede Minute i.v. bis adäquater Herzfrequenzanstieg; danach regelmäßige Evaluation — bei Abfall der HF erneut 0,5 ml (5 µg) i.v.; alternativ Perfusor: 1 mg Epinephrin in 100 ml NaCl 0,9 %, Laufrate 30 ml/h",
+              "repetition": "0,5 ml (5 µg) bolusweise jede Minute i.v. bis adäquater Herzfrequenzanstieg; danach regelmäßige Evaluation — bei HF-Abfall erneut 0,5 ml (5 µg). Alternativ Perfusor: 1 mg in 100 ml NaCl 0,9 %, Laufrate 30 ml/h",
               "preps": [
                 {
                   "ampulle": "1 mg / 1 ml (1 mg/ml)",
                   "zugabe": "99 ml NaCl 0,9 %",
-                  "ergebnis": "100 ml à 0,01 mg/ml (= 10 µg/ml)",
-                  "mgPerMl": 0.01,
+                  "ergebnis": "100 ml à 10 µg/ml (= 0,01 mg/ml)",
+                  "mgPerMl": 10,
                   "quelle": "saa",
                   "freigegeben": true
                 }
@@ -709,7 +717,8 @@
                 "1 mg Epinephrin in 100 ml NaCl 0,9 % (0,01 mg/ml = 10 µg/ml)",
                 "0,5 ml (5 µg) bolusweise jede Minute i.v. bis adäquater Herzfrequenzanstieg",
                 "Alternativ Perfusor: Laufrate 30 ml/h"
-              ]
+              ],
+              "einheit": "µg"
             }
           ],
           "relKontra": [],
@@ -1933,6 +1942,14 @@
               "preps": [
                 {
                   "ampulle": "10 mg / 1 ml (10 mg/ml)",
+                  "zugabe": "9 ml NaCl 0,9 %",
+                  "ergebnis": "10 ml à 1 mg/ml",
+                  "mgPerMl": 1,
+                  "quelle": "praxis",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "10 mg / 1 ml (10 mg/ml)",
                   "zugabe": null,
                   "ergebnis": "unverdünnt (10 mg/ml)",
                   "mgPerMl": 10,
@@ -2092,6 +2109,14 @@
               },
               "repetition": "Fraktionierte Gabe alle 2 min, bis suffiziente Spontanatmung und Schutzreflexe vorhanden sind",
               "preps": [
+                {
+                  "ampulle": "0,4 mg / 1 ml (0,4 mg/ml)",
+                  "zugabe": "3 ml NaCl 0,9 %",
+                  "ergebnis": "4 ml à 0,1 mg/ml",
+                  "mgPerMl": 0.1,
+                  "quelle": "praxis",
+                  "freigegeben": true
+                },
                 {
                   "ampulle": "0,4 mg / 1 ml (0,4 mg/ml)",
                   "zugabe": null,

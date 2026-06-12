@@ -9,18 +9,19 @@ const TILES = [
     tag: "Nachschlagen",
   },
   {
-    key: "trainer",
-    title: "Übergabe",
-    desc: "SINNHAFT-Übergabe einsprechen, KI parst & bewertet wie das ZNA-Team.",
-    Icon: ClipboardCheckIcon,
-    tag: "Trainieren",
-  },
-  {
     key: "medigabe",
     title: "Medigabe",
     desc: "SAA-konform durch die Medikamentengabe — Indikation, KI-Check, Dosis, 6-R.",
     Icon: SyringeIcon,
     tag: "Durchführen",
+  },
+  {
+    key: "trainer",
+    title: "Übergabe",
+    desc: "SINNHAFT-Übergabe einsprechen, KI parst & bewertet wie das ZNA-Team.",
+    Icon: ClipboardCheckIcon,
+    tag: "Trainieren",
+    span: true,
   },
 ];
 
@@ -55,7 +56,7 @@ export default function HomeScreen({ onPick }) {
             <button
               key={t.key}
               onClick={() => onPick(t.key)}
-              className="group relative text-left min-h-[160px] p-6 rounded-2xl border border-border bg-card hover:border-accent/50 hover:bg-card-hover transition-all duration-300 flex flex-col"
+              className={`group relative text-left min-h-[160px] p-6 rounded-2xl border border-border bg-card hover:border-accent/50 hover:bg-card-hover transition-all duration-300 flex flex-col${t.span ? " sm:col-span-2" : ""}`}
             >
               <div className="h-12 w-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center mb-4 group-hover:bg-accent/20 transition">
                 <t.Icon className="h-6 w-6" />

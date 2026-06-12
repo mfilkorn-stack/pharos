@@ -8,6 +8,7 @@ import Trainer from "./modules/trainer/Trainer.jsx";
 import Medigabe from "./modules/medigabe/Medigabe.jsx";
 import ConsentGate, { CONSENT_TEXT } from "./modules/lexikon/components/ConsentGate.jsx";
 import { isAccepted } from "./modules/lexikon/lib/consent.js";
+import { setDauerPick } from "./lib/dauerPickMode.js";
 import { config } from "./modules/lexikon/config.js";
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
     }
   }, [mode]);
   const jumpToMedScan = useCallback((tab) => {
+    setDauerPick(true);
     pendingLexNav.current = tab;
     setMode("lexikon");
   }, [setMode]);

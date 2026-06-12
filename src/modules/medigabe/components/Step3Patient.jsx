@@ -1,6 +1,19 @@
 // src/modules/medigabe/components/Step3Patient.jsx
 import { useState, useSyncExternalStore } from "react";
 import { getCaseMeds, addCaseMed, removeCaseMed, clearCaseMeds, subscribeCaseMeds, caseMedNames } from "../../../lib/caseMeds.js";
+import lexData from "../../lexikon/data/data.json";
+import saaData from "../../lexikon/data/saa.json";
+
+const NORM_MAP = new Map();
+for (const e of lexData.substances) {
+  NORM_MAP.set(e.wirkstoff.toLowerCase(), e.wirkstoff);
+  for (const s of (e.synonyms || [])) NORM_MAP.set(s.toLowerCase(), e.wirkstoff);
+}
+for (const e of saaData.entries) {
+  NORM_MAP.set(e.name.toLowerCase(), e.name);
+  for (const s of (e.synonyms || [])) NORM_MAP.set(s.toLowerCase(), e.name);
+}
+const normalize = (t) => NORM_MAP.get(t.toLowerCase()) ?? t;
 import { alterInJahren } from "../lib/dose.js";
 import { SegPick } from "./bits.jsx";
 import Button from "../../lexikon/components/ui/Button.jsx";
@@ -20,7 +33,7 @@ export default function Step3Patient({ patient, onPatch, minKg, minKgHinweis, mi
   const addManual = () => {
     const t = medInput.trim();
     if (!t) return;
-    addCaseMed({ wirkstoff: t, source: "medigabe" });
+    addCaseMed({ wirkstoff: normalize(t), source: "medigabe" });
     setMedInput("");
     if (patient.dauerStatus === "keine") onPatch({ dauerStatus: null });
   };

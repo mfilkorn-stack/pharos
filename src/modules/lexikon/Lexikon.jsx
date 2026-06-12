@@ -27,8 +27,9 @@ import { matchesFilter } from "./components/QuickFilters.jsx";
 import { CATEGORIES } from "./components/CategoryIcon.jsx";
 import GiftnotrufBanner from "./components/GiftnotrufBanner.jsx";
 import SymptomChips from "./components/SymptomChips.jsx";
-import { getCaseMeds, upsertCaseMeds, clearCaseMeds } from "../../lib/caseMeds.js";
+import { getCaseMeds, upsertCaseMeds, clearCaseMeds, addCaseMed } from "../../lib/caseMeds.js";
 import { useSaaMatrix } from "../../lib/saaMatrix.js";
+import { getDauerPick, setDauerPick, subscribeDauerPick } from "../../lib/dauerPickMode.js";
 
 // Build runtime DB entry: inherits group Notfall + appends extras
 function materialize(entry, groups) {
@@ -127,6 +128,9 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
   // Hydrieren nur mit vollwertigen Einträgen (mit id) — Medigabe-Minimaleinträge
   // ({wirkstoff, source} ohne id) sind keine renderbaren ResultCards.
   const [planEntries, setPlanEntries] = useState(() => getCaseMeds().filter((e) => e.id));
+  const [dauerPick, setDauerPickLocal] = useState(getDauerPick);
+  useEffect(() => subscribeDauerPick(() => setDauerPickLocal(getDauerPick())), []);
+  useEffect(() => () => setDauerPick(false), []);
   const [runtimeExtras, setRuntimeExtras] = useState([]);
   const [searchEnriching, setSearchEnriching] = useState(false);
   const [searchEnrichError, setSearchEnrichError] = useState("");
@@ -158,6 +162,10 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
   }, []);
 
   const clearHistory = useCallback(() => setHistory([]), []);
+
+  const handlePickAdd = useCallback((item) => {
+    addCaseMed({ wirkstoff: item.wirkstoff, id: item.id, source: "medscan" });
+  }, []);
 
   const goHome = useCallback(() => {
     setActiveView("suche");
@@ -383,6 +391,14 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
               <ScanActions onScan={() => setScanSource("scan")} onUpload={() => setScanSource("upload")} />
             </div>
 
+            {/* Dauermedikation-Pick-Modus Banner */}
+            {dauerPick ? (
+              <div className="flex items-center justify-between gap-3 px-4 py-3 rounded-xl border border-accent/40 bg-accent/5">
+                <span className="text-sm text-accent font-medium">Medikament zur Dauermedikation hinzufügen — tippe auf <strong>+</strong></span>
+                <Button variant="ghost" size="sm" onClick={() => setDauerPick(false)}>Fertig</Button>
+              </div>
+            ) : null}
+
             {/* Quick-Filter — in der Drogen-Ansicht ausgeblendet (Medikamenten-Kategorien) */}
             {activeView !== "drogen" ? (
               <QuickFilters active={activeFilter} onChange={setActiveFilter} counts={filterCounts} />
@@ -507,6 +523,7 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
                     onOpen={() => openDetail(item)}
                     isFavorite={favorites.includes(item.id)}
                     onToggleFavorite={handleToggleFavorite}
+                    onAdd={dauerPick ? () => handlePickAdd(item) : undefined}
                   />
                 ))}
               </div>

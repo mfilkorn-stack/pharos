@@ -8,8 +8,8 @@ import Badge from "../../lexikon/components/ui/Badge.jsx";
 import { CameraIcon, MagnifyingGlassIcon, XIcon } from "../../lexikon/components/ui/icons.jsx";
 
 const PRESETS = [
-  { label: "Mann", sub: "1,80 m · 80 kg", geschlecht: "m", kg: "80" },
-  { label: "Frau", sub: "1,66 m · 70 kg", geschlecht: "w", kg: "70" },
+  { label: "Mann", sub: "1,80 m · 80 kg · 50 J", geschlecht: "m", kg: "80", alter: "50" },
+  { label: "Frau", sub: "1,66 m · 70 kg · 45 J", geschlecht: "w", kg: "70", alter: "45" },
 ];
 
 export default function Step3Patient({ patient, onPatch, minKg, minKgHinweis, minAlterMonate, minAlterHinweis, onJumpToMedScan }) {
@@ -69,10 +69,10 @@ export default function Step3Patient({ patient, onPatch, minKg, minKgHinweis, mi
       </div>
       <div className="flex gap-2 -mt-2">
         {PRESETS.map((p) => {
-          const active = patient.geschlecht === p.geschlecht && String(patient.kg) === p.kg;
+          const active = patient.geschlecht === p.geschlecht && String(patient.kg) === p.kg && String(patient.alter) === p.alter;
           return (
             <button key={p.label} type="button"
-              onClick={() => onPatch({ geschlecht: p.geschlecht, kg: p.kg })}
+              onClick={() => onPatch({ geschlecht: p.geschlecht, kg: p.kg, alter: p.alter })}
               className={`flex-1 flex flex-col items-center py-2.5 rounded-lg border text-xs transition-colors ${active ? "border-accent text-accent bg-accent/10" : "border-border text-text-muted hover:text-text-secondary"}`}>
               <span className="font-medium">{p.label}</span>
               <span className="opacity-70 mt-0.5">{p.sub}</span>

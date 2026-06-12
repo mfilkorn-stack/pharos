@@ -129,7 +129,8 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
   // ({wirkstoff, source} ohne id) sind keine renderbaren ResultCards.
   const [planEntries, setPlanEntries] = useState(() => getCaseMeds().filter((e) => e.id));
   const [dauerPick, setDauerPickLocal] = useState(getDauerPick);
-  useEffect(() => subscribeDauerPick(() => setDauerPickLocal(getDauerPick())), []);
+  const [dauerAdded, setDauerAdded] = useState(() => new Set());
+  useEffect(() => subscribeDauerPick(() => { setDauerPickLocal(getDauerPick()); setDauerAdded(new Set()); }), []);
   useEffect(() => () => setDauerPick(false), []);
   const [runtimeExtras, setRuntimeExtras] = useState([]);
   const [searchEnriching, setSearchEnriching] = useState(false);
@@ -165,6 +166,7 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
 
   const handlePickAdd = useCallback((item) => {
     addCaseMed({ wirkstoff: item.wirkstoff, id: item.id, source: "medscan" });
+    setDauerAdded((prev) => new Set([...prev, item.id]));
   }, []);
 
   const goHome = useCallback(() => {
@@ -524,6 +526,7 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
                     isFavorite={favorites.includes(item.id)}
                     onToggleFavorite={handleToggleFavorite}
                     onAdd={dauerPick ? () => handlePickAdd(item) : undefined}
+                    isAdded={dauerPick && dauerAdded.has(item.id)}
                   />
                 ))}
               </div>

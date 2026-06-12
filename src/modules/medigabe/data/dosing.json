@@ -2031,6 +2031,14 @@
               "preps": [
                 {
                   "ampulle": "20 mg / 2 ml (10 mg/ml)",
+                  "zugabe": "8 ml NaCl 0,9 %",
+                  "ergebnis": "10 ml à 2 mg/ml",
+                  "mgPerMl": 2,
+                  "quelle": "praxis",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "20 mg / 2 ml (10 mg/ml)",
                   "zugabe": null,
                   "ergebnis": "unverdünnt (10 mg/ml)",
                   "mgPerMl": 10,

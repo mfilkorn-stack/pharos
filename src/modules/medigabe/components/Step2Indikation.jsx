@@ -1,8 +1,19 @@
 // src/modules/medigabe/components/Step2Indikation.jsx
+import { useEffect } from "react";
 import saa from "../../lexikon/data/saa.json";
 import dosing from "../data/dosing.json";
 
 export default function Step2Indikation({ gaben, onPick }) {
+  useEffect(() => {
+    gaben.forEach((g, gi) => {
+      const entry = dosing.entries.find((e) => e.id === g.medId);
+      if (entry?.indikationen.length === 1 && g.indId == null) {
+        onPick(gi, entry.indikationen[0].id);
+      }
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gaben.map((g) => g.medId).join(",")]);
+
   return (
     <div className="flex flex-col gap-5">
       <p className="text-xs text-text-muted">Nur die in der SAA genannten Indikationen sind wählbar.</p>

@@ -15,7 +15,9 @@
           "routen": [
             {
               "weg": "i.v.",
-              "dosis": { "mgProKg": 0.125 },
+              "dosis": {
+                "mgProKg": 0.125
+              },
               "maxMgProKg": 0.25,
               "repetition": "Repetition 0,125 mg/kgKG, bis Maximaldosis 0,25 mg/kgKG",
               "preps": [
@@ -36,11 +38,15 @@
                   "freigegeben": true
                 }
               ],
-              "hinweise": ["Kombination von Midazolam und Esketamin bei i.v.-Gabe empfohlen"]
+              "hinweise": [
+                "Kombination von Midazolam und Esketamin bei i.v.-Gabe empfohlen"
+              ]
             },
             {
               "weg": "nasal / i.m.",
-              "dosis": { "mgProKg": 1 },
+              "dosis": {
+                "mgProKg": 1
+              },
               "maxMgProKg": null,
               "repetition": "Einmalige Repetition 1 mg/kgKG möglich",
               "preps": [
@@ -82,48 +88,124 @@
           "routen": [
             {
               "weg": "buccal",
-              "dosis": { "stufen": [
-                { "wennAlterUnter": 1, "fixMg": 2.5, "repetition": "Keine Repetition" },
-                { "wennAlterUnter": 5, "fixMg": 5, "repetition": "Keine Repetition" },
-                { "wennAlterUnter": 10, "fixMg": 7.5, "repetition": "Einmalige Repetition möglich" },
-                { "fixMg": 10, "repetition": "Einmalige Repetition möglich" }
-              ] },
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 1,
+                    "fixMg": 2.5,
+                    "repetition": "Keine Repetition"
+                  },
+                  {
+                    "wennAlterUnter": 5,
+                    "fixMg": 5,
+                    "repetition": "Keine Repetition"
+                  },
+                  {
+                    "wennAlterUnter": 10,
+                    "fixMg": 7.5,
+                    "repetition": "Einmalige Repetition möglich"
+                  },
+                  {
+                    "fixMg": 10,
+                    "repetition": "Einmalige Repetition möglich"
+                  }
+                ]
+              },
               "preps": [
-                { "ampulle": "Buccolam Fertigspritze (5 mg/ml)", "zugabe": null, "ergebnis": "unverdünnt (5 mg/ml) buccal", "mgPerMl": 5, "quelle": "saa", "freigegeben": true }
+                {
+                  "ampulle": "Buccolam Fertigspritze (5 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5 mg/ml) buccal",
+                  "mgPerMl": 5,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
               ],
-              "hinweise": ["Antikonvulsive Therapie: adäquat hohe Dosierung erforderlich, nicht titrieren"]
+              "hinweise": [
+                "Antikonvulsive Therapie: adäquat hohe Dosierung erforderlich, nicht titrieren"
+              ]
             },
             {
               "weg": "nasal (MAD)",
-              "dosis": { "stufen": [
-                { "wennKgUnter": 10, "fixMg": 2.5, "repetition": "Repetition erst bei Kindern > 10 kgKG" },
-                { "wennKgUnter": 20, "fixMg": 5, "repetition": "Einmalige Repetition möglich" },
-                { "fixMg": 10, "repetition": "Einmalige Repetition möglich" }
-              ] },
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennKgUnter": 10,
+                    "fixMg": 2.5,
+                    "repetition": "Repetition erst bei Kindern > 10 kgKG"
+                  },
+                  {
+                    "wennKgUnter": 20,
+                    "fixMg": 5,
+                    "repetition": "Einmalige Repetition möglich"
+                  },
+                  {
+                    "fixMg": 10,
+                    "repetition": "Einmalige Repetition möglich"
+                  }
+                ]
+              },
               "preps": [
-                { "ampulle": "5 mg/ml (zur i.n.-Gabe)", "zugabe": null, "ergebnis": "unverdünnt (5 mg/ml) — max. 1 ml = 5 mg pro Nasenloch", "mgPerMl": 5, "quelle": "saa", "freigegeben": true }
+                {
+                  "ampulle": "5 mg/ml (zur i.n.-Gabe)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5 mg/ml) — max. 1 ml = 5 mg pro Nasenloch",
+                  "mgPerMl": 5,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
               ],
-              "hinweise": ["Nasal per MAD ab dem 3. Lebensmonat"]
+              "hinweise": [
+                "Nasal per MAD ab dem 3. Lebensmonat"
+              ]
             },
             {
               "weg": "i.v.",
-              "dosis": { "mgProKg": 0.1 },
+              "dosis": {
+                "mgProKg": 0.1
+              },
               "maxMgProKg": null,
               "maxMgAbsolut": 20,
               "repetition": "Einmalige Repetition möglich (Erwachsene, Maximaldosis 20 mg); Kinder max. 1 × Repetition",
               "preps": [
-                { "ampulle": "1 mg/ml (zur i.v.-Gabe)", "zugabe": null, "ergebnis": "unverdünnt (1 mg/ml)", "mgPerMl": 1, "quelle": "saa", "freigegeben": true }
+                {
+                  "ampulle": "1 mg/ml (zur i.v.-Gabe)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (1 mg/ml)",
+                  "mgPerMl": 1,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "5 mg / 1 ml (5 mg/ml)",
+                  "zugabe": "4 ml NaCl 0,9 %",
+                  "ergebnis": "5 ml à 1 mg/ml",
+                  "mgPerMl": 1,
+                  "quelle": "praxis",
+                  "freigegeben": true
+                }
               ],
               "hinweise": []
             },
             {
               "weg": "i.m.",
-              "dosis": { "fixMg": 10 },
+              "dosis": {
+                "fixMg": 10
+              },
               "repetition": "Einmalige Repetition möglich, Maximaldosis 20 mg",
               "preps": [
-                { "ampulle": "5 mg/ml (zur i.m.-Gabe)", "zugabe": null, "ergebnis": "unverdünnt (5 mg/ml)", "mgPerMl": 5, "quelle": "saa", "freigegeben": true }
+                {
+                  "ampulle": "5 mg/ml (zur i.m.-Gabe)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5 mg/ml)",
+                  "mgPerMl": 5,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
               ],
-              "hinweise": ["Erwachsene: 10 mg i.m."]
+              "hinweise": [
+                "Erwachsene: 10 mg i.m."
+              ]
             }
           ]
         },
@@ -151,22 +233,205 @@
           "routen": [
             {
               "weg": "i.v. (langsam)",
-              "dosis": { "stufen": [
-                { "wennAlterAb": 60, "fixMg": 1, "hinweis": "Pat. > 60 Jahre und / oder < 50 kgKG und / oder mit einschränkenden Krankheiten: 1 mg langsam i.v." },
-                { "wennKgUnter": 50, "fixMg": 1, "hinweis": "Pat. < 50 kgKG (inkl. Kinder > 10 kgKG): 1 mg langsam i.v." },
-                { "fixMg": 2 }
-              ] },
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterAb": 60,
+                    "fixMg": 1,
+                    "hinweis": "Pat. > 60 Jahre und / oder < 50 kgKG und / oder mit einschränkenden Krankheiten: 1 mg langsam i.v."
+                  },
+                  {
+                    "wennKgUnter": 50,
+                    "fixMg": 1,
+                    "hinweis": "Pat. < 50 kgKG (inkl. Kinder > 10 kgKG): 1 mg langsam i.v."
+                  },
+                  {
+                    "fixMg": 2
+                  }
+                ]
+              },
               "repetition": null,
               "preps": [
-                { "ampulle": "1 mg/ml (zur i.v.-Gabe)", "zugabe": null, "ergebnis": "unverdünnt (1 mg/ml)", "mgPerMl": 1, "quelle": "saa", "freigegeben": true }
+                {
+                  "ampulle": "1 mg/ml (zur i.v.-Gabe)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (1 mg/ml)",
+                  "mgPerMl": 1,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "5 mg / 1 ml (5 mg/ml)",
+                  "zugabe": "4 ml NaCl 0,9 %",
+                  "ergebnis": "5 ml à 1 mg/ml",
+                  "mgPerMl": 1,
+                  "quelle": "praxis",
+                  "freigegeben": true
+                }
               ],
-              "hinweise": ["Langsam i.v. injizieren"]
+              "hinweise": [
+                "Langsam i.v. injizieren"
+              ]
             }
           ]
         }
       ],
       "cave": [
         "Unterschiedliche Konzentrationen verfügbar (1 mg/ml i.v.; 5 mg/ml i.n./i.m./buccal)"
+      ]
+    },
+    {
+      "id": "saa:ass",
+      "saaSeite": 43,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 216,
+      "minAlterHinweis": "Keine Anwendung durch NotSan bei Pat. < 18 Jahren",
+      "indikationen": [
+        {
+          "id": "acs",
+          "label": "Akutes Koronarsyndrom, Myokardinfarkt",
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "fixMg": 250
+              },
+              "repetition": "Keine Repetition",
+              "preps": [
+                {
+                  "ampulle": "500 mg Trockensubstanz + 5 ml Lösungsmittel",
+                  "zugabe": null,
+                  "ergebnis": "aufgelöst (100 mg/ml), langsam i.v.",
+                  "mgPerMl": 100,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Für die i.v.-Gabe Herstellerangaben beachten"
+              ]
+            },
+            {
+              "weg": "oral",
+              "dosis": {
+                "fixMg": 200
+              },
+              "repetition": "Keine Repetition",
+              "preps": [
+                {
+                  "ampulle": "Diverse orale Darreichungsformen",
+                  "zugabe": null,
+                  "ergebnis": "oral",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": []
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Wirkeintritt nach 10–15 min; Wirkdauer: Tage (Lebensdauer der Thrombozyten)"
+      ]
+    },
+    {
+      "id": "saa:amiodaron",
+      "saaSeite": 44,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 36,
+      "minAlterHinweis": "Keine Anwendung bei Säuglingen und Kindern < 3 Jahre (Gehalt an Benzylalkohol)",
+      "indikationen": [
+        {
+          "id": "rea-defibrillierbar",
+          "label": "Reanimation: refraktäres Kammerflimmern, pulslose ventrikuläre Tachykardie",
+          "routen": [
+            {
+              "weg": "i.v. (Bolus)",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 18,
+                    "mgProKg": 5,
+                    "maxMgAbsolut": 300,
+                    "hinweis": "Kinder: 5 mg/kgKG (max. 300 mg) — Gabe nach der 3. Defibrillation"
+                  },
+                  {
+                    "fixMg": 300,
+                    "hinweis": "Erwachsene: 300 mg — Gabe nach der 3. Defibrillation"
+                  }
+                ]
+              },
+              "repetition": "Repetition nach der 5. Defibrillation: Kinder 5 mg/kgKG (max. 150 mg), Erwachsene 150 mg",
+              "preps": [
+                {
+                  "ampulle": "150 mg / 3 ml (50 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (50 mg/ml) — Erwachsenendosis 300 mg = 2 Ampullen",
+                  "mgPerMl": 50,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Langsame i.v.-Injektion als Bolusgabe unter laufender Infusion",
+                "Mit Vollelektrolytlösung nachspülen"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Bei Anwendung über Perfusor (außerhalb der Reanimation) Verdünnung mit Glucose 5 %",
+        "Alternatives Medikament: Lidocain"
+      ]
+    },
+    {
+      "id": "saa:atropin",
+      "saaSeite": 45,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 216,
+      "minAlterHinweis": "Keine Anwendung < 18 Jahre",
+      "indikationen": [
+        {
+          "id": "bradykardie",
+          "label": "Instabile Bradykardie",
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "fixMg": 0.5
+              },
+              "repetition": "Bei nachweisbarer, aber nicht ausreichender Wirkung Repetition nach 3–5 min bis adäquater Anstieg der Herzfrequenz (max. Gesamtdosis 3 mg)",
+              "preps": [
+                {
+                  "ampulle": "0,5 mg / 1 ml (0,5 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (0,5 mg/ml)",
+                  "mgPerMl": 0.5,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "1 mg / 1 ml (1 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (1 mg/ml)",
+                  "mgPerMl": 1,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Wenn wirkungslos: keine weitere Gabe → Wechsel auf Epinephrin"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Ampullen mit unterschiedlichen Konzentrationen verfügbar (0,5 und 1 mg/ml)",
+        "Wechsel auf Epinephrin bei persistierender instabiler Bradykardie"
       ]
     }
   ]

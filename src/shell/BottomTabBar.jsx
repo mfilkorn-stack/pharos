@@ -4,6 +4,7 @@ import {
   FlaskIcon,
   StarIcon,
   ClipboardCheckIcon,
+  SyringeIcon,
 } from "../modules/lexikon/components/ui/icons.jsx";
 
 // Sub-Navigation des MedScan-Moduls (Lexikon).
@@ -47,11 +48,22 @@ export default function BottomTabBar({ mode, active, counts = {}, onNav, onMode 
       <nav className={navCls} style={safe}>
         <Tab Icon={ClipboardCheckIcon} label="Übergabe" active onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} />
         <Tab Icon={MagnifyingGlassIcon} label="MedScan" active={false} onClick={() => onMode?.("lexikon")} />
+        <Tab Icon={SyringeIcon} label="Medigabe" active={false} onClick={() => onMode?.("medigabe")} />
       </nav>
     );
   }
 
-  // MedScan-Modus (Lexikon): Sub-Nav + Wechsel zur Übergabe.
+  if (mode === "medigabe") {
+    return (
+      <nav className={navCls} style={safe}>
+        <Tab Icon={SyringeIcon} label="Medigabe" active onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} />
+        <Tab Icon={MagnifyingGlassIcon} label="MedScan" active={false} onClick={() => onMode?.("lexikon")} />
+        <Tab Icon={ClipboardCheckIcon} label="Übergabe" active={false} onClick={() => onMode?.("trainer")} />
+      </nav>
+    );
+  }
+
+  // MedScan-Modus (Lexikon): Sub-Nav + Wechsel zur Übergabe + Medigabe.
   return (
     <nav className={navCls} style={safe}>
       {MEDSCAN_TABS.map((t) => (
@@ -65,6 +77,7 @@ export default function BottomTabBar({ mode, active, counts = {}, onNav, onMode 
         />
       ))}
       <Tab Icon={ClipboardCheckIcon} label="Übergabe" active={false} onClick={() => onMode?.("trainer")} />
+      <Tab Icon={SyringeIcon} label="Medigabe" active={false} onClick={() => onMode?.("medigabe")} />
     </nav>
   );
 }

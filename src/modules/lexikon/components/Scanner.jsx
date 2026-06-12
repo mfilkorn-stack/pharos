@@ -201,10 +201,8 @@ export default function Scanner({ source, onClose, onPick, onPickUnknown, onPick
               onPickUnknown={onPickUnknown}
               onPickAll={onPickAll}
               onClose={onClose}
+              onRetry={resetForRetry}
             />
-            <Button variant="ghost" size="md" onClick={resetForRetry} className="w-full">
-              Neu aufnehmen
-            </Button>
           </>
         ) : !frozen && source === "scan" ? (
           <p className="text-sm text-text-muted leading-relaxed">

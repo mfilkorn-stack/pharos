@@ -3,6 +3,7 @@ import { SZENARIEN } from './data/szenarien';
 import { SINNHAFT } from './data/sinnhaft';
 import { isSpeechSupported, startDictation as startSpeech } from './speech';
 import { uebergabeParse, uebergabeEvaluate } from '../../lib/kiClient';
+import ActionBar from '../../shell/ActionBar.jsx';
 
 const SPEECH_ERRORS = {
   'not-allowed': 'Mikrofon-Zugriff verweigert. Browser- und macOS-Systemeinstellungen → Datenschutz → Mikrofon prüfen.',
@@ -266,7 +267,7 @@ export default function Trainer() {
         }}
       />
 
-      <div className="relative max-w-5xl mx-auto px-6 py-10 pb-28 sm:px-10 sm:py-14 lg:pb-14">
+      <div className="relative max-w-5xl mx-auto px-6 py-10 pb-48 sm:px-10 sm:py-14 lg:pb-32">
         <header className="mb-12 flex items-end justify-between gap-4 flex-wrap">
           <div>
             <div className="text-[10px] tracking-[0.3em] text-text-muted uppercase mb-2 font-mono">
@@ -503,32 +504,21 @@ export default function Trainer() {
 
             <Section title="Aktueller Verlauf / Status">{scenario.verlauf}</Section>
 
-            <div className="mt-12 flex items-center gap-4 flex-wrap">
-              <button
-                onClick={() => setView('practice')}
-                className="font-mono px-8 py-4 bg-accent text-bg-primary rounded-lg hover:bg-accent/90 transition tracking-wider uppercase text-sm font-semibold active:scale-[0.98]"
-              >
-                Übergabe starten →
-              </button>
-              <div className="font-mono text-xs text-text-muted">
-                Du sprichst zur Schichtleitung der {scenario.transport.split(' ').slice(0, 2).join(' ')}.
-              </div>
+            <div className="mt-12 font-mono text-xs text-text-muted">
+              Du sprichst zur Schichtleitung der {scenario.transport.split(' ').slice(0, 2).join(' ')}.
             </div>
           </div>
         )}
 
         {view === 'practice' && (
           <div>
-            <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
-              <div>
-                <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-text-muted">
-                  {scenario
-                    ? `SINNHAFT · Übergabe an ${scenario.transport.split(' ').slice(0, 2).join(' ')}`
-                    : 'SINNHAFT · Eigene Übergabe'}
-                </div>
-                <h2 className="font-bold text-3xl mt-1 tracking-tight">Deine Übergabe</h2>
+            <div className="mb-8">
+              <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-text-muted">
+                {scenario
+                  ? `SINNHAFT · Übergabe an ${scenario.transport.split(' ').slice(0, 2).join(' ')}`
+                  : 'SINNHAFT · Eigene Übergabe'}
               </div>
-              <Timer seconds={elapsed} />
+              <h2 className="font-bold text-3xl mt-1 tracking-tight">Deine Übergabe</h2>
             </div>
 
             <div className="mb-8 border border-border rounded-xl bg-card overflow-hidden">
@@ -720,16 +710,8 @@ export default function Trainer() {
             )}
 
             <div className="mt-10 flex items-center gap-4 flex-wrap">
-              <button
-                onClick={handleSubmit}
-                disabled={Object.values(inputs).every((v) => !v?.trim())}
-                title={Object.values(inputs).every((v) => !v?.trim()) ? "Mindestens eine Sektion ausfüllen" : undefined}
-                className="font-mono px-8 py-4 bg-accent text-bg-primary rounded-lg hover:bg-accent/90 disabled:opacity-30 disabled:cursor-not-allowed transition tracking-wider uppercase text-sm font-semibold active:scale-[0.98]"
-              >
-                Übergabe abgeben →
-              </button>
               {Object.values(inputs).every((v) => !v?.trim()) ? (
-                <span className="font-mono text-xs text-text-muted">Mindestens eine Sektion ausfüllen.</span>
+                <span className="font-mono text-xs text-text-muted">Mindestens eine Sektion ausfüllen, dann unten abgeben.</span>
               ) : null}
               {scenario && (
                 <button
@@ -881,29 +863,6 @@ export default function Trainer() {
               <div className="font-semibold text-xl leading-snug text-text-primary">{feedback.topTip}</div>
             </div>
 
-            <div className="flex flex-wrap gap-4">
-              <button
-                onClick={() => {
-                  setInputs({});
-                  setStartChecks({});
-                  setFeedback(null);
-                  setTranscript('');
-                  setParseError(null);
-                  setParsingState('idle');
-                  finalTranscriptRef.current = '';
-                  setView('practice');
-                }}
-                className="font-mono px-6 py-3 bg-accent text-bg-primary rounded-lg hover:bg-accent/90 transition tracking-wider uppercase text-xs font-semibold active:scale-[0.98]"
-              >
-                Nochmal üben
-              </button>
-              <button
-                onClick={reset}
-                className="font-mono px-6 py-3 border border-border-strong hover:border-text-muted text-text-secondary hover:text-text-primary rounded-lg transition tracking-wider uppercase text-xs"
-              >
-                Neues Szenario
-              </button>
-            </div>
           </div>
         )}
 
@@ -911,6 +870,56 @@ export default function Trainer() {
           Prototyp · Schema nach Gräff et al. 2023 · Kein Ersatz für reale Ausbildung · Pharos
         </footer>
       </div>
+
+      {/* Fixierte Aktions-Leiste: primäre Aktion + Timer immer im Daumenbereich. */}
+      {view === 'brief' && scenario && (
+        <ActionBar maxWidthClass="max-w-5xl">
+          <button
+            onClick={() => setView('practice')}
+            className="font-mono flex-1 px-8 py-4 bg-accent text-bg-primary rounded-lg hover:bg-accent/90 transition tracking-wider uppercase text-sm font-semibold active:scale-[0.98]"
+          >
+            Übergabe starten →
+          </button>
+        </ActionBar>
+      )}
+      {view === 'practice' && (
+        <ActionBar maxWidthClass="max-w-5xl">
+          <Timer seconds={elapsed} />
+          <button
+            onClick={handleSubmit}
+            disabled={Object.values(inputs).every((v) => !v?.trim())}
+            title={Object.values(inputs).every((v) => !v?.trim()) ? 'Mindestens eine Sektion ausfüllen' : undefined}
+            className="font-mono flex-1 px-6 py-4 bg-accent text-bg-primary rounded-lg hover:bg-accent/90 disabled:opacity-30 disabled:cursor-not-allowed transition tracking-wider uppercase text-sm font-semibold active:scale-[0.98]"
+          >
+            Übergabe abgeben →
+          </button>
+        </ActionBar>
+      )}
+      {view === 'feedback' && feedback && (
+        <ActionBar maxWidthClass="max-w-5xl">
+          <button
+            onClick={() => {
+              setInputs({});
+              setStartChecks({});
+              setFeedback(null);
+              setTranscript('');
+              setParseError(null);
+              setParsingState('idle');
+              finalTranscriptRef.current = '';
+              setView('practice');
+            }}
+            className="font-mono flex-1 px-6 py-3 bg-accent text-bg-primary rounded-lg hover:bg-accent/90 transition tracking-wider uppercase text-xs font-semibold active:scale-[0.98]"
+          >
+            Nochmal üben
+          </button>
+          <button
+            onClick={reset}
+            className="font-mono px-6 py-3 border border-border-strong hover:border-text-muted text-text-secondary hover:text-text-primary rounded-lg transition tracking-wider uppercase text-xs"
+          >
+            Neues Szenario
+          </button>
+        </ActionBar>
+      )}
     </div>
   );
 }

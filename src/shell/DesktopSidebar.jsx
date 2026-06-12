@@ -6,12 +6,14 @@ import {
   ClockIcon,
   FlaskIcon,
   ClipboardCheckIcon,
+  SyringeIcon,
   WifiIcon,
   PharosLogo,
 } from "../modules/lexikon/components/ui/icons.jsx";
 
 const MODES = [
   { key: "lexikon", label: "MedScan", Icon: MagnifyingGlassIcon },
+  { key: "medigabe", label: "Medigabe", Icon: SyringeIcon },
   { key: "trainer", label: "Übergabe", Icon: ClipboardCheckIcon },
 ];
 

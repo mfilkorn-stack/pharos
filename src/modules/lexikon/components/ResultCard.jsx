@@ -1,6 +1,6 @@
 import CategoryIcon from "./CategoryIcon.jsx";
 import StatusPill from "./StatusPill.jsx";
-import { ChevronRightIcon, StarIcon, StarFilledIcon } from "./ui/icons.jsx";
+import { ChevronRightIcon, StarIcon, StarFilledIcon, PlusIcon, CheckIcon } from "./ui/icons.jsx";
 import Badge from "./ui/Badge.jsx";
 
 function maxRiskLevel(notfall) {
@@ -43,7 +43,7 @@ function kiBadge(item) {
   return { variant: "critical", label: "KI" };
 }
 
-export default function ResultCard({ item, isActive, onOpen, isFavorite, onToggleFavorite }) {
+export default function ResultCard({ item, isActive, onOpen, isFavorite, onToggleFavorite, onAdd, isAdded }) {
   const risk = maxRiskLevel(item.notfall);
   const barColor = RISK_BAR_COLOR[risk] || RISK_BAR_COLOR.info;
   const notf = getNotfallRelevanz(item.notfall);
@@ -140,8 +140,25 @@ export default function ResultCard({ item, isActive, onOpen, isFavorite, onToggl
           </div>
         </div>
 
-        {/* Favorite star + Chevron */}
+        {/* Add button (Dauermedikation-Pick-Modus) + Favorite star + Chevron */}
         <div className="flex items-center gap-1 flex-shrink-0">
+          {onAdd ? (
+            isAdded ? (
+              <span className="h-8 w-8 inline-flex items-center justify-center rounded-md text-success bg-success/10">
+                <CheckIcon className="h-4 w-4" />
+              </span>
+            ) : (
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); onAdd(); }}
+                aria-label={`${item.wirkstoff} zur Dauermedikation hinzufügen`}
+                title="Zur Dauermedikation hinzufügen"
+                className="h-8 w-8 inline-flex items-center justify-center rounded-md text-accent bg-accent/10 hover:bg-accent/20 transition-colors"
+              >
+                <PlusIcon className="h-4 w-4" />
+              </button>
+            )
+          ) : null}
           {onToggleFavorite ? (
             <button
               type="button"

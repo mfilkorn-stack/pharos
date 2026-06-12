@@ -231,6 +231,12 @@ export const MagnifyingGlassIcon = ({ className = "h-4 w-4" }) => (
   </svg>
 );
 
+export const PlusIcon = ({ className = "h-4 w-4" }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+    <path d="M12 5v14M5 12h14" />
+  </svg>
+);
+
 export const MicIcon = ({ className = "h-4 w-4" }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
     <rect x="9" y="2" width="6" height="12" rx="3" />

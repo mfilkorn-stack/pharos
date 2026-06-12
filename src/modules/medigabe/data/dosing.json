@@ -1,0 +1,3060 @@
+{
+  "version": "dosing-1",
+  "quelle": "SAA und BPR 2025 (6-Länder-AG), Stand 30.04.2025",
+  "entries": [
+    {
+      "id": "saa:esketamin",
+      "saaSeite": 50,
+      "verifiziert": "2026-06-10",
+      "minKg": 10,
+      "minKgHinweis": "Keine Anwendung bei Kindern < 10 kgKG (ca. 12 Monate)",
+      "indikationen": [
+        {
+          "id": "schmerz",
+          "label": "Starker Schmerz (NRS ≥ 6)",
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "mgProKg": 0.125
+              },
+              "maxMgProKg": 0.25,
+              "repetition": "Repetition 0,125 mg/kgKG, bis Maximaldosis 0,25 mg/kgKG",
+              "preps": [
+                {
+                  "ampulle": "50 mg / 2 ml (25 mg/ml)",
+                  "zugabe": "3 ml NaCl 0,9 %",
+                  "ergebnis": "5 ml à 10 mg/ml",
+                  "mgPerMl": 10,
+                  "quelle": "praxis",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "25 mg / 5 ml (5 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5 mg/ml)",
+                  "mgPerMl": 5,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Kombination von Midazolam und Esketamin bei i.v.-Gabe empfohlen"
+              ]
+            },
+            {
+              "weg": "nasal / i.m.",
+              "dosis": {
+                "mgProKg": 1
+              },
+              "maxMgProKg": null,
+              "repetition": "Einmalige Repetition 1 mg/kgKG möglich",
+              "preps": [
+                {
+                  "ampulle": "50 mg / 2 ml (25 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (25 mg/ml) — kleines Volumen für MAD",
+                  "mgPerMl": 25,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": []
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Ampullen mit unterschiedlichen Konzentrationen verfügbar (5 und 25 mg/ml)",
+        "Bei Verwendung von Ketamin: Dosisverdopplung",
+        "Hohe Geräusch- und Lichtempfindlichkeit; Wirkeintritt ca. 1 min, Wirkdauer ca. 20 min"
+      ]
+    },
+    {
+      "id": "saa:midazolam",
+      "saaSeite": 61,
+      "verifiziert": "2026-06-10",
+      "minAlterMonate": 3,
+      "minAlterHinweis": "Keine Anwendung bei Pat. < 3 Monate",
+      "indikationen": [
+        {
+          "id": "krampf",
+          "label": "Komplizierter Krampfanfall / Fieberkrampf",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "Primär hypoxisch bedingter Krampfanfall"
+          ],
+          "relKontra": [],
+          "routen": [
+            {
+              "weg": "buccal",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 1,
+                    "fixMg": 2.5,
+                    "repetition": "Keine Repetition"
+                  },
+                  {
+                    "wennAlterUnter": 5,
+                    "fixMg": 5,
+                    "repetition": "Keine Repetition"
+                  },
+                  {
+                    "wennAlterUnter": 10,
+                    "fixMg": 7.5,
+                    "repetition": "Einmalige Repetition möglich"
+                  },
+                  {
+                    "fixMg": 10,
+                    "repetition": "Einmalige Repetition möglich"
+                  }
+                ]
+              },
+              "preps": [
+                {
+                  "ampulle": "Buccolam Fertigspritze (5 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5 mg/ml) buccal",
+                  "mgPerMl": 5,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Antikonvulsive Therapie: adäquat hohe Dosierung erforderlich, nicht titrieren"
+              ]
+            },
+            {
+              "weg": "nasal (MAD)",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennKgUnter": 10,
+                    "fixMg": 2.5,
+                    "repetition": "Repetition erst bei Kindern > 10 kgKG"
+                  },
+                  {
+                    "wennKgUnter": 20,
+                    "fixMg": 5,
+                    "repetition": "Einmalige Repetition möglich"
+                  },
+                  {
+                    "fixMg": 10,
+                    "repetition": "Einmalige Repetition möglich"
+                  }
+                ]
+              },
+              "preps": [
+                {
+                  "ampulle": "5 mg/ml (zur i.n.-Gabe)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5 mg/ml) — max. 1 ml = 5 mg pro Nasenloch",
+                  "mgPerMl": 5,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Nasal per MAD ab dem 3. Lebensmonat"
+              ]
+            },
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "mgProKg": 0.1
+              },
+              "maxMgProKg": null,
+              "maxMgAbsolut": 20,
+              "repetition": "Einmalige Repetition möglich (Erwachsene, Maximaldosis 20 mg); Kinder max. 1 × Repetition",
+              "preps": [
+                {
+                  "ampulle": "1 mg/ml (zur i.v.-Gabe)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (1 mg/ml)",
+                  "mgPerMl": 1,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "5 mg / 1 ml (5 mg/ml)",
+                  "zugabe": "4 ml NaCl 0,9 %",
+                  "ergebnis": "5 ml à 1 mg/ml",
+                  "mgPerMl": 1,
+                  "quelle": "praxis",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": []
+            },
+            {
+              "weg": "i.m.",
+              "dosis": {
+                "fixMg": 10
+              },
+              "repetition": "Einmalige Repetition möglich, Maximaldosis 20 mg",
+              "preps": [
+                {
+                  "ampulle": "5 mg/ml (zur i.m.-Gabe)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5 mg/ml)",
+                  "mgPerMl": 5,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Erwachsene: 10 mg i.m."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "analgosedierung",
+          "label": "Analgosedierung (in Kombination mit Esketamin)",
+          "minKg": 10,
+          "minKgHinweis": "Bei Analgosedierung keine Anwendung bei Pat. < 10 kgKG (ca. 12 Monate)",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "Schwere Bewusstseinsstörung – Sopor, Koma",
+            "Intoxikation mit psychoaktiven Substanzen, Alkohol, Opioiden",
+            "Atemdepression",
+            "Myasthenia gravis",
+            "Obstruktive Schlafapnoe (OSAS)",
+            "Schwangerschaft"
+          ],
+          "relKontra": [
+            "Bewusstseinsstörung – Somnolenz",
+            "Chronisch-respiratorische Insuffizienz",
+            "Schwere Leber- und / oder Nierenfunktionsstörung",
+            "Schwere Herzinsuffizienz (ab Klasse NYHA III)",
+            "Pat. unter akutem Alkoholeinfluss, zentral dämpfenden oder psychotropen Substanzen in der Anamnese"
+          ],
+          "routen": [
+            {
+              "weg": "i.v. (langsam)",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterAb": 60,
+                    "fixMg": 1,
+                    "hinweis": "Pat. > 60 Jahre und / oder < 50 kgKG und / oder mit einschränkenden Krankheiten: 1 mg langsam i.v."
+                  },
+                  {
+                    "wennKgUnter": 50,
+                    "fixMg": 1,
+                    "hinweis": "Pat. < 50 kgKG (inkl. Kinder > 10 kgKG): 1 mg langsam i.v."
+                  },
+                  {
+                    "fixMg": 2
+                  }
+                ]
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "1 mg/ml (zur i.v.-Gabe)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (1 mg/ml)",
+                  "mgPerMl": 1,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "5 mg / 1 ml (5 mg/ml)",
+                  "zugabe": "4 ml NaCl 0,9 %",
+                  "ergebnis": "5 ml à 1 mg/ml",
+                  "mgPerMl": 1,
+                  "quelle": "praxis",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Langsam i.v. injizieren"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Unterschiedliche Konzentrationen verfügbar (1 mg/ml i.v.; 5 mg/ml i.n./i.m./buccal)"
+      ]
+    },
+    {
+      "id": "saa:ass",
+      "saaSeite": 43,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 216,
+      "minAlterHinweis": "Keine Anwendung durch NotSan bei Pat. < 18 Jahren",
+      "indikationen": [
+        {
+          "id": "acs",
+          "label": "Akutes Koronarsyndrom, Myokardinfarkt",
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "fixMg": 250
+              },
+              "repetition": "Keine Repetition",
+              "preps": [
+                {
+                  "ampulle": "500 mg Trockensubstanz + 5 ml Lösungsmittel",
+                  "zugabe": null,
+                  "ergebnis": "aufgelöst (100 mg/ml), langsam i.v.",
+                  "mgPerMl": 100,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Für die i.v.-Gabe Herstellerangaben beachten"
+              ]
+            },
+            {
+              "weg": "oral",
+              "dosis": {
+                "fixMg": 200
+              },
+              "repetition": "Keine Repetition",
+              "preps": [
+                {
+                  "ampulle": "Diverse orale Darreichungsformen",
+                  "zugabe": null,
+                  "ergebnis": "oral",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": []
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Wirkeintritt nach 10–15 min; Wirkdauer: Tage (Lebensdauer der Thrombozyten)"
+      ]
+    },
+    {
+      "id": "saa:amiodaron",
+      "saaSeite": 44,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 36,
+      "minAlterHinweis": "Keine Anwendung bei Säuglingen und Kindern < 3 Jahre (Gehalt an Benzylalkohol)",
+      "indikationen": [
+        {
+          "id": "rea-defibrillierbar",
+          "label": "Reanimation: refraktäres Kammerflimmern, pulslose ventrikuläre Tachykardie",
+          "routen": [
+            {
+              "weg": "i.v. (Bolus)",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 18,
+                    "mgProKg": 5,
+                    "maxMgAbsolut": 300,
+                    "hinweis": "Kinder: 5 mg/kgKG (max. 300 mg) — Gabe nach der 3. Defibrillation"
+                  },
+                  {
+                    "fixMg": 300,
+                    "hinweis": "Erwachsene: 300 mg — Gabe nach der 3. Defibrillation"
+                  }
+                ]
+              },
+              "repetition": "Repetition nach der 5. Defibrillation: Kinder 5 mg/kgKG (max. 150 mg), Erwachsene 150 mg",
+              "preps": [
+                {
+                  "ampulle": "150 mg / 3 ml (50 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (50 mg/ml) — Erwachsenendosis 300 mg = 2 Ampullen",
+                  "mgPerMl": 50,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Langsame i.v.-Injektion als Bolusgabe unter laufender Infusion",
+                "Mit Vollelektrolytlösung nachspülen"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Bei Anwendung über Perfusor (außerhalb der Reanimation) Verdünnung mit Glucose 5 %",
+        "Alternatives Medikament: Lidocain"
+      ]
+    },
+    {
+      "id": "saa:atropin",
+      "saaSeite": 45,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 216,
+      "minAlterHinweis": "Keine Anwendung < 18 Jahre",
+      "indikationen": [
+        {
+          "id": "bradykardie",
+          "label": "Instabile Bradykardie",
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "fixMg": 0.5
+              },
+              "repetition": "Bei nachweisbarer, aber nicht ausreichender Wirkung Repetition nach 3–5 min bis adäquater Anstieg der Herzfrequenz (max. Gesamtdosis 3 mg)",
+              "preps": [
+                {
+                  "ampulle": "0,5 mg / 1 ml (0,5 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (0,5 mg/ml)",
+                  "mgPerMl": 0.5,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "1 mg / 1 ml (1 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (1 mg/ml)",
+                  "mgPerMl": 1,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Wenn wirkungslos: keine weitere Gabe → Wechsel auf Epinephrin"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Ampullen mit unterschiedlichen Konzentrationen verfügbar (0,5 und 1 mg/ml)",
+        "Wechsel auf Epinephrin bei persistierender instabiler Bradykardie"
+      ]
+    },
+    {
+      "id": "saa:butylscopolamin",
+      "saaSeite": 46,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 144,
+      "minAlterHinweis": "Keine Anwendung bei Kindern < 12 Jahren",
+      "indikationen": [
+        {
+          "id": "kolik",
+          "label": "Starke kolikartige abdominelle Schmerzen",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "Tachykardie, Tachyarrhythmie",
+            "Engwinkelglaukom",
+            "Ileus",
+            "mechanische Stenosen im Magen-Darmtrakt",
+            "Myasthenia gravis",
+            "Schwangerschaft, Stillzeit"
+          ],
+          "relKontra": [
+            "kardiale Vorerkrankungen, z.B. KHK und hochgradige Herzklappenstenosen",
+            "Harnverhalt",
+            "Vorbehandlung mit anticholinerg wirkenden Medikamenten (z.B. Antidepressiva, Neuroleptika, Antihistaminika)"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "mgProKg": 0.3
+              },
+              "maxMgAbsolut": 20,
+              "repetition": "Repetition nach 5 min; max. 20 mg",
+              "preps": [
+                {
+                  "ampulle": "20 mg / 1 ml (20 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (20 mg/ml) — langsam i.v.",
+                  "mgPerMl": 20,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Langsam i.v. injizieren"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Wirkeintritt nach ca. 15 Minuten, Wirkdauer ca. 5 Stunden",
+        "Bei Nierenkoliken laut Leitlinie (AWMF 043-025) nicht mehr angezeigt"
+      ]
+    },
+    {
+      "id": "saa:dimenhydrinat",
+      "saaSeite": 47,
+      "verifiziert": "2026-06-12",
+      "indikationen": [
+        {
+          "id": "uebelkeit",
+          "label": "Übelkeit und Erbrechen",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "akute Bronchialobstruktion (Asthma / COPD)",
+            "Engwinkelglaukom",
+            "Krampfanfälle (Epilepsie, Eklampsie)",
+            "bekannte Porphyrie",
+            "bekanntes Long-QT-Syndrom",
+            "Phäochromozytom",
+            "Therapie mit MAO Hemmern"
+          ],
+          "relKontra": [
+            "Schwangerschaft und Stillzeit (CAVE: keine Anwendung bei Wehentätigkeit)",
+            "Morbus Parkinson",
+            "Herzrhythmusstörungen und KHK"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 14,
+                    "fixMg": 40
+                  },
+                  {
+                    "fixMg": 62
+                  }
+                ]
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "62 mg / 10 ml (6,2 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (6,2 mg/ml) — langsam i.v.",
+                  "mgPerMl": 6.2,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Kinder < 6 Jahre: nur rectal (keine i.v.-Gabe)",
+                "Kinder 6–14 Jahre: 40 mg langsam i.v.",
+                "Erwachsene und Kinder > 14 Jahre: 62 mg langsam i.v."
+              ],
+              "minAlterMonate": 72,
+              "minAlterHinweis": "Kinder < 6 Jahre: 40 mg rectal (keine i.v.-Gabe)"
+            },
+            {
+              "weg": "rectal",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 14,
+                    "fixMg": 40
+                  },
+                  {
+                    "fixMg": 40,
+                    "hinweis": "Rectal nur bei Kindern < 6 Jahre obligat; ältere Kinder und Erwachsene bevorzugt i.v."
+                  }
+                ]
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "40 mg Suppositorium",
+                  "zugabe": null,
+                  "ergebnis": "rectal",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Keine rectale Anwendung bei Kindern < 1 Jahr",
+                "Kinder < 6 Jahre: 40 mg rectal"
+              ],
+              "minAlterMonate": 12,
+              "minAlterHinweis": "Keine rectale Anwendung bei Kindern < 1 Jahr"
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Keine rectale Anwendung bei Kindern < 1 Jahr",
+        "Beeinträchtigung der Fahrtauglichkeit und Reaktionsfähigkeit",
+        "ZNS-Dämpfung verstärkt unter Alkoholeinfluss"
+      ]
+    },
+    {
+      "id": "saa:dimetinden",
+      "saaSeite": 48,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 144,
+      "minAlterHinweis": "Keine Anwendung bei Kindern < 12 Jahren",
+      "indikationen": [
+        {
+          "id": "anaphylaxie",
+          "label": "Anaphylaxie",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "Schwangerschaft und Stillzeit"
+          ],
+          "relKontra": [
+            "Glaukom",
+            "Epilepsie"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "mgProKg": 0.1
+              },
+              "maxMgAbsolut": 8,
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "4 mg / 4 ml (1 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (1 mg/ml) — langsam i.v.",
+                  "mgPerMl": 1,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "4–8 mg i.v. (0,1 mg/kgKG, max. 8 mg) langsam i.v.",
+                "Erwachsene und Kinder > 12 Jahre"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Beeinträchtigung der Fahrtauglichkeit und Reaktionsfähigkeit"
+      ]
+    },
+    {
+      "id": "saa:epinephrin",
+      "saaSeite": 49,
+      "verifiziert": "2026-06-12",
+      "indikationen": [
+        {
+          "id": "reanimation",
+          "label": "Reanimation",
+          "kontra": [],
+          "routen": [
+            {
+              "weg": "i.v. / i.o.",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 18,
+                    "mgProKg": 0.01
+                  },
+                  {
+                    "fixMg": 1
+                  }
+                ]
+              },
+              "repetition": "Bei VF: nach der 3. Defibrillation, danach alle 4 min; bei Asystolie / PEA: so früh wie möglich, danach alle 4 min",
+              "preps": [
+                {
+                  "ampulle": "1 mg / 1 ml (1 mg/ml)",
+                  "zugabe": "9 ml NaCl 0,9 %",
+                  "ergebnis": "10 ml à 0,1 mg/ml",
+                  "mgPerMl": 0.1,
+                  "quelle": "praxis",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "1 mg / 1 ml (1 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (1 mg/ml)",
+                  "mgPerMl": 1,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "Stechamp. 25 mg / 25 ml (1 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (1 mg/ml)",
+                  "mgPerMl": 1,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Erwachsene: 1 mg i.v. / i.o.",
+                "Kinder: 0,01 mg/kgKG i.v. / i.o."
+              ]
+            }
+          ],
+          "relKontra": [],
+          "kiHinweis": "Kontraindikationen: entfallen bei vitaler Gefährdung"
+        },
+        {
+          "id": "bradykardie",
+          "label": "Instabile Bradykardie",
+          "kontra": [],
+          "routen": [
+            {
+              "weg": "i.v. (Perfusor oder Bolusgabe)",
+              "dosis": {
+                "fixMg": 5
+              },
+              "repetition": "0,5 ml (5 µg) bolusweise jede Minute i.v. bis adäquater Herzfrequenzanstieg; danach regelmäßige Evaluation — bei HF-Abfall erneut 0,5 ml (5 µg). Alternativ Perfusor: 1 mg in 100 ml NaCl 0,9 %, Laufrate 30 ml/h",
+              "preps": [
+                {
+                  "ampulle": "1 mg / 1 ml (1 mg/ml)",
+                  "zugabe": "99 ml NaCl 0,9 %",
+                  "ergebnis": "100 ml à 10 µg/ml (= 0,01 mg/ml)",
+                  "mgPerMl": 10,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "1 mg Epinephrin in 100 ml NaCl 0,9 % (0,01 mg/ml = 10 µg/ml)",
+                "0,5 ml (5 µg) bolusweise jede Minute i.v. bis adäquater Herzfrequenzanstieg",
+                "Alternativ Perfusor: Laufrate 30 ml/h"
+              ],
+              "einheit": "µg"
+            }
+          ],
+          "relKontra": [],
+          "kiHinweis": "Kontraindikationen: entfallen bei vitaler Gefährdung"
+        },
+        {
+          "id": "anaphylaxie",
+          "label": "Anaphylaxie ab Stadium II mit Atemstörung oder Schock",
+          "kontra": [],
+          "routen": [
+            {
+              "weg": "i.m.",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 6,
+                    "fixMg": 0.15
+                  },
+                  {
+                    "wennAlterUnter": 12,
+                    "fixMg": 0.3
+                  },
+                  {
+                    "fixMg": 0.5
+                  }
+                ]
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "1 mg / 1 ml (1 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (1 mg/ml) — i.m.",
+                  "mgPerMl": 1,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Erwachsene und Kinder > 12 Jahre: 0,5 mg i.m.",
+                "Kinder 6–12 Jahre: 0,3 mg i.m.",
+                "Kinder < 6 Jahre: 0,15 mg i.m."
+              ]
+            }
+          ],
+          "relKontra": [],
+          "kiHinweis": "Kontraindikationen: entfallen bei vitaler Gefährdung"
+        },
+        {
+          "id": "atemweg-inhalation",
+          "label": "Obstruktion der oberen Atemwege durch Schleimhautschwellung, Anaphylaxie mit A- oder B-Problem, Laryngotracheobronchitis",
+          "kontra": [],
+          "routen": [
+            {
+              "weg": "inhalativ (vernebeln)",
+              "einheit": "mg",
+              "dosis": {
+                "fixMg": 4
+              },
+              "repetition": "Repetition nach 10 min möglich",
+              "preps": [
+                {
+                  "ampulle": "1 mg / 1 ml (1 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "4 ml unverdünnt vernebeln (1 mg/ml)",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "4 mg Epinephrin vernebeln",
+                "Gilt auch für Laryngotracheobronchitis"
+              ]
+            }
+          ],
+          "relKontra": [],
+          "kiHinweis": "Kontraindikationen: entfallen bei vitaler Gefährdung"
+        }
+      ],
+      "cave": [
+        "Sehr kurze Halbwertszeit",
+        "Interaktionen: Abschwächung der Epinephrin-Wirkung durch NaHCO₃",
+        "Nicht gleichzeitig mit NaHCO₃ über einen Zugang geben"
+      ]
+    },
+    {
+      "id": "saa:fentanyl",
+      "saaSeite": 51,
+      "verifiziert": "2026-06-12",
+      "minKg": 21,
+      "minKgHinweis": "Keine Anwendung bei Kindern < 21 kgKG (ca. 6 Jahre)",
+      "indikationen": [
+        {
+          "id": "schmerz",
+          "label": "Starker Schmerz (NRS ≥ 6)",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "Schwangerschaft",
+            "schwere Bewusstseinsstörung – Sopor, Koma",
+            "Atemdepression"
+          ],
+          "relKontra": [
+            "Bewusstseinsstörung – Somnolenz",
+            "obstruktive Atemwegserkrankungen",
+            "Myasthenia gravis",
+            "obstruktive Darmerkrankungen",
+            "Opioidabhängigkeit / Substitution mit Methadon"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "einheit": "µg",
+              "dosis": {
+                "mgProKg": 1
+              },
+              "maxMgProKg": 2,
+              "repetition": "Fraktionierte, langsame Gabe im Abstand von 3–4 Minuten in 50-µg-Schritten; Maximaldosis 2 µg/kgKG ideales Körpergewicht",
+              "preps": [
+                {
+                  "ampulle": "100 µg / 2 ml (50 µg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (50 µg/ml)",
+                  "mgPerMl": 50,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "500 µg / 10 ml (50 µg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (50 µg/ml)",
+                  "mgPerMl": 50,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Fraktionierte, langsame Gabe im Abstand von 3–4 Minuten in 50-µg-Schritten",
+                "Maximaldosis 2 µg/kgKG ideales Körpergewicht"
+              ]
+            },
+            {
+              "weg": "nasal / i.m.",
+              "einheit": "µg",
+              "dosis": {
+                "mgProKg": 2
+              },
+              "maxMgProKg": null,
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "100 µg / 2 ml (50 µg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (50 µg/ml)",
+                  "mgPerMl": 50,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Nasale und i.m. Gabe: 2 µg/kgKG"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Cave: vorsichtige Titration bei alten und multimorbiden Pat.",
+        "Cave: Wirkungsverstärkung und erhöhtes Risiko von Atemdepression in Kombination mit Alkohol- / Drogenkonsum / zentral dämpfenden Medikamenten (Benzodiazepine, Gabapentin, Pregabalin, o.ä.)",
+        "Muskelsteifheit, insbesondere Thoraxrigidität bei schneller Applikation",
+        "Bei Überdosierung: Naloxon titrieren"
+      ]
+    },
+    {
+      "id": "saa:furosemid",
+      "saaSeite": 52,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 144,
+      "minAlterHinweis": "Keine Anwendung bei Pat. < 12 J.",
+      "indikationen": [
+        {
+          "id": "lungenoedeme",
+          "label": "Kardiales Lungenödem",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "Hypovolämie, schwergradige Dehydratation",
+            "Nierenversagen mit Anurie",
+            "Leberversagen mit Bewusstseinsstörung (Praecoma / Coma hepaticum)",
+            "schwere Hypokaliämie, Hyponatriämie",
+            "Stillzeit"
+          ],
+          "relKontra": [
+            "Schwangerschaft",
+            "Hypotonie"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "fixMg": 20
+              },
+              "repetition": "Einmalige Repetition nach 15 min möglich",
+              "preps": [
+                {
+                  "ampulle": "20 mg / 2 ml (10 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (10 mg/ml) — langsam i.v.",
+                  "mgPerMl": 10,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "40 mg / 4 ml (10 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (10 mg/ml) — 2 ml entnehmen für 20 mg",
+                  "mgPerMl": 10,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "20 mg Furosemid langsam i.v.",
+                "Cave: Inkompatibilitäten (pH) → keine Mischung und / oder gleichzeitige Injektion mit anderen Substanzen"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Cave: Inkompatibilitäten (pH) → keine Mischung und / oder gleichzeitige Injektion mit anderen Substanzen",
+        "Wirkeintritt nach 2–15 min"
+      ]
+    },
+    {
+      "id": "saa:glucagon",
+      "saaSeite": 53,
+      "verifiziert": "2026-06-12",
+      "indikationen": [
+        {
+          "id": "hypoglykamie",
+          "label": "Hypoglykämie < 60 mg/dl bzw. 3,3 mmol/l (Fremdhilfe erforderlich)",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "leere Glykogenspeicher (schwere Leberfunktionsstörung, Alkoholmissbrauch etc.)",
+            "gleichzeitige Einnahme von Indometacin (paradoxe Wirkung möglich)"
+          ],
+          "relKontra": [],
+          "routen": [
+            {
+              "weg": "i.m.",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennKgUnter": 25,
+                    "fixMg": 0.5,
+                    "hinweis": "Kinder unter 25 kg KG: 0,5 mg i.m."
+                  },
+                  {
+                    "fixMg": 1,
+                    "hinweis": "Erwachsene und Kinder über 25 kg KG (ca. 8 Jahre): 1 mg i.m."
+                  }
+                ]
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "1 mg Pulver + 1 ml Lösungsmittel (1 mg/ml nach Rekonstitution)",
+                  "zugabe": null,
+                  "ergebnis": "1 mg/ml nach Auflösen des Pulvers",
+                  "mgPerMl": 1,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Erwachsene und Kinder über 25 kg KG (ca. 8 Jahre): 1 mg i.m.",
+                "Kinder unter 25 kg KG: 0,5 mg i.m.",
+                "Dokumentation der Charge erforderlich"
+              ]
+            },
+            {
+              "weg": "nasal (i.n.)",
+              "einheit": "mg",
+              "dosis": {
+                "fixMg": 3
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "Baqsimi 3 mg Nasenspray",
+                  "zugabe": null,
+                  "ergebnis": "3 mg nasal (1 Hub = 3 mg)",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "3 mg Glucagon (Baqsimi®) i.n.",
+                "Nasale Gabe ab 4 Jahren"
+              ],
+              "minAlterMonate": 48,
+              "minAlterHinweis": "Nasale Anwendung ab 4 Jahren"
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Dokumentation der Charge erforderlich",
+        "Nasale Anwendung (Baqsimi) ab 4 Jahren"
+      ]
+    },
+    {
+      "id": "saa:glucose",
+      "saaSeite": 54,
+      "verifiziert": "2026-06-12",
+      "indikationen": [
+        {
+          "id": "hypoglykamie",
+          "label": "Hypoglykämie < 60 mg/dl bzw. 3,3 mmol/l (Fremdhilfe erforderlich)",
+          "kontra": [],
+          "relKontra": [],
+          "kiHinweis": "Kontraindikationen: entfällt",
+          "routen": [
+            {
+              "weg": "i.v.",
+              "einheit": "g",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennKgUnter": 30,
+                    "mgProKg": 0.2,
+                    "hinweis": "Kinder: 0,2 g/kgKG i.v."
+                  },
+                  {
+                    "fixMg": 8,
+                    "hinweis": "Erwachsene und Kinder > 30 kgKG: 8–10 g Glucose i.v. (Einzeldosis)"
+                  }
+                ]
+              },
+              "maxMgAbsolut": 10,
+              "repetition": "Repetitionen möglich",
+              "preps": [
+                {
+                  "ampulle": "Glucose 20 % (0,2 g/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (0,2 g/ml) i.v. — max. 20 %ige Lösung; höherkonzentrierte vorher verdünnen",
+                  "mgPerMl": 0.2,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "Glucose 40 % (0,4 g/ml)",
+                  "zugabe": "1:1 mit NaCl 0,9 % verdünnen (gleiches Volumen)",
+                  "ergebnis": "verdünnt auf 20 % (0,2 g/ml) — SAA: max. 20 %ige Glucose i.v.",
+                  "mgPerMl": 0.2,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Auf sichere intravasale Lage des Venenzugangs achten",
+                "Höherkonzentrierte Lösungen verdünnen, max. 20 %ige Glucose i.v.",
+                "Glucose i.v. zusammen mit einlaufender Vollelektrolytlösung applizieren",
+                "Bei wachen Pat. mit erhaltenen Schutzreflexen und Schluckfähigkeit: Glucose per os"
+              ]
+            },
+            {
+              "weg": "oral",
+              "einheit": "g",
+              "dosis": {
+                "fixMg": 8
+              },
+              "maxMgAbsolut": 10,
+              "repetition": "Repetitionen möglich",
+              "preps": [
+                {
+                  "ampulle": "Diverse orale Darreichungsformen (Traubenzucker, Glucosegele etc.)",
+                  "zugabe": null,
+                  "ergebnis": "oral",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Bei wachen Pat. mit erhaltenen Schutzreflexen und Schluckfähigkeit: Glucose per os"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Cave: unterschiedliche Konzentrationen verfügbar (10 %, 20 %, 40 % und weitere)",
+        "Höherkonzentrierte Lösungen (> 20 %) vor i.v.-Gabe verdünnen",
+        "Venenreizung, Nekrosen bei paravasaler Gabe",
+        "Alternativen lt. BPR „Hypoglykämie“ prüfen (Glucagon)"
+      ]
+    },
+    {
+      "id": "saa:glyceroltrinitrat",
+      "saaSeite": 55,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 144,
+      "minAlterHinweis": "Keine Anwendung bei Pat. < 12 J.",
+      "indikationen": [
+        {
+          "id": "lungenoedeme",
+          "label": "Kardiales Lungenödem",
+          "kontra": [
+            "Überempfindlichkeit gegen die Substanz und andere Nitratverbindungen sowie Pfefferminzöl",
+            "Schock",
+            "Hypotonie RRsys < 100 mmHg",
+            "inferiorer Infarkt mit rechtsventrikulärer Beteiligung",
+            "gleichzeitige Einnahme von Phosphodiesterase-5-Hemmern",
+            "schwere stenosierende Herzklappenfehler",
+            "bekannte HOCM (hypertrophe obstruktive Cardiomyopathie)",
+            "V.a. Erhöhung des intrakraniellen Drucks, z.B. bei intrakranieller Blutung"
+          ],
+          "relKontra": [
+            "Hypotonie, RRsys ≤ 120 mmHg",
+            "Schwangerschaft und Stillzeit"
+          ],
+          "routen": [
+            {
+              "weg": "sublingual (Spray)",
+              "dosis": {
+                "fixMg": 0.4
+              },
+              "repetition": "Einmalige Repetition nach 5 Minuten möglich",
+              "preps": [
+                {
+                  "ampulle": "Spray 0,4 mg / Hub",
+                  "zugabe": null,
+                  "ergebnis": "1 Hub sublingual",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Spray nicht schütteln",
+                "Anlage eines sicheren i.v.-Zugangs vor Gabe von Glyceroltrinitrat"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "hypertensiver-notfall",
+          "label": "Hypertensiver Notfall mit kardialer Symptomatik",
+          "kontra": [
+            "Überempfindlichkeit gegen die Substanz und andere Nitratverbindungen sowie Pfefferminzöl",
+            "Schock",
+            "Hypotonie RRsys < 100 mmHg",
+            "inferiorer Infarkt mit rechtsventrikulärer Beteiligung",
+            "gleichzeitige Einnahme von Phosphodiesterase-5-Hemmern",
+            "schwere stenosierende Herzklappenfehler",
+            "bekannte HOCM (hypertrophe obstruktive Cardiomyopathie)",
+            "V.a. Erhöhung des intrakraniellen Drucks, z.B. bei intrakranieller Blutung"
+          ],
+          "relKontra": [
+            "Hypotonie, RRsys ≤ 120 mmHg",
+            "Schwangerschaft und Stillzeit"
+          ],
+          "routen": [
+            {
+              "weg": "sublingual (Spray)",
+              "dosis": {
+                "fixMg": 0.4
+              },
+              "repetition": "Einmalige Repetition nach 5 Minuten möglich",
+              "preps": [
+                {
+                  "ampulle": "Spray 0,4 mg / Hub",
+                  "zugabe": null,
+                  "ergebnis": "1 Hub sublingual",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Spray nicht schütteln",
+                "Anlage eines sicheren i.v.-Zugangs vor Gabe von Glyceroltrinitrat"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "myokardinfarkt",
+          "label": "Myokardinfarkt (keine routinemäßige Gabe)",
+          "kontra": [
+            "Überempfindlichkeit gegen die Substanz und andere Nitratverbindungen sowie Pfefferminzöl",
+            "Schock",
+            "Hypotonie RRsys < 100 mmHg",
+            "inferiorer Infarkt mit rechtsventrikulärer Beteiligung",
+            "gleichzeitige Einnahme von Phosphodiesterase-5-Hemmern",
+            "schwere stenosierende Herzklappenfehler",
+            "bekannte HOCM (hypertrophe obstruktive Cardiomyopathie)",
+            "V.a. Erhöhung des intrakraniellen Drucks, z.B. bei intrakranieller Blutung"
+          ],
+          "relKontra": [
+            "Hypotonie, RRsys ≤ 120 mmHg",
+            "Schwangerschaft und Stillzeit"
+          ],
+          "routen": [
+            {
+              "weg": "sublingual (Spray)",
+              "dosis": {
+                "fixMg": 0.4
+              },
+              "repetition": "Einmalige Repetition nach 5 Minuten möglich",
+              "preps": [
+                {
+                  "ampulle": "Spray 0,4 mg / Hub",
+                  "zugabe": null,
+                  "ergebnis": "1 Hub sublingual",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Spray nicht schütteln",
+                "Anlage eines sicheren i.v.-Zugangs vor Gabe von Glyceroltrinitrat"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Interaktionen: verstärkter Blutdruckabfall bei Vormedikation mit Antihypertensiva möglich",
+        "Cave: Reflextachykardie"
+      ]
+    },
+    {
+      "id": "saa:heparin",
+      "saaSeite": 56,
+      "verifiziert": "2026-06-12",
+      "indikationen": [
+        {
+          "id": "acs",
+          "label": "Akutes Koronarsyndrom",
+          "kontra": [
+            "Unverträglichkeit gegen die Substanz",
+            "Z.n. bekannter Heparin-induzierter Thrombozytopenie (HIT)",
+            "erhöhte Blutungsgefahr (z.B. schwere Leberinsuffizienz, hochgradige Niereninsuffizienz, schwere Thrombozytopenie)",
+            "Z.n. großem operativem Eingriff oder schwerem Trauma sowie chirurgischen Eingriffen am Zentralnervensystem und Augenoperationen in den letzten 4 Wochen",
+            "akute zerebrovaskuläre Erkrankung (z.B. V.a. ICB, SAB, Apoplex)",
+            "gastrointestinale oder urogenitale Blutung",
+            "aktuelles Ulcus ventriculi oder Ulcus duodeni",
+            "akutes Aortensyndrom",
+            "unkontrollierbare schwergradige Hypertonie",
+            "Antikoagulation im therapeutischen Bereich (Ausnahme: BPR ACS)"
+          ],
+          "relKontra": [
+            "Schwangerschaft"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "einheit": "I.E.",
+              "dosis": {
+                "fixMg": 5000
+              },
+              "repetition": "Keine Repetition",
+              "preps": [
+                {
+                  "ampulle": "Amp. 5.000 I.E. / 0,2 ml (25.000 I.E./ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (25.000 I.E./ml)",
+                  "mgPerMl": 25000,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "Amp. 5.000 I.E. / 1 ml (5.000 I.E./ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5.000 I.E./ml)",
+                  "mgPerMl": 5000,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "Amp. 25.000 I.E. / 5 ml (5.000 I.E./ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5.000 I.E./ml) — 1 ml entnehmen",
+                  "mgPerMl": 5000,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": []
+            }
+          ]
+        },
+        {
+          "id": "lungenarterienembolie",
+          "label": "Lungenarterienembolie",
+          "kontra": [
+            "Unverträglichkeit gegen die Substanz",
+            "Z.n. bekannter Heparin-induzierter Thrombozytopenie (HIT)",
+            "erhöhte Blutungsgefahr (z.B. schwere Leberinsuffizienz, hochgradige Niereninsuffizienz, schwere Thrombozytopenie)",
+            "Z.n. großem operativem Eingriff oder schwerem Trauma sowie chirurgischen Eingriffen am Zentralnervensystem und Augenoperationen in den letzten 4 Wochen",
+            "akute zerebrovaskuläre Erkrankung (z.B. V.a. ICB, SAB, Apoplex)",
+            "gastrointestinale oder urogenitale Blutung",
+            "aktuelles Ulcus ventriculi oder Ulcus duodeni",
+            "akutes Aortensyndrom",
+            "unkontrollierbare schwergradige Hypertonie",
+            "Antikoagulation im therapeutischen Bereich (Ausnahme: BPR ACS)"
+          ],
+          "relKontra": [
+            "Schwangerschaft"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "einheit": "I.E.",
+              "dosis": {
+                "fixMg": 5000
+              },
+              "repetition": "Keine Repetition",
+              "preps": [
+                {
+                  "ampulle": "Amp. 5.000 I.E. / 0,2 ml (25.000 I.E./ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (25.000 I.E./ml)",
+                  "mgPerMl": 25000,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "Amp. 5.000 I.E. / 1 ml (5.000 I.E./ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5.000 I.E./ml)",
+                  "mgPerMl": 5000,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "Amp. 25.000 I.E. / 5 ml (5.000 I.E./ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5.000 I.E./ml) — 1 ml entnehmen",
+                  "mgPerMl": 5000,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": []
+            }
+          ]
+        },
+        {
+          "id": "periphere-arterienverschluss",
+          "label": "Akuter peripherer arterieller Verschluss",
+          "kontra": [
+            "Unverträglichkeit gegen die Substanz",
+            "Z.n. bekannter Heparin-induzierter Thrombozytopenie (HIT)",
+            "erhöhte Blutungsgefahr (z.B. schwere Leberinsuffizienz, hochgradige Niereninsuffizienz, schwere Thrombozytopenie)",
+            "Z.n. großem operativem Eingriff oder schwerem Trauma sowie chirurgischen Eingriffen am Zentralnervensystem und Augenoperationen in den letzten 4 Wochen",
+            "akute zerebrovaskuläre Erkrankung (z.B. V.a. ICB, SAB, Apoplex)",
+            "gastrointestinale oder urogenitale Blutung",
+            "aktuelles Ulcus ventriculi oder Ulcus duodeni",
+            "akutes Aortensyndrom",
+            "unkontrollierbare schwergradige Hypertonie",
+            "Antikoagulation im therapeutischen Bereich (Ausnahme: BPR ACS)"
+          ],
+          "relKontra": [
+            "Schwangerschaft"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "einheit": "I.E.",
+              "dosis": {
+                "fixMg": 5000
+              },
+              "repetition": "Keine Repetition",
+              "preps": [
+                {
+                  "ampulle": "Amp. 5.000 I.E. / 0,2 ml (25.000 I.E./ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (25.000 I.E./ml)",
+                  "mgPerMl": 25000,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "Amp. 5.000 I.E. / 1 ml (5.000 I.E./ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5.000 I.E./ml)",
+                  "mgPerMl": 5000,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "Amp. 25.000 I.E. / 5 ml (5.000 I.E./ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5.000 I.E./ml) — 1 ml entnehmen",
+                  "mgPerMl": 5000,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": []
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Cave: unterschiedliche Konzentrationen verfügbar (25.000 I.E./ml Amp. 0,2 ml; 5.000 I.E./ml Amp. 1 ml; 5.000 I.E./ml Amp. 5 ml = 25.000 I.E.)",
+        "erhöhte Blutungsgefahr bei Kombination mit anderen Antikoagulanzien"
+      ]
+    },
+    {
+      "id": "saa:ibuprofen",
+      "saaSeite": 57,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 6,
+      "minKg": 7,
+      "minKgHinweis": "Keine Anwendung bei Pat. unter 6 Monate / 7 kg KG",
+      "minAlterHinweis": "Keine Anwendung bei Pat. unter 6 Monate / 7 kg KG",
+      "indikationen": [
+        {
+          "id": "schmerz",
+          "label": "Schmerzen (NRS ≥ 3)",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff oder gegen andere NSAR",
+            "Erkrankungen, die erhöhte Blutungsneigung oder aktive Blutungen mit sich bringen, wie z.B. Thrombozytopenie",
+            "Ulcus ventriculi, Ulcus duodeni",
+            "erhöhte Blutungsgefahr, aktive Blutung",
+            "schwere Niereninsuffizienz, Leberinsuffizienz",
+            "akutes Koronarsyndrom, schwere Herzinsuffizienz (NYHA-Klasse IV)",
+            "schwergradige Dehydratation",
+            "Schwangerschaft"
+          ],
+          "relKontra": [
+            "Kombination mit NSAR (Zeitfenster beachten)",
+            "Patienten mit einer gastrointestinalen Erkrankung in der Anamnese (Colitis ulcerosa, Morbus Crohn)",
+            "Herzinsuffizienz (NYHA II – III)",
+            "ischämische Herzkrankheit",
+            "Niereninsuffizienz, Leberinsuffizienz (Dosisreduktion)",
+            "Dehydratation",
+            "Störung des Porphyrin-Stoffwechsels"
+          ],
+          "routen": [
+            {
+              "weg": "oral (Suspension)",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennKgUnter": 10,
+                    "fixMg": 50,
+                    "hinweis": "7–9 kg KG (6–11 Monate): 50 mg"
+                  },
+                  {
+                    "wennKgUnter": 16,
+                    "fixMg": 100,
+                    "hinweis": "10–15 kg KG (1–3 Jahre): 100 mg"
+                  },
+                  {
+                    "wennKgUnter": 20,
+                    "fixMg": 150,
+                    "hinweis": "16–19 kg KG (4–5 Jahre): 150 mg"
+                  },
+                  {
+                    "wennKgUnter": 40,
+                    "fixMg": 200,
+                    "hinweis": "20–39 kg KG (6–11 Jahre): 200 mg"
+                  },
+                  {
+                    "mgProKg": 7.5,
+                    "hinweis": "> 40 kg KG (≥ 12 Jahre): 7,5 mg/kgKG"
+                  }
+                ]
+              },
+              "repetition": "Keine Repetition",
+              "preps": [
+                {
+                  "ampulle": "Suspension 20 mg/ml",
+                  "zugabe": null,
+                  "ergebnis": "oral (Suspension 20 mg/ml)",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "Suspension 40 mg/ml",
+                  "zugabe": null,
+                  "ergebnis": "oral (Suspension 40 mg/ml)",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Bei Kleinkindern alternativ Gabe als Suppositorium (keine Dosisanpassung erforderlich)",
+                "Tageshöchstdosis Erwachsene: 1.200 mg",
+                "Zeitabstand > 6 h zu letzter Gabe beachten"
+              ]
+            },
+            {
+              "weg": "rectal (Suppositorium)",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennKgUnter": 10,
+                    "fixMg": 50,
+                    "hinweis": "7–9 kg KG (6–11 Monate): 75 mg Suppositorium (50 mg)"
+                  },
+                  {
+                    "wennKgUnter": 16,
+                    "fixMg": 100,
+                    "hinweis": "10–15 kg KG (1–3 Jahre): 125 mg Suppositorium (ca. 100 mg)"
+                  },
+                  {
+                    "wennKgUnter": 20,
+                    "fixMg": 150,
+                    "hinweis": "16–19 kg KG (4–5 Jahre): 150 mg Suppositorium"
+                  },
+                  {
+                    "fixMg": 250,
+                    "hinweis": "≥ 20 kg KG: 250 mg Suppositorium"
+                  }
+                ]
+              },
+              "repetition": "Keine Repetition",
+              "preps": [
+                {
+                  "ampulle": "Suppositorien 75 mg, 125 mg, 150 mg, 250 mg",
+                  "zugabe": null,
+                  "ergebnis": "rectal",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Alternativ zu Suspension bei Kleinkindern",
+                "Zeitabstand > 6 h zu letzter Gabe beachten"
+              ]
+            },
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "fixMg": 600
+              },
+              "repetition": "Keine Repetition",
+              "preps": [
+                {
+                  "ampulle": "600 mg / 100 ml (6 mg/ml) i.v.-Präparat",
+                  "zugabe": null,
+                  "ergebnis": "600 mg in 100 ml (6 mg/ml) — als Kurzinfusion",
+                  "mgPerMl": 6,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "400 mg / 100 ml (4 mg/ml) i.v.-Präparat",
+                  "zugabe": null,
+                  "ergebnis": "400 mg in 100 ml (4 mg/ml) — als Kurzinfusion",
+                  "mgPerMl": 4,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "i.v.-Gabe möglich ab dem 18. Lebensjahr",
+                "Tageshöchstdosis Erwachsene: 1.200 mg"
+              ],
+              "minAlterMonate": 216,
+              "minAlterHinweis": "i.v.-Gabe nur ab dem 18. Lebensjahr"
+            }
+          ]
+        },
+        {
+          "id": "fieber-nach-krampf",
+          "label": "Fieber beim Kind nach stattgehabtem Krampfanfall / Fieberkrampf",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff oder gegen andere NSAR",
+            "Erkrankungen, die erhöhte Blutungsneigung oder aktive Blutungen mit sich bringen, wie z.B. Thrombozytopenie",
+            "Ulcus ventriculi, Ulcus duodeni",
+            "erhöhte Blutungsgefahr, aktive Blutung",
+            "schwere Niereninsuffizienz, Leberinsuffizienz",
+            "akutes Koronarsyndrom, schwere Herzinsuffizienz (NYHA-Klasse IV)",
+            "schwergradige Dehydratation",
+            "Schwangerschaft"
+          ],
+          "relKontra": [
+            "Kombination mit NSAR (Zeitfenster beachten)",
+            "Patienten mit einer gastrointestinalen Erkrankung in der Anamnese (Colitis ulcerosa, Morbus Crohn)",
+            "Herzinsuffizienz (NYHA II – III)",
+            "ischämische Herzkrankheit",
+            "Niereninsuffizienz, Leberinsuffizienz (Dosisreduktion)",
+            "Dehydratation",
+            "Störung des Porphyrin-Stoffwechsels"
+          ],
+          "routen": [
+            {
+              "weg": "oral (Suspension)",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennKgUnter": 10,
+                    "fixMg": 50,
+                    "hinweis": "7–9 kg KG (6–11 Monate): 50 mg"
+                  },
+                  {
+                    "wennKgUnter": 16,
+                    "fixMg": 100,
+                    "hinweis": "10–15 kg KG (1–3 Jahre): 100 mg"
+                  },
+                  {
+                    "wennKgUnter": 20,
+                    "fixMg": 150,
+                    "hinweis": "16–19 kg KG (4–5 Jahre): 150 mg"
+                  },
+                  {
+                    "wennKgUnter": 40,
+                    "fixMg": 200,
+                    "hinweis": "20–39 kg KG (6–11 Jahre): 200 mg"
+                  },
+                  {
+                    "mgProKg": 7.5,
+                    "hinweis": "> 40 kg KG (≥ 12 Jahre): 7,5 mg/kgKG"
+                  }
+                ]
+              },
+              "repetition": "Keine Repetition",
+              "preps": [
+                {
+                  "ampulle": "Suspension 20 mg/ml",
+                  "zugabe": null,
+                  "ergebnis": "oral (Suspension 20 mg/ml)",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "Suspension 40 mg/ml",
+                  "zugabe": null,
+                  "ergebnis": "oral (Suspension 40 mg/ml)",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Bei Kleinkindern alternativ Gabe als Suppositorium (keine Dosisanpassung erforderlich)",
+                "Zeitabstand > 6 h zu letzter Gabe beachten"
+              ]
+            },
+            {
+              "weg": "rectal (Suppositorium)",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennKgUnter": 10,
+                    "fixMg": 50,
+                    "hinweis": "7–9 kg KG (6–11 Monate): 75 mg Suppositorium (50 mg)"
+                  },
+                  {
+                    "wennKgUnter": 16,
+                    "fixMg": 100,
+                    "hinweis": "10–15 kg KG (1–3 Jahre): 125 mg Suppositorium (ca. 100 mg)"
+                  },
+                  {
+                    "wennKgUnter": 20,
+                    "fixMg": 150,
+                    "hinweis": "16–19 kg KG (4–5 Jahre): 150 mg Suppositorium"
+                  },
+                  {
+                    "fixMg": 250,
+                    "hinweis": "≥ 20 kg KG: 250 mg Suppositorium"
+                  }
+                ]
+              },
+              "repetition": "Keine Repetition",
+              "preps": [
+                {
+                  "ampulle": "Suppositorien 75 mg, 125 mg, 150 mg, 250 mg",
+                  "zugabe": null,
+                  "ergebnis": "rectal",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Alternativ zu Suspension bei Kleinkindern",
+                "Zeitabstand > 6 h zu letzter Gabe beachten"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Präparate mit unterschiedlichen Konzentrationen bzw. Wirkstoffmengen verfügbar",
+        "Zeitabstand > 6 h zu letzter Gabe beachten",
+        "Tageshöchstdosis Erwachsene: 1.200 mg"
+      ]
+    },
+    {
+      "id": "saa:ipratropium",
+      "saaSeite": 58,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 72,
+      "minAlterHinweis": "Keine Anwendung bei Pat. < 6 Jahre",
+      "indikationen": [
+        {
+          "id": "bronchialobstruktion",
+          "label": "Bronchialobstruktion: Asthmaanfall, Exazerbation COPD",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff, Atropin oder andere Atropinderivate",
+            "symptomatische Tachykardie / Tachyarrhythmie",
+            "Engwinkelglaukom"
+          ],
+          "relKontra": [
+            "Schwangerschaft"
+          ],
+          "routen": [
+            {
+              "weg": "inhalativ (vernebeln)",
+              "einheit": "µg",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 12,
+                    "fixMg": 250,
+                    "hinweis": "Pat. 6 bis 12 Jahre: 0,25 mg Inhalation"
+                  },
+                  {
+                    "fixMg": 500,
+                    "hinweis": "Pat. > 12 Jahre: 0,5 mg Inhalation"
+                  }
+                ]
+              },
+              "repetition": "Repetition nach 30 min möglich",
+              "preps": [
+                {
+                  "ampulle": "250 µg / 2 ml Inhalationslösung",
+                  "zugabe": null,
+                  "ergebnis": "vernebeln (250 µg in 2 ml)",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "500 µg / 2 ml Inhalationslösung",
+                  "zugabe": null,
+                  "ergebnis": "vernebeln (500 µg in 2 ml)",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Vernebelte Lösung darf nicht in die Augen gelangen, auf festen Sitz der Maske achten",
+                "Unterschiedliche Konzentrationen verfügbar"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Unterschiedliche Konzentrationen verfügbar (250 µg/2 ml und 500 µg/2 ml)"
+      ]
+    },
+    {
+      "id": "saa:lidocain",
+      "saaSeite": 59,
+      "verifiziert": "2026-06-12",
+      "indikationen": [
+        {
+          "id": "rea-defibrillierbar",
+          "label": "Reanimation: refraktäres Kammerflimmern, pulslose ventrikuläre Tachykardie (gleichwertige Alternative zu Amiodaron)",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff"
+          ],
+          "relKontra": [],
+          "kiHinweis": "Kontraindikationen: entfallen bei vitaler Gefährdung",
+          "routen": [
+            {
+              "weg": "i.v. (Bolus)",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 18,
+                    "mgProKg": 1,
+                    "maxMgAbsolut": 100,
+                    "hinweis": "Säuglinge und Kinder: 1 mg/kgKG — Gabe nach der 3. Defibrillation"
+                  },
+                  {
+                    "fixMg": 100,
+                    "hinweis": "Erwachsene: 100 mg — Gabe nach der 3. Defibrillation"
+                  }
+                ]
+              },
+              "repetition": "Repetition nach der 5. Defibrillation: Kinder 0,5 mg/kgKG, Erwachsene 50 mg",
+              "preps": [
+                {
+                  "ampulle": "100 mg / 5 ml (20 mg/ml = 2 %)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (20 mg/ml) — Erwachsenendosis 100 mg = 5 ml",
+                  "mgPerMl": 20,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Lidocain 2 % (20 mg/ml): Amp. 100 mg / 5 ml",
+                "Lidocain 1 % (10 mg/ml) ebenfalls verfügbar — Cave: unterschiedliche Konzentrationen",
+                "Mit Vollelektrolytlösung nachspülen"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Cave: unterschiedliche Konzentrationen verfügbar — Lidocain 2 % = 20 mg/ml (Amp. 100 mg/5 ml) und Lidocain 1 % = 10 mg/ml",
+        "Bradykardie, Überleitungsstörungen, Hypotonie möglich"
+      ]
+    },
+    {
+      "id": "saa:metoprolol",
+      "saaSeite": 60,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 216,
+      "minAlterHinweis": "Keine Anwendung bei Pat. < 18 Jahren",
+      "indikationen": [
+        {
+          "id": "tachykardie-acs",
+          "label": "STEMI/OMI mit nicht schmerzbedingtem tachykardem Vorhofflimmern (> 100/min) oder multiplen VES (Richtwert mind. 1–2/15 sek)",
+          "kontra": [
+            "bekannte Allergie bzw. Unverträglichkeit (auch gegen enthaltene Konservierungsmittel)",
+            "Vormedikation mit Calcium-Antagonisten vom Verapamil-Typ",
+            "Zeichen einer akuten Herzinsuffizienz, z.B. pulmonale Stauung",
+            "Hypotonie (RRsys < 120 mmHg)",
+            "Bradykardie (< 60/min)",
+            "AV-Block II° / III°",
+            "Hinweise auf Hyperkaliämie im EKG → Cave: BRASH-Syndrom (pos. Verstärkung einer Kreislaufdepression bis -stillstand bei Hyperkaliämie und Betablockade)"
+          ],
+          "relKontra": [
+            "Asthma bronchiale"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "fixMg": 2
+              },
+              "repetition": "Repetition: 2 mg i.v. und 1 mg i.v. (maximale Gesamtmenge 5 mg)",
+              "preps": [
+                {
+                  "ampulle": "5 mg / 5 ml (1 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (1 mg/ml)",
+                  "mgPerMl": 1,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Erwachsene: 2 mg i.v.; Repetition 2 mg i.v. und 1 mg i.v. (max. Gesamtmenge 5 mg)",
+                "Metoprolol und Glyceroltrinitrat sind beide hypotensiv wirksam — keine zeitgleiche Gabe"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Metoprolol und Glyceroltrinitrat: beide hypotensiv wirksam — keine zeitgleiche Gabe",
+        "Hypotonie und Bradykardie möglich"
+      ]
+    },
+    {
+      "id": "saa:morphin",
+      "saaSeite": 62,
+      "verifiziert": "2026-06-12",
+      "minKg": 21,
+      "minKgHinweis": "Keine Anwendung bei Kindern < 21 kgKG (ca. 6 Jahre)",
+      "indikationen": [
+        {
+          "id": "schmerz",
+          "label": "Starke und stärkste Schmerzen NRS ≥ 6",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "schwere Bewusstseinsstörung – Sopor, Koma",
+            "Atemdepression"
+          ],
+          "relKontra": [
+            "Bewusstseinsstörung – Somnolenz",
+            "Schwangerschaft, Stillzeit",
+            "obstruktive Atemwegserkrankungen",
+            "Myasthenia gravis",
+            "Phäochromozytom",
+            "obstruktive Erkrankungen des Gastrointestinaltraktes, Ileus",
+            "Epilepsie",
+            "Opioidabhängigkeit / Substitution mit Methadon"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 18,
+                    "mgProKg": 0.05,
+                    "maxMgAbsolut": 10,
+                    "hinweis": "Kinder: 0,05 mg/kgKG alle 3–4 Minuten, Maximaldosis 10 mg"
+                  },
+                  {
+                    "fixMg": 2,
+                    "maxMgAbsolut": 10,
+                    "hinweis": "Erwachsene: 2 mg fraktioniert, langsam i.v. alle 3–4 Minuten, Maximaldosis 10 mg"
+                  }
+                ]
+              },
+              "maxMgAbsolut": 10,
+              "repetition": "Fraktionierte, langsame Gabe alle 3–4 Minuten; Maximaldosis 10 mg",
+              "preps": [
+                {
+                  "ampulle": "10 mg / 1 ml (10 mg/ml)",
+                  "zugabe": "9 ml NaCl 0,9 %",
+                  "ergebnis": "10 ml à 1 mg/ml",
+                  "mgPerMl": 1,
+                  "quelle": "praxis",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "10 mg / 1 ml (10 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (10 mg/ml)",
+                  "mgPerMl": 10,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "20 mg / 1 ml (20 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (20 mg/ml) — Cave: höhere Konzentration",
+                  "mgPerMl": 20,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Fraktionierte, langsame Applikation vermindert Übelkeit",
+                "Maximaldosis 10 mg",
+                "Bei Übelkeit und Erbrechen: SAA Dimenhydrinat",
+                "Bei Überdosierung: Naloxon titrieren",
+                "Insbesondere beim ACS zur Vorlastsenkung und Sedierung gut geeignet"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Ampullen mit unterschiedlichen Konzentrationen verfügbar (10 mg/ml und 20 mg/ml)",
+        "Wirkungsverstärkung und erhöhtes Risiko von Atemdepression in Kombination mit Alkohol, Drogenkonsum / zentral dämpfenden Medikamenten (Benzodiazepine o.ä.)",
+        "BtM-pflichtig"
+      ]
+    },
+    {
+      "id": "saa:nalbuphin",
+      "saaSeite": 63,
+      "verifiziert": "2026-06-12",
+      "minKg": 21,
+      "minKgHinweis": "Keine Anwendung bei Kindern < 21 kgKG (ca. 6 Jahre)",
+      "indikationen": [
+        {
+          "id": "schmerz",
+          "label": "Starke und stärkste Schmerzen NRS ≥ 6",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "Schwere Bewusstseinsstörung – Sopor, Koma",
+            "Atemdepression",
+            "Schwangerschaft",
+            "schwere Leber- und Nierenschäden",
+            "Dauertherapie mit µ-Rezeptor-Agonisten",
+            "Opioidabhängigkeit / Substitution mit Methadon"
+          ],
+          "relKontra": [
+            "Bewusstseinsstörung – Somnolenz",
+            "Stillzeit",
+            "obstruktive Atemwegserkrankungen",
+            "obstruktive Erkrankungen des Gastrointestinaltraktes, Ileus",
+            "Epilepsie"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterAb": 65,
+                    "mgProKg": 0.1,
+                    "maxMgAbsolut": 20,
+                    "hinweis": "Pat. ≥ 65 Jahre: 0,1 mg/kgKG i.v."
+                  },
+                  {
+                    "mgProKg": 0.2,
+                    "maxMgAbsolut": 20,
+                    "hinweis": "Pat. < 65 Jahre: 0,2 mg/kgKG i.v."
+                  }
+                ]
+              },
+              "maxMgAbsolut": 20,
+              "repetition": "Repetition bis zur Maximaldosis 20 mg; Kinder und Jugendliche keine Repetition",
+              "preps": [
+                {
+                  "ampulle": "20 mg / 2 ml (10 mg/ml)",
+                  "zugabe": "8 ml NaCl 0,9 %",
+                  "ergebnis": "10 ml à 2 mg/ml",
+                  "mgPerMl": 2,
+                  "quelle": "praxis",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "20 mg / 2 ml (10 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (10 mg/ml)",
+                  "mgPerMl": 10,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Pat. < 65 Jahre: 0,2 mg/kgKG i.v.",
+                "Pat. ≥ 65 Jahre: 0,1 mg/kgKG i.v.",
+                "Kinder und Jugendliche: keine Repetition",
+                "Ceiling-Effekt beachten = keine Wirkungsverstärkung bei Dosissteigerung",
+                "Kein BtM"
+              ]
+            },
+            {
+              "weg": "nasal / i.m. / s.c.",
+              "dosis": {
+                "mgProKg": 0.2
+              },
+              "maxMgAbsolut": 20,
+              "repetition": "Repetition bis zur Maximaldosis 20 mg; Kinder und Jugendliche keine Repetition",
+              "preps": [
+                {
+                  "ampulle": "20 mg / 2 ml (10 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (10 mg/ml) — nasal / i.m. / s.c.",
+                  "mgPerMl": 10,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Nasal, i.m. und s.c. möglich: 0,2 mg/kgKG",
+                "i.m. Gabe schmerzhaft"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Ceiling-Effekt: keine Wirkungsverstärkung bei Dosissteigerung",
+        "Geringes Risiko einer Atemdepression",
+        "i.m. Gabe schmerzhaft",
+        "Kein BtM nach BtMG"
+      ]
+    },
+    {
+      "id": "saa:naloxon",
+      "saaSeite": 64,
+      "verifiziert": "2026-06-12",
+      "indikationen": [
+        {
+          "id": "opioid-intoxikation",
+          "label": "Opioid-Intoxikation / Opioid-Überdosierung bei Versagen der primären Maßnahmen",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff"
+          ],
+          "relKontra": [],
+          "kiHinweis": "Anwendung nach sorgfältiger Nutzen-/Risiko-Abwägung: entfällt",
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 18,
+                    "mgProKg": 0.01,
+                    "hinweis": "Kinder: 0,01 mg/kgKG alle 2 Minuten"
+                  },
+                  {
+                    "fixMg": 0.1,
+                    "hinweis": "Erwachsene: 0,1 mg fraktioniert, langsam i.v. alle 2 Minuten"
+                  }
+                ]
+              },
+              "repetition": "Fraktionierte Gabe alle 2 min, bis suffiziente Spontanatmung und Schutzreflexe vorhanden sind",
+              "preps": [
+                {
+                  "ampulle": "0,4 mg / 1 ml (0,4 mg/ml)",
+                  "zugabe": "3 ml NaCl 0,9 %",
+                  "ergebnis": "4 ml à 0,1 mg/ml",
+                  "mgPerMl": 0.1,
+                  "quelle": "praxis",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "0,4 mg / 1 ml (0,4 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (0,4 mg/ml) — fraktioniert titrieren",
+                  "mgPerMl": 0.4,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Primäre Maßnahmen zuerst: Kommandoatmung, Sauerstoff, Beutel-Maske-Beatmung",
+                "Fraktionierte, langsame Titration i.v. alle 2 Minuten",
+                "Kinder: 0,01 mg/kgKG alle 2 Minuten"
+              ]
+            },
+            {
+              "weg": "i.m. / nasal",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 18,
+                    "mgProKg": 0.01,
+                    "hinweis": "Kinder: 0,01 mg/kgKG i.m. / nasal"
+                  },
+                  {
+                    "fixMg": 0.4,
+                    "hinweis": "Erwachsene: 0,4 mg i.m. / nasal (Dosisanpassung beachten)"
+                  }
+                ]
+              },
+              "repetition": "Dosisanpassung bei i.m. und nasaler Gabe beachten",
+              "preps": [
+                {
+                  "ampulle": "0,4 mg / 1 ml (0,4 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (0,4 mg/ml) — i.m. / nasal",
+                  "mgPerMl": 0.4,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "i.m.- und intranasale Gabe möglich (Dosisanpassung)"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Wirkeintritt schnell, innerhalb von 1–2 Minuten",
+        "Auslösen eines akuten Entzugssyndroms bei Opioidabhängigkeit möglich",
+        "Erneute Opioidwirkung nach Abbau von Naloxon möglich → fortgesetzte Überwachung zwingend erforderlich",
+        "Überschießende Reaktion möglich: Schwindel, Schwitzen, Tremor, Muskelkrämpfe, Tachykardie, Blutdruckanstieg"
+      ]
+    },
+    {
+      "id": "saa:paracetamol",
+      "saaSeite": 65,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 6,
+      "minAlterHinweis": "Altersbegrenzung: siehe Durchführung/Dosierung (rekt. ab 6 Monate / 7 kgKG)",
+      "indikationen": [
+        {
+          "id": "schmerz",
+          "label": "Schmerzen NRS ≥ 3",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "schwere Leberfunktionsstörung",
+            "bekannter Glukose-6-phosphat-Dehydrogenase-Mangel"
+          ],
+          "relKontra": [
+            "schwere Niereninsuffizienz",
+            "Leberfunktionsstörung (z.B. bei schwerer Mangelernährung, Alkoholabusus)",
+            "Schwangerschaft, Stillzeit",
+            "Blutbildungsstörungen angeboren oder erworben"
+          ],
+          "routen": [
+            {
+              "weg": "rectal (Suppositorium)",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennKgUnter": 13,
+                    "fixMg": 125,
+                    "hinweis": "Kinder 7–12 kgKG (6 Monate – 2 Jahre): 125 mg rectal"
+                  },
+                  {
+                    "wennKgUnter": 26,
+                    "fixMg": 250,
+                    "hinweis": "Kinder 13–25 kgKG (2–8 Jahre): 250 mg rectal"
+                  },
+                  {
+                    "fixMg": 500,
+                    "hinweis": "Kinder 26–43 kgKG (8–12 Jahre): 500 mg rectal"
+                  }
+                ]
+              },
+              "repetition": "Keine Repetition; Zeitabstand zur letzten Gabe > 6 Stunden beachten",
+              "preps": [
+                {
+                  "ampulle": "Supp. 75 mg, 125 mg, 250 mg, 500 mg",
+                  "zugabe": null,
+                  "ergebnis": "rectal",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Dosierung identisch zur Schmerztherapie und Fiebersenkung",
+                "Zeitabstand zur letzten Gabe > 6 Stunden beachten"
+              ]
+            },
+            {
+              "weg": "i.v. (Kurzinfusion)",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennKgUnter": 51,
+                    "mgProKg": 15,
+                    "maxMgAbsolut": 1000,
+                    "hinweis": "Pat. 15–50 kgKG: 15 mg/kgKG i.v. (max. 1000 mg)"
+                  },
+                  {
+                    "fixMg": 1000,
+                    "hinweis": "Pat. > 50 kgKG: 1000 mg i.v."
+                  }
+                ]
+              },
+              "maxMgAbsolut": 1000,
+              "repetition": "Keine Repetition; einmalige Kurzinfusion über 15 Minuten",
+              "preps": [
+                {
+                  "ampulle": "Kurzinfusion 10 mg/ml (1 g/100 ml oder 0,5 g/50 ml)",
+                  "zugabe": null,
+                  "ergebnis": "Kurzinfusion über 15 Minuten i.v.; nicht zu applizierende Menge vor Gabe abziehen und verwerfen",
+                  "mgPerMl": 10,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Einmalige Kurzinfusion über 15 Minuten i.v.",
+                "Nicht zu applizierende Menge vor Gabe abziehen und verwerfen",
+                "Zeitabstand zur letzten Gabe > 6 Stunden beachten"
+              ],
+              "minAlterMonate": 180,
+              "minAlterHinweis": "i.v.-Kurzinfusion: Altersgrenze SAA nicht explizit, Praxis ab 15 kgKG (ca. 15 Monate)"
+            }
+          ]
+        },
+        {
+          "id": "fieber-nach-krampf",
+          "label": "Fieber beim Kind nach stattgehabtem Krampfanfall / Fieberkrampf",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "schwere Leberfunktionsstörung",
+            "bekannter Glukose-6-phosphat-Dehydrogenase-Mangel"
+          ],
+          "relKontra": [
+            "schwere Niereninsuffizienz",
+            "Leberfunktionsstörung (z.B. bei schwerer Mangelernährung, Alkoholabusus)",
+            "Schwangerschaft, Stillzeit",
+            "Blutbildungsstörungen angeboren oder erworben"
+          ],
+          "routen": [
+            {
+              "weg": "rectal (Suppositorium)",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennKgUnter": 13,
+                    "fixMg": 125,
+                    "hinweis": "Kinder 7–12 kgKG (6 Monate – 2 Jahre): 125 mg rectal"
+                  },
+                  {
+                    "wennKgUnter": 26,
+                    "fixMg": 250,
+                    "hinweis": "Kinder 13–25 kgKG (2–8 Jahre): 250 mg rectal"
+                  },
+                  {
+                    "fixMg": 500,
+                    "hinweis": "Kinder 26–43 kgKG (8–12 Jahre): 500 mg rectal"
+                  }
+                ]
+              },
+              "repetition": "Keine Repetition; Zeitabstand zur letzten Gabe > 6 Stunden beachten",
+              "preps": [
+                {
+                  "ampulle": "Supp. 75 mg, 125 mg, 250 mg, 500 mg",
+                  "zugabe": null,
+                  "ergebnis": "rectal",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Dosierung identisch zur Schmerztherapie",
+                "Zeitabstand zur letzten Gabe > 6 Stunden beachten"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Zeitabstand zur letzten Gabe > 6 Stunden beachten",
+        "Nicht zu applizierende Menge bei i.v.-Kurzinfusion vor Gabe abziehen und verwerfen",
+        "Unterschiedliche Darreichungsformen: 10 mg/ml i.v.; Supp. 75/125/250/500 mg"
+      ]
+    },
+    {
+      "id": "saa:prednisolon",
+      "saaSeite": 66,
+      "verifiziert": "2026-06-12",
+      "indikationen": [
+        {
+          "id": "anaphylaxie",
+          "label": "Anaphylaxie",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff"
+          ],
+          "relKontra": [
+            "Schwangerschaft"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennKgUnter": 30,
+                    "fixMg": 50,
+                    "hinweis": "Pat. 15–30 kgKG: 50 mg i.v."
+                  },
+                  {
+                    "wennKgUnter": 61,
+                    "fixMg": 100,
+                    "hinweis": "Pat. 30–60 kgKG: 100 mg i.v."
+                  },
+                  {
+                    "fixMg": 250,
+                    "hinweis": "Pat. > 12 Jahre: 250 mg i.v."
+                  }
+                ]
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "250 mg / 5 ml (50 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (50 mg/ml) — langsam i.v.",
+                  "mgPerMl": 50,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Pat. > 12 Jahre: 250 mg i.v.",
+                "Pat. 30–60 kgKG: 100 mg i.v.",
+                "Pat. 15–30 kgKG: 50 mg i.v.",
+                "Wirkeintritt verzögert; unspezifische frühzeitige Effekte nach 10–20 min"
+              ]
+            },
+            {
+              "weg": "rectal",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennKgUnter": 61,
+                    "fixMg": 100,
+                    "hinweis": "Pat. 15–60 kgKG: 100 mg rectal (Alternative zu i.v.)"
+                  },
+                  {
+                    "fixMg": 100,
+                    "hinweis": "100 mg rectal — alternativ wenn kein i.v. möglich"
+                  }
+                ]
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "Suppositorium / Rectalkapsel 100 mg",
+                  "zugabe": null,
+                  "ergebnis": "100 mg rectal",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Pat. 30–60 kgKG: 100 mg rectal (Alternative zu i.v.)",
+                "Pat. 15–30 kgKG: 100 mg rectal (Alternative zu i.v.)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "bronchialobstruktion",
+          "label": "Bronchialobstruktion",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff"
+          ],
+          "relKontra": [
+            "Schwangerschaft"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 13,
+                    "mgProKg": 2,
+                    "maxMgAbsolut": 80,
+                    "hinweis": "Pat. ≤ 12 Jahre: 2 mg/kgKG i.v. (max. 80 mg)"
+                  },
+                  {
+                    "fixMg": 80,
+                    "hinweis": "Pat. > 12 Jahre: 80 mg i.v."
+                  }
+                ]
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "250 mg / 5 ml (50 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (50 mg/ml) — langsam i.v.",
+                  "mgPerMl": 50,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Pat. > 12 Jahre: 80 mg i.v.",
+                "Pat. ≤ 12 Jahre: 2 mg/kgKG i.v. (max. 80 mg)"
+              ]
+            },
+            {
+              "weg": "rectal",
+              "dosis": {
+                "fixMg": 100,
+                "hinweis": "100 mg rectal (Alternative zu i.v.)"
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "Suppositorium / Rectalkapsel 100 mg",
+                  "zugabe": null,
+                  "ergebnis": "100 mg rectal",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "100 mg rectal — alternative Darreichungsform"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "pseudokrupp",
+          "label": "Pseudokrupp",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff"
+          ],
+          "relKontra": [
+            "Schwangerschaft"
+          ],
+          "routen": [
+            {
+              "weg": "rectal",
+              "dosis": {
+                "fixMg": 100,
+                "hinweis": "Kleinkinder: 100 mg rectal"
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "Suppositorium / Rectalkapsel 100 mg",
+                  "zugabe": null,
+                  "ergebnis": "100 mg rectal",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Kleinkinder: 100 mg rectal"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Wirkeintritt verzögert; unspezifische frühzeitige Effekte nach 10–20 min",
+        "Wirkdauer 4–6 Stunden",
+        "Hyperglykämie und Immunsuppression möglich"
+      ]
+    },
+    {
+      "id": "saa:salbutamol",
+      "saaSeite": 67,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 48,
+      "minAlterHinweis": "Keine Anwendung bei Pat. < 4 Jahre",
+      "indikationen": [
+        {
+          "id": "bronchialobstruktion",
+          "label": "Bronchialobstruktion",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "symptomatische Tachykardie / Tachyarrhythmie"
+          ],
+          "relKontra": [
+            "schwere Herzerkrankungen – ACS, HOCM",
+            "Phäochromozytom",
+            "Schwangerschaft"
+          ],
+          "routen": [
+            {
+              "weg": "inhalativ (vernebeln)",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 13,
+                    "fixMg": 1.25,
+                    "hinweis": "Pat. 4–12 Jahre: 1,25 mg inhalativ"
+                  },
+                  {
+                    "fixMg": 2.5,
+                    "hinweis": "Pat. > 12 Jahre: 2,5 mg inhalativ"
+                  }
+                ]
+              },
+              "repetition": "Einmalige Repetition nach 10 min möglich",
+              "preps": [
+                {
+                  "ampulle": "1,25 mg / 2,5 ml Fertiginhalat (0,5 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "2,5 ml vernebeln (1,25 mg) — Zubereitungen mit unterschiedlichen Konzentrationen verfügbar",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Pat. > 12 Jahre: 2,5 mg inhalativ",
+                "Pat. 4–12 Jahre: 1,25 mg inhalativ",
+                "Zubereitungen mit unterschiedlichen Konzentrationen verfügbar — CAVE Verwechslung"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Zubereitungen mit unterschiedlichen Konzentrationen verfügbar",
+        "Tachykardie, HRST, Extrasystolie möglich",
+        "Wehenhemmung (tokolytische Wirkung)"
+      ]
+    },
+    {
+      "id": "saa:sauerstoff",
+      "saaSeite": 68,
+      "verifiziert": "2026-06-12",
+      "indikationen": [
+        {
+          "id": "hypoxaemie",
+          "label": "Hypoxämie",
+          "kontra": [],
+          "relKontra": [],
+          "kiHinweis": "Kontraindikationen: entfällt",
+          "routen": [
+            {
+              "weg": "inhalativ (Nasenbrille / Gesichtsmaske)",
+              "einheit": "l/min",
+              "dosis": {
+                "stufen": [
+                  {
+                    "fixMg": 2,
+                    "hinweis": "Nasenbrille: Fluss < 5 l/min — Ziel SpO₂ 92–96 % (ohne Hyperkapnierisiko)"
+                  },
+                  {
+                    "fixMg": 8,
+                    "hinweis": "Gesichtsmaske: Fluss ≥ 5 l/min — Ziel SpO₂ 92–96 % (ohne Hyperkapnierisiko)"
+                  }
+                ]
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "Sauerstoff 0,5–15 l/min",
+                  "zugabe": null,
+                  "ergebnis": "Flussrate titrieren nach SpO₂-Zielwert; Nasenbrille < 5 l/min, Gesichtsmaske ≥ 5 l/min",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Pat. ohne Hyperkapnierisiko: Ziel SpO₂ 92–96 %",
+                "Pat. mit Hyperkapnierisiko (COPD, Mukoviszidose, Thoraxdeformitäten, neuromuskuläre Erkrankungen, Adipositas BMI > 40): Ziel SpO₂ 88–92 %",
+                "Nasenbrille: Fluss < 5 l/min; Gesichtsmaske: Fluss ≥ 5 l/min"
+              ]
+            },
+            {
+              "weg": "hochdosiert inhalativ (15 l/min)",
+              "einheit": "l/min",
+              "dosis": {
+                "fixMg": 15,
+                "hinweis": "15 l/min — ohne SpO₂-Zielwert bei vitaler Gefährdung"
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "Sauerstoff 15 l/min",
+                  "zugabe": null,
+                  "ergebnis": "15 l/min hochdosiert — ohne SpO₂-Zielwert",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Ohne Pulsoximetriesignal und kritisch krank (z.B. Herz-Kreislauf-Stillstand)",
+                "Schwere Atemnot",
+                "CO-Intoxikation",
+                "Tauchunfall / Dekompessionskrankheit",
+                "Explosionsgefahr bei entsprechendem Konzentrationsverhältnis, CAVE bei Defibrillation"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "co-intoxikation",
+          "label": "Intoxikation mit Kohlenmonoxid",
+          "kontra": [],
+          "relKontra": [],
+          "kiHinweis": "Kontraindikationen: entfällt",
+          "routen": [
+            {
+              "weg": "hochdosiert inhalativ (15 l/min)",
+              "einheit": "l/min",
+              "dosis": {
+                "fixMg": 15,
+                "hinweis": "15 l/min hochdosiert ohne SpO₂-Zielwert"
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "Sauerstoff 15 l/min",
+                  "zugabe": null,
+                  "ergebnis": "15 l/min hochdosiert — ohne SpO₂-Zielwert",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "CO-Intoxikation: 15 l/min hochdosiert",
+                "Explosionsgefahr bei entsprechendem Konzentrationsverhältnis, CAVE bei Defibrillation"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "tauchunfall",
+          "label": "Tauchunfall / Dekompressionskrankheit",
+          "kontra": [],
+          "relKontra": [],
+          "kiHinweis": "Kontraindikationen: entfällt",
+          "routen": [
+            {
+              "weg": "hochdosiert inhalativ (15 l/min)",
+              "einheit": "l/min",
+              "dosis": {
+                "fixMg": 15,
+                "hinweis": "15 l/min hochdosiert ohne SpO₂-Zielwert"
+              },
+              "repetition": null,
+              "preps": [
+                {
+                  "ampulle": "Sauerstoff 15 l/min",
+                  "zugabe": null,
+                  "ergebnis": "15 l/min hochdosiert — ohne SpO₂-Zielwert",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Tauchunfall / Dekompessionskrankheit: 15 l/min hochdosiert",
+                "Explosionsgefahr bei entsprechendem Konzentrationsverhältnis, CAVE bei Defibrillation"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Explosionsgefahr bei entsprechendem Konzentrationsverhältnis, CAVE bei Defibrillation",
+        "Hyperoxie mit Resorptionsatelektasen möglich",
+        "Bildung freier Radikale mit koronarer und cerebraler Vasokonstriktion"
+      ]
+    },
+    {
+      "id": "saa:txa",
+      "saaSeite": 69,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 72,
+      "minAlterHinweis": "Keine Anwendung bei Kindern < 6 Jahre",
+      "indikationen": [
+        {
+          "id": "trauma-haemorrhagie",
+          "label": "Blutungen nach schwerem Trauma im hämorrhagischen Schock",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "Schwangerschaft"
+          ],
+          "relKontra": [
+            "akute arterielle / venöse Thrombosen / Lungenarterienembolie",
+            "schwere Nierenfunktionsstörung"
+          ],
+          "routen": [
+            {
+              "weg": "i.v. (Kurzinfusion)",
+              "dosis": {
+                "mgProKg": 15,
+                "hinweis": "15 mg/kgKG Tranexamsäure langsam i.v. (Kurzinfusion über 15 Minuten), max. 1000 mg"
+              },
+              "maxMgAbsolut": 1000,
+              "repetition": "Keine Repetition",
+              "preps": [
+                {
+                  "ampulle": "500 mg / 5 ml (100 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "Kurzinfusion über 15 Minuten i.v. (100 mg/ml, langsam)",
+                  "mgPerMl": 100,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "1.000 mg / 10 ml (100 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "Kurzinfusion über 15 Minuten i.v. (100 mg/ml, langsam)",
+                  "mgPerMl": 100,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "15 mg/kgKG Tranexamsäure langsam i.v. über 15 Minuten, max. 1000 mg",
+                "Gabe nur innerhalb der ersten 3 Stunden nach Trauma",
+                "Zu schnelle i.v.-Applikation → Unwohlsein, Hypotonie ggf. mit Bewusstlosigkeit"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Gabe nur innerhalb der ersten 3 Stunden nach Trauma",
+        "Zu schnelle i.v.-Applikation kann Unwohlsein mit Hypotonie, ggf. Bewusstlosigkeit verursachen",
+        "TXA bei SHT als Monotrauma, ICB ohne Polytraumatisierung oder gastrointestinalen Blutungen nach aktuellen Studien nicht empfohlen"
+      ]
+    },
+    {
+      "id": "saa:urapidil",
+      "saaSeite": 70,
+      "verifiziert": "2026-06-12",
+      "minAlterMonate": 144,
+      "minAlterHinweis": "Keine Anwendung bei Kindern < 12 Jahren",
+      "indikationen": [
+        {
+          "id": "hypertensiver-notfall",
+          "label": "Hypertensiver Notfall",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "nicht korrigierte Aortenisthmusstenose",
+            "Schwangerschaft"
+          ],
+          "relKontra": [
+            "Leber- und Niereninsuffizienz",
+            "Aorten- oder Mitralklappenstenososen",
+            "Herzinsuffizienz"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "fixMg": 5,
+                "hinweis": "5 mg langsam i.v.; Repetition möglich bis Maximaldosis 25 mg"
+              },
+              "maxMgAbsolut": 25,
+              "repetition": "Repetition möglich; Maximaldosis 25 mg",
+              "preps": [
+                {
+                  "ampulle": "25 mg / 5 ml (5 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5 mg/ml) — langsam i.v.",
+                  "mgPerMl": 5,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "50 mg / 10 ml (5 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5 mg/ml) — langsam i.v.",
+                  "mgPerMl": 5,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "5 mg langsam i.v.; Repetition möglich; Maximaldosis 25 mg",
+                "Bei Anwendung unter Nutzen-/Risiko-Abwägung Dosisreduktion empfohlen",
+                "Wirkungsverstärkung bei gleichzeitiger Medikation mit anderen Antihypertensiva",
+                "Hypertensiver Notfall: angestrebter Zielwert RRsyst 100–120 mmHg"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "aortensyndrom",
+          "label": "Akutes Aortensyndrom",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "nicht korrigierte Aortenisthmusstenose",
+            "Schwangerschaft"
+          ],
+          "relKontra": [
+            "Leber- und Niereninsuffizienz",
+            "Aorten- oder Mitralklappenstenososen",
+            "Herzinsuffizienz"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "fixMg": 5,
+                "hinweis": "5 mg langsam i.v.; Repetition möglich bis Maximaldosis 25 mg"
+              },
+              "maxMgAbsolut": 25,
+              "repetition": "Repetition möglich; Maximaldosis 25 mg",
+              "preps": [
+                {
+                  "ampulle": "25 mg / 5 ml (5 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5 mg/ml) — langsam i.v.",
+                  "mgPerMl": 5,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "50 mg / 10 ml (5 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5 mg/ml) — langsam i.v.",
+                  "mgPerMl": 5,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "5 mg langsam i.v.; Repetition möglich; Maximaldosis 25 mg",
+                "Akutes Aortensyndrom: Zielwert RRsyst 100–120 mmHg"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "schlaganfall",
+          "label": "Schlaganfall",
+          "kontra": [
+            "Überempfindlichkeit gegen den Wirkstoff",
+            "nicht korrigierte Aortenisthmusstenose",
+            "Schwangerschaft"
+          ],
+          "relKontra": [
+            "Leber- und Niereninsuffizienz",
+            "Aorten- oder Mitralklappenstenososen",
+            "Herzinsuffizienz"
+          ],
+          "routen": [
+            {
+              "weg": "i.v.",
+              "dosis": {
+                "fixMg": 5,
+                "hinweis": "5 mg langsam i.v.; Repetition möglich bis Maximaldosis 25 mg"
+              },
+              "maxMgAbsolut": 25,
+              "repetition": "Repetition möglich; Maximaldosis 25 mg",
+              "preps": [
+                {
+                  "ampulle": "25 mg / 5 ml (5 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5 mg/ml) — langsam i.v.",
+                  "mgPerMl": 5,
+                  "quelle": "saa",
+                  "freigegeben": true
+                },
+                {
+                  "ampulle": "50 mg / 10 ml (5 mg/ml)",
+                  "zugabe": null,
+                  "ergebnis": "unverdünnt (5 mg/ml) — langsam i.v.",
+                  "mgPerMl": 5,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "5 mg langsam i.v.; Repetition möglich; Maximaldosis 25 mg",
+                "Schlaganfall: moderate RR-Senkung auf einen Wert NICHT unter RRsyst < 180 mmHg"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Unerwartet starker Blutdruckabfall möglich",
+        "Hypertensiver Notfall / ACS: Zielwert RRsyst 100–120 mmHg",
+        "Schlaganfall: RR NICHT unter 180 mmHg senken",
+        "Wirkungsverstärkung bei Kombination mit anderen Antihypertensiva"
+      ]
+    },
+    {
+      "id": "saa:vel",
+      "saaSeite": 71,
+      "verifiziert": "2026-06-12",
+      "indikationen": [
+        {
+          "id": "volumenmangel",
+          "label": "Flüssigkeits- und Volumenmangel (Blutung, Dehydratation, Anaphylaxie, Sepsis, Verbrennung, Hyperglykämie)",
+          "kontra": [
+            "Hypervolämie, z.B. im Rahmen von kardialer Dekompensation, Lungenödem",
+            "Niereninsuffizienz mit Oligo- / Anurie"
+          ],
+          "relKontra": [
+            "Herzinsuffizienz, pulmonale Stauung"
+          ],
+          "routen": [
+            {
+              "weg": "i.v. (Infusion / Bolus)",
+              "einheit": "ml",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 13,
+                    "mgProKg": 10,
+                    "hinweis": "Kinder ≤ 12 Jahre: 10 ml/kgKG i.v."
+                  },
+                  {
+                    "fixMg": 500,
+                    "maxMgAbsolut": 1000,
+                    "hinweis": "Pat. > 12 Jahre: 500–1.000 ml i.v."
+                  }
+                ]
+              },
+              "maxMgAbsolut": 1000,
+              "repetition": "Repetition möglich",
+              "preps": [
+                {
+                  "ampulle": "Vollelektrolytlösung Infusionsbeutel 250 ml / 500 ml / 1.000 ml",
+                  "zugabe": null,
+                  "ergebnis": "i.v.-Infusion / Bolus — relativ kurzzeitiger intravasaler Volumeneffekt (20–30 min)",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Pat. > 12 Jahre: 500–1.000 ml i.v.",
+                "Pat. ≤ 12 Jahre: 10 ml/kgKG i.v.",
+                "Repetition möglich",
+                "Relativ kurzzeitiger intravasaler Volumeneffekt (20–30 Minuten)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "schlaganfall",
+          "label": "Schlaganfall",
+          "kontra": [
+            "Hypervolämie, z.B. im Rahmen von kardialer Dekompensation, Lungenödem",
+            "Niereninsuffizienz mit Oligo- / Anurie"
+          ],
+          "relKontra": [
+            "Herzinsuffizienz, pulmonale Stauung"
+          ],
+          "routen": [
+            {
+              "weg": "i.v. (Infusion / Bolus)",
+              "einheit": "ml",
+              "dosis": {
+                "stufen": [
+                  {
+                    "wennAlterUnter": 13,
+                    "mgProKg": 10,
+                    "hinweis": "Kinder ≤ 12 Jahre: 10 ml/kgKG i.v."
+                  },
+                  {
+                    "fixMg": 500,
+                    "maxMgAbsolut": 1000,
+                    "hinweis": "Pat. > 12 Jahre: 500–1.000 ml i.v."
+                  }
+                ]
+              },
+              "maxMgAbsolut": 1000,
+              "repetition": "Repetition möglich",
+              "preps": [
+                {
+                  "ampulle": "Vollelektrolytlösung Infusionsbeutel 250 ml / 500 ml / 1.000 ml",
+                  "zugabe": null,
+                  "ergebnis": "i.v.-Infusion / Bolus — relativ kurzzeitiger intravasaler Volumeneffekt (20–30 min)",
+                  "mgPerMl": null,
+                  "quelle": "saa",
+                  "freigegeben": true
+                }
+              ],
+              "hinweise": [
+                "Schlaganfall: Vollelektrolytlösung als Begleitinfusion"
+              ]
+            }
+          ]
+        }
+      ],
+      "cave": [
+        "Hyperhydratation (Überwässerung) möglich",
+        "Dilution (Verdünnung und ggf. Verstärkung einer Blutung)",
+        "Relativ kurzzeitiger intravasaler Volumeneffekt (20–30 Minuten)"
+      ]
+    }
+  ]
+}

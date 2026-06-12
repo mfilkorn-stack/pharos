@@ -3,7 +3,6 @@ import data from "./data/data.json";
 import atcIndex from "./data/atc_index.json";
 import groupMap from "./data/atc_group_map.json";
 import saaData from "./data/saa.json";
-import saaMatrixSeed from "./data/saa-matrix.json";
 import SearchBar from "./components/SearchBar.jsx";
 import QuickFilters from "./components/QuickFilters.jsx";
 import ScanActions from "./components/ScanActions.jsx";
@@ -28,6 +27,9 @@ import { matchesFilter } from "./components/QuickFilters.jsx";
 import { CATEGORIES } from "./components/CategoryIcon.jsx";
 import GiftnotrufBanner from "./components/GiftnotrufBanner.jsx";
 import SymptomChips from "./components/SymptomChips.jsx";
+import { getCaseMeds, upsertCaseMeds, clearCaseMeds, addCaseMed } from "../../lib/caseMeds.js";
+import { useSaaMatrix } from "../../lib/saaMatrix.js";
+import { getDauerPick, setDauerPick, subscribeDauerPick } from "../../lib/dauerPickMode.js";
 
 // Build runtime DB entry: inherits group Notfall + appends extras
 function materialize(entry, groups) {
@@ -123,9 +125,14 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
   const [scanSource, setScanSource] = useState(null);
-  const [planEntries, setPlanEntries] = useState([]);
+  // Hydrieren nur mit vollwertigen Einträgen (mit id) — Medigabe-Minimaleinträge
+  // ({wirkstoff, source} ohne id) sind keine renderbaren ResultCards.
+  const [planEntries, setPlanEntries] = useState(() => getCaseMeds().filter((e) => e.id));
+  const [dauerPick, setDauerPickLocal] = useState(getDauerPick);
+  const [dauerAdded, setDauerAdded] = useState(() => new Set());
+  useEffect(() => subscribeDauerPick(() => { setDauerPickLocal(getDauerPick()); setDauerAdded(new Set()); }), []);
+  useEffect(() => () => setDauerPick(false), []);
   const [runtimeExtras, setRuntimeExtras] = useState([]);
-  const [saaMatrixRuntime, setSaaMatrixRuntime] = useState({});
   const [searchEnriching, setSearchEnriching] = useState(false);
   const [searchEnrichError, setSearchEnrichError] = useState("");
   const [activeView, setActiveView] = useState("suche"); // suche | favoriten | verlauf
@@ -157,6 +164,11 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
 
   const clearHistory = useCallback(() => setHistory([]), []);
 
+  const handlePickAdd = useCallback((item) => {
+    addCaseMed({ wirkstoff: item.wirkstoff, id: item.id, source: "medscan" });
+    setDauerAdded((prev) => new Set([...prev, item.id]));
+  }, []);
+
   const goHome = useCallback(() => {
     setActiveView("suche");
     setActiveFilter("all");
@@ -186,6 +198,11 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
 
   // OCR-Modell vorwaermen (Consent ist auf Shell-Ebene bereits erteilt).
   useEffect(() => { prewarmOCR(); }, []);
+
+  // Einsatzliste teilen: Scan-/Suchergebnisse für Medigabe verfügbar machen.
+  useEffect(() => {
+    if (planEntries.length) upsertCaseMeds(planEntries);
+  }, [planEntries]);
 
   // ⌘K / Strg+K fokussiert das Suchfeld (passend zum Hint in der SearchBar).
   useEffect(() => {
@@ -233,17 +250,8 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
     return [...buildDedupedDB(SEED_DB, extras), ...SAA_DB];
   }, [runtimeExtras]);
 
-  // SAA-Matrix: committet (saaMatrixSeed) + Runtime-Ergänzungen (gemerged nach normKey).
-  const reloadSaaMatrix = useCallback(async () => {
-    try {
-      const res = await fetch("/data/saa-matrix-runtime.json", { cache: "no-store" });
-      if (!res.ok) return;
-      const d = await res.json();
-      setSaaMatrixRuntime(d?.entries || {});
-    } catch { /* ignore */ }
-  }, []);
-  useEffect(() => { reloadSaaMatrix(); }, [reloadSaaMatrix]);
-  const saaMatrix = useMemo(() => ({ ...(saaMatrixSeed.entries || {}), ...saaMatrixRuntime }), [saaMatrixRuntime]);
+  // SAA-Matrix: Seed + Runtime — geteilt mit Medigabe (src/lib/saaMatrix.js).
+  const { matrix: saaMatrix } = useSaaMatrix();
 
   const scanLookup = useMemo(
     () => makeScanLookup(fullDB, atcIndex, groupMap, data.groups),
@@ -385,6 +393,14 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
               <ScanActions onScan={() => setScanSource("scan")} onUpload={() => setScanSource("upload")} />
             </div>
 
+            {/* Dauermedikation-Pick-Modus Banner */}
+            {dauerPick ? (
+              <div className="flex items-center justify-between gap-3 px-4 py-3 rounded-xl border border-accent/40 bg-accent/5">
+                <span className="text-sm text-accent font-medium">Medikament zur Dauermedikation hinzufügen — tippe auf <strong>+</strong></span>
+                <Button variant="ghost" size="sm" onClick={() => setDauerPick(false)}>Fertig</Button>
+              </div>
+            ) : null}
+
             {/* Quick-Filter — in der Drogen-Ansicht ausgeblendet (Medikamenten-Kategorien) */}
             {activeView !== "drogen" ? (
               <QuickFilters active={activeFilter} onChange={setActiveFilter} counts={filterCounts} />
@@ -395,7 +411,7 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
               <div className="space-y-3 px-4 py-3 rounded-xl border border-accent/20 bg-accent/5">
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-sm text-accent font-semibold">Plan-Auswahl · {results.length} Wirkstoffe</span>
-                  <Button variant="ghost" size="sm" onClick={() => setPlanEntries([])}>Zurücksetzen</Button>
+                  <Button variant="ghost" size="sm" onClick={() => { setPlanEntries([]); clearCaseMeds(); }}>Zurücksetzen</Button>
                 </div>
                 <SaaCheck patientMeds={planEntries.filter((p) => p.source !== "unknown" && p.source !== "rejected").map((p) => p.wirkstoff)} matrix={saaMatrix} />
               </div>
@@ -509,6 +525,8 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
                     onOpen={() => openDetail(item)}
                     isFavorite={favorites.includes(item.id)}
                     onToggleFavorite={handleToggleFavorite}
+                    onAdd={dauerPick ? () => handlePickAdd(item) : undefined}
+                    isAdded={dauerPick && dauerAdded.has(item.id)}
                   />
                 ))}
               </div>

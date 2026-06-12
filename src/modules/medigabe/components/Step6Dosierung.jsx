@@ -1,4 +1,5 @@
 // src/modules/medigabe/components/Step6Dosierung.jsx
+import { useEffect } from "react";
 import { computeDose, computeVolume, fmt, alterInJahren } from "../lib/dose.js";
 import { SegPick } from "./bits.jsx";
 import Badge from "../../lexikon/components/ui/Badge.jsx";
@@ -14,6 +15,16 @@ export default function Step6Dosierung({ ind, cave, patient, dosier, onPatch }) 
   // Routen-Altersgrenze (z. B. Dimenhydrinat i.v. erst ab 6 J — darunter rectal).
   const routeOk = (r) => r.minAlterMonate == null || (alterJahre != null && alterJahre * 12 >= r.minAlterMonate);
   const routeGesperrt = route ? !routeOk(route) : false;
+
+  useEffect(() => {
+    if (dosier.weg != null) return;
+    const valid = ind.routen.map((r, i) => ({ r, i })).filter(({ r }) => routeOk(r));
+    if (valid.length === 1) {
+      const { r, i } = valid[0];
+      onPatch({ weg: i, prep: r.preps.length === 1 ? 0 : null });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ind.routen.map((r) => r.weg).join(","), alterJahre]);
 
   let dose = null, vol = null;
   if (route && prep && eingabenOk && !routeGesperrt) {

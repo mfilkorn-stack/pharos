@@ -60,7 +60,7 @@ function normName(s) {
 // (gleicher ATC oder überschneidender Wirkstoffname/Synonym).
 const SEED = (() => {
   try {
-    const d = JSON.parse(readFileSync(join(ROOT_DIR, "src/data/data.json"), "utf8"));
+    const d = JSON.parse(readFileSync(join(ROOT_DIR, "src/modules/lexikon/data/data.json"), "utf8"));
     const atcs = new Set();
     const names = new Set();
     for (const s of d.substances || []) {

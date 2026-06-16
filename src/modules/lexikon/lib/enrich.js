@@ -1,5 +1,8 @@
 // Client wrapper for the /enrich endpoint of the local KI proxy.
-// Returns the enriched entry (same shape as data.json substances), or null on any failure.
+// Returns:
+//   - the enriched entry (same shape as data.json substances) on success
+//   - { quarantined: true, name } when the server signals quarantine
+//   - null on any other failure
 
 export async function enrichName(name, { url, timeoutMs = 45000 } = {}) {
   if (!url || !name) return null;
@@ -14,6 +17,9 @@ export async function enrichName(name, { url, timeoutMs = 45000 } = {}) {
     });
     if (!res.ok) return null;
     const data = await res.json();
+    if (data?.quarantined === true) {
+      return { quarantined: true, name };
+    }
     return data?.entry || null;
   } catch {
     return null;

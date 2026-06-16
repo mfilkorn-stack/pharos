@@ -27,6 +27,7 @@ import { matchesFilter } from "./components/QuickFilters.jsx";
 import { CATEGORIES } from "./components/CategoryIcon.jsx";
 import GiftnotrufBanner from "./components/GiftnotrufBanner.jsx";
 import SymptomChips from "./components/SymptomChips.jsx";
+import ToxidromeOverview from "./components/ToxidromeOverview.jsx";
 import { getCaseMeds, upsertCaseMeds, clearCaseMeds, addCaseMed } from "../../lib/caseMeds.js";
 import { useSaaMatrix } from "../../lib/saaMatrix.js";
 import { getDauerPick, setDauerPick, subscribeDauerPick } from "../../lib/dauerPickMode.js";
@@ -135,6 +136,8 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
   const [runtimeExtras, setRuntimeExtras] = useState([]);
   const [searchEnriching, setSearchEnriching] = useState(false);
   const [searchEnrichError, setSearchEnrichError] = useState("");
+  // Quarantäne-Notiz: gesetzt wenn enrichName {quarantined:true, name} zurückgibt (Agent C)
+  const [quarantinedName, setQuarantinedName] = useState(null);
   const [activeView, setActiveView] = useState("suche"); // suche | favoriten | verlauf
   const [favorites, setFavorites] = useState(() => loadFavorites());
   const [history, setHistory] = useState(() => loadHistory());
@@ -182,6 +185,17 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
 
   // Zentraler Sidebar-Navigationshandler: View wechseln und Such-/Filter-Zustand
   // sauber zurücksetzen (sonst bleibt z. B. ein Kategorie-Filter „hängen").
+  // Klick auf Toxidrom-Klassenkarte: Filter auf diese Gruppe setzen + Listenansicht
+  const handlePickClass = useCallback((groupId) => {
+    setActiveView("drogen");
+    setActiveFilter(groupId);
+    setQuery("");
+    setPlanEntries([]);
+    setDetail(null);
+    setSearchEnrichError("");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   const handleNav = useCallback((key) => {
     if (key === "scannen") { setScanSource("scan"); return; }
     if (key === "hochladen") { setScanSource("upload"); return; }
@@ -250,6 +264,17 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
     return [...buildDedupedDB(SEED_DB, extras), ...SAA_DB];
   }, [runtimeExtras]);
 
+  // Anzahl Substanzen pro drogen_*-Gruppe (für ToxidromeOverview-Chips)
+  const substanceCounts = useMemo(() => {
+    const counts = {};
+    for (const item of fullDB) {
+      if (item.group && item.group.startsWith("drogen_")) {
+        counts[item.group] = (counts[item.group] || 0) + 1;
+      }
+    }
+    return counts;
+  }, [fullDB]);
+
   // SAA-Matrix: Seed + Runtime — geteilt mit Medigabe (src/lib/saaMatrix.js).
   const { matrix: saaMatrix } = useSaaMatrix();
 
@@ -265,7 +290,18 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
   };
 
   const enrichUnknownEntry = useCallback(async (name) => {
-    const entry = await enrichName(name, { url: config.enrichProxyUrl });
+    const result = await enrichName(name, { url: config.enrichProxyUrl });
+    // Agent C implementiert enrichName() so dass es {quarantined:true,name} zurückgeben kann.
+    // Solange Agent C noch nicht deployed ist, verhält sich enrichName wie bisher (gibt entry|null zurück).
+    if (result && typeof result === "object" && result.quarantined === true) {
+      const displayName = result.name || String(name).trim();
+      setQuarantinedName(displayName);
+      setPlanEntries((prev) => prev.filter((p) =>
+        !(p.source === "unknown" && p.wirkstoff === String(name).trim())
+      ));
+      return null;
+    }
+    const entry = result;
     if (!entry) {
       // Kein echter Wirkstoff (z. B. Verpackungsform "Blister") oder nicht
       // auffindbar → Platzhalter als "nicht erkannt" markieren statt endlos zu spinnen.
@@ -275,6 +311,7 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
           : p));
       return null;
     }
+    setQuarantinedName(null);
     const enriched = materialize(entry, data.groups);
     setPlanEntries((prev) => prev.map((p) => (p.id === `unknown:${entry.id.replace(/^unknown:/, "")}` || p.wirkstoff === name) ? enriched : p));
     reloadExtras();
@@ -331,10 +368,15 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
       return history.map((id) => map.get(id)).filter(Boolean);
     }
     if (activeView === "drogen") {
-      return fullDB.filter((d) => matchesFilter(d, "drogen"));
+      const allDrogen = fullDB.filter((d) => matchesFilter(d, "drogen"));
+      // Wenn eine Gruppe ausgewählt wurde (via onPickClass), auf diese filtern
+      if (activeFilter && activeFilter.startsWith("drogen_")) {
+        return allDrogen.filter((d) => d.group === activeFilter);
+      }
+      return allDrogen;
     }
     return fullDB;
-  }, [activeView, fullDB, favorites, history]);
+  }, [activeView, fullDB, favorites, history, activeFilter]);
 
   // Filter + search logic
   const results = useMemo(() => {
@@ -450,7 +492,52 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
                   </Button>
                 ) : null}
               </div>
-            ) : (activeView === "drogen" || (activeView === "suche" && activeFilter === "drogen")) ? (
+            ) : activeView === "drogen" ? (
+              <div className="space-y-4">
+                {/* Quarantäne-Notiz (Agent C setzt quarantined:true in enrichName-Antwort) */}
+                {quarantinedName ? (
+                  <div className="px-4 py-3 rounded-xl border border-warning/30 bg-warning/5 text-sm text-warning">
+                    <strong>{quarantinedName}</strong>: wegen widersprüchlicher Fachquellen ausgeblendet — nicht verlässlich.
+                  </div>
+                ) : null}
+
+                {/* Toxidrom-Einstieg (nur wenn kein Gruppen-Filter aktiv) */}
+                {(!activeFilter || !activeFilter.startsWith("drogen_")) ? (
+                  <ToxidromeOverview
+                    groups={data.groups}
+                    substanceCounts={substanceCounts}
+                    onPickClass={handlePickClass}
+                    onScan={() => setScanSource("scan")}
+                    onSearch={() => {
+                      document.querySelector('input[placeholder*="Suche"]')?.focus();
+                    }}
+                  />
+                ) : (
+                  <div className="flex items-center gap-3">
+                    <span className="h-9 w-9 rounded-lg bg-amber-500/15 text-amber-400 flex items-center justify-center flex-shrink-0">
+                      <FlaskIcon className="h-4 w-4" />
+                    </span>
+                    <div className="flex-1">
+                      <h2 className="text-base font-semibold text-text-primary">
+                        {data.groups[activeFilter]?.toxidrom?.label || data.groups[activeFilter]?.gruppe || activeFilter}
+                      </h2>
+                      <p className="text-xs text-text-muted">
+                        {substanceCounts[activeFilter] || 0} Substanzen
+                        <button
+                          type="button"
+                          className="ml-2 text-amber-400 hover:underline cursor-pointer"
+                          onClick={() => setActiveFilter("all")}
+                        >
+                          Alle Klassen
+                        </button>
+                      </p>
+                    </div>
+                  </div>
+                )}
+                <GiftnotrufBanner />
+                <SymptomChips onPick={onQueryChange} />
+              </div>
+            ) : (activeView === "suche" && activeFilter === "drogen") ? (
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <span className="h-9 w-9 rounded-lg bg-amber-500/15 text-amber-400 flex items-center justify-center flex-shrink-0">

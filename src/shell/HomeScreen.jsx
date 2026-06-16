@@ -1,4 +1,4 @@
-import { PharosLogo, MagnifyingGlassIcon, ClipboardCheckIcon, SyringeIcon, ArrowRightIcon, WifiIcon } from "../modules/lexikon/components/ui/icons.jsx";
+import { PharosLogo, MagnifyingGlassIcon, ClipboardCheckIcon, SyringeIcon, FlaskIcon, ArrowRightIcon, WifiIcon } from "../modules/lexikon/components/ui/icons.jsx";
 
 const TILES = [
   {
@@ -16,12 +16,18 @@ const TILES = [
     tag: "Durchführen",
   },
   {
+    key: "drogen",
+    title: "Drogen / Tox",
+    desc: "Toxidrome & Substanzen scannen — Antidot, Mischkonsum, Substanzwarnungen.",
+    Icon: FlaskIcon,
+    tag: "Erkennen",
+  },
+  {
     key: "trainer",
     title: "Übergabe",
     desc: "SINNHAFT-Übergabe einsprechen, KI parst & bewertet wie das ZNA-Team.",
     Icon: ClipboardCheckIcon,
     tag: "Trainieren",
-    span: true,
   },
 ];
 
@@ -47,7 +53,7 @@ export default function HomeScreen({ onPick }) {
           Was brauchst du<span className="text-accent">?</span>
         </h1>
         <p className="text-text-secondary text-base mb-10 max-w-xl leading-relaxed">
-          Drei Werkzeuge, ein Ort. Wähle, womit du startest — du kannst jederzeit wechseln.
+          Vier Werkzeuge, ein Ort. Wähle, womit du startest — du kannst jederzeit wechseln.
         </p>
 
         {/* Tiles */}

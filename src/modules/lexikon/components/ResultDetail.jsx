@@ -1,4 +1,5 @@
 import Badge from "./ui/Badge.jsx";
+import { buildSources, isDrug as isDrugEntry } from "../lib/sources.js";
 import SaaDetail from "./SaaDetail.jsx";
 import {
   DropletIcon,
@@ -293,8 +294,80 @@ export default function ResultDetail({ item, isFavorite, onToggleFavorite }) {
         </Section>
       ) : null}
 
-      {/* Quellen zum Überprüfen (KI-Einträge) */}
-      {isKI && item.sources?.length ? (
+      {/* Quellen — Drogen (alle, inkl. Seed) */}
+      {(() => {
+        const drugEntry = isDrugEntry(item);
+        if (!drugEntry) return null;
+        const effectiveSources = item.sources && item.sources.length
+          ? item.sources
+          : buildSources(item);
+        if (!effectiveSources || !effectiveSources.length) return null;
+        const authSources = effectiveSources.filter((s) => s.role === "auth" || !s.role);
+        const harmRedSources = effectiveSources.filter((s) => s.role === "harm_reduction");
+        return (
+          <>
+            {authSources.length ? (
+              <Section
+                icon={item.verification?.status === "valide" ? "shield" : "link"}
+                tint={item.verification?.status === "valide" ? "success" : "accent"}
+                title={`Geprüfte Fachquellen${item.verification?.checkedAt ? ` · ${fmtDate(item.verification.checkedAt)}` : ""}`}
+              >
+                <ul className="space-y-2">
+                  {authSources.map((s, i) => (
+                    <li key={i}>
+                      <a
+                        href={s.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-start gap-2 text-sm text-accent hover:underline"
+                      >
+                        <LinkIcon className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                        <span className="min-w-0">
+                          <span className="font-medium">{s.publisher || s.domain}</span>
+                          {s.corroborates === true ? (
+                            <Badge variant="success" size="sm" className="ml-2 align-middle">bestätigt</Badge>
+                          ) : s.corroborates === false ? (
+                            <Badge variant="critical" size="sm" className="ml-2 align-middle">widerspricht</Badge>
+                          ) : null}
+                          <span className="block text-xs text-text-muted truncate">{s.domain}</span>
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </Section>
+            ) : null}
+            {harmRedSources.length ? (
+              <Section icon="alert" tint="warning" title="Substanzwarnungen / Drug-Checking">
+                <p className="text-xs text-text-muted mb-2">
+                  Externe Harm-Reduction-Info — kein Beleg, kein Medizinprodukt.
+                </p>
+                <ul className="space-y-2">
+                  {harmRedSources.map((s, i) => (
+                    <li key={i}>
+                      <a
+                        href={s.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-start gap-2 text-sm text-text-secondary hover:underline"
+                      >
+                        <LinkIcon className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                        <span className="min-w-0">
+                          <span className="font-medium">{s.publisher || s.domain}</span>
+                          <span className="block text-xs text-text-muted truncate">{s.domain}</span>
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </Section>
+            ) : null}
+          </>
+        );
+      })()}
+
+      {/* Quellen zum Überprüfen (KI-Medikamente, nicht Drogen) */}
+      {isKI && !isDrugEntry(item) && item.sources?.length ? (
         <Section
           icon={item.verification?.status === "valide" ? "shield" : "link"}
           tint={item.verification?.status === "valide" ? "success" : "accent"}

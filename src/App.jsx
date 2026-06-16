@@ -45,12 +45,20 @@ export default function App() {
   const handleNav = useCallback((key) => lexRef.current?.nav(key), []);
   const handleMode = useCallback((m) => setMode(m), [setMode]);
   const onNavState = useCallback((s) => setLexNav(s), []);
+  const handlePick = useCallback((key) => {
+    if (key === "drogen") {
+      pendingLexNav.current = "drogen";
+      setMode("lexikon");
+    } else {
+      setMode(key);
+    }
+  }, [setMode]);
 
   if (checking) return null;
   if (!consented) return <ConsentGate onAccept={() => setConsented(true)} />;
 
   if (mode === "home") {
-    return <HomeScreen onPick={setMode} />;
+    return <HomeScreen onPick={handlePick} />;
   }
 
   return (

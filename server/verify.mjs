@@ -3,7 +3,7 @@
 // Liefert ein Ergebnis-Objekt zurück; der Aufrufer (ki-proxy) wendet es auf den
 // Eintrag an und verwaltet attempts/Status — so bleibt verify.mjs zustandslos.
 
-import { TRUST_DOMAINS } from "./enrich.mjs";
+import { trustDomainsFor, TRUST_DOMAINS } from "../src/modules/lexikon/lib/sources.js";
 
 // Registrierbare Domain (für Unabhängigkeits-Zählung): letzte zwei Labels,
 // www. entfernt. Reicht für unsere Allowlist (wikipedia.org, gelbe-liste.de,
@@ -55,7 +55,7 @@ export async function verifyEntry(entry, { anthropic, model }) {
     const resp = await anthropic.messages.create({
       model,
       max_tokens: 2500,
-      tools: [{ type: "web_search_20250305", name: "web_search", max_uses: 5, allowed_domains: TRUST_DOMAINS }],
+      tools: [{ type: "web_search_20250305", name: "web_search", max_uses: 5, allowed_domains: trustDomainsFor(entry) }],
       messages: [{ role: "user", content: buildPrompt(entry) }],
     });
     const text = (resp.content || []).filter((b) => b.type === "text").map((b) => b.text).join("\n");
@@ -64,7 +64,7 @@ export async function verifyEntry(entry, { anthropic, model }) {
       return { ok: false, error: "no_json" };
     }
 
-    const allowed = new Set(TRUST_DOMAINS.map(registrableDomain));
+    const allowed = new Set(trustDomainsFor(entry).map(registrableDomain));
     const corroboratingDomains = new Set();
     const sources = [];
     for (const s of parsed.sources) {

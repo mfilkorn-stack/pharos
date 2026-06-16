@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 import { enrich } from "./enrich.mjs";
 import { verifyEntry } from "./verify.mjs";
 import { saaCheck } from "./saa-check.mjs";
+import { isDrug } from "../src/modules/lexikon/lib/sources.js";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = join(HERE, "..");
@@ -27,13 +28,28 @@ function loadExtras() {
   try {
     return JSON.parse(readFileSync(EXTRAS_PATH, "utf8"));
   } catch {
-    return { version: "runtime-1", entries: [] };
+    return { version: "runtime-1", entries: [], quarantine: [] };
   }
 }
 
 function saveExtras(store) {
   mkdirSync(dirname(EXTRAS_PATH), { recursive: true });
   writeFileSync(EXTRAS_PATH, JSON.stringify(store, null, 2));
+}
+
+// Baut ein Set normalisierter Namen aller quarantänierten Einträge.
+// Wird für Pre/Post-Check im /enrich-Endpoint genutzt (Schleifen-Schutz).
+function buildQuarantineKeys(store) {
+  const keys = new Set();
+  for (const q of store.quarantine || []) {
+    const wk = normName(q.wirkstoff);
+    if (wk) keys.add(wk);
+    for (const s of q.synonyms || []) {
+      const k = normName(s);
+      if (k) keys.add(k);
+    }
+  }
+  return keys;
 }
 
 function normName(s) {
@@ -150,8 +166,26 @@ app.post("/enrich", async (req, res) => {
     const key = normName(name);
     const existing = store.entries.find((e) => normName(e.wirkstoff) === key);
     if (existing) return res.json({ entry: existing, cached: true });
+
+    // Pre-Check: Quarantäne-Schleifen-Schutz — verhindert erneuten Claude-Call
+    // für bereits quarantänierte Substanzen (kein API-Kosten-Risiko).
+    const qKeys = buildQuarantineKeys(store);
+    if (qKeys.has(key)) {
+      return res.json({ entry: null, quarantined: true, reason: "widerspruch" });
+    }
+
     const entry = await enrich(name, { anthropic, model: MODEL });
     if (!entry) return res.status(502).json({ error: "enrich_failed" });
+
+    // Post-Check: nach Kanonisierung nochmals gegen Quarantäne prüfen
+    // (Synonym einer quarantänierten Substanz könnte anders normalisiert sein).
+    if (isDrug(entry)) {
+      const postKeys = buildQuarantineKeys(loadExtras());
+      const allKeys = [normName(entry.wirkstoff), ...(entry.synonyms || []).map(normName)].filter(Boolean);
+      if (allKeys.some((k) => postKeys.has(k))) {
+        return res.json({ entry: null, quarantined: true, reason: "widerspruch" });
+      }
+    }
     // Dublettenprüfung: nicht persistieren, wenn der Eintrag eine Dublette eines
     // Seed-Eintrags (gleicher ATC/Name) oder eines bestehenden Extras ist —
     // sonst wächst extras-runtime.json mit Duplikaten (z. B. „Metoprololsuccinat").
@@ -227,6 +261,25 @@ async function verifyOne(id) {
   const e2 = store.entries.find((x) => x.id === id);
   if (!e2) return;
   const attempts = (e2.verification?.attempts || 0) + 1;
+  const status = computeStatus(result, attempts);
+
+  // Quarantäne: widersprüchliche Drogen-Einträge aus entries[] entfernen und
+  // in quarantine[] verschieben — verhindert Endlosschleife re-scan → re-enrich.
+  if (isDrug(e2) && status === "widerspruch") {
+    store.entries = store.entries.filter((x) => x.id !== id);
+    store.quarantine = store.quarantine || [];
+    store.quarantine.push({
+      id: e2.id,
+      wirkstoff: e2.wirkstoff,
+      synonyms: e2.synonyms || [],
+      reason: "widerspruch",
+      sources: e2.sources || [],
+      quarantinedAt: new Date().toISOString(),
+    });
+    saveExtras(store);
+    console.log(`[verify] quarantaeniert: ${e2.wirkstoff}`);
+    return;
+  }
 
   if (result.ok && result.sources?.length) {
     const existing = Array.isArray(e2.sources) ? e2.sources : [];
@@ -235,7 +288,7 @@ async function verifyOne(id) {
     e2.sources = existing;
   }
   e2.verification = {
-    status: computeStatus(result, attempts),
+    status,
     sourceCount: result.ok ? result.sourceCount : (e2.verification?.sourceCount || 0),
     checkedAt: new Date().toISOString(),
     attempts,

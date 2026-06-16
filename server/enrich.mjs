@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { fetchDrugInfo } from "./wikipedia.mjs";
+import { buildSources } from "../src/modules/lexikon/lib/sources.js";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "..");
@@ -86,37 +87,8 @@ async function generateFullEntry(name, anthropic, model) {
   }
 }
 
-// Vertrauenswürdige Quellen (Allowlist). `link(name, atc)` baut einen Deep-/Such-Link
-// (reine URL-Konstruktion, KEIN Fetch → keine Latenz im Erkennungs-Pfad).
-// Dieselbe Liste dient als allowed_domains für den Web-Search-Faktencheck (verify.mjs).
-export const TRUSTED_SOURCES = [
-  { domain: "gelbe-liste.de", publisher: "Gelbe Liste", link: (n) => `https://www.gelbe-liste.de/suche?term=${encodeURIComponent(n)}` },
-  { domain: "fachinfo.de", publisher: "Fachinformation", link: (n) => `https://www.fachinfo.de/suche?q=${encodeURIComponent(n)}` },
-  { domain: "embryotox.de", publisher: "Embryotox", link: (n) => `https://www.embryotox.de/arzneimittel/suche/?tx_solr%5Bq%5D=${encodeURIComponent(n)}` },
-  { domain: "pubchem.ncbi.nlm.nih.gov", publisher: "PubChem", link: (n) => `https://pubchem.ncbi.nlm.nih.gov/#query=${encodeURIComponent(n)}` },
-  { domain: "go.drugbank.com", publisher: "DrugBank", link: (n) => `https://go.drugbank.com/unearth/q?searcher=drugs&query=${encodeURIComponent(n)}` },
-  { domain: "whocc.no", publisher: "WHO ATC/DDD", link: (n, atc) => atc ? `https://www.whocc.no/atc_ddd_index/?code=${encodeURIComponent(atc)}` : "https://www.whocc.no/atc_ddd_index/" },
-  { domain: "bfarm.de", publisher: "BfArM", link: (n) => `https://www.bfarm.de/SiteGlobals/Forms/Suche/DE/Servicesuche_Formular.html?templateQueryString=${encodeURIComponent(n)}` },
-];
-
-// Domains, die der Web-Search-Faktencheck als unabhängig & vertrauenswürdig zählt.
-export const TRUST_DOMAINS = [
-  "de.wikipedia.org", "en.wikipedia.org",
-  ...TRUSTED_SOURCES.map((s) => s.domain),
-];
-
-// Prio-1-Quellen: echte Wikipedia-URL (falls vorhanden) + Nachschlage-Links zu Trust-DBs.
-// corroborates=null → noch nicht faktengeprüft (das macht Prio 2 / verify.mjs).
-function buildDeterministicSources(wirkstoff, atc, wiki) {
-  const out = [];
-  if (wiki?.url) {
-    out.push({ url: wiki.url, title: `Wikipedia: ${wiki.wirkstoff || wirkstoff}`, publisher: "Wikipedia", domain: `${wiki.lang || "de"}.wikipedia.org`, kind: "deterministisch", corroborates: null });
-  }
-  for (const s of TRUSTED_SOURCES) {
-    out.push({ url: s.link(wirkstoff, atc), title: `${s.publisher}: „${wirkstoff}" nachschlagen`, publisher: s.publisher, domain: s.domain, kind: "deterministisch", corroborates: null });
-  }
-  return out;
-}
+// Re-export für Rückwärtskompatibilität (verify.mjs importiert TRUST_DOMAINS direkt).
+export { TRUST_DOMAINS } from "../src/modules/lexikon/lib/sources.js";
 
 export async function enrich(name, { anthropic, model }) {
   if (!name || typeof name !== "string") return null;
@@ -218,7 +190,8 @@ export async function enrich(name, { anthropic, model }) {
     source: "ki",
     // Prio 1: Quellen zum Prüfen sofort dabei (≥1). Prio 2 (verify.mjs) ergänzt
     // websearch-Quellen + setzt verification.status/sourceCount zeitversetzt.
-    sources: buildDeterministicSources(wirkstoff, atc, wiki),
+    // buildSources wählt automatisch Med- vs. Drogen-Quellen anhand group/kategorie.
+    sources: buildSources({ wirkstoff, atc, group, kategorie: ai?.kategorie }, wiki),
     verification: { status: "pending", sourceCount: 0, checkedAt: null, attempts: 0 },
   };
 }

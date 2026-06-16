@@ -501,8 +501,8 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
                   </div>
                 ) : null}
 
-                {/* Toxidrom-Einstieg (nur wenn kein Gruppen-Filter aktiv) */}
-                {(!activeFilter || !activeFilter.startsWith("drogen_")) ? (
+                {/* Toxidrom-Einstieg — nur ohne aktive Suche */}
+                {!query.trim() && ((!activeFilter || !activeFilter.startsWith("drogen_")) ? (
                   <ToxidromeOverview
                     groups={data.groups}
                     substanceCounts={substanceCounts}
@@ -533,9 +533,9 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
                       </p>
                     </div>
                   </div>
-                )}
-                <GiftnotrufBanner />
-                <SymptomChips onPick={onQueryChange} />
+                ))}
+                {!query.trim() && <GiftnotrufBanner />}
+                {!query.trim() && <SymptomChips onPick={onQueryChange} />}
               </div>
             ) : (activeView === "suche" && activeFilter === "drogen") ? (
               <div className="space-y-4">

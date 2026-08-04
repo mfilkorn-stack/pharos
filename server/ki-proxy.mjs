@@ -503,7 +503,19 @@ async function computeMatrixOne(name) {
   if (!key) return;
   const r = await saaCheck({ patientMeds: [name], saaMeds: SAA_MEDS }, { anthropic, model: MODEL });
   if (!r.ok) return;
-  const flags = (r.results || []).filter((x) => x.level !== "ok").map((x) => ({ saaId: x.id, level: x.level, reason: x.reason }));
+  // Nur Flags gegen tatsächlich gelistete SAA-Medikamente cachen. Das Modell
+  // erfindet sonst IDs wie "saa:tramadol" und markiert sie als "absolut" —
+  // im Client erscheint das als absolute Kontraindikation gegen ein Medikament,
+  // das gar nicht im Abgabekatalog steht.
+  const validSaaIds = new Set(SAA_MEDS.map((m) => m.id));
+  const raw = (r.results || []).filter((x) => x.level !== "ok");
+  const flags = raw
+    .filter((x) => validSaaIds.has(x.id))
+    .map((x) => ({ saaId: x.id, level: x.level, reason: x.reason }));
+  const dropped = raw.filter((x) => !validSaaIds.has(x.id)).map((x) => x.id);
+  if (dropped.length) {
+    console.warn(`[saa-matrix] "${name}": ${dropped.length} unbekannte SAA-ID(s) verworfen: ${dropped.join(", ")}`);
+  }
   const store = loadMatrix();
   store.entries[key] = { name, flags, checkedAt: new Date().toISOString() };
   saveMatrix(store);

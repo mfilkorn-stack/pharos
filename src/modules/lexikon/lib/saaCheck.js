@@ -46,6 +46,15 @@ export function aggregateCheck(patientMeds, matrix, saaEntries) {
   const pending = [];
   let cachedCount = 0;
 
+  // saa.json ist die einzige Autorität dafür, was ein SAA-Medikament ist.
+  // Die Matrix wird von der KI befüllt und enthält erfundene saaIds wie
+  // "saa:tramadol" — teils mit Level "absolut" und einem reason-Text, der die
+  // Substanz selbst als "nicht gelistet" bezeichnet. Ungefiltert erscheinen
+  // solche Phantome als ABSOLUTE KONTRAINDIKATION gegen ein Medikament, das
+  // gar nicht zum Abgabekatalog gehört. Nur bekannte IDs zählen.
+  const validIds = new Set((saaEntries || []).map((e) => e.id));
+  const isKnownSaa = (id) => validIds.has(id);
+
   const add = (saaId, level, med, reason) => {
     const cur = byId[saaId];
     if (!cur || RANK[level] > RANK[cur.level]) {
@@ -58,10 +67,19 @@ export function aggregateCheck(patientMeds, matrix, saaEntries) {
     const rec = matrix?.[normKey(med)];
     if (rec) {
       cachedCount++;
-      for (const f of rec.flags || []) add(f.saaId, f.level, med, f.reason);
+      for (const f of rec.flags || []) {
+        if (!isKnownSaa(f.saaId)) continue;
+        add(f.saaId, f.level, med, f.reason);
+      }
     } else {
       pending.push(med);
-      for (const f of deterministicFlags(med, saaEntries)) add(f.saaId, f.level, med, f.reason);
+      // deterministicFlags leitet saaId direkt aus saaEntries ab, ist also
+      // per Konstruktion gültig — der Filter hier kostet nichts und hält die
+      // Invariante an einer Stelle.
+      for (const f of deterministicFlags(med, saaEntries)) {
+        if (!isKnownSaa(f.saaId)) continue;
+        add(f.saaId, f.level, med, f.reason);
+      }
     }
   }
 

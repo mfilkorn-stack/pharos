@@ -6,7 +6,10 @@ import { parse as parseCsv } from "csv-parse/sync";
 
 const ROOT = process.cwd();
 const IN = join(ROOT, "scripts/input");
-const OUT = join(ROOT, "src/data");
+// Muss auf das Verzeichnis zeigen, aus dem die App tatsächlich importiert.
+// Bis hierher stand "src/data" — ein Pfad, den es nicht gibt: die Pipeline
+// schrieb ins Leere, während die App src/modules/lexikon/data/ las.
+const OUT = join(ROOT, "src/modules/lexikon/data");
 const VERSION = "2026.1";
 
 const GROUPS_SEED = JSON.parse(readFileSync(join(ROOT, "scripts/seed.json"), "utf8")).groups;
@@ -134,7 +137,13 @@ function validate(data, atcIndex, groupMap) {
   }
   const atcSet = new Set(atcIndex.map((x) => x.atc));
   for (const s of data.substances) {
-    if (!s.id || !s.wirkstoff || !s.atc || !s.group) errs.push(`Pflichtfeld fehlt: ${JSON.stringify(s)}`);
+    // Illegale Drogen haben definitionsgemäß keinen ATC-Code. Die harte
+    // atc-Pflicht war der Grund, warum der Drogen-Block an der Pipeline vorbei
+    // direkt in data.json gepflegt wurde — für drogen_*-Gruppen entfällt sie.
+    const atcPflicht = !String(s.group || "").startsWith("drogen_");
+    if (!s.id || !s.wirkstoff || !s.group || (atcPflicht && !s.atc)) {
+      errs.push(`Pflichtfeld fehlt: ${JSON.stringify(s)}`);
+    }
     if (!data.groups[s.group]) errs.push(`Substanz ${s.id}: Gruppe ${s.group} nicht in groups.`);
     if (atcIndex.length && !atcSet.has(s.atc)) console.warn(`[validate] ${s.id} ATC ${s.atc} nicht in atc_index (Hinweis).`);
   }
@@ -162,7 +171,16 @@ function main() {
     process.exit(1);
   }
   writeFileSync(join(OUT, "data.json"), JSON.stringify(data, null, 2));
-  writeFileSync(join(OUT, "atc_index.json"), JSON.stringify(atcIndex, null, 2));
+  // Ohne wido-atc.zip ist atcIndex leer. Da OUT jetzt auf den echten
+  // Datenbestand zeigt, würde ein Lauf ohne Input einen gefüllten Index
+  // wortlos plattmachen — deshalb in dem Fall nicht anfassen.
+  const atcOut = join(OUT, "atc_index.json");
+  const vorhanden = existsSync(atcOut) ? JSON.parse(readFileSync(atcOut, "utf8")).length : 0;
+  if (!atcIndex.length && vorhanden) {
+    console.warn(`[atc] atc_index.json behalten (${vorhanden} Einträge) — ohne wido-atc.zip nicht überschreiben.`);
+  } else {
+    writeFileSync(atcOut, JSON.stringify(atcIndex, null, 2));
+  }
   writeFileSync(join(OUT, "atc_group_map.json"), JSON.stringify(groupMapSrc, null, 2));
   console.log(`OK · ${substances.length} substances · ${atcIndex.length} atc_index · ${Object.keys(groupMapSrc).length} group_map entries · ${runtimeExtras.length} runtime-extras`);
 }

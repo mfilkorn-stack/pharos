@@ -1,6 +1,277 @@
 {
   "version": "2026.1",
   "groups": {
+    "drogen_opioide": {
+      "toxidrom": {
+        "key": "opioid",
+        "label": "Opioid-Toxidrom",
+        "leitsymptome": [
+          "Miosis",
+          "Atemdepression",
+          "Bewusstseinsminderung",
+          "Bradykardie",
+          "Hypotonie"
+        ]
+      },
+      "antidot": [
+        {
+          "mittel": "Naloxon",
+          "hinweis": "Titriert i.v./i.m./nasal; wegen kurzer HWZ ggf. wiederholen (Re-Narkotisierung)."
+        }
+      ],
+      "mischkonsum": [
+        {
+          "partner": "Benzodiazepine / Alkohol",
+          "risiko": "Potenzierte Atemdepression bis Atemstillstand",
+          "level": "hoch"
+        },
+        {
+          "partner": "Stimulanzien (Speedball)",
+          "risiko": "Gegensätzliche Wirkung maskiert Überdosis; hohe Herzbelastung",
+          "level": "hoch"
+        }
+      ],
+      "gruppe": "Illegale Opioide",
+      "notfall": [
+        {
+          "level": "hoch",
+          "text": "Atemdepression bis Atemstillstand; Leitsymptom Miosis (stecknadelkopfgroße Pupillen)."
+        },
+        {
+          "level": "hoch",
+          "text": "Antagonisierung mit Naloxon — wegen kurzer Naloxon-HWZ ggf. wiederholen (Re-Narkotisierung)."
+        },
+        {
+          "level": "info",
+          "text": "Mischkonsum mit Benzodiazepinen oder Alkohol verstärkt die Atemdepression erheblich."
+        }
+      ]
+    },
+    "drogen_stimulanzien": {
+      "toxidrom": {
+        "key": "sympathomimetisch",
+        "label": "Sympathomimetisches Toxidrom",
+        "leitsymptome": [
+          "Mydriasis",
+          "Tachykardie",
+          "Hypertonie",
+          "Hyperthermie",
+          "Agitation",
+          "Schwitzen"
+        ]
+      },
+      "antidot": [],
+      "mischkonsum": [
+        {
+          "partner": "Alkohol (bei Kokain)",
+          "risiko": "Cocaethylen — erhöhte Kardiotoxizität",
+          "level": "hoch"
+        },
+        {
+          "partner": "MAO-Hemmer / serotonerge Substanzen",
+          "risiko": "Hypertensive Krise, Serotonin-Syndrom",
+          "level": "hoch"
+        }
+      ],
+      "gruppe": "Stimulanzien (Kokain/Amphetamine)",
+      "notfall": [
+        {
+          "level": "hoch",
+          "text": "Sympathomimetisches Syndrom: Tachykardie, Hypertonie, Hyperthermie, Krampfanfälle; Herzinfarkt/Schlaganfall möglich."
+        },
+        {
+          "level": "mittel",
+          "text": "Starke Agitation, Aggression, exzitatorisches Delir; Eigen-/Fremdgefährdung."
+        },
+        {
+          "level": "info",
+          "text": "Therapie: Benzodiazepine + aktive Kühlung. Reine Betablocker meiden (unopposed alpha)."
+        }
+      ]
+    },
+    "drogen_halluzinogene": {
+      "toxidrom": {
+        "key": "halluzinogen",
+        "label": "Halluzinogenes Toxidrom",
+        "leitsymptome": [
+          "Mydriasis",
+          "Halluzinationen",
+          "Tachykardie",
+          "Hypertonie",
+          "Angst/Panik",
+          "Hyperthermie"
+        ]
+      },
+      "antidot": [],
+      "mischkonsum": [
+        {
+          "partner": "MAO-Hemmer (v. a. Ayahuasca/DMT)",
+          "risiko": "Serotonin-Syndrom",
+          "level": "hoch"
+        },
+        {
+          "partner": "Stimulanzien",
+          "risiko": "Verstärkte Angst/Agitation, Kreislaufbelastung",
+          "level": "mittel"
+        }
+      ],
+      "gruppe": "Halluzinogene (LSD/Psilocybin)",
+      "notfall": [
+        {
+          "level": "mittel",
+          "text": "„Bad Trip”: Angst, Panik, Desorientierung; selten exzitatorisches Delir."
+        },
+        {
+          "level": "info",
+          "text": "Reizarme Umgebung, beruhigendes Zureden („Talk-down”); Benzodiazepine bei schwerer Agitation."
+        },
+        {
+          "level": "info",
+          "text": "Direkt selten lebensbedrohlich; Gefahr v. a. durch Fremdverhalten/Unfälle."
+        }
+      ]
+    },
+    "drogen_cannabinoide": {
+      "toxidrom": {
+        "key": "cannabinoid",
+        "label": "Cannabinoid-Wirkung",
+        "leitsymptome": [
+          "Konjunktivale Injektion (rote Augen)",
+          "Tachykardie",
+          "Mundtrockenheit",
+          "Angst/Panik",
+          "Hypotonie"
+        ]
+      },
+      "antidot": [],
+      "mischkonsum": [
+        {
+          "partner": "Alkohol",
+          "risiko": "Verstärkte Sedierung, Übelkeit, Kreislaufkollaps",
+          "level": "mittel"
+        }
+      ],
+      "gruppe": "Cannabinoide (THC)",
+      "notfall": [
+        {
+          "level": "mittel",
+          "text": "Tachykardie, orthostatische Hypotonie, Angst/Panik; selten Psychose."
+        },
+        {
+          "level": "info",
+          "text": "Synthetische Cannabinoide („Spice”) wesentlich potenter/unberechenbarer — Krampfanfälle, Agitation."
+        },
+        {
+          "level": "info",
+          "text": "Meist rein symptomatische, beruhigende Behandlung."
+        }
+      ]
+    },
+    "drogen_dissoziativa": {
+      "toxidrom": {
+        "key": "dissoziativ",
+        "label": "Dissoziatives Toxidrom",
+        "leitsymptome": [
+          "Nystagmus",
+          "Dissoziation",
+          "Hypersalivation",
+          "Hypertonie",
+          "Tachykardie",
+          "Katalepsie"
+        ]
+      },
+      "antidot": [],
+      "mischkonsum": [
+        {
+          "partner": "Opioide / Alkohol / GHB",
+          "risiko": "Verstärkte Sedierung, Aspiration, Atemdepression",
+          "level": "hoch"
+        }
+      ],
+      "gruppe": "Dissoziativa (Ketamin)",
+      "notfall": [
+        {
+          "level": "mittel",
+          "text": "Dissoziation, Katalepsie, Hypersalivation; in hoher Dosis Bewusstlosigkeit („K-Hole”)."
+        },
+        {
+          "level": "info",
+          "text": "Schutzreflexe oft erhalten, aber Aspirationsgefahr; Laryngospasmus selten."
+        },
+        {
+          "level": "info",
+          "text": "Reizarme Umgebung, Monitoring; Therapie supportiv."
+        }
+      ]
+    },
+    "drogen_dampfdrogen": {
+      "toxidrom": {
+        "key": "sedativ_hypnotisch",
+        "label": "Sedativ-hypnotisches Toxidrom",
+        "leitsymptome": [
+          "Tiefe Bewusstlosigkeit",
+          "Atemdepression",
+          "Bradykardie",
+          "plötzliches Erwachen",
+          "Myoklonien"
+        ]
+      },
+      "antidot": [],
+      "mischkonsum": [
+        {
+          "partner": "Alkohol / Benzodiazepine / Opioide",
+          "risiko": "Potenzierte Atemdepression, Koma, Atemstillstand",
+          "level": "hoch"
+        }
+      ],
+      "gruppe": "GHB / GBL („Liquid Ecstasy”)",
+      "notfall": [
+        {
+          "level": "hoch",
+          "text": "Plötzliche tiefe Bewusstlosigkeit mit Atemdepression; sehr enge therapeutische Breite."
+        },
+        {
+          "level": "hoch",
+          "text": "Mischkonsum mit Alkohol potenziert die Wirkung — Koma, Atemstillstand."
+        },
+        {
+          "level": "info",
+          "text": "Kein spezifisches Antidot; supportiv, Atemwegssicherung. Auch als K.-o.-Mittel relevant."
+        }
+      ]
+    },
+    "drogen_inhalantien": {
+      "toxidrom": {
+        "key": "inhalativ",
+        "label": "Inhalantien-Wirkung",
+        "leitsymptome": [
+          "Schwindel",
+          "Synkope",
+          "Zyanose (bei Nitriten)",
+          "Hypotonie",
+          "Kopfschmerz"
+        ]
+      },
+      "antidot": [],
+      "mischkonsum": [
+        {
+          "partner": "PDE-5-Hemmer (Sildenafil) bei Poppers",
+          "risiko": "Lebensbedrohliche Hypotonie",
+          "level": "hoch"
+        }
+      ],
+      "gruppe": "Inhalantien (Lachgas/Poppers)",
+      "notfall": [
+        {
+          "level": "hoch",
+          "text": "Akute Hypoxie durch Sauerstoffverdrängung beim Inhalieren; Synkope, Sturzgefahr."
+        },
+        {
+          "level": "info",
+          "text": "Meist rasch reversibel an Frischluft; bei anhaltender Bewusstseinsstörung andere Ursache prüfen."
+        }
+      ]
+    },
     "doak": {
       "gruppe": "DOAK · Faktor-Xa-/Thrombin-Hemmer",
       "notfall": [
@@ -229,6 +500,53 @@
         {
           "level": "info",
           "text": "Serotoninsyndrom-Risiko in Kombination; teils QT-Verlängerung."
+        }
+      ]
+    },
+    "antipsychotikum": {
+      "gruppe": "Antipsychotikum (Neuroleptikum)",
+      "notfall": [
+        {
+          "level": "hoch",
+          "text": "QT-Verlängerung bis Torsade de pointes; Risiko steigt mit weiteren QT-verlängernden Substanzen."
+        },
+        {
+          "level": "mittel",
+          "text": "Malignes neuroleptisches Syndrom: Fieber, Rigor, Bewusstseinsstörung, CK-Anstieg."
+        },
+        {
+          "level": "info",
+          "text": "Frühdyskinesien/extrapyramidale Störungen; orthostatische Hypotonie und Sedierung häufig."
+        }
+      ]
+    },
+    "lithium": {
+      "gruppe": "Lithium (Phasenprophylaxe)",
+      "notfall": [
+        {
+          "level": "hoch",
+          "text": "Geringe therapeutische Breite; Intoxikation bei Exsikkose, NSAR, ACE-Hemmern und Diuretika."
+        },
+        {
+          "level": "mittel",
+          "text": "Intoxikationszeichen: Tremor, Ataxie, Erbrechen, Verwirrtheit, Krampfanfall."
+        },
+        {
+          "level": "info",
+          "text": "Kein Antidot; bei schwerer Intoxikation Hämodialyse."
+        }
+      ]
+    },
+    "psychostimulans": {
+      "gruppe": "Psychostimulans",
+      "notfall": [
+        {
+          "level": "mittel",
+          "text": "Sympathomimetisch: Tachykardie, Hypertonie, innere Unruhe."
+        },
+        {
+          "level": "info",
+          "text": "Überdosierung: Agitation, Hyperthermie, Krampfanfall."
         }
       ]
     },
@@ -495,6 +813,591 @@
     }
   },
   "substances": [
+    {
+      "id": "heroin",
+      "wirkdauer": {
+        "onset": "i.v. Sekunden, nasal/rauchen 1-5 min",
+        "dauer": "3-5 h",
+        "konsumform": [
+          "i.v.",
+          "nasal",
+          "inhalativ"
+        ]
+      },
+      "wirkstoff": "Heroin",
+      "synonyms": [
+        "Diamorphin",
+        "Diacetylmorphin",
+        "H",
+        "Brown",
+        "Schore"
+      ],
+      "atc": null,
+      "group": "drogen_opioide",
+      "indikationen": [],
+      "extra": [],
+      "quelle": "Drogen-Seed",
+      "stand": "2026-06"
+    },
+    {
+      "id": "fentanyl_illegal",
+      "wirkdauer": {
+        "onset": "i.v. Sekunden",
+        "dauer": "30-90 min",
+        "konsumform": [
+          "i.v.",
+          "nasal",
+          "transdermal"
+        ]
+      },
+      "wirkstoff": "Fentanyl (illegal)",
+      "synonyms": [
+        "Fenta",
+        "China White",
+        "Apache"
+      ],
+      "atc": null,
+      "group": "drogen_opioide",
+      "indikationen": [],
+      "extra": [
+        {
+          "level": "hoch",
+          "text": "Extrem potent — kleinste Mengen tödlich; häufige Beimengung in andere Substanzen ohne Wissen des Konsumenten."
+        }
+      ],
+      "quelle": "Drogen-Seed",
+      "stand": "2026-06"
+    },
+    {
+      "id": "kokain",
+      "wirkdauer": {
+        "onset": "nasal 1-3 min, geraucht (Crack) Sekunden",
+        "dauer": "30-90 min",
+        "konsumform": [
+          "nasal",
+          "inhalativ",
+          "i.v."
+        ]
+      },
+      "wirkstoff": "Kokain",
+      "synonyms": [
+        "Koks",
+        "Coke",
+        "Schnee",
+        "Crack",
+        "Base"
+      ],
+      "atc": null,
+      "group": "drogen_stimulanzien",
+      "indikationen": [],
+      "extra": [
+        {
+          "level": "hoch",
+          "text": "Akutes Koronarsyndrom auch bei jungen Konsumenten; Vasospasmus."
+        }
+      ],
+      "quelle": "Drogen-Seed",
+      "stand": "2026-06"
+    },
+    {
+      "id": "methamphetamin",
+      "wirkdauer": {
+        "onset": "geraucht/i.v. Sekunden-Minuten",
+        "dauer": "8-24 h",
+        "konsumform": [
+          "inhalativ",
+          "nasal",
+          "oral",
+          "i.v."
+        ]
+      },
+      "wirkstoff": "Methamphetamin",
+      "synonyms": [
+        "Crystal Meth",
+        "Crystal",
+        "Ice",
+        "Pervitin",
+        "Meth"
+      ],
+      "atc": null,
+      "group": "drogen_stimulanzien",
+      "indikationen": [],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Sehr lange Wirkdauer; ausgeprägte Agitation/Psychose, Hyperthermie möglich."
+        }
+      ],
+      "quelle": "Drogen-Seed",
+      "stand": "2026-06"
+    },
+    {
+      "id": "amphetamin",
+      "wirkdauer": {
+        "onset": "oral 30-60 min, nasal Minuten",
+        "dauer": "4-8 h",
+        "konsumform": [
+          "oral",
+          "nasal"
+        ]
+      },
+      "wirkstoff": "Amphetamin",
+      "synonyms": [
+        "Speed",
+        "Pep",
+        "Pepp",
+        "Amphe"
+      ],
+      "atc": null,
+      "group": "drogen_stimulanzien",
+      "indikationen": [],
+      "extra": [],
+      "quelle": "Drogen-Seed",
+      "stand": "2026-06"
+    },
+    {
+      "id": "mdma",
+      "wirkdauer": {
+        "onset": "30-60 min",
+        "dauer": "4-6 h",
+        "konsumform": [
+          "oral"
+        ]
+      },
+      "wirkstoff": "MDMA",
+      "synonyms": [
+        "Ecstasy",
+        "XTC",
+        "E",
+        "Molly",
+        "Emma"
+      ],
+      "atc": null,
+      "group": "drogen_stimulanzien",
+      "indikationen": [],
+      "extra": [
+        {
+          "level": "hoch",
+          "text": "Hyperthermie und Hyponatriämie (exzessives Trinken/SIADH); Risiko Serotonin-Syndrom."
+        }
+      ],
+      "quelle": "Drogen-Seed",
+      "stand": "2026-06"
+    },
+    {
+      "id": "cannabis",
+      "wirkdauer": {
+        "onset": "geraucht Minuten, oral 30-120 min",
+        "dauer": "2-6 h (oral länger)",
+        "konsumform": [
+          "inhalativ",
+          "oral"
+        ]
+      },
+      "wirkstoff": "Cannabis / THC",
+      "synonyms": [
+        "Gras",
+        "Weed",
+        "Marihuana",
+        "Haschisch",
+        "Hasch",
+        "Dope",
+        "Joint"
+      ],
+      "atc": null,
+      "group": "drogen_cannabinoide",
+      "indikationen": [],
+      "extra": [],
+      "quelle": "Drogen-Seed",
+      "stand": "2026-06"
+    },
+    {
+      "id": "spice",
+      "wirkstoff": "Synthetische Cannabinoide",
+      "synonyms": [
+        "Spice",
+        "K2",
+        "Räuchermischung",
+        "Legal Highs"
+      ],
+      "atc": null,
+      "group": "drogen_cannabinoide",
+      "indikationen": [],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Deutlich stärker und unberechenbarer als natürliches THC; Krampfanfälle, Psychose, Tachykardie."
+        }
+      ],
+      "quelle": "Drogen-Seed",
+      "stand": "2026-06"
+    },
+    {
+      "id": "lsd",
+      "wirkdauer": {
+        "onset": "30-90 min",
+        "dauer": "8-12 h",
+        "konsumform": [
+          "oral"
+        ]
+      },
+      "wirkstoff": "LSD",
+      "synonyms": [
+        "Acid",
+        "Pappe",
+        "Trip",
+        "Lyserg"
+      ],
+      "atc": null,
+      "group": "drogen_halluzinogene",
+      "indikationen": [],
+      "extra": [],
+      "quelle": "Drogen-Seed",
+      "stand": "2026-06"
+    },
+    {
+      "id": "psilocybin",
+      "wirkdauer": {
+        "onset": "20-60 min",
+        "dauer": "4-6 h",
+        "konsumform": [
+          "oral"
+        ]
+      },
+      "wirkstoff": "Psilocybin",
+      "synonyms": [
+        "Magic Mushrooms",
+        "Pilze",
+        "Shrooms",
+        "Zauberpilze"
+      ],
+      "atc": null,
+      "group": "drogen_halluzinogene",
+      "indikationen": [],
+      "extra": [],
+      "quelle": "Drogen-Seed",
+      "stand": "2026-06"
+    },
+    {
+      "id": "ketamin",
+      "wirkdauer": {
+        "onset": "nasal 5-15 min, i.v./i.m. Minuten",
+        "dauer": "45-90 min",
+        "konsumform": [
+          "nasal",
+          "i.m.",
+          "i.v.",
+          "oral"
+        ]
+      },
+      "wirkstoff": "Ketamin (Missbrauch)",
+      "synonyms": [
+        "K",
+        "Special K",
+        "Ket",
+        "Keta"
+      ],
+      "atc": null,
+      "group": "drogen_dissoziativa",
+      "indikationen": [],
+      "extra": [],
+      "quelle": "Drogen-Seed",
+      "stand": "2026-06"
+    },
+    {
+      "id": "ghb",
+      "wirkdauer": {
+        "onset": "10-20 min",
+        "dauer": "1,5-3 h",
+        "konsumform": [
+          "oral"
+        ]
+      },
+      "wirkstoff": "GHB / GBL",
+      "synonyms": [
+        "Liquid Ecstasy",
+        "G",
+        "Liquid",
+        "K.-o.-Tropfen",
+        "Gamma-Hydroxybuttersäure"
+      ],
+      "atc": null,
+      "group": "drogen_dampfdrogen",
+      "indikationen": [],
+      "extra": [],
+      "quelle": "Drogen-Seed",
+      "stand": "2026-06"
+    },
+    {
+      "id": "twocb",
+      "wirkdauer": {
+        "onset": "30-90 min",
+        "dauer": "4-8 h",
+        "konsumform": [
+          "oral",
+          "nasal"
+        ]
+      },
+      "wirkstoff": "2C-B",
+      "synonyms": [
+        "Nexus",
+        "Tusi",
+        "Pink Cocaine",
+        "2CB"
+      ],
+      "atc": null,
+      "group": "drogen_halluzinogene",
+      "indikationen": [],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Dosisabhängig psychedelisch bis stimulierend; Tachykardie, Hypertonie, Übelkeit, Angst möglich."
+        }
+      ],
+      "quelle": "Drogen-Seed (saferparty)",
+      "stand": "2026-06"
+    },
+    {
+      "id": "cathinone",
+      "wirkdauer": {
+        "onset": "nasal Minuten, oral 15-45 min",
+        "dauer": "2-4 h (kurz, Nachdosieren)",
+        "konsumform": [
+          "nasal",
+          "oral"
+        ]
+      },
+      "wirkstoff": "Synthetische Cathinone",
+      "synonyms": [
+        "Mephedron",
+        "4-MMC",
+        "3-MMC",
+        "3-CMC",
+        "Methylon",
+        "Badesalz",
+        "Miau Miau"
+      ],
+      "atc": null,
+      "group": "drogen_stimulanzien",
+      "indikationen": [],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Kurze Wirkdauer fördert Nachdosieren; ausgeprägte Sympathomimetik, Agitation, Hyperthermie."
+        }
+      ],
+      "quelle": "Drogen-Seed (saferparty)",
+      "stand": "2026-06"
+    },
+    {
+      "id": "mda",
+      "wirkdauer": {
+        "onset": "30-60 min",
+        "dauer": "6-8 h",
+        "konsumform": [
+          "oral"
+        ]
+      },
+      "wirkstoff": "MDA",
+      "synonyms": [
+        "Sally",
+        "Tenamfetamin",
+        "Sass"
+      ],
+      "atc": null,
+      "group": "drogen_stimulanzien",
+      "indikationen": [],
+      "extra": [
+        {
+          "level": "hoch",
+          "text": "Wie MDMA, jedoch länger und neurotoxischer; Hyperthermie, Serotonin-Syndrom-Risiko."
+        }
+      ],
+      "quelle": "Drogen-Seed (saferparty)",
+      "stand": "2026-06"
+    },
+    {
+      "id": "dmt",
+      "wirkdauer": {
+        "onset": "geraucht Sekunden, Ayahuasca 30-60 min",
+        "dauer": "geraucht 5-20 min, Ayahuasca 2-4 h",
+        "konsumform": [
+          "inhalativ",
+          "oral"
+        ]
+      },
+      "wirkstoff": "DMT",
+      "synonyms": [
+        "Ayahuasca",
+        "Changa",
+        "5-MeO-DMT",
+        "Dimethyltryptamin"
+      ],
+      "atc": null,
+      "group": "drogen_halluzinogene",
+      "indikationen": [],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Sehr intensiv, kurz wirksam (geraucht); Ayahuasca + Antidepressiva (MAO-Hemmer) → Serotonin-Syndrom-Risiko."
+        }
+      ],
+      "quelle": "Drogen-Seed (saferparty)",
+      "stand": "2026-06"
+    },
+    {
+      "id": "meskalin",
+      "wirkstoff": "Meskalin",
+      "synonyms": [
+        "Peyote",
+        "San Pedro",
+        "Mescalin"
+      ],
+      "atc": null,
+      "group": "drogen_halluzinogene",
+      "indikationen": [],
+      "extra": [],
+      "quelle": "Drogen-Seed (saferparty)",
+      "stand": "2026-06"
+    },
+    {
+      "id": "salvia",
+      "wirkstoff": "Salvia divinorum",
+      "synonyms": [
+        "Aztekensalbei",
+        "Salvinorin A",
+        "Zaubersalbei"
+      ],
+      "atc": null,
+      "group": "drogen_halluzinogene",
+      "indikationen": [],
+      "extra": [
+        {
+          "level": "info",
+          "text": "Sehr kurze, intensive Dissoziation/Desorientierung; Verletzungsgefahr durch Realitätsverlust."
+        }
+      ],
+      "quelle": "Drogen-Seed (saferparty)",
+      "stand": "2026-06"
+    },
+    {
+      "id": "nitazene",
+      "wirkdauer": {
+        "onset": "Sekunden-Minuten",
+        "dauer": "variabel, teils lang",
+        "konsumform": [
+          "i.v.",
+          "nasal",
+          "inhalativ"
+        ]
+      },
+      "wirkstoff": "Nitazene",
+      "synonyms": [
+        "Isotonitazen",
+        "Metonitazen",
+        "Etonitazen"
+      ],
+      "atc": null,
+      "group": "drogen_opioide",
+      "indikationen": [],
+      "extra": [
+        {
+          "level": "hoch",
+          "text": "Synthetische Opioide, teils potenter als Fentanyl; oft als Beimengung. Naloxon ggf. hochdosiert/wiederholt."
+        }
+      ],
+      "quelle": "Drogen-Seed (saferparty)",
+      "stand": "2026-06"
+    },
+    {
+      "id": "kratom",
+      "wirkdauer": {
+        "onset": "10-30 min",
+        "dauer": "2-5 h",
+        "konsumform": [
+          "oral"
+        ]
+      },
+      "wirkstoff": "Kratom",
+      "synonyms": [
+        "Mitragynin",
+        "Mitragyna speciosa"
+      ],
+      "atc": null,
+      "group": "drogen_opioide",
+      "indikationen": [],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Niedrig dosiert stimulierend, hoch dosiert opioidartig; bei Überdosis Sedierung/Atemdepression möglich."
+        }
+      ],
+      "quelle": "Drogen-Seed (saferparty)",
+      "stand": "2026-06"
+    },
+    {
+      "id": "lachgas",
+      "wirkdauer": {
+        "onset": "Sekunden",
+        "dauer": "1-3 min",
+        "konsumform": [
+          "inhalativ"
+        ]
+      },
+      "wirkstoff": "Lachgas",
+      "synonyms": [
+        "Distickstoffmonoxid",
+        "N2O",
+        "Stickoxydul",
+        "Ballons",
+        "Whippets"
+      ],
+      "atc": null,
+      "group": "drogen_inhalantien",
+      "indikationen": [],
+      "extra": [
+        {
+          "level": "mittel",
+          "text": "Chronischer Konsum: Vitamin-B12-Inaktivierung mit Polyneuropathie/funikulärer Myelose; Erfrierungen an Lippen/Atemwegen."
+        }
+      ],
+      "quelle": "Drogen-Seed (saferparty)",
+      "stand": "2026-06"
+    },
+    {
+      "id": "poppers",
+      "wirkdauer": {
+        "onset": "Sekunden",
+        "dauer": "wenige Minuten",
+        "konsumform": [
+          "inhalativ"
+        ]
+      },
+      "antidot": [
+        {
+          "mittel": "Methylenblau",
+          "hinweis": "Bei Methämoglobinämie (Zyanose trotz O2, schokoladenbraunes Blut); plus Sauerstoff."
+        }
+      ],
+      "wirkstoff": "Poppers (Alkylnitrite)",
+      "synonyms": [
+        "Amylnitrit",
+        "Isopropylnitrit",
+        "Liquid Gold",
+        "Rush"
+      ],
+      "atc": null,
+      "group": "drogen_inhalantien",
+      "indikationen": [],
+      "extra": [
+        {
+          "level": "hoch",
+          "text": "Methämoglobinämie (Zyanose trotz O2, schokoladenbraunes Blut) — Antidot Methylenblau; ausgeprägte Hypotonie."
+        }
+      ],
+      "quelle": "Drogen-Seed (saferparty)",
+      "stand": "2026-06"
+    },
     {
       "id": "ass",
       "wirkstoff": "Acetylsalicylsäure",

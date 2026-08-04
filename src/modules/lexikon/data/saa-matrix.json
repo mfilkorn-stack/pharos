@@ -1980,11 +1980,6 @@
           "reason": "SSRI + NSAR erhöhen GI-Blutungsrisiko additiv"
         },
         {
-          "saaId": "saa:tramadol",
-          "level": "vorsicht",
-          "reason": "Nicht gelistet, irrelevant"
-        },
-        {
           "saaId": "saa:fentanyl",
           "level": "vorsicht",
           "reason": "Serotonin-Syndrom-Risiko bei Kombination von SSRI mit Opioid (Fentanyl hat schwache serotonerge Aktivität); klinisch bei Notfalldosis gering, aber zu beachten"
@@ -2019,11 +2014,6 @@
           "saaId": "saa:ibuprofen",
           "level": "vorsicht",
           "reason": "SSRI + NSAR erhöhen GI-Blutungsrisiko additiv"
-        },
-        {
-          "saaId": "saa:tramadol",
-          "level": "vorsicht",
-          "reason": "Nicht gelistet, irrelevant"
         },
         {
           "saaId": "saa:fentanyl",
@@ -2658,11 +2648,6 @@
           "reason": "SNRI + NSAR: deutlich erhöhtes GI-Blutungsrisiko durch additive Hemmung der Thrombozytenfunktion"
         },
         {
-          "saaId": "saa:tramadol",
-          "level": "vorsicht",
-          "reason": "Nicht in der Liste, entfällt"
-        },
-        {
           "saaId": "saa:morphin",
           "level": "vorsicht",
           "reason": "SNRI + Opioide: erhöhtes Serotonin-Syndrom-Risiko (insbesondere bei Fentanyl/Morphin mit serotonerger Aktivität)"
@@ -2702,11 +2687,6 @@
           "saaId": "saa:ibuprofen",
           "level": "vorsicht",
           "reason": "SNRI + NSAR: deutlich erhöhtes GI-Blutungsrisiko durch additive Hemmung der Thrombozytenfunktion"
-        },
-        {
-          "saaId": "saa:tramadol",
-          "level": "vorsicht",
-          "reason": "Nicht in der Liste, entfällt"
         },
         {
           "saaId": "saa:morphin",
@@ -2772,11 +2752,6 @@
           "reason": "Vorbehandlung mit anticholinerg wirkendem Antidepressivum – additive anticholinerge Effekte"
         },
         {
-          "saaId": "saa:tramadol",
-          "level": "vorsicht",
-          "reason": "Nicht gelistet, ignoriert"
-        },
-        {
           "saaId": "saa:morphin",
           "level": "vorsicht",
           "reason": "Duloxetin (SNRI) kann Serotoninsyndrom-Risiko bei Kombination mit Opioiden erhöhen; additive ZNS-Dämpfung"
@@ -2813,11 +2788,6 @@
           "reason": "Vorbehandlung mit anticholinerg wirkendem Antidepressivum – additive anticholinerge Effekte"
         },
         {
-          "saaId": "saa:tramadol",
-          "level": "vorsicht",
-          "reason": "Nicht gelistet, ignoriert"
-        },
-        {
           "saaId": "saa:morphin",
           "level": "vorsicht",
           "reason": "Duloxetin (SNRI) kann Serotoninsyndrom-Risiko bei Kombination mit Opioiden erhöhen; additive ZNS-Dämpfung"
@@ -2852,11 +2822,6 @@
           "saaId": "saa:butylscopolamin",
           "level": "vorsicht",
           "reason": "Vorbehandlung mit anticholinerg wirkendem Antidepressivum – additive anticholinerge Effekte"
-        },
-        {
-          "saaId": "saa:tramadol",
-          "level": "vorsicht",
-          "reason": "Nicht gelistet, ignoriert"
         },
         {
           "saaId": "saa:morphin",
@@ -3163,11 +3128,6 @@
           "reason": "Kombination Digoxin + Betablocker erhöht Risiko schwerer Bradykardie und AV-Blockierung erheblich"
         },
         {
-          "saaId": "saa:diltiazem",
-          "level": "vorsicht",
-          "reason": "Nicht direkt SAA, aber als Patientenmedikament relevant; hier: Digoxin erhöht Toxizitätsrisiko bei Kombination mit Calciumantagonisten – Metoprolol-KI beachten"
-        },
-        {
           "saaId": "saa:amiodaron",
           "level": "vorsicht",
           "reason": "Amiodaron erhöht Digoxin-Plasmaspiegel und verstärkt Bradykardie-/AV-Block-Risiko"
@@ -3189,11 +3149,6 @@
           "reason": "Kombination Digoxin + Betablocker erhöht Risiko schwerer Bradykardie und AV-Blockierung erheblich"
         },
         {
-          "saaId": "saa:diltiazem",
-          "level": "vorsicht",
-          "reason": "Nicht direkt SAA, aber als Patientenmedikament relevant; hier: Digoxin erhöht Toxizitätsrisiko bei Kombination mit Calciumantagonisten – Metoprolol-KI beachten"
-        },
-        {
           "saaId": "saa:amiodaron",
           "level": "vorsicht",
           "reason": "Amiodaron erhöht Digoxin-Plasmaspiegel und verstärkt Bradykardie-/AV-Block-Risiko"
@@ -3213,11 +3168,6 @@
           "saaId": "saa:metoprolol",
           "level": "absolut",
           "reason": "Kombination Digoxin + Betablocker erhöht Risiko schwerer Bradykardie und AV-Blockierung erheblich"
-        },
-        {
-          "saaId": "saa:diltiazem",
-          "level": "vorsicht",
-          "reason": "Nicht direkt SAA, aber als Patientenmedikament relevant; hier: Digoxin erhöht Toxizitätsrisiko bei Kombination mit Calciumantagonisten – Metoprolol-KI beachten"
         },
         {
           "saaId": "saa:amiodaron",
@@ -4119,11 +4069,6 @@
           "reason": "Escitalopram verlängert QTc-Zeit; Dimenhydrinat ebenfalls QTc-verlängernd: erhöhtes Arrhythmierisiko; Long-QT ist absolute KI für Dimenhydrinat"
         },
         {
-          "saaId": "saa:tramadol",
-          "level": "vorsicht",
-          "reason": "Nicht in Liste, entfällt"
-        },
-        {
           "saaId": "saa:amiodaron",
           "level": "vorsicht",
           "reason": "Additive QTc-Verlängerung: erhöhtes Risiko für Torsades de pointes"
@@ -4153,11 +4098,6 @@
           "saaId": "saa:dimenhydrinat",
           "level": "absolut",
           "reason": "Escitalopram verlängert QTc-Zeit; Dimenhydrinat ebenfalls QTc-verlängernd: erhöhtes Arrhythmierisiko; Long-QT ist absolute KI für Dimenhydrinat"
-        },
-        {
-          "saaId": "saa:tramadol",
-          "level": "vorsicht",
-          "reason": "Nicht in Liste, entfällt"
         },
         {
           "saaId": "saa:amiodaron",
@@ -4660,11 +4600,6 @@
           "reason": "Kombinationsrisiko serotonerges Syndrom (Morphin hat schwache serotonerge Wirkung); CYP-Interaktion möglich; additive ZNS-Dämpfung"
         },
         {
-          "saaId": "saa:tramadol",
-          "level": "absolut",
-          "reason": "Nicht in der Liste, ignorieren"
-        },
-        {
           "saaId": "saa:esketamin",
           "level": "vorsicht",
           "reason": "Fluoxetin: psychotrope Substanz; Esketamin relative KI bei Pat. unter psychotropen Substanzen; additives Risiko serotonerges Syndrom/psychotrope Effekte"
@@ -4699,11 +4634,6 @@
           "saaId": "saa:morphin",
           "level": "vorsicht",
           "reason": "Kombinationsrisiko serotonerges Syndrom (Morphin hat schwache serotonerge Wirkung); CYP-Interaktion möglich; additive ZNS-Dämpfung"
-        },
-        {
-          "saaId": "saa:tramadol",
-          "level": "absolut",
-          "reason": "Nicht in der Liste, ignorieren"
         },
         {
           "saaId": "saa:esketamin",
@@ -6827,11 +6757,6 @@
           "saaId": "saa:ibuprofen",
           "level": "vorsicht",
           "reason": "NSAR hemmen Thrombozytenfunktion und fördern GI-Blutung – additive Blutungsgefahr unter Nadroparin"
-        },
-        {
-          "saaId": "saa:naproxen",
-          "level": "vorsicht",
-          "reason": "Analog zu Ibuprofen: NSAR erhöhen Blutungsrisiko unter Antikoagulation"
         }
       ]
     },
@@ -6853,11 +6778,6 @@
           "saaId": "saa:ibuprofen",
           "level": "vorsicht",
           "reason": "NSAR hemmen Thrombozytenfunktion und fördern GI-Blutung – additive Blutungsgefahr unter Nadroparin"
-        },
-        {
-          "saaId": "saa:naproxen",
-          "level": "vorsicht",
-          "reason": "Analog zu Ibuprofen: NSAR erhöhen Blutungsrisiko unter Antikoagulation"
         }
       ]
     },
@@ -8080,16 +8000,6 @@
           "reason": "Paroxetin (SSRI) + Dimenhydrinat (Antihistaminikum): additives Risiko für QT-Verlängerung und Serotonin-Syndrom möglich"
         },
         {
-          "saaId": "saa:tramadol",
-          "level": "vorsicht",
-          "reason": "Nicht relevant hier – kein Tramadol gelistet"
-        },
-        {
-          "saaId": "saa:pethidin",
-          "level": "absolut",
-          "reason": "Nicht SAA-Medikament – jedoch Pethidin ist Patientenmedikament; irrelevant"
-        },
-        {
           "saaId": "saa:morphin",
           "level": "vorsicht",
           "reason": "SSRI + Opioide: leicht erhöhtes Serotonin-Syndrom-Risiko, klinisch meist gering, aber Vorsicht"
@@ -8098,11 +8008,6 @@
           "saaId": "saa:fentanyl",
           "level": "vorsicht",
           "reason": "SSRI + Fentanyl: geringes Serotonin-Syndrom-Risiko, Vorsicht bei höheren Dosen"
-        },
-        {
-          "saaId": "saa:tramadol",
-          "level": "absolut",
-          "reason": "Nicht gelistet – entfällt"
         }
       ]
     },
@@ -8116,16 +8021,6 @@
           "reason": "Paroxetin (SSRI) + Dimenhydrinat (Antihistaminikum): additives Risiko für QT-Verlängerung und Serotonin-Syndrom möglich"
         },
         {
-          "saaId": "saa:tramadol",
-          "level": "vorsicht",
-          "reason": "Nicht relevant hier – kein Tramadol gelistet"
-        },
-        {
-          "saaId": "saa:pethidin",
-          "level": "absolut",
-          "reason": "Nicht SAA-Medikament – jedoch Pethidin ist Patientenmedikament; irrelevant"
-        },
-        {
           "saaId": "saa:morphin",
           "level": "vorsicht",
           "reason": "SSRI + Opioide: leicht erhöhtes Serotonin-Syndrom-Risiko, klinisch meist gering, aber Vorsicht"
@@ -8134,11 +8029,6 @@
           "saaId": "saa:fentanyl",
           "level": "vorsicht",
           "reason": "SSRI + Fentanyl: geringes Serotonin-Syndrom-Risiko, Vorsicht bei höheren Dosen"
-        },
-        {
-          "saaId": "saa:tramadol",
-          "level": "absolut",
-          "reason": "Nicht gelistet – entfällt"
         }
       ]
     },
@@ -8152,16 +8042,6 @@
           "reason": "Paroxetin (SSRI) + Dimenhydrinat (Antihistaminikum): additives Risiko für QT-Verlängerung und Serotonin-Syndrom möglich"
         },
         {
-          "saaId": "saa:tramadol",
-          "level": "vorsicht",
-          "reason": "Nicht relevant hier – kein Tramadol gelistet"
-        },
-        {
-          "saaId": "saa:pethidin",
-          "level": "absolut",
-          "reason": "Nicht SAA-Medikament – jedoch Pethidin ist Patientenmedikament; irrelevant"
-        },
-        {
           "saaId": "saa:morphin",
           "level": "vorsicht",
           "reason": "SSRI + Opioide: leicht erhöhtes Serotonin-Syndrom-Risiko, klinisch meist gering, aber Vorsicht"
@@ -8170,11 +8050,6 @@
           "saaId": "saa:fentanyl",
           "level": "vorsicht",
           "reason": "SSRI + Fentanyl: geringes Serotonin-Syndrom-Risiko, Vorsicht bei höheren Dosen"
-        },
-        {
-          "saaId": "saa:tramadol",
-          "level": "absolut",
-          "reason": "Nicht gelistet – entfällt"
         }
       ]
     },
@@ -9660,11 +9535,6 @@
           "reason": "Additive serotoninerge Effekte möglich (Serotonin-Syndrom-Risiko); QT-Verlängerung durch Dimenhydrinat additiv mit SSRI"
         },
         {
-          "saaId": "saa:tramadol",
-          "level": "vorsicht",
-          "reason": "nicht gelistet"
-        },
-        {
           "saaId": "saa:fentanyl",
           "level": "vorsicht",
           "reason": "Kombiniertes serotoninerges Potenzial (Fentanyl hat geringes serotoninerges Risiko); klinisch meist vertretbar, aber Vorsicht"
@@ -9673,11 +9543,6 @@
           "saaId": "saa:morphin",
           "level": "vorsicht",
           "reason": "Erhöhtes Serotonin-Syndrom-Risiko bei Kombination mit SSRI und Opioiden"
-        },
-        {
-          "saaId": "saa:tramadol",
-          "level": "absolut",
-          "reason": "nicht gelistet – ignorieren"
         },
         {
           "saaId": "saa:ass",
@@ -9696,11 +9561,6 @@
           "reason": "Additive serotoninerge Effekte möglich (Serotonin-Syndrom-Risiko); QT-Verlängerung durch Dimenhydrinat additiv mit SSRI"
         },
         {
-          "saaId": "saa:tramadol",
-          "level": "vorsicht",
-          "reason": "nicht gelistet"
-        },
-        {
           "saaId": "saa:fentanyl",
           "level": "vorsicht",
           "reason": "Kombiniertes serotoninerges Potenzial (Fentanyl hat geringes serotoninerges Risiko); klinisch meist vertretbar, aber Vorsicht"
@@ -9709,11 +9569,6 @@
           "saaId": "saa:morphin",
           "level": "vorsicht",
           "reason": "Erhöhtes Serotonin-Syndrom-Risiko bei Kombination mit SSRI und Opioiden"
-        },
-        {
-          "saaId": "saa:tramadol",
-          "level": "absolut",
-          "reason": "nicht gelistet – ignorieren"
         },
         {
           "saaId": "saa:ass",
@@ -10650,11 +10505,6 @@
           "reason": "Trizyklische Antidepressiva hemmen die neuronale Wiederaufnahme von Katecholaminen; Epinephrin kann bei TZA-Einnahme verstärkte kardiovaskuläre Effekte (Hypertension, Arrhythmien) auslösen"
         },
         {
-          "saaId": "saa:tramadol",
-          "level": "vorsicht",
-          "reason": "Trimipramin + Tramadol: erhöhtes Serotoninsyndrom-Risiko und additive Krampfschwellensenkung"
-        },
-        {
           "saaId": "saa:nalbuphin",
           "level": "vorsicht",
           "reason": "Additive ZNS-Depression; trizyklische Antidepressiva potenzieren Opioidwirkung"
@@ -10714,11 +10564,6 @@
           "saaId": "saa:epinephrin",
           "level": "vorsicht",
           "reason": "Trizyklische Antidepressiva hemmen die neuronale Wiederaufnahme von Katecholaminen; Epinephrin kann bei TZA-Einnahme verstärkte kardiovaskuläre Effekte (Hypertension, Arrhythmien) auslösen"
-        },
-        {
-          "saaId": "saa:tramadol",
-          "level": "vorsicht",
-          "reason": "Trimipramin + Tramadol: erhöhtes Serotoninsyndrom-Risiko und additive Krampfschwellensenkung"
         },
         {
           "saaId": "saa:nalbuphin",
@@ -10981,11 +10826,6 @@
           "reason": "Additive QTc-Verlängerung möglich; zudem additive serotonerge/anticholinerge Wirkungen"
         },
         {
-          "saaId": "saa:tramadol",
-          "level": "vorsicht",
-          "reason": "Nicht gelistet, aber relevant: Venlafaxin + Opioid-Serotonin-Agonisten – bei Fentanyl/Morphin: Serotonin-Syndrom-Risiko gering, dennoch SNRI + Morphin/Fentanyl: vorsicht"
-        },
-        {
           "saaId": "saa:morphin",
           "level": "vorsicht",
           "reason": "SNRI können über Serotoninsystem interagieren; additive ZNS-Depression; geringes Serotonin-Syndrom-Risiko"
@@ -11020,11 +10860,6 @@
           "saaId": "saa:dimenhydrinat",
           "level": "vorsicht",
           "reason": "Additive QTc-Verlängerung möglich; zudem additive serotonerge/anticholinerge Wirkungen"
-        },
-        {
-          "saaId": "saa:tramadol",
-          "level": "vorsicht",
-          "reason": "Nicht gelistet, aber relevant: Venlafaxin + Opioid-Serotonin-Agonisten – bei Fentanyl/Morphin: Serotonin-Syndrom-Risiko gering, dennoch SNRI + Morphin/Fentanyl: vorsicht"
         },
         {
           "saaId": "saa:morphin",
@@ -11180,11 +11015,6 @@
           "saaId": "saa:ibuprofen",
           "level": "vorsicht",
           "reason": "Voriconazol hemmt CYP2C9; erhöhte Ibuprofenspiegel möglich, verstärkte Blutungsneigung"
-        },
-        {
-          "saaId": "saa:warfarin",
-          "level": "vorsicht",
-          "reason": "Nicht in dieser Liste als Notfallmedikament, aber Voriconazol hemmt CYP2C9 – relevant für Warfarin-Interaktion"
         }
       ]
     },
@@ -11226,11 +11056,6 @@
           "saaId": "saa:ibuprofen",
           "level": "vorsicht",
           "reason": "Voriconazol hemmt CYP2C9; erhöhte Ibuprofenspiegel möglich, verstärkte Blutungsneigung"
-        },
-        {
-          "saaId": "saa:warfarin",
-          "level": "vorsicht",
-          "reason": "Nicht in dieser Liste als Notfallmedikament, aber Voriconazol hemmt CYP2C9 – relevant für Warfarin-Interaktion"
         }
       ]
     },

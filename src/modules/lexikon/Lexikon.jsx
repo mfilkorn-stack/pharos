@@ -31,6 +31,10 @@ import ToxidromeOverview from "./components/ToxidromeOverview.jsx";
 import { getCaseMeds, upsertCaseMeds, clearCaseMeds, addCaseMed } from "../../lib/caseMeds.js";
 import { useSaaMatrix } from "../../lib/saaMatrix.js";
 import { getDauerPick, setDauerPick, subscribeDauerPick } from "../../lib/dauerPickMode.js";
+import { formatBuildTime } from "../../lib/buildInfo.js";
+
+// Konstant pro Bundle — einmal formatieren, nicht bei jedem Render.
+const BUILD_STAMP = formatBuildTime();
 
 // Build runtime DB entry: inherits group Notfall + appends extras
 function materialize(entry, groups) {
@@ -313,7 +317,15 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
     }
     setQuarantinedName(null);
     const enriched = materialize(entry, data.groups);
-    setPlanEntries((prev) => prev.map((p) => (p.id === `unknown:${entry.id.replace(/^unknown:/, "")}` || p.wirkstoff === name) ? enriched : p));
+    // Aus dem Scan-Pfad existiert ein Platzhalter, der ersetzt wird. Aus der
+    // Suchleiste gibt es keinen (planEntries ist leer) — dann anhängen, sonst
+    // liefe prev.map() ins Leere und das KI-Ergebnis wäre kommentarlos weg.
+    setPlanEntries((prev) => {
+      const isPlaceholder = (p) =>
+        p.id === `unknown:${entry.id.replace(/^unknown:/, "")}` || p.wirkstoff === name;
+      const replaced = prev.map((p) => (isPlaceholder(p) ? enriched : p));
+      return replaced.some((p) => p.id === enriched.id) ? replaced : [...replaced, enriched];
+    });
     reloadExtras();
     return entry;
   }, [reloadExtras]);
@@ -341,6 +353,10 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
     try {
       const entry = await enrichUnknownEntry(term);
       if (!entry) setSearchEnrichError(`Keine Daten für „${term}" gefunden — kein bekannter Wirkstoff oder Tippfehler.`);
+      // Suchfeld leeren: results zeigt planEntries nur bei leerer Query (siehe
+      // results-useMemo). Ohne das bliebe der KI-Treffer unsichtbar, weil der
+      // Filter weiter gegen die unveränderte fullDB läuft.
+      else setQuery("");
     } finally {
       setSearchEnriching(false);
     }
@@ -426,7 +442,11 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
           <main className="flex-1 min-w-0 max-w-[920px] mx-auto w-full px-4 sm:px-6 py-4 sm:py-6 pb-28 lg:pb-6 space-y-4 sm:space-y-5">
             {/* Status */}
             <div className="flex items-center justify-end gap-3">
-              <StatusPill dot="success">Datenstand: {data.version}</StatusPill>
+              {/* h-auto/whitespace-normal: der Build-Stempel sprengt sonst auf
+                  schmalen Displays die einzeilige Pill. */}
+              <StatusPill dot="success" className="h-auto py-1 whitespace-normal text-right">
+                Datenstand: {data.version} · Build {BUILD_STAMP}
+              </StatusPill>
             </div>
 
             {/* Suche + Scan (alle Groessen) */}

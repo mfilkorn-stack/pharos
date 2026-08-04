@@ -985,6 +985,53 @@
           "text": "Meist rasch reversibel an Frischluft; bei anhaltender Bewusstseinsstörung andere Ursache prüfen."
         }
       ]
+    },
+    "antipsychotikum": {
+      "gruppe": "Antipsychotikum (Neuroleptikum)",
+      "notfall": [
+        {
+          "level": "hoch",
+          "text": "QT-Verlängerung bis Torsade de pointes; Risiko steigt mit weiteren QT-verlängernden Substanzen."
+        },
+        {
+          "level": "mittel",
+          "text": "Malignes neuroleptisches Syndrom: Fieber, Rigor, Bewusstseinsstörung, CK-Anstieg."
+        },
+        {
+          "level": "info",
+          "text": "Frühdyskinesien/extrapyramidale Störungen; orthostatische Hypotonie und Sedierung häufig."
+        }
+      ]
+    },
+    "lithium": {
+      "gruppe": "Lithium (Phasenprophylaxe)",
+      "notfall": [
+        {
+          "level": "hoch",
+          "text": "Geringe therapeutische Breite; Intoxikation bei Exsikkose, NSAR, ACE-Hemmern und Diuretika."
+        },
+        {
+          "level": "mittel",
+          "text": "Intoxikationszeichen: Tremor, Ataxie, Erbrechen, Verwirrtheit, Krampfanfall."
+        },
+        {
+          "level": "info",
+          "text": "Kein Antidot; bei schwerer Intoxikation Hämodialyse."
+        }
+      ]
+    },
+    "psychostimulans": {
+      "gruppe": "Psychostimulans",
+      "notfall": [
+        {
+          "level": "mittel",
+          "text": "Sympathomimetisch: Tachykardie, Hypertonie, innere Unruhe."
+        },
+        {
+          "level": "info",
+          "text": "Überdosierung: Agitation, Hyperthermie, Krampfanfall."
+        }
+      ]
     }
   },
   "substances": [

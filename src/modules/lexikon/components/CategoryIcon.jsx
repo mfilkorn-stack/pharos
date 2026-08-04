@@ -37,12 +37,15 @@ export const CATEGORIES = [
     groups: new Set(["doak","vka","tah","lmwh","heparin_unfrakt","vitamin_k","gerinnungsfaktor"]),
   },
   {
+    // Label bewusst "Neuro/Psyche": die Kategorie enthielt schon immer
+    // Antidepressiva und Benzodiazepine, jetzt zusätzlich Antipsychotika,
+    // Lithium und Psychostimulanzien — "Neurologie" allein war irreführend.
     key: "neuro",
-    label: "Neurologie",
+    label: "Neuro/Psyche",
     emoji: "🧠",
     tint: "neuro",
     Icon: BrainIcon,
-    groups: new Set(["antiepileptikum","parkinson","ssri","snri","trizyklisch","mirtazapin","benzodiazepin","z_substanz","triptan"]),
+    groups: new Set(["antiepileptikum","parkinson","ssri","snri","trizyklisch","mirtazapin","benzodiazepin","z_substanz","triptan","antipsychotikum","lithium","psychostimulans"]),
   },
   {
     key: "schmerz",

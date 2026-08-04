@@ -1,4 +1,4 @@
-import { CATEGORIES } from "./CategoryIcon.jsx";
+import { CATEGORIES, CATEGORIZED_GROUPS } from "./CategoryIcon.jsx";
 
 // Maps category display name -> set of groupIds from data.json#groups
 // Keep the OLD FILTER_CATEGORIES export for backward compat with App.jsx imports
@@ -61,6 +61,11 @@ export function matchesFilter(item, filterKey) {
     if (newCat.isSaa) return item.source === "saa";
     if (newCat.isCritical) {
       return (item.notfall || []).some((n) => n.level === "hoch");
+    }
+    // Auffangkategorie: alles ohne abgedeckte Gruppe. SAA-Einträge haben einen
+    // eigenen Chip und sind hier ausgenommen, sonst stünden sie doppelt.
+    if (newCat.isOther) {
+      return item.source !== "saa" && !CATEGORIZED_GROUPS.has(item.group || "");
     }
     return newCat.groups ? newCat.groups.has(item.group || "") : false;
   }

@@ -6,6 +6,7 @@ import {
   AlertTriangleIcon,
   PillIcon,
   FlaskIcon,
+  SyringeIcon,
   MedicalCrossIcon,
 } from "./ui/icons.jsx";
 
@@ -44,6 +45,38 @@ export const CATEGORIES = [
     groups: new Set(["antiepileptikum","parkinson","ssri","snri","trizyklisch","mirtazapin","benzodiazepin","z_substanz","triptan"]),
   },
   {
+    key: "schmerz",
+    label: "Schmerz",
+    emoji: "🩹",
+    tint: "warning",
+    Icon: PillIcon,
+    groups: new Set(["opioid","nsar","nonopioid_analget"]),
+  },
+  {
+    key: "diabetes",
+    label: "Diabetes",
+    emoji: "🍬",
+    tint: "accent",
+    Icon: SyringeIcon,
+    groups: new Set(["insulin","biguanid","sulfonylharnstoff","sglt2","dpp4","glp1_ra"]),
+  },
+  {
+    key: "infekt",
+    label: "Infekt",
+    emoji: "🦠",
+    tint: "info",
+    Icon: FlaskIcon,
+    groups: new Set(["penicillin","cephalosporin","makrolid","fluorchinolon","tetracyclin","sulfonamid","nitroimidazol","azol_antimykot"]),
+  },
+  {
+    key: "allergie",
+    label: "Allergie",
+    emoji: "🤧",
+    tint: "neuro",
+    Icon: DropletIcon,
+    groups: new Set(["h1_antihist2","antihistaminikum1","glukokortikoid"]),
+  },
+  {
     key: "drogen",
     label: "Drogen",
     emoji: "🧪",
@@ -69,7 +102,27 @@ export const CATEGORIES = [
     isSaa: true,
     groups: null,
   },
+  // Auffangkategorie, bewusst als letzter Chip. Sie greift für alles, dessen
+  // `group` in keiner der Gruppen-Kategorien oben steht — inklusive Einträgen
+  // ganz ohne Gruppe (group=null). Damit ist jeder Eintrag über mindestens
+  // einen Filter erreichbar, auch wenn die Datenbasis später neue Gruppen
+  // bekommt, für die es hier noch keine eigene Kategorie gibt.
+  {
+    key: "andere",
+    label: "Andere",
+    emoji: "💊",
+    tint: "neutral",
+    Icon: PillIcon,
+    isOther: true,
+    groups: null,
+  },
 ];
+
+// Alle Gruppen-IDs, die von einer Kategorie oben abgedeckt sind. Basis für die
+// Auffangkategorie — aus CATEGORIES abgeleitet, damit beides nicht auseinanderläuft.
+export const CATEGORIZED_GROUPS = new Set(
+  CATEGORIES.filter((c) => c.groups).flatMap((c) => [...c.groups])
+);
 
 const TINT_CLASSES = {
   critical: "bg-critical/10 text-critical",

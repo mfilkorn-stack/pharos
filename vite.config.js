@@ -4,6 +4,12 @@ import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig({
+  // Build-Zeitpunkt fest ins Bundle einsetzen. Die App zeigt ihn neben dem
+  // Datenstand an — damit ist am Gerät ablesbar, ob wirklich der neueste
+  // Build ausgeliefert wird (dist/ ist gitignored, `git pull` allein genügt nicht).
+  define: {
+    __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+  },
   plugins: [
     tailwindcss(),
     react(),

@@ -7,10 +7,18 @@ import { buildSources } from "../src/modules/lexikon/lib/sources.js";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, "..");
 
+const GROUP_MAP_PATH = join(ROOT, "src/modules/lexikon/data/atc_group_map.json");
+
 function loadGroupMap() {
   try {
-    return JSON.parse(readFileSync(join(ROOT, "src/data/atc_group_map.json"), "utf8"));
-  } catch { return {}; }
+    return JSON.parse(readFileSync(GROUP_MAP_PATH, "utf8"));
+  } catch (err) {
+    // Nicht still schlucken: ohne Map liefert groupForAtc() immer null, jeder
+    // KI-Eintrag bekommt group=null und taucht danach in keinem Kategorie-
+    // Filter auf. Genau so ist der falsche Pfad hier lange unbemerkt geblieben.
+    console.error(`[enrich] atc_group_map.json nicht ladbar (${GROUP_MAP_PATH}):`, err?.message || err);
+    return {};
+  }
 }
 
 function norm(s) {

@@ -32,6 +32,7 @@ import { getCaseMeds, upsertCaseMeds, clearCaseMeds, addCaseMed } from "../../li
 import { useSaaMatrix } from "../../lib/saaMatrix.js";
 import { getDauerPick, setDauerPick, subscribeDauerPick } from "../../lib/dauerPickMode.js";
 import { formatBuildTime } from "../../lib/buildInfo.js";
+import { sortResults, effectiveSortMode, SORT_OPTIONS } from "./lib/sort.js";
 
 // Konstant pro Bundle — einmal formatieren, nicht bei jedem Render.
 const BUILD_STAMP = formatBuildTime();
@@ -98,15 +99,6 @@ function materializeSaa(e) {
 
 const SAA_DB = (saaData.entries || []).map(materializeSaa);
 
-// Rang für Sortierung nach Notfallrelevanz: hoch > mittel > info > keine.
-function notfallRank(item) {
-  const ns = item.notfall || [];
-  if (ns.some((n) => n.level === "hoch")) return 3;
-  if (ns.some((n) => n.level === "mittel")) return 2;
-  if (ns.length) return 1;
-  return 0;
-}
-
 function makeScanLookup(db, atcIdx, gMap, groups) {
   return (text) => {
     const lines = String(text || "").split(/\n+/).map((l) => l.trim()).filter(Boolean);
@@ -143,6 +135,9 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
   // Quarantäne-Notiz: gesetzt wenn enrichName {quarantined:true, name} zurückgibt (Agent C)
   const [quarantinedName, setQuarantinedName] = useState(null);
   const [activeView, setActiveView] = useState("suche"); // suche | favoriten | verlauf
+  // null = automatisch: mit Suchbegriff Relevanz, sonst Notfallrelevanz.
+  // Sobald der Nutzer wählt, gilt seine Wahl, bis er sie wieder ändert.
+  const [sortMode, setSortMode] = useState(null);
   const [favorites, setFavorites] = useState(() => loadFavorites());
   const [history, setHistory] = useState(() => loadHistory());
   const [detail, setDetail] = useState(null); // item currently selected
@@ -394,6 +389,9 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
     return fullDB;
   }, [activeView, fullDB, favorites, history, activeFilter]);
 
+  const queryActive = Boolean(query.trim());
+  const effectiveSort = effectiveSortMode(sortMode, query);
+
   // Filter + search logic
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -413,11 +411,10 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
         ? searched
         : searched.filter((d) => matchesFilter(d, activeFilter));
     }
-    // Grundsätzlich nach Notfallrelevanz sortieren (stabil). Verlauf bleibt
-    // chronologisch ("Zuletzt geöffnet"), daher dort nicht umsortieren.
+    // Verlauf bleibt chronologisch ("Zuletzt geöffnet"), dort nicht umsortieren.
     if (activeView === "verlauf") return list;
-    return [...list].sort((a, b) => notfallRank(b) - notfallRank(a));
-  }, [query, planEntries, baseSet, activeFilter, activeView]);
+    return sortResults(list, effectiveSort, query);
+  }, [query, planEntries, baseSet, activeFilter, activeView, effectiveSort]);
 
   // Counts per filter for chips (using new CATEGORIES)
   const filterCounts = useMemo(() => {
@@ -576,10 +573,27 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
             {/* Meta row */}
             <div className="flex items-center justify-between">
               <span className="text-sm text-text-secondary">{results.length} {activeView === "favoriten" ? "Favoriten" : activeView === "verlauf" ? "im Verlauf" : activeView === "drogen" ? "Substanzen" : "Einträge gefunden"}</span>
-              <div className="hidden lg:flex items-center gap-2 text-text-muted text-xs">
-                <span>Sortieren:</span>
-                <span className="text-text-secondary">{activeView === "verlauf" ? "Zuletzt geöffnet" : "Notfallrelevanz"} ▼</span>
-              </div>
+              {/* Bewusst ein natives <select>: iOS öffnet seinen eigenen Picker —
+                  großes Trefferziel, bedienbar mit Handschuhen, barrierefrei ohne
+                  Zusatzarbeit. Auf allen Breakpoints sichtbar; vorher war das
+                  Control ein toter <span> mit Dropdown-Pfeil und nur ab lg: da. */}
+              {activeView === "verlauf" ? (
+                <span className="text-text-muted text-xs">Zuletzt geöffnet</span>
+              ) : (
+                <label className="flex items-center gap-1.5 text-text-muted text-xs">
+                  <span className="hidden sm:inline">Sortieren:</span>
+                  <select
+                    value={effectiveSort}
+                    onChange={(e) => setSortMode(e.target.value)}
+                    aria-label="Sortierung der Ergebnisliste"
+                    className="bg-card border border-border rounded-md pl-2 pr-1 py-1 text-text-secondary text-xs cursor-pointer focus:outline-none focus:border-border-strong"
+                  >
+                    {SORT_OPTIONS.filter((o) => !o.nurMitSuche || queryActive).map((o) => (
+                      <option key={o.key} value={o.key}>{o.label}</option>
+                    ))}
+                  </select>
+                </label>
+              )}
             </div>
 
             {/* Results */}

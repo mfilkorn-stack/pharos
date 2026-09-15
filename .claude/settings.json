@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev)",
+      "Bash(npm run build)",
+      "Bash(npm run preview)",
+      "Bash(npm test)",
+      "Bash(npm run test:watch)",
+      "Bash(npm run data)",
+      "Bash(npm run data:saa)",
+      "Bash(npm run data:saa-matrix)",
+      "Bash(npm run data:ocr)",
+      "Bash(npm ci)",
+      "Bash(npm install)",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Read",
+      "Edit",
+      "Write"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Read(.env)",
+      "Read(.env.*)",
+      "Edit(src/modules/lexikon/data/data.json)",
+      "Edit(src/modules/lexikon/data/atc_index.json)",
+      "Edit(src/modules/lexikon/data/atc_group_map.json)"
+    ]
+  }
+}

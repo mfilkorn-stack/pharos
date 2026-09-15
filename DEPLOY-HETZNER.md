@@ -7,7 +7,7 @@ Fertige Artefakte in `deploy/`: [`Caddyfile`](deploy/Caddyfile), [`pharos-ki-pro
 ---
 
 ## Geprüfte Fakten
-- `src/data/*.json` sind **im Repo getrackt** → `npm run data` am Server **nicht nötig**.
+- `src/modules/lexikon/data/*.json` sind **im Repo getrackt** → `npm run data` am Server **nicht nötig**.
 - `public/tesseract/*.traineddata` ist **gitignored** → `npm run data:ocr` einmalig am Server (~1,5 MB, Internet nötig).
 - `VITE_KI_PROXY_URL` wird **zur Build-Zeit** eingebettet → vor `npm run build` korrekt setzen (`https://www.pharos.team/ki`).
 - Caddy proxyt **`/uebergabe/*`** mit (Trainer parse/evaluate) — nicht nur `/ki`,`/enrich`.

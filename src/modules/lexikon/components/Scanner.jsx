@@ -4,8 +4,9 @@ import { recognizeText } from "../lib/ocr.js";
 import { recognizeWithKI } from "../lib/ki.js";
 import { config } from "../config.js";
 import ConfirmList from "./ConfirmList.jsx";
-import { XIcon, CameraIcon } from "./ui/icons.jsx";
+import { XIcon, CameraIcon, UploadIcon } from "./ui/icons.jsx";
 import Button from "./ui/Button.jsx";
+import { useDialogFocus } from "./ui/useDialogFocus.js";
 
 export default function Scanner({ source, onClose, onPick, onPickUnknown, onPickAll, lookup }) {
   const videoRef = useRef(null);
@@ -81,14 +82,9 @@ export default function Scanner({ source, onClose, onPick, onPickUnknown, onPick
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [source]);
 
-  // Modal-Verhalten: Esc schließt, Hintergrund-Scroll sperren.
-  useEffect(() => {
-    const onKey = (e) => { if (e.key === "Escape") onClose?.(); };
-    document.addEventListener("keydown", onKey);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => { document.removeEventListener("keydown", onKey); document.body.style.overflow = prevOverflow; };
-  }, [onClose]);
+  // Modal-Verhalten: Esc, Scroll-Lock, Focus-Trap, Fokus-Rückgabe.
+  const dialogRef = useRef(null);
+  useDialogFocus(true, dialogRef, onClose);
 
   useEffect(() => {
     if (source === "upload" && fileRef.current && !autoOpenedRef.current) {
@@ -134,16 +130,16 @@ export default function Scanner({ source, onClose, onPick, onPickUnknown, onPick
       aria-label={source === "scan" ? "Medikament scannen" : "Datei hochladen"}
       onClick={(e) => { if (e.target === e.currentTarget) onClose?.(); }}
     >
-      <div className="bg-bg-secondary rounded-2xl border border-border shadow-2xl max-w-md w-full flex flex-col gap-4 p-5 sm:p-6 max-h-[92vh] overflow-y-auto my-4">
+      <div ref={dialogRef} tabIndex={-1} className="bg-bg-secondary rounded-2xl border border-border shadow-2xl max-w-md w-full flex flex-col gap-4 p-5 sm:p-6 max-h-[92vh] overflow-y-auto my-4 outline-none">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <span className="font-mono text-[10px] tracking-[0.14em] uppercase text-text-muted">
-            {source === "scan" ? "Scannen" : "Hochladen"}
-          </span>
+          <h2 className="font-mono text-[11px] tracking-[0.14em] uppercase text-text-secondary">
+            {source === "scan" ? "Medikament scannen" : "Datei hochladen"}
+          </h2>
           <button
             type="button"
             onClick={onClose}
-            className="h-8 w-8 inline-flex items-center justify-center rounded-md text-text-secondary hover:bg-card-hover hover:text-text-primary transition-colors"
+            className="h-11 w-11 -mr-2 inline-flex items-center justify-center rounded-md text-text-secondary hover:bg-card-hover hover:text-text-primary transition-colors"
             aria-label="Schließen"
           >
             <XIcon className="h-5 w-5" />
@@ -155,7 +151,7 @@ export default function Scanner({ source, onClose, onPick, onPickUnknown, onPick
           <video ref={videoRef} className="w-full aspect-[4/3] object-cover bg-bg-primary border border-border rounded-xl" muted playsInline />
         ) : null}
         {frozen && snapshot !== "pdf" ? (
-          <img src={snapshot} alt="Aufnahme" className="w-full aspect-[4/3] object-cover bg-bg-primary border border-border rounded-xl" />
+          <img src={snapshot} alt="Aufgenommenes Bild zur Erkennung" className="w-full aspect-[4/3] object-cover bg-bg-primary border border-border rounded-xl" />
         ) : null}
         {frozen && snapshot === "pdf" ? (
           <div className="w-full aspect-[4/3] bg-bg-primary border border-border rounded-xl flex items-center justify-center font-mono text-sm text-text-muted">
@@ -173,20 +169,27 @@ export default function Scanner({ source, onClose, onPick, onPickUnknown, onPick
 
         {/* File input (hidden) */}
         {!result && source === "upload" && !frozen ? (
-          <input ref={fileRef} type="file" accept="image/*,application/pdf" className="hidden" onChange={onFile} />
+          <>
+            <input ref={fileRef} type="file" accept="image/*,application/pdf" className="hidden" onChange={onFile} tabIndex={-1} aria-hidden="true" />
+            {/* Sichtbarer Auslöser: bricht der Nutzer den Datei-Dialog ab, gab es vorher keinen Weg zurück außer Schließen. */}
+            <Button variant="primary" size="lg" onClick={() => fileRef.current?.click()} disabled={busy} className="w-full">
+              <UploadIcon className="h-5 w-5" />
+              Bild oder PDF auswählen
+            </Button>
+          </>
         ) : null}
 
         {/* Status row */}
         {(busy || (status && !result)) ? (
-          <div className="flex items-center gap-3 px-3 py-2.5 bg-card border border-border rounded-lg">
-            <span className="h-2 w-2 rounded-full bg-accent flex-shrink-0 animate-pulse" />
+          <div role="status" aria-live="polite" className="flex items-center gap-3 px-3 py-2.5 bg-card border border-border rounded-lg">
+            <span className="h-2 w-2 rounded-full bg-accent flex-shrink-0 animate-pulse" aria-hidden="true" />
             <span className="text-sm text-text-primary font-mono">{status || "Erkenne …"}</span>
           </div>
         ) : null}
 
         {/* Error message */}
         {msg ? (
-          <p className="text-sm text-warning font-mono leading-relaxed">{msg}</p>
+          <p role="alert" className="text-sm text-warning leading-relaxed">{msg}</p>
         ) : null}
 
         {/* Result / ConfirmList */}

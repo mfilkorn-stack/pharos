@@ -1,6 +1,6 @@
 // src/modules/medigabe/Medigabe.jsx
 // Medigabe nach SAA — geführter 8-Schritte-Wizard (SAA S. 41 Standardvorgehen).
-import { useSyncExternalStore, useCallback, useEffect } from "react";
+import { useSyncExternalStore, useCallback, useEffect, useState } from "react";
 import saa from "../lexikon/data/saa.json";
 import dosing from "./data/dosing.json";
 import { getWizard, patchWizard, resetWizard, subscribeWizard } from "./lib/wizard.js";
@@ -15,6 +15,7 @@ import Step6Dosierung from "./components/Step6Dosierung.jsx";
 import Step7SechsR, { sechsRItems } from "./components/Step7SechsR.jsx";
 import Step8Doku from "./components/Step8Doku.jsx";
 import Button from "../lexikon/components/ui/Button.jsx";
+import ConfirmDialog from "../lexikon/components/ui/ConfirmDialog.jsx";
 import { computeDose, computeVolume, fmt, alterInJahren } from "./lib/dose.js";
 import { kiOutcome, dauermedRowsMulti, kiPunkte } from "./lib/ki.js";
 import { normKey } from "../lexikon/lib/saaCheck.js";
@@ -25,6 +26,8 @@ export default function Medigabe({ onJumpToMedScan }) {
   const meds = useSyncExternalStore(subscribeCaseMeds, getCaseMeds);
   const { matrix: saaMatrix } = useSaaMatrix();
   const back = useCallback(() => patchWizard({ step: Math.max(1, getWizard().step - 1) }), []);
+  // Offener Bestätigungsdialog: null | "abwaegung" | "reset"
+  const [dialog, setDialog] = useState(null);
 
   // Wächter: Weicht die Einsatz-Medikationsliste vom bestätigten Stand ab (z. B. Scan
   // in MedScan mitten im Wizard — auch während Medigabe unmounted war), verfällt die
@@ -176,7 +179,7 @@ export default function Medigabe({ onJumpToMedScan }) {
       <Button
         size="lg" className="w-full" disabled={!out.complete}
         onClick={() => {
-          if (out.confirm && !window.confirm("Relative Kontraindikation(en) bzw. Dauermedikations-Hinweise liegen vor. Nutzen-Risiko abgewogen? Begründung dokumentieren.")) return;
+          if (out.confirm) { setDialog("abwaegung"); return; }
           patchWizard({ step: 5 });
         }}
       >
@@ -312,18 +315,39 @@ export default function Medigabe({ onJumpToMedScan }) {
         />
       );
       footer = (
-        <Button variant="subtle" size="lg" className="w-full" onClick={() => { clearCaseMeds(); resetWizard(); }}>
-          Neuer Patient — alles zurücksetzen
+        <Button variant="subtle" size="lg" className="w-full" onClick={() => setDialog("reset")}>
+          Neuer Patient
         </Button>
       );
     }
   }
 
   return (
-    <main className="flex-1 min-w-0 flex flex-col">
+    <main id="main" tabIndex={-1} className="flex-1 min-w-0 flex flex-col outline-none">
       <StepFrame step={w.step} context={context} onBack={back} footer={footer}>
         {body}
       </StepFrame>
+      <ConfirmDialog
+        open={dialog === "abwaegung"}
+        title="Nutzen-Risiko abgewogen?"
+        confirmLabel="Abgewogen — weiter"
+        onCancel={() => setDialog(null)}
+        onConfirm={() => { setDialog(null); patchWizard({ step: 5 }); }}
+      >
+        Relative Kontraindikation(en) oder Hinweise aus der Dauermedikation liegen vor.
+        Gabe nur nach bewusster Abwägung — Begründung im Einsatzprotokoll dokumentieren.
+      </ConfirmDialog>
+      <ConfirmDialog
+        open={dialog === "reset"}
+        tone="danger"
+        title="Neuen Patienten beginnen?"
+        confirmLabel="Alles zurücksetzen"
+        onCancel={() => setDialog(null)}
+        onConfirm={() => { setDialog(null); clearCaseMeds(); resetWizard(); }}
+      >
+        Patientendaten, Dauermedikation und alle Bestätigungen dieses Durchlaufs werden gelöscht.
+        Doku-Zusammenfassung vorher ins Protokoll übernehmen.
+      </ConfirmDialog>
     </main>
   );
 }

@@ -1,3 +1,5 @@
+import Chip from "./ui/Chip.jsx";
+
 // Symptombasierte Schnellsuche: Klick auf ein Leitsymptom setzt die Suche.
 // Findet über das erweiterte Such-Prädikat (App.jsx) alle Substanzen, deren
 // Toxidrom dieses Leitsymptom listet — der Rückwärts-Workflow bei unbekannter Substanz.
@@ -17,20 +19,13 @@ const SYMPTOMS = [
 
 export default function SymptomChips({ onPick }) {
   return (
-    <div>
-      <div className="font-mono text-[10px] tracking-wider uppercase text-text-muted mb-1.5">
+    <div role="group" aria-labelledby="symptom-chips-label">
+      <div id="symptom-chips-label" className="font-mono text-[10px] tracking-wider uppercase text-text-muted mb-1.5">
         Leitsymptom → Substanzklasse
       </div>
-      <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+      <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1 -mx-4 px-4 sm:mx-0 sm:px-0">
         {SYMPTOMS.map((s) => (
-          <button
-            key={s}
-            type="button"
-            onClick={() => onPick?.(s)}
-            className="inline-flex items-center h-8 px-3 rounded-lg border border-border bg-card text-sm text-text-secondary whitespace-nowrap transition-colors cursor-pointer flex-shrink-0 hover:border-amber-400/40 hover:text-text-primary"
-          >
-            {s}
-          </button>
+          <Chip key={s} pressable={false} onClick={() => onPick?.(s)}>{s}</Chip>
         ))}
       </div>
     </div>

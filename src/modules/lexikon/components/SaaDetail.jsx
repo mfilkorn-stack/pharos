@@ -1,4 +1,5 @@
 import Badge from "./ui/Badge.jsx";
+import DetailSection from "./ui/DetailSection.jsx";
 import {
   DropletIcon,
   CheckCircleIcon,
@@ -10,27 +11,7 @@ import {
   StarFilledIcon,
 } from "./ui/icons.jsx";
 
-const TINT = {
-  info: "bg-info/10 text-info",
-  success: "bg-success/10 text-success",
-  warning: "bg-warning/10 text-warning",
-  critical: "bg-critical/10 text-critical",
-  accent: "bg-accent/10 text-accent",
-};
-
-function Section({ icon: Icon, tint, title, children }) {
-  return (
-    <section>
-      <div className="flex items-center gap-2 mb-3">
-        <span className={`h-7 w-7 rounded-lg flex items-center justify-center flex-shrink-0 ${TINT[tint] || TINT.accent}`}>
-          <Icon className="h-4 w-4" />
-        </span>
-        <h3 className="text-sm font-semibold text-text-primary">{title}</h3>
-      </div>
-      <div className="ml-9">{children}</div>
-    </section>
-  );
-}
+const Section = DetailSection;
 
 function Bullets({ items, className = "text-text-secondary" }) {
   return (
@@ -64,7 +45,8 @@ export default function SaaDetail({ item, isFavorite, onToggleFavorite }) {
               type="button"
               onClick={() => onToggleFavorite(item.id)}
               aria-label={isFavorite ? "Favorit entfernen" : "Als Favorit markieren"}
-              className={`h-9 w-9 inline-flex items-center justify-center rounded-md transition-colors flex-shrink-0 ${
+              aria-pressed={!!isFavorite}
+              className={`h-11 w-11 -mt-1 -mr-2 inline-flex items-center justify-center rounded-lg transition-colors flex-shrink-0 ${
                 isFavorite ? "text-warning bg-warning/10 hover:bg-warning/15" : "text-text-muted hover:text-warning hover:bg-card-hover"
               }`}
             >

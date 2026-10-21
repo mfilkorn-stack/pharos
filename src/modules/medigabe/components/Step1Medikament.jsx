@@ -28,14 +28,19 @@ export default function Step1Medikament({ values, onToggle }) {
         value={q}
         onChange={(e) => setQ(e.target.value)}
         placeholder="Medikament suchen …"
+        aria-label="SAA-Medikament suchen"
+        enterKeyHint="search"
         autoComplete="off"
         className="w-full h-12 px-4 mb-2 bg-card border border-border rounded-lg text-sm text-text-primary placeholder:text-text-muted"
       />
       {limitReached ? (
-        <p className="text-xs text-text-muted mb-2">Maximal 3 Medikamente pro Durchlauf.</p>
+        <p className="text-xs text-text-muted mb-2" role="status">Maximal 3 Medikamente pro Durchlauf — zum Wechseln eines abwählen.</p>
       ) : (
         <div className="mb-2" />
       )}
+      {!list.length ? (
+        <p className="text-sm text-text-secondary py-6 text-center">Kein SAA-Medikament zu „{q.trim()}". Nur Medikamente der SAA/BPR sind hinterlegt.</p>
+      ) : null}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {list.map((e) => {
           const ready = READY.has(e.id);
@@ -54,7 +59,7 @@ export default function Step1Medikament({ values, onToggle }) {
             >
               <div className="flex items-center justify-between gap-2">
                 <span className="text-sm font-semibold text-text-primary">{e.name}</span>
-                {!ready ? <Badge variant="neutral" size="sm">folgt</Badge> : null}
+                {!ready ? <Badge variant="neutral" size="sm">in Vorbereitung</Badge> : null}
               </div>
               <div className="text-xs text-text-muted mt-0.5 truncate">{e.gruppe}</div>
             </button>

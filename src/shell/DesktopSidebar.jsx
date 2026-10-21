@@ -26,19 +26,17 @@ const LEXIKON_NAV = [
   { key: "verlauf", label: "Verlauf", Icon: ClockIcon },
 ];
 
-function Row({ Icon, label, active, count, muted, onClick }) {
+function Row({ Icon, label, active, count, onClick }) {
   const base = "w-full h-10 px-3 rounded-lg flex items-center gap-3 text-sm font-medium transition-colors cursor-pointer";
   const state = active
     ? "bg-accent/10 text-accent"
-    : muted
-    ? "text-text-secondary hover:bg-card-hover hover:text-text-primary"
     : "text-text-secondary hover:bg-card-hover hover:text-text-primary";
   return (
-    <button type="button" onClick={onClick} className={`${base} ${state}`}>
+    <button type="button" onClick={onClick} aria-current={active ? "page" : undefined} className={`${base} ${state}`}>
       <Icon className={`h-4 w-4 flex-shrink-0 ${active ? "text-accent" : ""}`} />
       <span className="flex-1 text-left">{label}</span>
       {typeof count === "number" && count > 0 ? (
-        <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${active ? "bg-accent/20 text-accent" : "bg-card text-text-muted"}`}>
+        <span className={`text-[11px] font-mono px-1.5 py-0.5 rounded ${active ? "bg-accent/20 text-accent" : "bg-card text-text-muted"}`}>
           {count}
         </span>
       ) : null}
@@ -49,7 +47,7 @@ function Row({ Icon, label, active, count, muted, onClick }) {
 // Desktop-Navigation (lg+): oben Modus-Umschalter, darunter modus-spezifische Punkte.
 export default function DesktopSidebar({ mode, active, counts = {}, onNav, onMode, onHome }) {
   return (
-    <aside className="w-[260px] h-screen sticky top-0 border-r border-border bg-bg-secondary flex flex-col p-4 gap-1 overflow-y-auto flex-shrink-0">
+    <aside className="w-[260px] h-screen sticky top-0 border-r border-border bg-bg-secondary flex flex-col p-4 gap-1 overflow-y-auto flex-shrink-0 print:hidden">
       {/* Logo → Home */}
       <button
         type="button"
@@ -67,15 +65,17 @@ export default function DesktopSidebar({ mode, active, counts = {}, onNav, onMod
       </button>
 
       {/* Modus-Umschalter */}
-      <div className="font-mono text-[10px] tracking-[0.25em] uppercase text-text-muted px-3 mt-2 mb-1">Modus</div>
-      {MODES.map((m) => (
-        <Row key={m.key} Icon={m.Icon} label={m.label} active={mode === m.key} onClick={() => onMode?.(m.key)} />
-      ))}
+      <nav aria-label="Module" className="flex flex-col gap-1">
+        <div className="font-mono text-[10px] tracking-[0.25em] uppercase text-text-muted px-3 mt-2 mb-1" aria-hidden="true">Modul</div>
+        {MODES.map((m) => (
+          <Row key={m.key} Icon={m.Icon} label={m.label} active={mode === m.key} onClick={() => onMode?.(m.key)} />
+        ))}
+      </nav>
 
       {/* Lexikon-Navigation */}
       {mode === "lexikon" ? (
-        <>
-          <div className="font-mono text-[10px] tracking-[0.25em] uppercase text-text-muted px-3 mt-4 mb-1">MedScan</div>
+        <nav aria-label="MedScan-Ansichten" className="flex flex-col gap-1">
+          <div className="font-mono text-[10px] tracking-[0.25em] uppercase text-text-muted px-3 mt-4 mb-1" aria-hidden="true">MedScan</div>
           {LEXIKON_NAV.map((item) => (
             <Row
               key={item.key}
@@ -86,7 +86,7 @@ export default function DesktopSidebar({ mode, active, counts = {}, onNav, onMod
               onClick={() => onNav?.(item.key)}
             />
           ))}
-        </>
+        </nav>
       ) : null}
 
       <div className="mt-auto" />

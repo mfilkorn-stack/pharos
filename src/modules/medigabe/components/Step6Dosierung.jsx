@@ -36,11 +36,12 @@ export default function Step6Dosierung({ ind, cave, patient, dosier, onPatch }) 
   return (
     <div className="flex flex-col gap-5">
       <div>
-        <div className="text-xs text-text-muted mb-2">Applikationsweg</div>
+        <div className="text-xs text-text-muted mb-2" id="lbl-weg">Applikationsweg</div>
         <SegPick
           options={ind.routen.map((r, i) => ({ value: i, label: r.weg, disabled: !routeOk(r) }))}
           value={dosier.weg}
           onChange={(weg) => onPatch({ weg, prep: ind.routen[weg].preps.length === 1 ? 0 : null })}
+          labelledBy="lbl-weg"
         />
         {ind.routen.filter((r) => !routeOk(r) && r.minAlterHinweis).map((r, i) => (
           <p key={i} className="text-xs text-warning mt-2">{r.weg}: {r.minAlterHinweis}</p>
@@ -108,7 +109,7 @@ export default function Step6Dosierung({ ind, cave, patient, dosier, onPatch }) 
             </div>
           ) : null}
 
-          <div className="border-2 border-accent rounded-xl bg-card p-4">
+          <div className="border-2 border-accent rounded-xl bg-card p-4" role="status" aria-live="polite">
             <div className="flex items-baseline gap-2">
               <span className="text-3xl font-bold text-text-primary leading-none">{fmt(vol ? vol.mgEffektiv : dose.mg)}</span>
               <span className="text-base text-text-secondary">{einheit}</span>

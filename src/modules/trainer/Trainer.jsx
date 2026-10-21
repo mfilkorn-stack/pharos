@@ -4,6 +4,12 @@ import { SINNHAFT } from './data/sinnhaft';
 import { isSpeechSupported, startDictation as startSpeech } from './speech';
 import { uebergabeParse, uebergabeEvaluate } from '../../lib/kiClient';
 import ActionBar from '../../shell/ActionBar.jsx';
+import Button from '../lexikon/components/ui/Button.jsx';
+import { MicIcon, ChevronDownIcon, ArrowRightIcon, ChevronLeftIcon } from '../lexikon/components/ui/icons.jsx';
+
+// Farben aus den Design-Tokens (vorher Hex-Literale im JSX).
+const ACCENT = 'var(--color-accent)';
+const RATING_COLOR = { gut: 'var(--color-success)', teilweise: 'var(--color-warning)' };
 
 const SPEECH_ERRORS = {
   'not-allowed': 'Mikrofon-Zugriff verweigert. Browser- und macOS-Systemeinstellungen → Datenschutz → Mikrofon prüfen.',
@@ -252,14 +258,9 @@ export default function Trainer() {
   };
 
   return (
-    <div
-      className="min-h-screen w-full text-text-primary relative overflow-hidden"
-      style={{
-        background:
-          'radial-gradient(ellipse at top left, #0B1220 0%, #070b16 55%, #050816 100%)',
-      }}
-    >
+    <main id="main" tabIndex={-1} className="min-h-screen w-full text-text-primary relative overflow-hidden bg-hero outline-none">
       <div
+        aria-hidden="true"
         className="absolute inset-0 opacity-[0.025] pointer-events-none mix-blend-overlay"
         style={{
           backgroundImage:
@@ -267,31 +268,28 @@ export default function Trainer() {
         }}
       />
 
-      <div className="relative max-w-5xl mx-auto px-6 py-10 pb-48 sm:px-10 sm:py-14 lg:pb-32">
-        <header className="mb-12 flex items-end justify-between gap-4 flex-wrap">
+      <div className="relative max-w-5xl mx-auto px-4 py-8 pb-48 sm:px-10 sm:py-14 lg:pb-32">
+        <header className="mb-8 sm:mb-12 flex items-end justify-between gap-4 flex-wrap">
           <div>
             <div className="text-[10px] tracking-[0.3em] text-text-muted uppercase mb-2 font-mono">
               Pharos · Übergabe-Training
             </div>
-            <h1 className="text-5xl sm:text-6xl leading-[0.95] tracking-tight font-bold">
+            <h1 className="text-4xl sm:text-6xl leading-[0.95] tracking-tight font-bold">
               Übergabe<span className="text-accent">.</span>
               <br />
               <span className="text-text-secondary font-semibold">nach SINNHAFT</span>
             </h1>
           </div>
           {view !== 'home' && (
-            <button
-              onClick={reset}
-              className="text-xs tracking-wider uppercase text-text-secondary hover:text-accent transition border-b border-border-strong hover:border-accent pb-1 font-mono"
-            >
-              ← Neu starten
-            </button>
+            <Button variant="ghost" size="sm" onClick={reset}>
+              <ChevronLeftIcon className="h-4 w-4" /> Neu starten
+            </Button>
           )}
         </header>
 
         {view === 'home' && (
           <div>
-            <p className="text-text-secondary text-lg max-w-2xl mb-3 leading-relaxed">
+            <p className="text-text-secondary text-base sm:text-lg max-w-2xl mb-3 leading-relaxed">
               Strukturiere deine nächste Übergabe nach{' '}
               <span className="text-accent font-semibold">SINNHAFT</span> — sprich oder tippe, KI sortiert automatisch ins Schema und gibt dir Feedback.
             </p>
@@ -299,17 +297,18 @@ export default function Trainer() {
               Schema: Gräff, Ehlers &amp; Schacher (2023), Notfall+Rettungsmedizin 27(1).
             </p>
 
-            <div className="mb-10 grid grid-cols-4 sm:grid-cols-8 gap-1.5">
+            <div className="mb-10 grid grid-cols-4 sm:grid-cols-8 gap-1.5" role="list" aria-label="SINNHAFT-Schema">
               {SINNHAFT.map((f) => (
                 <div
                   key={f.key}
-                  className="aspect-square border border-border bg-card rounded-lg flex flex-col items-center justify-center hover:border-accent/40 hover:bg-card-hover transition"
-                  title={f.label}
+                  role="listitem"
+                  aria-label={`${f.letter} — ${f.label}`}
+                  className="aspect-square border border-border bg-card rounded-lg flex flex-col items-center justify-center px-1"
                 >
                   <span className={`font-bold text-3xl ${f.type === 'simulated' ? 'text-text-muted' : 'text-accent'}`}>
                     {f.letter}
                   </span>
-                  <span className="font-mono text-[8px] tracking-widest uppercase text-text-muted mt-1">
+                  <span className="hidden sm:block font-mono text-[10px] tracking-wide uppercase text-text-muted mt-1 text-center leading-tight max-w-full truncate" aria-hidden="true">
                     {f.label}
                   </span>
                 </div>
@@ -318,8 +317,9 @@ export default function Trainer() {
 
             {/* ── Hero: Eigene Übergabe ── */}
             <button
+              type="button"
               onClick={startFreeMode}
-              className="group relative w-full text-left p-8 rounded-xl border border-accent/30 hover:border-accent/60 bg-accent/5 hover:bg-accent/10 transition-all duration-300 overflow-hidden mb-12"
+              className="group relative w-full text-left p-5 sm:p-8 rounded-xl border border-accent/30 hover:border-accent/60 bg-accent/5 hover:bg-accent/10 transition-all duration-300 overflow-hidden mb-12"
             >
               <div className="absolute top-0 left-0 w-full h-[2px] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 bg-accent" />
               <div className="flex items-center justify-between gap-6 flex-wrap">
@@ -327,23 +327,23 @@ export default function Trainer() {
                   <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-accent/70 mb-3">
                     Eigene Übergabe vorbereiten
                   </div>
-                  <div className="font-semibold text-3xl sm:text-4xl mb-3 leading-tight tracking-tight text-text-primary">
+                  <h2 className="font-semibold text-2xl sm:text-4xl mb-3 leading-tight tracking-tight text-text-primary">
                     Deine nächste Übergabe
-                  </div>
+                  </h2>
                   <div className="text-sm text-text-secondary leading-relaxed max-w-xl">
                     Sprich oder tippe frei — KI parst in S·I·N·N·H·A und bewertet Vollständigkeit, Struktur und klinische Priorisierung.
                   </div>
                 </div>
-                <div className="font-mono text-xs tracking-wider uppercase border border-accent/40 text-accent px-5 py-3 group-hover:bg-accent group-hover:text-bg-primary transition-all rounded-lg shrink-0">
-                  Starten →
+                <div aria-hidden="true" className="inline-flex items-center gap-2 font-mono text-xs tracking-wider uppercase border border-accent/40 text-accent px-5 py-3 group-hover:bg-accent group-hover:text-bg-primary transition-all rounded-lg shrink-0">
+                  Starten <ArrowRightIcon className="h-4 w-4" />
                 </div>
               </div>
             </button>
 
             {/* ── Beispiel-Übergaben ── */}
-            <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-text-muted mb-4">
-              Beispiel-Übergaben · Gut gemachte SINNHAFT-Übergaben zum Anhören
-            </div>
+            <h2 className="font-mono text-[11px] tracking-[0.3em] uppercase text-text-muted mb-4">
+              Beispiel-Übergaben · zum Anhören und Üben
+            </h2>
 
             <div className="space-y-3 mb-12">
               {SZENARIEN.map((sc) => {
@@ -352,54 +352,56 @@ export default function Trainer() {
                 return (
                   <div
                     key={sc.id}
-                    className="rounded-xl border overflow-hidden transition-colors duration-300"
-                    style={{ borderColor: isExpanded ? sc.accent + '55' : 'rgba(148, 163, 184, 0.1)' }}
+                    className="rounded-xl border border-border overflow-hidden transition-colors duration-300"
+                    style={isExpanded ? { borderColor: sc.accent + '55' } : undefined}
                   >
                     {/* Karten-Header */}
-                    <div className="relative p-5 bg-card flex items-center gap-4 flex-wrap">
+                    <div className="relative p-4 sm:p-5 bg-card flex items-center gap-3 sm:gap-4 flex-wrap">
                       <div
                         className="absolute top-0 left-0 h-full w-[3px]"
                         style={{ backgroundColor: isPlaying ? sc.accent : 'transparent' }}
                       />
-                      <span className="text-3xl ml-2" style={{ color: sc.accent }}>{sc.glyph}</span>
+                      <span className="text-3xl ml-2" style={{ color: sc.accent }} aria-hidden="true">{sc.glyph}</span>
                       <div className="flex-1 min-w-0">
                         <div className="font-mono text-[10px] tracking-[0.25em] uppercase text-text-muted">{sc.category}</div>
-                        <div className="font-semibold text-lg leading-tight text-text-primary">{sc.title}</div>
+                        <h3 className="font-semibold text-lg leading-tight text-text-primary">{sc.title}</h3>
                         <div className="text-xs text-text-muted">{sc.patient}</div>
                       </div>
-                      <div className="flex gap-2 shrink-0">
-                        <button
+                      <div className="flex gap-2 w-full sm:w-auto shrink-0">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="flex-1 sm:flex-none"
                           onClick={() => playExample(sc)}
-                          className="font-mono flex items-center gap-2 px-3 py-2 rounded-lg transition tracking-wider uppercase text-xs border"
-                          style={isPlaying
-                            ? { backgroundColor: sc.accent + '22', borderColor: sc.accent, color: sc.accent }
-                            : { borderColor: 'rgba(148, 163, 184, 0.2)', color: '#94A3B8' }
-                          }
+                          aria-pressed={isPlaying}
+                          aria-label={isPlaying ? `Musterübergabe ${sc.title} stoppen` : `Musterübergabe ${sc.title} anhören`}
+                          style={isPlaying ? { borderColor: sc.accent, color: sc.accent } : undefined}
                         >
                           {isPlaying
-                            ? <><span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: sc.accent }} />Stoppen</>
-                            : <><span style={{ color: sc.accent }}>▶</span>Anhören</>
+                            ? <><span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: sc.accent }} aria-hidden="true" />Stoppen</>
+                            : <><span style={{ color: sc.accent }} aria-hidden="true">▶</span>Anhören</>
                           }
-                        </button>
-                        <button
-                          onClick={() => startScenario(sc)}
-                          className="font-mono px-3 py-2 rounded-lg border border-border hover:border-border-strong text-text-secondary hover:text-text-primary transition tracking-wider uppercase text-xs"
-                        >
-                          Üben →
-                        </button>
-                        <button
+                        </Button>
+                        <Button variant="subtle" size="sm" className="flex-1 sm:flex-none" onClick={() => startScenario(sc)} aria-label={`Szenario ${sc.title} üben`}>
+                          Üben <ArrowRightIcon className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="lg:h-9 lg:w-9"
                           onClick={() => setExpandedId(isExpanded ? null : sc.id)}
-                          className="font-mono px-2 py-2 rounded-lg border border-border hover:border-border-strong text-text-muted hover:text-text-secondary transition text-xs"
-                          title="Schema anzeigen"
+                          aria-expanded={isExpanded}
+                          aria-controls={`schema-${sc.id}`}
+                          aria-label={isExpanded ? 'SINNHAFT-Schema ausblenden' : 'SINNHAFT-Schema anzeigen'}
                         >
-                          {isExpanded ? '▲' : '▼'}
-                        </button>
+                          <ChevronDownIcon className={`h-4 w-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                        </Button>
                       </div>
                     </div>
 
                     {/* SINNHAFT-Schema-Panel */}
                     {isExpanded && (
-                      <div className="border-t px-6 py-5 space-y-4 bg-bg-secondary" style={{ borderColor: sc.accent + '33' }}>
+                      <div id={`schema-${sc.id}`} className="border-t px-4 sm:px-6 py-5 space-y-4 bg-bg-secondary" style={{ borderColor: sc.accent + '33' }}>
                         {isPlaying && (
                           <div className="flex items-center gap-2 mb-4 pb-4 border-b border-border">
                             <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: sc.accent }} />
@@ -417,7 +419,7 @@ export default function Trainer() {
                           <div key={row.letter} className="flex gap-4">
                             <span className="font-bold text-xl w-5 shrink-0 pt-0.5" style={{ color: sc.accent }}>{row.letter}</span>
                             <div>
-                              <div className="font-mono text-[9px] tracking-widest uppercase text-text-muted mb-0.5">{row.label}</div>
+                              <div className="font-mono text-[10px] tracking-widest uppercase text-text-muted mb-0.5">{row.label}</div>
                               <div className="text-sm text-text-secondary leading-relaxed">{row.content}</div>
                             </div>
                           </div>
@@ -523,31 +525,25 @@ export default function Trainer() {
 
             <div className="mb-8 border border-border rounded-xl bg-card overflow-hidden">
               <div className="px-5 py-4 border-b border-border">
-                <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-text-muted">
+                <label htmlFor="uebergabe-transkript" className="block font-mono text-[11px] tracking-[0.3em] uppercase text-text-muted">
                   Übergabe einsprechen oder tippen
-                </div>
+                </label>
                 <div className="text-text-secondary text-sm mt-1">
-                  Sprich frei nach SINNHAFT, dann „Auto-Parse" — KI sortiert in die Felder.
+                  Sprich frei nach SINNHAFT, dann „In SINNHAFT-Felder sortieren" — die KI verteilt den Text auf die Felder.
                 </div>
               </div>
 
               <div className="p-5">
                 <div className="flex items-center gap-3 mb-3 flex-wrap">
-                  <button
-                    onClick={startDictation}
-                    aria-label={listening ? 'Diktat stoppen' : 'Diktat starten'}
-                    className={`font-mono flex items-center gap-2 px-4 py-2 rounded-lg transition tracking-wider uppercase text-xs ${
-                      listening
-                        ? 'bg-critical hover:bg-critical/90 text-white'
-                        : 'bg-critical/90 hover:bg-critical text-white'
-                    }`}
-                  >
-                    <span className={`w-2.5 h-2.5 bg-white rounded-full ${listening ? 'animate-pulse' : ''}`} />
-                    {listening ? 'Diktat läuft – stoppen' : 'Diktat starten'}
-                  </button>
+                  <Button variant={listening ? 'danger' : 'subtle'} size="md" onClick={startDictation} aria-pressed={listening}>
+                    {listening
+                      ? <span className="w-2.5 h-2.5 bg-bg-primary rounded-full animate-pulse" aria-hidden="true" />
+                      : <MicIcon className="h-4 w-4 text-critical" />}
+                    {listening ? 'Diktat stoppen' : 'Diktat starten'}
+                  </Button>
                   {parsingState === 'parsing' && (
-                    <div className="flex items-center gap-3 text-text-secondary">
-                      <span className="text-xl animate-pulse text-accent">◌</span>
+                    <div role="status" className="flex items-center gap-3 text-text-secondary">
+                      <span className="text-xl animate-pulse text-accent" aria-hidden="true">◌</span>
                       <span className="font-mono text-sm">KI sortiert in SINNHAFT-Sektionen …</span>
                     </div>
                   )}
@@ -563,23 +559,24 @@ export default function Trainer() {
                 {listening && (
                   <div className="mb-3 flex items-center gap-3 border border-critical/30 bg-critical/5 px-4 py-3 rounded-lg">
                     <span className="w-2 h-2 bg-critical rounded-full animate-pulse" />
-                    <span className="font-mono text-xs text-critical/90 leading-relaxed">Sprechen … (Button erneut klicken zum Stoppen)</span>
+                    <span className="font-mono text-xs text-critical leading-relaxed">Sprechen … zum Beenden „Diktat stoppen" tippen.</span>
                   </div>
                 )}
 
                 {speechError && (
-                  <div className="mb-3 text-xs text-critical border border-critical/30 bg-critical/10 p-3 rounded-lg leading-relaxed">
+                  <div role="alert" className="mb-3 text-xs text-critical border border-critical/30 bg-critical/10 p-3 rounded-lg leading-relaxed">
                     {speechError}
                   </div>
                 )}
 
                 {parseError && (
-                  <div className="mb-3 text-xs text-critical border border-critical/30 bg-critical/10 p-3 rounded-lg leading-relaxed">
+                  <div role="alert" className="mb-3 text-xs text-critical border border-critical/30 bg-critical/10 p-3 rounded-lg leading-relaxed">
                     {parseError}
                   </div>
                 )}
 
                 <textarea
+                  id="uebergabe-transkript"
                   ref={textareaRef}
                   value={transcript}
                   onChange={(e) => {
@@ -593,20 +590,19 @@ export default function Trainer() {
                 />
 
                 <div className="flex items-center gap-3 mt-3 flex-wrap">
-                  <button
+                  <Button
+                    variant="primary"
+                    size="md"
                     onClick={parseTranscript}
                     disabled={!transcript.trim() || parsingState === 'parsing'}
-                    className="font-mono flex items-center gap-2 px-5 py-3 bg-accent hover:bg-accent/90 disabled:opacity-30 disabled:cursor-not-allowed text-bg-primary rounded-lg transition tracking-wider uppercase text-xs font-semibold active:scale-[0.98]"
+                    title={!transcript.trim() ? 'Erst Übergabe einsprechen oder tippen' : undefined}
                   >
-                    Auto-Parse in SINNHAFT-Felder →
-                  </button>
+                    In SINNHAFT-Felder sortieren <ArrowRightIcon className="h-4 w-4" />
+                  </Button>
                   {transcript && (
-                    <button
-                      onClick={resetTranscript}
-                      className="font-mono text-xs tracking-wider uppercase text-text-secondary hover:text-text-primary transition"
-                    >
-                      ↺ Leeren
-                    </button>
+                    <Button variant="ghost" size="sm" onClick={resetTranscript}>
+                      Text leeren
+                    </Button>
                   )}
                 </div>
               </div>
@@ -617,41 +613,35 @@ export default function Trainer() {
                 if (f.type === 'checklist') {
                   return (
                     <div key={f.key} className="border border-border rounded-xl p-4 bg-card">
-                      <label className="flex items-baseline gap-3 mb-3">
-                        <span
-                          className="font-bold text-2xl"
-                          style={{ color: scenario?.accent || '#22D3EE' }}
-                        >
+                      <div className="flex items-baseline gap-3 mb-3 flex-wrap" id={`lbl-${f.key}`}>
+                        <span className="font-bold text-2xl" style={{ color: scenario?.accent || ACCENT }} aria-hidden="true">
                           {f.letter}
                         </span>
                         <span className="text-text-primary text-base font-semibold">{f.label}</span>
                         <span className="text-text-muted text-xs">— {f.hint}</span>
-                      </label>
-                      <div className="space-y-2 ml-9">
+                      </div>
+                      <div className="space-y-1 sm:ml-9" role="group" aria-labelledby={`lbl-${f.key}`}>
                         {f.items.map((item, i) => (
-                          <label key={i} className="flex items-center gap-3 cursor-pointer group">
-                            <button
-                              type="button"
-                              role="checkbox"
-                              aria-checked={!!startChecks[i]}
-                              aria-label={item}
-                              onClick={() => setStartChecks({ ...startChecks, [i]: !startChecks[i] })}
-                              className={`w-5 h-5 border rounded-md flex items-center justify-center transition ${
-                                startChecks[i]
-                                  ? 'bg-accent border-accent'
-                                  : 'border-border-strong hover:border-text-muted'
+                          <button
+                            key={i}
+                            type="button"
+                            role="checkbox"
+                            aria-checked={!!startChecks[i]}
+                            onClick={() => setStartChecks({ ...startChecks, [i]: !startChecks[i] })}
+                            className="group w-full min-h-11 flex items-center gap-3 rounded-lg px-2 -mx-2 text-left hover:bg-card-hover transition"
+                          >
+                            <span
+                              aria-hidden="true"
+                              className={`w-5 h-5 border rounded-md flex items-center justify-center flex-shrink-0 transition ${
+                                startChecks[i] ? 'bg-accent border-accent' : 'border-border-strong group-hover:border-text-muted'
                               }`}
                             >
                               {startChecks[i] && <span className="text-bg-primary text-xs">✓</span>}
-                            </button>
-                            <span
-                              className={`text-sm transition ${
-                                startChecks[i] ? 'text-text-primary' : 'text-text-secondary group-hover:text-text-primary'
-                              }`}
-                            >
+                            </span>
+                            <span className={`text-sm transition ${startChecks[i] ? 'text-text-primary' : 'text-text-secondary group-hover:text-text-primary'}`}>
                               {item}
                             </span>
-                          </label>
+                          </button>
                         ))}
                       </div>
                     </div>
@@ -659,7 +649,7 @@ export default function Trainer() {
                 }
                 if (f.type === 'simulated') {
                   return (
-                    <div key={f.key} className="border-l-2 border-border-strong pl-4 py-2 opacity-60">
+                    <div key={f.key} className="border-l-2 border-border-strong pl-4 py-2">
                       <div className="flex items-baseline gap-3">
                         <span className="font-bold text-2xl text-text-muted">{f.letter}</span>
                         <span className="text-text-secondary text-base font-semibold">{f.label}</span>
@@ -675,10 +665,11 @@ export default function Trainer() {
                 }
                 return (
                   <div key={f.key}>
-                    <label className="flex items-baseline gap-3 mb-2 flex-wrap">
+                    <label htmlFor={`feld-${f.key}`} className="flex items-baseline gap-3 mb-2 flex-wrap">
                       <span
                         className="font-bold text-2xl"
-                        style={{ color: scenario?.accent || '#22D3EE' }}
+                        style={{ color: scenario?.accent || ACCENT }}
+                        aria-hidden="true"
                       >
                         {f.letter}
                       </span>
@@ -686,6 +677,7 @@ export default function Trainer() {
                       <span className="text-text-muted text-xs">— {f.hint}</span>
                     </label>
                     <textarea
+                      id={`feld-${f.key}`}
                       value={inputs[f.key] || ''}
                       onChange={(e) => setInputs({ ...inputs, [f.key]: e.target.value })}
                       rows={f.rows}
@@ -704,8 +696,8 @@ export default function Trainer() {
             </div>
 
             {error && (
-              <div className="mt-6 border border-critical/30 bg-critical/10 text-critical text-sm p-3 rounded-lg">
-                Fehler beim Bewerten: {error}
+              <div role="alert" className="mt-6 border border-critical/30 bg-critical/10 text-critical text-sm p-3 rounded-lg">
+                Bewertung fehlgeschlagen: {error} — deine Eingaben bleiben erhalten, bitte erneut abgeben.
               </div>
             )}
 
@@ -714,21 +706,18 @@ export default function Trainer() {
                 <span className="font-mono text-xs text-text-muted">Mindestens eine Sektion ausfüllen, dann unten abgeben.</span>
               ) : null}
               {scenario && (
-                <button
-                  onClick={() => setView('brief')}
-                  className="font-mono text-xs tracking-wider uppercase text-text-secondary hover:text-text-primary transition"
-                >
-                  ← Briefing nochmal
-                </button>
+                <Button variant="ghost" size="sm" onClick={() => setView('brief')}>
+                  <ChevronLeftIcon className="h-4 w-4" /> Briefing ansehen
+                </Button>
               )}
             </div>
           </div>
         )}
 
         {view === 'evaluating' && (
-          <div className="py-32 text-center">
+          <div className="py-32 text-center" role="status" aria-live="polite">
             <div className="inline-block">
-              <div className="text-6xl animate-pulse" style={{ color: scenario?.accent || '#22D3EE' }}>
+              <div className="text-6xl animate-pulse" style={{ color: scenario?.accent || ACCENT }} aria-hidden="true">
                 ◌
               </div>
               <div className="mt-6 text-text-secondary">
@@ -748,7 +737,7 @@ export default function Trainer() {
             </div>
 
             <div className="grid sm:grid-cols-[auto_1fr] gap-8 items-start mb-12">
-              <ScoreRing score={feedback.score} accent={scenario?.accent || '#22D3EE'} />
+              <ScoreRing score={feedback.score} accent={scenario?.accent || ACCENT} />
               <div>
                 <div className="font-mono text-text-muted text-xs tracking-widest uppercase mb-2">Gesamteindruck</div>
                 <div className="font-semibold text-2xl leading-snug text-text-primary">
@@ -764,14 +753,13 @@ export default function Trainer() {
               <div className="space-y-2">
                 {SINNHAFT.filter((f) => f.type !== 'simulated').map((f) => {
                   const sf = feedback.sectionFeedback?.find((s) => s.key === f.key);
-                  const color =
-                    sf?.rating === 'gut' ? '#10B981' : sf?.rating === 'teilweise' ? '#F59E0B' : '#EF4444';
+                  const color = RATING_COLOR[sf?.rating] || 'var(--color-critical)';
                   return (
                     <div
                       key={f.key}
                       className="flex gap-4 p-4 border border-border bg-card rounded-lg"
                     >
-                      <div className="w-1 self-stretch rounded-full" style={{ backgroundColor: color }} />
+                      <div className="w-1 self-stretch rounded-full" style={{ backgroundColor: color }} aria-hidden="true" />
                       <div className="flex-1">
                         <div className="flex items-baseline gap-3 mb-1 flex-wrap">
                           <span className="font-bold" style={{ color }}>
@@ -874,30 +862,32 @@ export default function Trainer() {
       {/* Fixierte Aktions-Leiste: primäre Aktion + Timer immer im Daumenbereich. */}
       {view === 'brief' && scenario && (
         <ActionBar maxWidthClass="max-w-5xl">
-          <button
-            onClick={() => setView('practice')}
-            className="font-mono flex-1 px-8 py-4 bg-accent text-bg-primary rounded-lg hover:bg-accent/90 transition tracking-wider uppercase text-sm font-semibold active:scale-[0.98]"
-          >
-            Übergabe starten →
-          </button>
+          <Button variant="primary" size="lg" className="flex-1" onClick={() => setView('practice')}>
+            Übergabe starten <ArrowRightIcon className="h-5 w-5" />
+          </Button>
         </ActionBar>
       )}
       {view === 'practice' && (
         <ActionBar maxWidthClass="max-w-5xl">
           <Timer seconds={elapsed} />
-          <button
+          <Button
+            variant="primary"
+            size="lg"
+            className="flex-1"
             onClick={handleSubmit}
             disabled={Object.values(inputs).every((v) => !v?.trim())}
             title={Object.values(inputs).every((v) => !v?.trim()) ? 'Mindestens eine Sektion ausfüllen' : undefined}
-            className="font-mono flex-1 px-6 py-4 bg-accent text-bg-primary rounded-lg hover:bg-accent/90 disabled:opacity-30 disabled:cursor-not-allowed transition tracking-wider uppercase text-sm font-semibold active:scale-[0.98]"
           >
-            Übergabe abgeben →
-          </button>
+            Übergabe abgeben <ArrowRightIcon className="h-5 w-5" />
+          </Button>
         </ActionBar>
       )}
       {view === 'feedback' && feedback && (
         <ActionBar maxWidthClass="max-w-5xl">
-          <button
+          <Button
+            variant="primary"
+            size="lg"
+            className="flex-1"
             onClick={() => {
               setInputs({});
               setStartChecks({});
@@ -908,19 +898,15 @@ export default function Trainer() {
               finalTranscriptRef.current = '';
               setView('practice');
             }}
-            className="font-mono flex-1 px-6 py-3 bg-accent text-bg-primary rounded-lg hover:bg-accent/90 transition tracking-wider uppercase text-xs font-semibold active:scale-[0.98]"
           >
             Nochmal üben
-          </button>
-          <button
-            onClick={reset}
-            className="font-mono px-6 py-3 border border-border-strong hover:border-text-muted text-text-secondary hover:text-text-primary rounded-lg transition tracking-wider uppercase text-xs"
-          >
+          </Button>
+          <Button variant="ghost" size="lg" onClick={reset}>
             Neues Szenario
-          </button>
+          </Button>
         </ActionBar>
       )}
-    </div>
+    </main>
   );
 }
 
@@ -928,7 +914,7 @@ function InfoBlock({ label, value, accent }) {
   return (
     <div className="border-l border-border-strong pl-4">
       <div className="font-mono text-[10px] tracking-[0.25em] uppercase text-text-muted mb-1">{label}</div>
-      <div className="text-base leading-snug font-semibold" style={{ color: accent || '#F8FAFC' }}>
+      <div className="text-base leading-snug font-semibold" style={{ color: accent || 'var(--color-text-primary)' }}>
         {value}
       </div>
     </div>
@@ -950,11 +936,11 @@ function Timer({ seconds }) {
   const warn = seconds > 90;
   const crit = seconds > 120;
   return (
-    <div className="font-mono flex items-baseline gap-2 border border-border px-4 py-2 rounded-lg bg-card">
+    <div role="timer" aria-label={`Verstrichene Zeit ${m}:${s} von 2:00`} className="font-mono flex items-center gap-2 border border-border px-3 sm:px-4 min-h-12 rounded-lg bg-card">
       <span
         className={`w-2 h-2 rounded-full ${crit ? 'bg-critical' : warn ? 'bg-warning' : 'bg-success'} animate-pulse`}
       />
-      <span className="text-[10px] tracking-widest uppercase text-text-muted">Zeit</span>
+      <span className="hidden sm:inline text-[10px] tracking-widest uppercase text-text-muted">Zeit</span>
       <span className={`text-base ${crit ? 'text-critical' : warn ? 'text-warning' : 'text-text-primary'}`}>
         {m}:{s}
       </span>
@@ -968,9 +954,9 @@ function ScoreRing({ score, accent }) {
   const c = 2 * Math.PI * r;
   const offset = c - (score / 100) * c;
   return (
-    <div className="relative w-[140px] h-[140px]">
-      <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
-        <circle cx="60" cy="60" r={r} fill="none" stroke="#172033" strokeWidth="6" />
+    <div className="relative w-[140px] h-[140px]" role="img" aria-label={`Bewertung: ${score} von 100 Punkten`}>
+      <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120" aria-hidden="true">
+        <circle cx="60" cy="60" r={r} fill="none" stroke="var(--color-card-hover)" strokeWidth="6" />
         <circle
           cx="60"
           cy="60"

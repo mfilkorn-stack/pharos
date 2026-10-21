@@ -15,7 +15,6 @@ export const CATEGORIES = [
   {
     key: "kardio",
     label: "Kardio",
-    emoji: "🫀",
     tint: "critical",
     Icon: HeartIcon,
     groups: new Set(["betablocker","acehemmer","sartan","ca_antagonist","schleifendiuretikum","thiazid","kalium_diuretikum","glykosid","antiarrhythmikum","statin","alphablocker"]),
@@ -23,7 +22,6 @@ export const CATEGORIES = [
   {
     key: "atemwege",
     label: "COPD",
-    emoji: "🫁",
     tint: "info",
     Icon: LungsIcon,
     groups: new Set(["saba","ics","lama"]),
@@ -31,7 +29,6 @@ export const CATEGORIES = [
   {
     key: "antikoag",
     label: "Antikoag.",
-    emoji: "🩸",
     tint: "critical",
     Icon: DropletIcon,
     groups: new Set(["doak","vka","tah","lmwh","heparin_unfrakt","vitamin_k","gerinnungsfaktor"]),
@@ -42,7 +39,6 @@ export const CATEGORIES = [
     // Lithium und Psychostimulanzien — "Neurologie" allein war irreführend.
     key: "neuro",
     label: "Neuro/Psyche",
-    emoji: "🧠",
     tint: "neuro",
     Icon: BrainIcon,
     groups: new Set(["antiepileptikum","parkinson","ssri","snri","trizyklisch","mirtazapin","benzodiazepin","z_substanz","triptan","antipsychotikum","lithium","psychostimulans"]),
@@ -50,7 +46,6 @@ export const CATEGORIES = [
   {
     key: "schmerz",
     label: "Schmerz",
-    emoji: "🩹",
     tint: "warning",
     Icon: PillIcon,
     groups: new Set(["opioid","nsar","nonopioid_analget"]),
@@ -58,7 +53,6 @@ export const CATEGORIES = [
   {
     key: "diabetes",
     label: "Diabetes",
-    emoji: "🍬",
     tint: "accent",
     Icon: SyringeIcon,
     groups: new Set(["insulin","biguanid","sulfonylharnstoff","sglt2","dpp4","glp1_ra"]),
@@ -66,7 +60,6 @@ export const CATEGORIES = [
   {
     key: "infekt",
     label: "Infekt",
-    emoji: "🦠",
     tint: "info",
     Icon: FlaskIcon,
     groups: new Set(["penicillin","cephalosporin","makrolid","fluorchinolon","tetracyclin","sulfonamid","nitroimidazol","azol_antimykot"]),
@@ -74,7 +67,6 @@ export const CATEGORIES = [
   {
     key: "allergie",
     label: "Allergie",
-    emoji: "🤧",
     tint: "neuro",
     Icon: DropletIcon,
     groups: new Set(["h1_antihist2","antihistaminikum1","glukokortikoid"]),
@@ -82,7 +74,6 @@ export const CATEGORIES = [
   {
     key: "drogen",
     label: "Drogen",
-    emoji: "🧪",
     tint: "drogen",
     Icon: FlaskIcon,
     groups: new Set(["drogen_opioide","drogen_stimulanzien","drogen_halluzinogene","drogen_cannabinoide","drogen_dissoziativa","drogen_dampfdrogen","drogen_inhalantien"]),
@@ -90,7 +81,6 @@ export const CATEGORIES = [
   {
     key: "kritisch",
     label: "Kritisch",
-    emoji: "⚠️",
     tint: "warning",
     Icon: AlertTriangleIcon,
     isCritical: true,
@@ -99,7 +89,6 @@ export const CATEGORIES = [
   {
     key: "saa",
     label: "SAA/BPR",
-    emoji: "🚑",
     tint: "accent",
     Icon: MedicalCrossIcon,
     isSaa: true,
@@ -113,7 +102,6 @@ export const CATEGORIES = [
   {
     key: "andere",
     label: "Andere",
-    emoji: "💊",
     tint: "neutral",
     Icon: PillIcon,
     isOther: true,
@@ -132,8 +120,8 @@ const TINT_CLASSES = {
   info: "bg-info/10 text-info",
   accent: "bg-accent/10 text-accent",
   warning: "bg-warning/10 text-warning",
-  neuro: "bg-purple-500/15 text-purple-400",
-  drogen: "bg-amber-500/15 text-amber-400",
+  neuro: "bg-neuro/15 text-neuro",
+  drogen: "bg-drogen/15 text-drogen",
   neutral: "bg-card text-text-secondary",
 };
 

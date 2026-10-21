@@ -12,11 +12,11 @@ export const STEP_LABELS = ["Medikament", "Indikation", "Patient", "Kontraindika
 export function StepFrame({ step, context, children, onBack, footer }) {
   return (
     <div className="max-w-2xl mx-auto px-4 pt-5 pb-48 w-full">
-      <div className="flex items-center justify-between mb-2">
-        <span className="font-mono text-[10px] tracking-[0.2em] uppercase text-text-muted">Schritt {step} / 8</span>
-        <span className="text-xs text-text-secondary">{STEP_LABELS[step - 1]}</span>
+      <div className="flex items-baseline justify-between gap-3 mb-2">
+        <h1 className="text-lg font-semibold text-text-primary tracking-tight">{STEP_LABELS[step - 1]}</h1>
+        <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-text-muted flex-shrink-0">Schritt {step} / 8</span>
       </div>
-      <div className="flex gap-1 mb-4" aria-hidden="true">
+      <div className="flex gap-1 mb-4" role="progressbar" aria-label="Fortschritt Medigabe" aria-valuemin={1} aria-valuemax={8} aria-valuenow={step} aria-valuetext={`Schritt ${step} von 8: ${STEP_LABELS[step - 1]}`}>
         {STEP_LABELS.map((_, i) => (
           <span key={i} className={`flex-1 h-1 rounded-full ${i < step ? "bg-accent" : "bg-border"}`} />
         ))}
@@ -29,7 +29,7 @@ export function StepFrame({ step, context, children, onBack, footer }) {
         </div>
       ) : null}
       {children}
-      <p className="mt-6 text-xs text-text-muted border-t border-border pt-3">
+      <p className="mt-6 text-xs text-text-muted border-t border-border pt-3 print:text-black">
         Entscheidungsunterstützung — kein Ersatz für ärztliche Anordnung / gültige SAA-Freigabe.
       </p>
 
@@ -56,10 +56,11 @@ export function CheckRow({ checked, onToggle, children, tone = "accent" }) {
     <button
       type="button"
       onClick={onToggle}
-      aria-pressed={checked}
+      role="checkbox"
+      aria-checked={!!checked}
       className="w-full min-h-[56px] flex items-center gap-3 px-3 py-2.5 bg-card border border-border rounded-lg text-left hover:bg-card-hover transition-colors"
     >
-      <span className={`h-6 w-6 rounded-md border-2 flex items-center justify-center flex-shrink-0 ${checked ? CHECK_TONES[tone] : "border-border-strong text-transparent"}`}>
+      <span className={`h-6 w-6 rounded-md border-2 flex items-center justify-center flex-shrink-0 ${checked ? CHECK_TONES[tone] : "border-border-strong text-transparent"}`} aria-hidden="true">
         <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M3 8.5l3.5 3.5L13 4" /></svg>
       </span>
       <span className="text-sm text-text-primary leading-snug">{children}</span>
@@ -84,7 +85,7 @@ export function JaNeinRow({ text, value, onChange, highlight }) {
   return (
     <div className={`flex flex-wrap items-center gap-3 px-3 py-2.5 bg-card border rounded-lg ${highlight ? "border-critical/60" : "border-border"}`}>
       <span className="flex-1 min-w-[55%] text-sm text-text-primary leading-snug break-words [overflow-wrap:anywhere]">{text}</span>
-      <div className="flex gap-1.5 flex-shrink-0 ml-auto">
+      <div className="flex gap-1.5 flex-shrink-0 ml-auto" role="group" aria-label="Liegt vor?">
         {seg("nein", "Nein", "border-success/50 bg-success/10 text-success")}
         {seg("ja", "Ja", "border-critical/50 bg-critical/10 text-critical")}
       </div>
@@ -94,9 +95,9 @@ export function JaNeinRow({ text, value, onChange, highlight }) {
 
 // Segment-Auswahl (z. B. Applikationsweg, Geschlecht). Optionen können
 // disabled sein (z. B. Route unterhalb der Altersgrenze gesperrt).
-export function SegPick({ options, value, onChange }) {
+export function SegPick({ options, value, onChange, labelledBy }) {
   return (
-    <div className="flex gap-2 flex-wrap">
+    <div className="flex gap-2 flex-wrap" role="group" aria-labelledby={labelledBy}>
       {options.map((o) => (
         <button
           key={o.value}

@@ -24,7 +24,8 @@ export default function GiftnotrufBanner() {
         </div>
         <a
           href={telHref(notruf.tel)}
-          className="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg bg-critical text-bg-primary text-sm font-semibold transition-opacity hover:opacity-90 flex-shrink-0"
+          aria-label={`${notruf.label} ${notruf.tel} anrufen`}
+          className="inline-flex items-center gap-1.5 h-11 px-4 rounded-lg bg-critical text-bg-primary text-sm font-semibold transition-opacity hover:opacity-90 flex-shrink-0"
         >
           <PhoneIcon className="h-4 w-4" />
           {notruf.tel}
@@ -35,19 +36,22 @@ export default function GiftnotrufBanner() {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center justify-between gap-2 px-3 py-2 border-t border-critical/15 text-sm text-text-secondary hover:text-text-primary hover:bg-card-hover/50 transition-colors cursor-pointer"
+        aria-expanded={open}
+        aria-controls="giz-liste"
+        className="w-full min-h-11 flex items-center justify-between gap-2 px-3 py-2 border-t border-critical/15 text-sm text-text-secondary hover:text-text-primary hover:bg-card-hover/50 transition-colors cursor-pointer"
       >
         <span>Giftinformationszentralen (regional)</span>
-        <ChevronDownIcon className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
+        <ChevronDownIcon className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} aria-hidden="true" />
       </button>
 
       {open ? (
-        <ul className="px-3 pb-3 pt-1 space-y-1">
+        <ul id="giz-liste" className="px-3 pb-3 pt-1 space-y-1">
           {giz.map((g) => (
             <li key={g.tel}>
               <a
                 href={telHref(g.tel)}
-                className="flex items-center justify-between gap-3 rounded-lg px-2.5 py-2 hover:bg-card-hover transition-colors"
+                aria-label={`Giftnotruf ${g.ort} ${g.tel} anrufen`}
+                className="flex items-center justify-between gap-3 rounded-lg px-2.5 py-2 min-h-11 hover:bg-card-hover transition-colors"
               >
                 <span className="min-w-0">
                   <span className="block text-sm text-text-primary truncate">{g.ort}</span>

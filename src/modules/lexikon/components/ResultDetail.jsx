@@ -1,4 +1,5 @@
 import Badge from "./ui/Badge.jsx";
+import DetailSection from "./ui/DetailSection.jsx";
 import { buildSources, isDrug as isDrugEntry } from "../lib/sources.js";
 import SaaDetail from "./SaaDetail.jsx";
 import {
@@ -59,28 +60,9 @@ function fmtDate(iso) {
   catch { return ""; }
 }
 
-const TINT_CLASSES = {
-  info: "bg-info/10 text-info",
-  success: "bg-success/10 text-success",
-  warning: "bg-warning/10 text-warning",
-  accent: "bg-accent/10 text-accent",
-  critical: "bg-critical/10 text-critical",
-};
-
-function Section({ icon, tint, title, children }) {
-  const tintCls = TINT_CLASSES[tint] || "bg-card text-text-secondary";
-  const Icon = ICON_MAP[icon] || InfoIcon;
-  return (
-    <section>
-      <div className="flex items-center gap-2 mb-3">
-        <span className={`h-7 w-7 rounded-lg flex items-center justify-center flex-shrink-0 ${tintCls}`}>
-          <Icon className="h-4 w-4" />
-        </span>
-        <h3 className="text-sm font-semibold text-text-primary">{title}</h3>
-      </div>
-      <div className="ml-9">{children}</div>
-    </section>
-  );
+// Abschnitt-Wrapper: Icon per Schlüssel, Darstellung zentral in ui/DetailSection.
+function Section({ icon, ...rest }) {
+  return <DetailSection icon={ICON_MAP[icon] || InfoIcon} {...rest} />;
 }
 
 function mapNotfallLevel(level) {
@@ -110,7 +92,7 @@ export default function ResultDetail({ item, isFavorite, onToggleFavorite }) {
       <div>
         <div className="flex items-start gap-2">
           <div className="flex-1 flex items-center gap-2 flex-wrap min-w-0">
-            <h2 className="text-xl font-bold text-text-primary">{item.wirkstoff}</h2>
+            <h2 className="text-xl font-bold text-text-primary break-words [overflow-wrap:anywhere]">{item.wirkstoff}</h2>
             {item.atc ? (
               <span className="font-mono text-xs text-text-secondary border border-border rounded px-1.5 py-0.5 flex-shrink-0">
                 {item.atc}
@@ -122,7 +104,8 @@ export default function ResultDetail({ item, isFavorite, onToggleFavorite }) {
               type="button"
               onClick={() => onToggleFavorite(item.id)}
               aria-label={isFavorite ? "Favorit entfernen" : "Als Favorit markieren"}
-              className={`h-9 w-9 inline-flex items-center justify-center rounded-md transition-colors flex-shrink-0 ${
+              aria-pressed={!!isFavorite}
+              className={`h-11 w-11 -mt-1 -mr-2 inline-flex items-center justify-center rounded-lg transition-colors flex-shrink-0 ${
                 isFavorite
                   ? "text-warning bg-warning/10 hover:bg-warning/15"
                   : "text-text-muted hover:text-warning hover:bg-card-hover"
@@ -139,8 +122,8 @@ export default function ResultDetail({ item, isFavorite, onToggleFavorite }) {
 
         {/* Source badges */}
         {isPending ? (
-          <div className="flex items-center gap-2 mt-3">
-            <span className="inline-block h-2 w-2 rounded-full bg-warning animate-pulse" />
+          <div className="flex items-center gap-2 mt-3" role="status">
+            <span className="inline-block h-2 w-2 rounded-full bg-warning animate-pulse" aria-hidden="true" />
             <span className="text-sm text-warning font-mono">Wird via KI angereichert …</span>
           </div>
         ) : isRejected ? (
@@ -154,15 +137,6 @@ export default function ResultDetail({ item, isFavorite, onToggleFavorite }) {
           <Badge variant="neutral" size="md" className="mt-3">Generische Gruppeninfo</Badge>
         ) : null}
       </div>
-
-      {/* Wirkung — synthetic; bei Drogen + Platzhalter/Reject ausgeblendet (kein echter Wirkstoff) */}
-      {!isDrug && !isPending && !isRejected ? (
-        <Section icon="droplet" tint="info" title="Wirkung">
-          <p className="text-sm text-text-secondary leading-relaxed">
-            Wirkstoff der Gruppe {item.gruppe}.
-          </p>
-        </Section>
-      ) : null}
 
       {/* Indikationen */}
       {item.indikationen?.length ? (
@@ -319,6 +293,7 @@ export default function ResultDetail({ item, isFavorite, onToggleFavorite }) {
                         href={s.url}
                         target="_blank"
                         rel="noopener noreferrer"
+                        aria-label={`${s.publisher || s.domain} (öffnet in neuem Tab)`}
                         className="flex items-start gap-2 text-sm text-accent hover:underline"
                       >
                         <LinkIcon className="h-4 w-4 mt-0.5 flex-shrink-0" />
@@ -349,6 +324,7 @@ export default function ResultDetail({ item, isFavorite, onToggleFavorite }) {
                         href={s.url}
                         target="_blank"
                         rel="noopener noreferrer"
+                        aria-label={`${s.publisher || s.domain} (öffnet in neuem Tab)`}
                         className="flex items-start gap-2 text-sm text-text-secondary hover:underline"
                       >
                         <LinkIcon className="h-4 w-4 mt-0.5 flex-shrink-0" />

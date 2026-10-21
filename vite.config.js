@@ -15,19 +15,26 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["manifest.webmanifest"],
+      includeAssets: ["icons/icon.svg", "icons/apple-touch-icon.png"],
       manifest: {
         name: "Pharos — Werkzeuge für den Einsatz",
         short_name: "Pharos",
-        description: "Wirkstoff-Lexikon und SINNHAFT-Übergabe-Trainer für Rettungsfachpersonal.",
+        description: "Wirkstoff-Lexikon, SAA-Medigabe und SINNHAFT-Übergabe-Trainer für Rettungsfachpersonal.",
+        lang: "de",
         start_url: "/",
         display: "standalone",
         background_color: "#050816",
         theme_color: "#050816",
-        icons: [],
+        icons: [
+          { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+          { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
+          { src: "/icons/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
+        ],
       },
       workbox: {
-        globPatterns: ["**/*.{js,css,html,svg,webmanifest}"],
+        globPatterns: ["**/*.{js,css,html,svg,png,woff2,webmanifest}"],
+        // Nur Latin-Fonts vorab cachen; andere Subsets lädt der Browser bei Bedarf.
+        globIgnores: ["**/*-{cyrillic,cyrillic-ext,greek,greek-ext,vietnamese}-*.woff2"],
         runtimeCaching: [
           {
             urlPattern: /\/tesseract\/.+\.traineddata$/,

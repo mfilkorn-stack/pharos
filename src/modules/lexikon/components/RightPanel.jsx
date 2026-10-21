@@ -2,7 +2,7 @@ import ResultDetail from "./ResultDetail.jsx";
 
 export default function RightPanel({ item, isFavorite, onToggleFavorite }) {
   return (
-    <aside className="w-[400px] flex-shrink-0 h-screen sticky top-0 border-l border-border bg-bg-secondary overflow-y-auto">
+    <aside aria-label="Wirkstoff-Details" className="w-[400px] flex-shrink-0 h-screen sticky top-0 border-l border-border bg-bg-secondary overflow-y-auto print:hidden">
       {item ? (
         <div className="p-6">
           <ResultDetail item={item} isFavorite={isFavorite} onToggleFavorite={onToggleFavorite} />
@@ -15,7 +15,7 @@ export default function RightPanel({ item, isFavorite, onToggleFavorite }) {
             </svg>
           </div>
           <p className="text-sm font-medium text-text-secondary">Wirkstoff auswählen</p>
-          <p className="text-xs text-text-muted mt-1">Klicke auf einen Eintrag links für Details</p>
+          <p className="text-xs text-text-muted mt-1">Eintrag in der Liste wählen, um Details zu sehen.</p>
         </div>
       )}
     </aside>

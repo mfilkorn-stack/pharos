@@ -1,0 +1,127 @@
+name: Release
+
+# Release nach jedem Merge auf main: erst prüfen (Tests + Build), dann per SSH auf
+# den Hetzner-Server ausrollen (deploy/deploy.sh).
+#
+# Betriebsregel aus DEPLOY-HETZNER.md: „Kein Deploy/Restart 9–18 Uhr ohne Rückfrage."
+# Merges in diesem Fenster werden geprüft, aber nicht ausgerollt. Der Abendlauf
+# (19:15 Uhr Berlin) holt sie automatisch nach. Sofort-Release tagsüber nur bewusst:
+# „Run workflow" mit Häkchen bei „Sperrzeit 9–18 Uhr übergehen".
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # 19:15 Berlin: 17:15 UTC in der Sommerzeit, 18:15 UTC in der Winterzeit.
+    # Der Gate-Job lässt nur den zur aktuellen Zeitzone passenden Lauf ausrollen
+    # (robust auch dann, wenn GitHub den Cron verspätet startet).
+    - cron: "15 17 * * *"
+    - cron: "15 18 * * *"
+  workflow_dispatch:
+    inputs:
+      override_window:
+        description: "Sperrzeit 9–18 Uhr übergehen (Release sofort)"
+        type: boolean
+        default: false
+      force:
+        description: "Auch ohne neuen Commit neu bauen"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+# Nie zwei Releases gleichzeitig; ein laufender Release wird nicht abgebrochen.
+concurrency:
+  group: release-production
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Tests & Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # Gleiche Major-Version wie auf dem Server (DEPLOY-HETZNER.md, NodeSource 20.x).
+          node-version: 20
+          cache: npm
+
+      - run: npm ci --no-audit --no-fund
+      - run: npm test
+      - run: npm run build
+
+  gate:
+    name: Zeitfenster prüfen
+    needs: verify
+    runs-on: ubuntu-latest
+    outputs:
+      allowed: ${{ steps.window.outputs.allowed }}
+    steps:
+      - id: window
+        env:
+          EVENT: ${{ github.event_name }}
+          CRON: ${{ github.event.schedule }}
+          OVERRIDE: ${{ inputs.override_window }}
+        run: |
+          hour=$(TZ=Europe/Berlin date +%-H)
+          minute=$(TZ=Europe/Berlin date +%-M)
+          allowed=true
+          if [[ "$EVENT" == "schedule" ]]; then
+            # Sommerzeit (+0200) → der 17:15-UTC-Lauf, Winterzeit (+0100) → der 18:15-UTC-Lauf.
+            if [[ "$(TZ=Europe/Berlin date +%z)" == "+0200" ]]; then want="15 17 * * *"; else want="15 18 * * *"; fi
+            [[ "$CRON" == "$want" ]] || allowed=false
+          elif (( hour >= 9 && hour < 18 )) && [[ "$OVERRIDE" != "true" ]]; then
+            allowed=false
+            echo "::notice title=Release verschoben::Merge um ${hour}:$(printf %02d "$minute") Uhr liegt in der Sperrzeit 9–18 Uhr. Der Abendlauf um 19:15 Uhr rollt aus, oder manuell mit 'Sperrzeit übergehen' starten."
+          fi
+          echo "allowed=$allowed" >> "$GITHUB_OUTPUT"
+          echo "Berlin ${hour}:$(printf %02d "$minute") · Event ${EVENT} · Release erlaubt: ${allowed}"
+
+  deploy:
+    name: Release auf www.pharos.team
+    needs: gate
+    if: needs.gate.outputs.allowed == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: production
+      url: https://www.pharos.team
+    steps:
+      - name: SSH-Zugang einrichten
+        env:
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          if [[ -z "$SSH_KEY" || -z "$KNOWN_HOSTS" ]]; then
+            echo "::error::Secrets DEPLOY_SSH_KEY und DEPLOY_KNOWN_HOSTS fehlen (Settings → Environments → production)."
+            exit 1
+          fi
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          # Host-Key fest hinterlegt statt StrictHostKeyChecking=no (MITM-Schutz).
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Release ausführen
+        env:
+          HOST: ${{ secrets.DEPLOY_HOST }}
+          SSH_USER: ${{ secrets.DEPLOY_USER || 'deploy' }}
+          SHA: ${{ github.event_name == 'push' && github.sha || '' }}
+          FORCE: ${{ inputs.force && '1' || '0' }}
+        run: |
+          # Bei push genau den geprüften Commit ausrollen, sonst den aktuellen main-Stand.
+          target="${SHA:-origin/main}"
+          # Das Skript läuft in der Fassung aus origin/main (git show), ohne vorher das
+          # Arbeitsverzeichnis anzufassen — so greift auch der erste Release sauber.
+          ssh -i ~/.ssh/deploy_key -o BatchMode=yes -o ConnectTimeout=20 "$SSH_USER@$HOST" \
+            "cd /opt/pharos && git fetch --quiet origin main && git show origin/main:deploy/deploy.sh | FORCE=$FORCE bash -s -- '$target'"
+
+      - name: Öffentlicher Smoke-Test
+        run: |
+          curl -fsS --retry 5 --retry-delay 3 https://www.pharos.team/health
+          echo
+          curl -fsS -o /dev/null -w "Startseite: HTTP %{http_code}\n" https://www.pharos.team/

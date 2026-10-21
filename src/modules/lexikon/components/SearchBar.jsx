@@ -11,7 +11,7 @@ const ERROR_MESSAGES = {
   "aborted": null, // Nutzer hat gestoppt, kein Fehler
 };
 
-export default function SearchBar({ value, onChange, hint }) {
+export default function SearchBar({ value, onChange, hint, inputRef }) {
   const stopRef = useRef(null);
   const [listening, setListening] = useState(false);
   const [supported] = useState(() => isSpeechSupported());
@@ -64,13 +64,17 @@ export default function SearchBar({ value, onChange, hint }) {
         <SearchIcon className="h-5 w-5" />
       </span>
       <input
-        type="text"
-        inputMode="search"
-        placeholder={listening ? "Sprechen … (klick auf Mikrofon zum Stoppen)" : "Suche Wirkstoff oder Handelsname…"}
+        ref={inputRef}
+        type="search"
+        enterKeyHint="search"
+        aria-label="Wirkstoff oder Handelsname suchen"
+        autoComplete="off"
+        autoCorrect="off"
+        spellCheck={false}
+        placeholder={listening ? "Sprechen …" : "Wirkstoff, Handelsname …"}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        autoFocus
-        className="w-full h-12 bg-card border border-border rounded-xl pl-12 pr-28 text-base text-text-primary placeholder:text-text-muted outline-none transition-colors duration-150 focus:border-accent/50 focus:bg-card-hover"
+        className="w-full h-12 bg-card border border-border rounded-xl pl-12 pr-32 [&::-webkit-search-cancel-button]:hidden text-base text-text-primary placeholder:text-text-muted outline-none transition-colors duration-150 focus:border-accent/50 focus:bg-card-hover"
       />
 
       <div className="absolute right-2 flex items-center gap-1">
@@ -79,7 +83,7 @@ export default function SearchBar({ value, onChange, hint }) {
             type="button"
             onClick={() => onChange("")}
             aria-label="Suche löschen"
-            className="h-8 w-8 inline-flex items-center justify-center rounded-md text-text-muted hover:text-text-primary hover:bg-card-hover transition-colors"
+            className="h-11 w-11 lg:h-9 lg:w-9 inline-flex items-center justify-center rounded-lg text-text-muted hover:text-text-primary hover:bg-card-hover transition-colors"
           >
             <XIcon className="h-4 w-4" />
           </button>
@@ -90,8 +94,9 @@ export default function SearchBar({ value, onChange, hint }) {
             type="button"
             onClick={toggleDictation}
             aria-label={listening ? "Diktat stoppen" : "Per Stimme suchen"}
+            aria-pressed={listening}
             title={listening ? "Diktat stoppen" : "Per Stimme suchen (DE)"}
-            className={`h-8 w-8 inline-flex items-center justify-center rounded-md transition-colors ${
+            className={`h-11 w-11 lg:h-9 lg:w-9 inline-flex items-center justify-center rounded-lg transition-colors ${
               listening
                 ? "bg-critical/15 text-critical animate-pulse"
                 : "text-text-muted hover:text-accent hover:bg-card-hover"
@@ -109,7 +114,7 @@ export default function SearchBar({ value, onChange, hint }) {
       </div>
     </div>
     {error ? (
-      <div className="text-xs text-critical px-1 leading-relaxed">{error}</div>
+      <div role="alert" className="text-xs text-critical px-1 leading-relaxed">{error}</div>
     ) : null}
     </div>
   );

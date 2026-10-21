@@ -29,7 +29,7 @@ const RISK_BAR_COLOR = {
 const SOURCE_BADGE = {
   "0b": { variant: "neutral", label: "Gruppe" },
   ki: { variant: "critical", label: "KI" },
-  unknown: { variant: "warning", label: "..." },
+  unknown: { variant: "warning", label: "lädt" },
   saa: { variant: "accent", label: "SAA/BPR" },
 };
 
@@ -52,32 +52,41 @@ export default function ResultCard({ item, isActive, onOpen, isFavorite, onToggl
   const sourceBadge = item.source === "ki" ? kiBadge(item) : (SOURCE_BADGE[item.source] || null);
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
+    // Karte selbst ist kein Button: der Haupt-Button (Name) spannt per ::after die
+    // ganze Fläche auf, Stern/Plus liegen darüber (z-10). So gibt es keine
+    // verschachtelten interaktiven Elemente (invalides HTML, kaputte Tab-Reihenfolge).
+    <article
       onClick={onOpen}
-      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onOpen(); } }}
-      aria-label={`${item.wirkstoff} öffnen`}
-      className={`group w-full flex items-stretch bg-card hover:bg-card-hover border rounded-xl overflow-hidden transition-all text-left cursor-pointer ${
+      className={`group relative w-full flex items-stretch bg-card hover:bg-card-hover border rounded-xl overflow-hidden transition-all text-left cursor-pointer ${
         isActive
           ? "border-accent/40 bg-card-hover"
           : "border-border hover:border-accent/30"
       }`}
     >
       {/* Risk bar */}
-      <div className={`w-1 ${barColor} flex-shrink-0`} />
+      <div className={`w-1 ${barColor} flex-shrink-0`} aria-hidden="true" />
 
       {/* Content */}
-      <div className="flex-1 flex items-center gap-4 p-4 sm:p-5 min-w-0">
+      <div className="flex-1 flex items-center gap-3 sm:gap-4 p-4 sm:p-5 min-w-0">
         {/* Category icon */}
-        <CategoryIcon item={item} />
+        {/* Mobil ausgeblendet: der 56-px-Block nahm der Textspalte ein Viertel der Breite. */}
+        <div className="hidden sm:block"><CategoryIcon item={item} /></div>
 
         {/* Main content grid */}
         <div className="flex-1 min-w-0 grid grid-cols-1 sm:grid-cols-[1fr_200px] gap-4">
           {/* Left: name + synonyms + group + indikationen */}
           <div className="min-w-0">
             <div className="flex items-center gap-2 min-w-0 flex-wrap">
-              <h3 className="text-base font-semibold text-text-primary truncate">{item.wirkstoff}</h3>
+              <h3 className="text-base font-semibold text-text-primary min-w-0">
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); onOpen(); }}
+                  aria-current={isActive ? "true" : undefined}
+                  className="text-left break-words [overflow-wrap:anywhere] focus-visible:outline-none after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-2 focus-visible:after:ring-accent"
+                >
+                  {item.wirkstoff}
+                </button>
+              </h3>
               {item.atc ? (
                 <span className="font-mono text-[11px] text-text-secondary border border-border rounded px-1.5 py-0.5 flex-shrink-0">
                   {item.atc}
@@ -141,10 +150,10 @@ export default function ResultCard({ item, isActive, onOpen, isFavorite, onToggl
         </div>
 
         {/* Add button (Dauermedikation-Pick-Modus) + Favorite star + Chevron */}
-        <div className="flex items-center gap-1 flex-shrink-0">
+        <div className="relative z-10 flex items-center gap-0.5 flex-shrink-0 -mr-2">
           {onAdd ? (
             isAdded ? (
-              <span className="h-8 w-8 inline-flex items-center justify-center rounded-md text-success bg-success/10">
+              <span className="h-11 w-11 inline-flex items-center justify-center rounded-lg text-success bg-success/10" role="img" aria-label={`${item.wirkstoff} hinzugefügt`}>
                 <CheckIcon className="h-4 w-4" />
               </span>
             ) : (
@@ -153,7 +162,7 @@ export default function ResultCard({ item, isActive, onOpen, isFavorite, onToggl
                 onClick={(e) => { e.stopPropagation(); onAdd(); }}
                 aria-label={`${item.wirkstoff} zur Dauermedikation hinzufügen`}
                 title="Zur Dauermedikation hinzufügen"
-                className="h-8 w-8 inline-flex items-center justify-center rounded-md text-accent bg-accent/10 hover:bg-accent/20 transition-colors"
+                className="h-11 w-11 inline-flex items-center justify-center rounded-lg text-accent bg-accent/10 hover:bg-accent/20 transition-colors"
               >
                 <PlusIcon className="h-4 w-4" />
               </button>
@@ -163,9 +172,10 @@ export default function ResultCard({ item, isActive, onOpen, isFavorite, onToggl
             <button
               type="button"
               onClick={(e) => { e.stopPropagation(); onToggleFavorite(item.id); }}
-              aria-label={isFavorite ? "Favorit entfernen" : "Als Favorit markieren"}
+              aria-label={isFavorite ? `${item.wirkstoff} aus Favoriten entfernen` : `${item.wirkstoff} als Favorit markieren`}
+              aria-pressed={!!isFavorite}
               title={isFavorite ? "Favorit entfernen" : "Als Favorit markieren"}
-              className={`h-8 w-8 inline-flex items-center justify-center rounded-md transition-colors cursor-pointer ${
+              className={`h-11 w-11 inline-flex items-center justify-center rounded-lg transition-colors cursor-pointer ${
                 isFavorite
                   ? "text-warning hover:bg-card-hover"
                   : "text-text-muted hover:text-warning hover:bg-card-hover"
@@ -174,9 +184,9 @@ export default function ResultCard({ item, isActive, onOpen, isFavorite, onToggl
               {isFavorite ? <StarFilledIcon className="h-4 w-4" /> : <StarIcon className="h-4 w-4" />}
             </button>
           ) : null}
-          <ChevronRightIcon className="h-5 w-5 text-text-muted group-hover:text-accent transition-colors" />
+          <ChevronRightIcon className="h-5 w-5 mx-1 text-text-muted group-hover:text-accent transition-colors" aria-hidden="true" />
         </div>
       </div>
-    </div>
+    </article>
   );
 }

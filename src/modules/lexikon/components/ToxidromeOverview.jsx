@@ -31,7 +31,7 @@ export default function ToxidromeOverview({ groups = {}, substanceCounts = {}, o
     <div className="space-y-5">
       {/* Header */}
       <div className="flex items-start gap-3">
-        <span className="h-9 w-9 rounded-lg bg-amber-500/15 text-amber-400 flex items-center justify-center flex-shrink-0">
+        <span className="h-9 w-9 rounded-lg bg-drogen/15 text-drogen flex items-center justify-center flex-shrink-0">
           <FlaskIcon className="h-4 w-4" />
         </span>
         <div className="flex-1 min-w-0">
@@ -67,11 +67,11 @@ export default function ToxidromeOverview({ groups = {}, substanceCounts = {}, o
               key={key}
               type="button"
               onClick={() => onPickClass?.(key)}
-              className="w-full text-left rounded-xl border border-amber-500/20 bg-amber-500/10 hover:bg-amber-500/20 transition-all p-4 space-y-3 cursor-pointer focus-visible:ring-2 focus-visible:ring-amber-400/50 focus-visible:outline-none"
+              className="w-full text-left rounded-xl border border-drogen/20 bg-drogen/10 hover:bg-drogen/20 transition-all p-4 space-y-3 cursor-pointer focus-visible:ring-2 focus-visible:ring-drogen/50 focus-visible:outline-none"
             >
               {/* Karten-Header */}
               <div className="flex items-start justify-between gap-2">
-                <h3 className="text-sm font-semibold text-amber-400 leading-snug">{label}</h3>
+                <h3 className="text-sm font-semibold text-drogen leading-snug">{label}</h3>
                 <span className="text-xs font-mono text-text-muted flex-shrink-0">
                   {count} {count === 1 ? "Substanz" : "Substanzen"}
                 </span>
@@ -83,7 +83,7 @@ export default function ToxidromeOverview({ groups = {}, substanceCounts = {}, o
                   {leitsymptome.map((sym) => (
                     <span
                       key={sym}
-                      className="text-xs bg-amber-500/15 text-amber-300 border border-amber-500/20 rounded-md px-2 py-0.5"
+                      className="text-xs bg-drogen/15 text-drogen border border-drogen/20 rounded-md px-2 py-0.5"
                     >
                       {sym}
                     </span>
@@ -95,7 +95,7 @@ export default function ToxidromeOverview({ groups = {}, substanceCounts = {}, o
               {hasAntidot ? (
                 <div className="flex items-center gap-1.5">
                   <span className="text-xs font-mono text-text-muted uppercase tracking-wider">Antidot:</span>
-                  <span className="text-xs font-semibold text-amber-400 bg-amber-500/20 border border-amber-500/30 rounded px-2 py-0.5">
+                  <span className="text-xs font-semibold text-drogen bg-drogen/20 border border-drogen/30 rounded px-2 py-0.5">
                     {antidot[0].mittel}
                   </span>
                 </div>

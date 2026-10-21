@@ -19,7 +19,7 @@ export default function Step5Aufklaerung({ aufkl, onPatch, onToggleItem, onAllIt
           <button
             type="button"
             onClick={onAllItems}
-            className="h-9 px-3 rounded-lg border border-accent/40 bg-accent/5 text-accent text-xs font-medium hover:bg-accent/10 transition-colors flex-shrink-0"
+            className="h-11 px-3 rounded-lg border border-accent/40 bg-accent/5 text-accent text-xs font-medium hover:bg-accent/10 transition-colors flex-shrink-0"
           >
             Alle abhaken
           </button>
@@ -34,21 +34,23 @@ export default function Step5Aufklaerung({ aufkl, onPatch, onToggleItem, onAllIt
       </section>
 
       <section>
-        <div className="text-xs text-text-muted mb-2">Einwilligungsfähigkeit vorhanden?</div>
+        <div className="text-xs text-text-muted mb-2" id="lbl-faehig">Einwilligungsfähigkeit vorhanden?</div>
         <SegPick
           options={[{ value: "ja", label: "Ja" }, { value: "nein", label: "Nein" }, { value: "unklar", label: "Unklar" }]}
           value={aufkl.faehig}
           onChange={(faehig) => onPatch({ faehig, einwilligung: null, mutmasslich: false })}
+          labelledBy="lbl-faehig"
         />
       </section>
 
       {aufkl.faehig === "ja" ? (
         <section>
-          <div className="text-xs text-text-muted mb-2">Einwilligung in die Maßnahme?</div>
+          <div className="text-xs text-text-muted mb-2" id="lbl-einw">Einwilligung in die Maßnahme?</div>
           <SegPick
             options={[{ value: "ja", label: "Erteilt" }, { value: "nein", label: "Verweigert" }]}
             value={aufkl.einwilligung}
             onChange={(einwilligung) => onPatch({ einwilligung })}
+            labelledBy="lbl-einw"
           />
           {aufkl.einwilligung === "nein" ? (
             <div className="mt-3 border border-critical/40 bg-critical/10 rounded-lg p-3 text-sm">

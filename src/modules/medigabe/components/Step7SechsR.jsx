@@ -22,7 +22,7 @@ export default function Step7SechsR({ items, sechsR, onToggle, onAll }) {
         <button
           type="button"
           onClick={onAll}
-          className="h-9 px-3 rounded-lg border border-accent/40 bg-accent/5 text-accent text-xs font-medium hover:bg-accent/10 transition-colors"
+          className="h-11 px-3 rounded-lg border border-accent/40 bg-accent/5 text-accent text-xs font-medium hover:bg-accent/10 transition-colors"
         >
           Alle abhaken
         </button>

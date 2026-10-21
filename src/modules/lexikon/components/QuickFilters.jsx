@@ -1,3 +1,4 @@
+import Chip from "./ui/Chip.jsx";
 import { CATEGORIES, CATEGORIZED_GROUPS } from "./CategoryIcon.jsx";
 
 // Maps category display name -> set of groupIds from data.json#groups
@@ -80,47 +81,15 @@ export function matchesFilter(item, filterKey) {
 }
 
 export default function QuickFilters({ active, onChange, counts }) {
+  const isAll = !active || active === "all";
   return (
-    <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
-      {/* "Alle" chip */}
-      <button
-        type="button"
-        onClick={() => onChange("all")}
-        className={`inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg border text-sm font-medium whitespace-nowrap transition-all cursor-pointer flex-shrink-0 ${
-          !active || active === "all"
-            ? "bg-accent text-bg-primary border-transparent"
-            : "bg-card text-text-secondary border-border hover:border-border-strong hover:text-text-primary"
-        }`}
-      >
-        Alle
-        {counts?.get("all") != null ? (
-          <span className="text-[11px] opacity-70">({counts.get("all")})</span>
-        ) : null}
-      </button>
-
-      {/* Category chips */}
-      {CATEGORIES.map((cat) => {
-        const isActive = active === cat.key;
-        const count = counts?.get(cat.key);
-        return (
-          <button
-            key={cat.key}
-            type="button"
-            onClick={() => onChange(cat.key)}
-            className={`inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg border text-sm font-medium whitespace-nowrap transition-all cursor-pointer flex-shrink-0 ${
-              isActive
-                ? "bg-accent text-bg-primary border-transparent"
-                : "bg-card text-text-primary border-border hover:border-border-strong"
-            }`}
-          >
-            <span>{cat.emoji}</span>
-            <span>{cat.label}</span>
-            {count != null ? (
-              <span className="text-[11px] opacity-60">({count})</span>
-            ) : null}
-          </button>
-        );
-      })}
+    <div role="group" aria-label="Kategorie-Filter" className="flex gap-2 overflow-x-auto no-scrollbar pb-1 -mx-4 px-4 sm:mx-0 sm:px-0">
+      <Chip active={isAll} onClick={() => onChange("all")} count={counts?.get("all")}>Alle</Chip>
+      {CATEGORIES.map((cat) => (
+        <Chip key={cat.key} Icon={cat.Icon} active={active === cat.key} onClick={() => onChange(cat.key)} count={counts?.get(cat.key)}>
+          {cat.label}
+        </Chip>
+      ))}
     </div>
   );
 }

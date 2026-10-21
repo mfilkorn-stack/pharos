@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, useCallback, forwardRef, useImperativeHandle } from "react";
+import { useState, useMemo, useEffect, useCallback, useRef, forwardRef, useImperativeHandle } from "react";
 import data from "./data/data.json";
 import atcIndex from "./data/atc_index.json";
 import groupMap from "./data/atc_group_map.json";
@@ -21,7 +21,7 @@ import { buildDedupedDB } from "./lib/dedupe.js";
 import { enrichName } from "./lib/enrich.js";
 import { prewarmOCR } from "./lib/ocr.js";
 import { loadFavorites, saveFavorites, loadHistory, saveHistory, pushHistory, toggleFavorite as toggleFav } from "./lib/store.js";
-import { TrashIcon, StarIcon, ClockIcon, FlaskIcon } from "./components/ui/icons.jsx";
+import { TrashIcon, StarIcon, ClockIcon, FlaskIcon, SearchIcon } from "./components/ui/icons.jsx";
 import { config } from "./config.js";
 import { matchesFilter } from "./components/QuickFilters.jsx";
 import { CATEGORIES } from "./components/CategoryIcon.jsx";
@@ -36,6 +36,16 @@ import { sortResults, effectiveSortMode, SORT_OPTIONS } from "./lib/sort.js";
 
 // Konstant pro Bundle — einmal formatieren, nicht bei jedem Render.
 const BUILD_STAMP = formatBuildTime();
+
+// Mobile Unternavigation (< lg). Die Bottom-Tab-Leiste trägt nur noch die drei
+// Module; MedScan-Ansichten liegen hier — inkl. Verlauf, der mobil vorher fehlte.
+const VIEW_TABS = [
+  { key: "suche", label: "Suche", Icon: SearchIcon },
+  { key: "drogen", label: "Drogen", Icon: FlaskIcon },
+  { key: "favoriten", label: "Favoriten", Icon: StarIcon },
+  { key: "verlauf", label: "Verlauf", Icon: ClockIcon },
+];
+const HAS_FINE_POINTER = typeof window !== "undefined" && window.matchMedia?.("(pointer: fine)").matches;
 
 // Build runtime DB entry: inherits group Notfall + appends extras
 function materialize(entry, groups) {
@@ -217,17 +227,23 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
     if (planEntries.length) upsertCaseMeds(planEntries);
   }, [planEntries]);
 
+  // Autofokus nur mit Maus/Trackpad — auf Touch-Geräten würde die Tastatur
+  // bei jedem Modulwechsel die halbe Ergebnisliste verdecken.
+  const searchRef = useRef(null);
+  const focusSearch = useCallback(() => searchRef.current?.focus(), []);
+  useEffect(() => { if (HAS_FINE_POINTER) focusSearch(); }, [focusSearch]);
+
   // ⌘K / Strg+K fokussiert das Suchfeld (passend zum Hint in der SearchBar).
   useEffect(() => {
     const onKey = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
-        document.querySelector('input[placeholder*="Suche"]')?.focus();
+        focusSearch();
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  }, [focusSearch]);
 
   // Navigation wird von der Pharos-Shell gesteuert: aktiven View + Zaehler melden,
   // Nav-Befehle (handleNav/goHome) per Ref nach aussen geben.
@@ -436,7 +452,32 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
       {/* Content row: center + right panel */}
       <div className="flex flex-1 min-w-0">
           {/* Center column — pb fuer mobile Bottom-Tab-Bar */}
-          <main className="flex-1 min-w-0 max-w-[920px] mx-auto w-full px-4 sm:px-6 py-4 sm:py-6 pb-28 lg:pb-6 space-y-4 sm:space-y-5">
+          <main id="main" tabIndex={-1} className="flex-1 min-w-0 max-w-[920px] mx-auto w-full px-4 sm:px-6 py-4 sm:py-6 pb-28 lg:pb-6 space-y-4 sm:space-y-5 outline-none">
+            <h1 className="sr-only">MedScan — Wirkstoffe nachschlagen</h1>
+
+            {/* Mobile Unternavigation */}
+            <nav aria-label="MedScan-Ansichten" className="lg:hidden grid grid-cols-4 gap-1 p-1 rounded-xl bg-bg-secondary border border-border">
+              {VIEW_TABS.map(({ key, label, Icon }) => {
+                const on = activeView === key;
+                const n = key === "favoriten" ? favorites.length : key === "verlauf" ? history.length : null;
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => handleNav(key)}
+                    aria-current={on ? "page" : undefined}
+                    className={`h-11 rounded-lg inline-flex items-center justify-center gap-1.5 text-xs font-medium transition-colors ${
+                      on ? "bg-card-hover text-accent" : "text-text-secondary hover:text-text-primary"
+                    }`}
+                  >
+                    <Icon className="h-4 w-4" />
+                    <span>{label}</span>
+                    {n ? <span className="sr-only">({n})</span> : null}
+                  </button>
+                );
+              })}
+            </nav>
+
             {/* Status */}
             <div className="flex items-center justify-end gap-3">
               {/* h-auto/whitespace-normal: der Build-Stempel sprengt sonst auf
@@ -448,14 +489,14 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
 
             {/* Suche + Scan (alle Groessen) */}
             <div className="space-y-3">
-              <SearchBar value={query} onChange={onQueryChange} hint="⌘K" />
+              <SearchBar value={query} onChange={onQueryChange} hint={HAS_FINE_POINTER ? "⌘K" : null} inputRef={searchRef} />
               <ScanActions onScan={() => setScanSource("scan")} onUpload={() => setScanSource("upload")} />
             </div>
 
             {/* Dauermedikation-Pick-Modus Banner */}
             {dauerPick ? (
               <div className="flex items-center justify-between gap-3 px-4 py-3 rounded-xl border border-accent/40 bg-accent/5">
-                <span className="text-sm text-accent font-medium">Medikament zur Dauermedikation hinzufügen — tippe auf <strong>+</strong></span>
+                <span className="text-sm text-accent font-medium">Dauermedikation ergänzen — tippe bei jedem Medikament auf <strong>+</strong>, danach „Fertig".</span>
                 <Button variant="ghost" size="sm" onClick={() => setDauerPick(false)}>Fertig</Button>
               </div>
             ) : null}
@@ -525,13 +566,11 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
                     substanceCounts={substanceCounts}
                     onPickClass={handlePickClass}
                     onScan={() => setScanSource("scan")}
-                    onSearch={() => {
-                      document.querySelector('input[placeholder*="Suche"]')?.focus();
-                    }}
+                    onSearch={focusSearch}
                   />
                 ) : (
                   <div className="flex items-center gap-3">
-                    <span className="h-9 w-9 rounded-lg bg-amber-500/15 text-amber-400 flex items-center justify-center flex-shrink-0">
+                    <span className="h-9 w-9 rounded-lg bg-drogen/15 text-drogen flex items-center justify-center flex-shrink-0">
                       <FlaskIcon className="h-4 w-4" />
                     </span>
                     <div className="flex-1">
@@ -540,15 +579,11 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
                       </h2>
                       <p className="text-xs text-text-muted">
                         {substanceCounts[activeFilter] || 0} Substanzen
-                        <button
-                          type="button"
-                          className="ml-2 text-amber-400 hover:underline cursor-pointer"
-                          onClick={() => setActiveFilter("all")}
-                        >
-                          Alle Klassen
-                        </button>
                       </p>
                     </div>
+                    <Button variant="ghost" size="sm" onClick={() => setActiveFilter("all")}>
+                      Alle Klassen
+                    </Button>
                   </div>
                 ))}
                 {!query.trim() && <GiftnotrufBanner />}
@@ -557,7 +592,7 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
             ) : (activeView === "suche" && activeFilter === "drogen") ? (
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <span className="h-9 w-9 rounded-lg bg-amber-500/15 text-amber-400 flex items-center justify-center flex-shrink-0">
+                  <span className="h-9 w-9 rounded-lg bg-drogen/15 text-drogen flex items-center justify-center flex-shrink-0">
                     <FlaskIcon className="h-4 w-4" />
                   </span>
                   <div className="flex-1">
@@ -572,7 +607,7 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
 
             {/* Meta row */}
             <div className="flex items-center justify-between">
-              <span className="text-sm text-text-secondary">{results.length} {activeView === "favoriten" ? "Favoriten" : activeView === "verlauf" ? "im Verlauf" : activeView === "drogen" ? "Substanzen" : "Einträge gefunden"}</span>
+              <span className="text-sm text-text-secondary" role="status" aria-live="polite">{results.length} {activeView === "favoriten" ? "Favoriten" : activeView === "verlauf" ? "im Verlauf" : activeView === "drogen" ? "Substanzen" : "Einträge gefunden"}</span>
               {/* Bewusst ein natives <select>: iOS öffnet seinen eigenen Picker —
                   großes Trefferziel, bedienbar mit Handschuhen, barrierefrei ohne
                   Zusatzarbeit. Auf allen Breakpoints sichtbar; vorher war das
@@ -586,7 +621,7 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
                     value={effectiveSort}
                     onChange={(e) => setSortMode(e.target.value)}
                     aria-label="Sortierung der Ergebnisliste"
-                    className="bg-card border border-border rounded-md pl-2 pr-1 py-1 text-text-secondary text-xs cursor-pointer focus:outline-none focus:border-border-strong"
+                    className="h-11 lg:h-8 bg-card border border-border rounded-lg pl-2 pr-1 text-text-secondary text-sm lg:text-xs cursor-pointer focus:border-border-strong"
                   >
                     {SORT_OPTIONS.filter((o) => !o.nurMitSuche || queryActive).map((o) => (
                       <option key={o.key} value={o.key}>{o.label}</option>
@@ -604,13 +639,13 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
                     <p className="text-text-secondary text-base">Kein Treffer für „{query.trim()}"</p>
                     {query.trim().length >= 3 ? (
                       searchEnriching ? (
-                        <div className="flex items-center gap-2 text-warning text-sm font-mono">
+                        <div role="status" className="flex items-center gap-2 text-warning text-sm font-mono">
                           <span className="h-1.5 w-1.5 rounded-full bg-warning animate-pulse" />
                           Suche und ergänze via KI …
                         </div>
                       ) : searchEnrichError ? (
                         <div className="space-y-3">
-                          <p className="text-sm text-critical">{searchEnrichError}</p>
+                          <p role="alert" className="text-sm text-critical">{searchEnrichError}</p>
                           <Button variant="subtle" size="md" onClick={handleSearchEnrich}>
                             <SparklesIcon className="h-4 w-4" />
                             Erneut versuchen
@@ -629,7 +664,7 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
                 ) : activeView === "favoriten" ? (
                   <p className="text-text-secondary text-base">Noch keine Favoriten — tippe bei einem Eintrag auf den Stern.</p>
                 ) : activeView === "verlauf" ? (
-                  <p className="text-text-secondary text-base">Noch nichts geöffnet.</p>
+                  <p className="text-text-secondary text-base">Noch nichts geöffnet — geöffnete Wirkstoffe erscheinen hier.</p>
                 ) : activeView === "drogen" ? (
                   <p className="text-text-secondary text-base">Keine Substanz — suche per Name, Straßenname oder Symptom.</p>
                 ) : (
@@ -638,6 +673,7 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
               </div>
             ) : (
               <div className="space-y-3">
+                <h2 className="sr-only">Ergebnisse</h2>
                 {results.map((item) => (
                   <ResultCard
                     key={item.id}
@@ -665,7 +701,7 @@ const Lexikon = forwardRef(function Lexikon({ onNavState }, ref) {
         </div>
 
       {/* Footer disclaimer */}
-      <footer className="bg-bg-primary/95 border-t border-border px-4 py-2.5 text-center mb-24 lg:mb-0">
+      <footer className="bg-bg-primary/95 border-t border-border px-4 py-2.5 text-center mb-[calc(3.5rem+env(safe-area-inset-bottom))] lg:mb-0">
         <span className="font-mono text-[10px] text-text-muted tracking-wide">
           Generische Wirkstoffinformation · kein Medizinprodukt · keine patientenbezogene Entscheidungsgrundlage
         </span>

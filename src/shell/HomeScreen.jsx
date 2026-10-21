@@ -11,7 +11,7 @@ const TILES = [
   {
     key: "medigabe",
     title: "Medigabe",
-    desc: "SAA-konform durch die Medikamentengabe — Indikation, KI-Check, Dosis, 6-R.",
+    desc: "SAA-konform durch die Medikamentengabe — Indikation, Kontraindikationen, Dosis, 6-R.",
     Icon: SyringeIcon,
     tag: "Durchführen",
   },
@@ -25,7 +25,7 @@ const TILES = [
   {
     key: "trainer",
     title: "Übergabe",
-    desc: "SINNHAFT-Übergabe einsprechen, KI parst & bewertet wie das ZNA-Team.",
+    desc: "SINNHAFT-Übergabe einsprechen — die KI sortiert und bewertet wie das ZNA-Team.",
     Icon: ClipboardCheckIcon,
     tag: "Trainieren",
   },
@@ -33,13 +33,10 @@ const TILES = [
 
 export default function HomeScreen({ onPick }) {
   return (
-    <div
-      className="min-h-screen w-full text-text-primary"
-      style={{ background: "radial-gradient(ellipse at top left, #0B1220 0%, #070b16 55%, #050816 100%)" }}
-    >
-      <div className="max-w-3xl mx-auto px-6 py-16 sm:py-24">
+    <main id="main" tabIndex={-1} className="min-h-screen w-full text-text-primary bg-hero outline-none">
+      <div className="max-w-3xl mx-auto px-5 sm:px-6 pt-[max(3rem,env(safe-area-inset-top))] pb-[max(3rem,env(safe-area-inset-bottom))] sm:py-24">
         {/* Brand */}
-        <div className="flex items-center gap-3 mb-12">
+        <div className="flex items-center gap-3 mb-10 sm:mb-12">
           <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-accent to-info flex items-center justify-center flex-shrink-0">
             <PharosLogo className="h-7 w-7 text-bg-primary" />
           </div>
@@ -62,15 +59,16 @@ export default function HomeScreen({ onPick }) {
             <button
               key={t.key}
               onClick={() => onPick(t.key)}
-              className={`group relative text-left min-h-[160px] p-6 rounded-2xl border border-border bg-card hover:border-accent/50 hover:bg-card-hover transition-all duration-300 flex flex-col${t.span ? " sm:col-span-2" : ""}`}
+              type="button"
+              className={`group relative text-left min-h-[140px] sm:min-h-[160px] p-5 sm:p-6 rounded-2xl border border-border bg-card hover:border-accent/50 hover:bg-card-hover transition-all duration-300 flex flex-col${t.span ? " sm:col-span-2" : ""}`}
             >
               <div className="h-12 w-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center mb-4 group-hover:bg-accent/20 transition">
                 <t.Icon className="h-6 w-6" />
               </div>
               <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-text-muted mb-1">{t.tag}</div>
-              <div className="text-xl font-bold tracking-tight mb-2">{t.title}</div>
+              <h2 className="text-xl font-bold tracking-tight mb-2">{t.title}</h2>
               <div className="text-sm text-text-secondary leading-relaxed flex-1">{t.desc}</div>
-              <div className="mt-4 flex items-center gap-2 text-accent font-mono text-xs tracking-wider uppercase">
+              <div className="mt-4 flex items-center gap-2 text-accent font-mono text-xs tracking-wider uppercase" aria-hidden="true">
                 Öffnen <ArrowRightIcon className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </div>
             </button>
@@ -83,10 +81,10 @@ export default function HomeScreen({ onPick }) {
           <span>MedScan läuft offline. Übergabe-Bewertung benötigt Internet.</span>
         </div>
 
-        <footer className="mt-12 pt-6 border-t border-border font-mono text-[10px] tracking-wide text-text-muted">
+        <footer className="mt-12 pt-6 border-t border-border font-mono text-[11px] tracking-wide text-text-muted">
           Generische Fachinformation · kein Medizinprodukt · keine patientenbezogene Entscheidungsgrundlage
         </footer>
       </div>
-    </div>
+    </main>
   );
 }

@@ -41,12 +41,12 @@ export default function Step4Kontra({ punkte, rows, kombi, patient, kiHinweise =
       ) : null}
       <section>
         <div className="flex items-center justify-between gap-2 mb-2">
-          <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-critical">Absolut — liegt das vor?</div>
+          <h2 className="font-mono text-[11px] tracking-[0.2em] uppercase text-critical">Absolut — liegt das vor?</h2>
           {punkte.abs.length ? (
             <button
               type="button"
               onClick={() => onAnswerMany(Object.fromEntries(punkte.abs.map((p) => [p.key, "nein"])))}
-              className="h-9 px-3 rounded-lg border border-success/40 bg-success/5 text-success text-xs font-medium hover:bg-success/10 transition-colors flex-shrink-0"
+              className="h-11 px-3 rounded-lg border border-success/40 bg-success/5 text-success text-xs font-medium hover:bg-success/10 transition-colors flex-shrink-0"
             >
               Keine liegt vor — alle „Nein"
             </button>
@@ -81,11 +81,11 @@ export default function Step4Kontra({ punkte, rows, kombi, patient, kiHinweise =
       {punkte.rel.length ? (
         <section>
           <div className="flex items-center justify-between gap-2 mb-2">
-            <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-warning">Relativ — liegt das vor?</div>
+            <h2 className="font-mono text-[11px] tracking-[0.2em] uppercase text-warning">Relativ — liegt das vor?</h2>
             <button
               type="button"
               onClick={() => onAnswerMany(Object.fromEntries(punkte.rel.map((p) => [p.key, "nein"])))}
-              className="h-9 px-3 rounded-lg border border-success/40 bg-success/5 text-success text-xs font-medium hover:bg-success/10 transition-colors flex-shrink-0"
+              className="h-11 px-3 rounded-lg border border-success/40 bg-success/5 text-success text-xs font-medium hover:bg-success/10 transition-colors flex-shrink-0"
             >
               Keine liegt vor — alle „Nein"
             </button>
@@ -112,7 +112,7 @@ export default function Step4Kontra({ punkte, rows, kombi, patient, kiHinweise =
 
       <section>
         <div className="font-mono text-[10px] tracking-[0.2em] uppercase text-text-muted mb-2">
-          Dauermedikation <span className="normal-case tracking-normal">· KI-gestützter Abgleich</span>
+          Dauermedikation <span className="normal-case tracking-normal">· automatischer Abgleich (Cloud-KI)</span>
         </div>
         {patient.dauerStatus === "keine" ? (
           <div className="flex items-center gap-2 border border-border bg-card rounded-lg px-3 py-3">
@@ -127,7 +127,7 @@ export default function Step4Kontra({ punkte, rows, kombi, patient, kiHinweise =
                   <AlertTriangleIcon className={`h-4 w-4 ${r.level === "absolut" ? "text-critical" : "text-warning"}`} />
                   <span className="text-sm font-semibold text-text-primary">{r.med}</span>
                   <Badge variant={r.level === "absolut" ? "critical" : "warning"} size="sm">
-                    {r.level === "absolut" ? "Absolute KI" : "Vorsicht"}
+                    {r.level === "absolut" ? "Absolut" : "Vorsicht"}
                   </Badge>
                   {r.pending ? <Badge variant="neutral" size="sm">vorläufig</Badge> : null}
                 </div>
@@ -137,7 +137,7 @@ export default function Step4Kontra({ punkte, rows, kombi, patient, kiHinweise =
                   </p>
                 ))}
                 {r.level === "absolut" ? (
-                  <p className="text-xs text-critical mb-2">→ Entspricht einem absoluten KI-Punkt oben — dort entscheiden.</p>
+                  <p className="text-xs text-critical mb-2">→ Entspricht einer absoluten Kontraindikation oben — dort entscheiden.</p>
                 ) : null}
                 <CheckRow tone="warning" checked={!!answers[`m:${normKey(r.med)}`]} onToggle={() => onAnswer(`m:${normKey(r.med)}`, !answers[`m:${normKey(r.med)}`])}>
                   Zur Kenntnis genommen / abgewogen
@@ -148,7 +148,7 @@ export default function Step4Kontra({ punkte, rows, kombi, patient, kiHinweise =
               <div className="flex items-center gap-2 border border-warning/30 bg-card rounded-lg px-3 py-2.5">
                 <AlertTriangleIcon className="h-4 w-4 text-warning flex-shrink-0" />
                 <span className="text-xs text-text-secondary">
-                  {unknown.map((r) => r.med).join(", ")}: KI-Abgleich ausstehend — eigenständig prüfen.
+                  {unknown.map((r) => r.med).join(", ")}: automatischer Abgleich ausstehend — selbst prüfen.
                 </span>
                 <Badge variant="neutral" size="sm">vorläufig</Badge>
               </div>
@@ -156,7 +156,7 @@ export default function Step4Kontra({ punkte, rows, kombi, patient, kiHinweise =
             {okCount ? (
               <div className="flex items-center gap-2 border border-border bg-card rounded-lg px-3 py-2.5">
                 <CheckCircleIcon className="h-4 w-4 text-success flex-shrink-0" />
-                <span className="text-xs text-text-secondary">{okCount} Medikament(e) unkritisch gegenüber der Auswahl.</span>
+                <span className="text-xs text-text-secondary">{okCount} {okCount === 1 ? "Medikament" : "Medikamente"} unkritisch gegenüber der Auswahl.</span>
               </div>
             ) : null}
             {!rows.length ? (

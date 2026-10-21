@@ -54,15 +54,21 @@ export default function App() {
     }
   }, [setMode]);
 
-  if (checking) return null;
+  if (checking) return <div className="min-h-screen bg-bg-primary" aria-busy="true" />;
   if (!consented) return <ConsentGate onAccept={() => setConsented(true)} />;
 
   if (mode === "home") {
-    return <HomeScreen onPick={handlePick} />;
+    return (
+      <>
+        <SkipLink />
+        <HomeScreen onPick={handlePick} />
+      </>
+    );
   }
 
   return (
     <div className="min-h-screen bg-bg-primary flex">
+      <SkipLink />
       {/* Desktop-Navigation (lg+) */}
       <div className="hidden lg:block">
         <DesktopSidebar
@@ -84,14 +90,21 @@ export default function App() {
 
       {/* Mobile-Navigation (< lg) */}
       <div className="lg:hidden">
-        <BottomTabBar
-          mode={mode}
-          active={lexNav.active}
-          counts={lexNav.counts}
-          onNav={handleNav}
-          onMode={handleMode}
-        />
+        <BottomTabBar mode={mode} onMode={handleMode} onHome={goHome} />
       </div>
     </div>
+  );
+}
+
+// Erstes fokussierbares Element: springt an Navigation vorbei zum Inhalt (WCAG 2.4.1).
+function SkipLink() {
+  return (
+    <a
+      href="#main"
+      onClick={(e) => { e.preventDefault(); document.getElementById("main")?.focus(); }}
+      className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[70] focus:px-4 focus:py-3 focus:rounded-lg focus:bg-accent focus:text-bg-primary focus:font-semibold"
+    >
+      Zum Inhalt springen
+    </a>
   );
 }

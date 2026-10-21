@@ -25,12 +25,12 @@ export default function ConsentGate({ onAccept }) {
     return (
       <div className="min-h-screen bg-bg-primary flex items-center justify-center px-4">
         <div className="max-w-md w-full bg-card-hover/40 border border-border rounded-2xl p-8 sm:p-10 text-center">
-          <span className="font-mono text-xs tracking-[0.14em] uppercase text-critical">Gesperrt</span>
+          <h1 className="font-mono text-xs tracking-[0.14em] uppercase text-critical">Nutzung nicht möglich</h1>
           <p className="mt-4 text-text-secondary text-sm leading-relaxed">
             Ohne Zustimmung zur Nutzungsvereinbarung ist die App nicht nutzbar.
           </p>
           <Button variant="ghost" size="md" onClick={() => setDenied(false)} className="mt-6">
-            Zurück
+            Zurück zur Vereinbarung
           </Button>
         </div>
       </div>
@@ -43,7 +43,7 @@ export default function ConsentGate({ onAccept }) {
   };
 
   return (
-    <div className="min-h-screen bg-bg-primary flex items-center justify-center px-4 py-8">
+    <main className="min-h-screen bg-bg-primary flex items-center justify-center px-4 py-8">
       <div className="max-w-md w-full bg-card-hover/40 border border-border rounded-2xl p-8 sm:p-10">
         {/* Header */}
         <div className="flex flex-col items-start gap-3 mb-6">
@@ -69,7 +69,7 @@ export default function ConsentGate({ onAccept }) {
         <ul className="flex flex-col gap-3 mb-8">
           {REQUIREMENTS.map((req, i) => (
             <li key={i} className="flex items-start gap-3">
-              <span className="flex-shrink-0 h-5 w-5 rounded-full bg-success/10 border border-success/30 inline-flex items-center justify-center mt-0.5">
+              <span className="flex-shrink-0 h-5 w-5 rounded-full bg-success/10 border border-success/30 inline-flex items-center justify-center mt-0.5" aria-hidden="true">
                 <CheckIcon className="h-3 w-3 text-success" />
               </span>
               <span className="text-sm text-text-secondary leading-relaxed">{req}</span>
@@ -87,6 +87,6 @@ export default function ConsentGate({ onAccept }) {
           </Button>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

@@ -1,17 +1,23 @@
-# Wirkstoff-Lookup
+# Pharos
 
-Generisches fachliches Nachschlagewerk zu Arzneistoffen für Rettungsfachpersonal (Aus-/Fortbildung). **Kein Medizinprodukt.** **Keine patientenbezogene Entscheidungsgrundlage.**
+Werkzeuge für Rettungsfachpersonal (Aus-/Fortbildung) in einer PWA. **Kein Medizinprodukt.** **Keine patientenbezogene Entscheidungsgrundlage.**
+
+## Module
+
+- **Lexikon / MedScan** — Wirkstoff-Nachschlagewerk mit Barcode-, BMP- und OCR-Erkennung, SAA-Check.
+- **Medigabe** — 8-Schritt-Wizard für die Medikamentengabe nach SAA/BPR 2025.
+- **Trainer** — SINNHAFT-Übergabe nach Gräff et al. 2023.
 
 ## Stack
 
-Vite + React + PWA (Workbox). Vitest. Tesseract.js (lazy). zxing-wasm (lazy Fallback).
+Vite 8 + React 19 + Tailwind 4, PWA (Workbox). Vitest (jsdom). Express-Proxy für die KI-Pfade. Tesseract.js (lazy). zxing-wasm (lazy Fallback).
 
 ## Setup
 
 ```bash
 npm install
 npm run data:ocr    # einmalig: deu.traineddata nach public/tesseract/ (~10 MB)
-npm run data        # Pipeline → src/data/*.json (Inputs in scripts/input/)
+npm run data        # Pipeline → src/modules/lexikon/data/*.json (Inputs in scripts/input/)
 npm run dev
 ```
 
@@ -38,7 +44,7 @@ Siehe `docs/superpowers/specs/2026-06-01-wirkstoff-lookup-v1.1-design.md`.
 ## Sicherheit & Recht
 
 - Datensparsamkeit: alle Offline-Pfade on-device, ephemer, ohne Upload.
-- KI-Pfad in dieser Version inaktiv (Flags in `src/config.js`, default false).
+- KI-Pfad aktiv (Flags `cloudPackung`/`cloudPlan` in `src/modules/lexikon/config.js`). Der Anthropic-Key liegt nur serverseitig im Proxy, nie im Client-Bundle.
 - BMP-Data-Matrix Parser ist Whitelist-only: Patientenkopf und Diagnosen werden nicht gelesen.
 - Consent persistent in `localStorage`, kein PII.
 

@@ -13,11 +13,11 @@
 npm run data
 ```
 
-Erzeugt: `src/data/data.json`, `src/data/atc_index.json`, `src/data/atc_group_map.json`. Validiert hart; Exit ≠ 0 bei Verstoß.
+Erzeugt: `src/modules/lexikon/data/data.json`, `src/modules/lexikon/data/atc_index.json`, `src/modules/lexikon/data/atc_group_map.json`. Validiert hart; Exit ≠ 0 bei Verstoß.
 
 ## Seed
 
-`scripts/seed.json` ist der kanonische Input für `groups` und die 48 Seed-Substanzen. Die Pipeline liest daraus beim Start; `src/data/data.json` ist reines Output und wird von der Pipeline niemals gelesen. Wer die Seed-Substanzen oder Gruppen anpassen will, ändert `scripts/seed.json` — nie direkt `src/data/data.json`.
+`scripts/seed.json` ist der kanonische Input für `groups` und die Seed-Substanzen (aktuell 259, inkl. Drogen-Seed). Die Pipeline liest daraus beim Start; `src/modules/lexikon/data/data.json` ist reines Output und wird von der Pipeline niemals gelesen. Wer die Seed-Substanzen oder Gruppen anpassen will, ändert `scripts/seed.json` — nie direkt `src/modules/lexikon/data/data.json`.
 
 ## Idempotenz
 

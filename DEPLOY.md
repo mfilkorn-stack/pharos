@@ -1,4 +1,4 @@
-# Deploy-Anleitung – Wirkstoff-Lookup
+# Deploy-Anleitung – Pharos
 
 ## Architektur-Überblick
 
@@ -77,14 +77,14 @@ npm run data
 ```
 
 Liest aus `scripts/input/` und erzeugt:
-- `src/data/data.json`
-- `src/data/atc_index.json`
-- `src/data/atc_group_map.json`
+- `src/modules/lexikon/data/data.json`
+- `src/modules/lexikon/data/atc_index.json`
+- `src/modules/lexikon/data/atc_group_map.json`
 
 Exit ≠ 0 = Validierungsfehler → Build abbrechen, Inputs prüfen.
 
 > **Wichtig:** `scripts/seed.json` ist der kanonische Input für Substanzen/Gruppen.
-> Niemals `src/data/data.json` direkt editieren.
+> Niemals `src/modules/lexikon/data/data.json` direkt editieren.
 
 ### Schritt 5 – Frontend bauen
 
@@ -119,7 +119,7 @@ server {
 }
 ```
 
-> KI-Features (`cloudPackung`, `cloudPlan`) stehen in `src/config.js` auf `true`.
+> KI-Features (`cloudPackung`, `cloudPlan`) stehen in `src/modules/lexikon/config.js` auf `true`.
 > Ist der Proxy nicht erreichbar, zeigt die App eine Fehlermeldung – lokale Suche
 > funktioniert weiterhin vollständig.
 
@@ -180,7 +180,7 @@ curl https://deine-domain.de/health
 | `dist/` | ✅ Build vorhanden |
 | `dist/tesseract/deu.traineddata` | ✅ OCR-Modell vorhanden |
 | `dist/data/extras-runtime.json` | ✅ Enrich-Cache vorhanden |
-| `src/data/*.json` | ✅ Datenpipeline-Output vorhanden |
+| `src/modules/lexikon/data/*.json` | ✅ Datenpipeline-Output vorhanden |
 | `.env.local` | ✅ Konfiguriert |
 | `scripts/input/` | ⚠️ Prüfen ob wido-atc.zip + top250.csv liegen |
 

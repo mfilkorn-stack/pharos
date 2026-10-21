@@ -68,13 +68,37 @@ sudo systemctl reload caddy      # holt automatisch Let's-Encrypt-Zertifikat
 ```
 
 ## 7 — Update-Workflow
-```bash
-cd /opt/pharos && git pull
-npm ci                                  # nur bei Dependency-Änderung
-npm run build                           # bei Code-/URL-Änderung
-sudo systemctl restart pharos-ki-proxy  # nur bei Proxy-/Server-Änderung
-```
-Caddy servt neues `dist/` ohne Neustart. **Kein Deploy/Restart 9–18 Uhr ohne Rückfrage.**
+
+Automatisch per GitHub Action `.github/workflows/release.yml` nach jedem Merge auf `main`:
+Tests und Build in CI, danach per SSH `deploy/deploy.sh` auf dem Server. Das Skript zieht
+den Commit per Fast-Forward, führt `npm ci` nur bei geändertem Lockfile aus, baut nach
+`dist.next`, tauscht atomar gegen `dist`, startet den Proxy nur bei Server-Änderungen neu
+und rollt `dist` zurück, wenn der Health-Check scheitert.
+
+**Kein Deploy/Restart 9–18 Uhr ohne Rückfrage** — die Action hält das ein: Merges in
+diesem Fenster werden nur geprüft, der Abendlauf um 19:15 Uhr rollt sie aus. Sofort-Release
+tagsüber: Actions → Release → „Run workflow" → „Sperrzeit 9–18 Uhr übergehen".
+
+Manuell auf dem Server: `cd /opt/pharos && bash deploy/deploy.sh` (optional mit `FORCE=1`).
+
+### Einmalige Einrichtung für die Action
+
+1. Deploy-Schlüssel nur für GitHub erzeugen (lokal):
+   ```bash
+   ssh-keygen -t ed25519 -N "" -C "github-actions-pharos" -f pharos_deploy
+   ```
+   `pharos_deploy.pub` auf dem Server in `/home/deploy/.ssh/authorized_keys` eintragen.
+2. Host-Key festhalten: `ssh-keyscan -t ed25519 www.pharos.team` → Ausgabe kopieren.
+3. GitHub → Settings → Environments → **`production`** anlegen und dort als Secrets:
+   `DEPLOY_HOST` (Server-IP oder Hostname), `DEPLOY_USER` (`deploy`),
+   `DEPLOY_SSH_KEY` (Inhalt von `pharos_deploy`), `DEPLOY_KNOWN_HOSTS` (Ausgabe aus 2.).
+   Optional unter „Required reviewers" dich selbst eintragen, dann wartet jeder Release
+   auf einen Klick.
+4. Neustart ohne Passwort, aber nur für diesen einen Befehl (`sudo visudo -f /etc/sudoers.d/pharos`):
+   ```
+   deploy ALL=(root) NOPASSWD: /usr/bin/systemctl restart pharos-ki-proxy
+   ```
+5. Der Server muss `git fetch` können (Deploy-Key am Server, siehe Abschnitt 3).
 
 ---
 

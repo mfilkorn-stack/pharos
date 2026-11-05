@@ -1,27 +1,19 @@
 name: Release
 
 # Nur manuell, wie in VermieterOS: Pushes und Pull Requests lösen nichts aus.
-# Release: Actions → „Release“ → „Run workflow“ auf main. Reihenfolge: Tests & Build →
-# Ausrollen per SSH auf den Hetzner-Server (deploy/deploy.sh). Auf einem anderen Branch
-# gestartet: gleiche Prüfungen, aber nichts wird ausgerollt.
-#
-# Betriebsregel aus DEPLOY-HETZNER.md: „Kein Deploy/Restart 9–18 Uhr ohne Rückfrage.“
-# Der manuelle Start ist diese Rückfrage — tagsüber also nur bewusst auslösen.
+# Vor einem Deployment: Actions → „Release“ → „Run workflow“ auf main. Die Action prüft
+# Tests und Build; sie hat keinen Zugang zum Server. Ausgerollt wird erst danach von Hand:
+#   ssh -t pharos 'cd /opt/pharos && bash deploy/deploy.sh'
+# (siehe DEPLOY-HETZNER.md, Abschnitt 7)
 on:
   workflow_dispatch:
-    inputs:
-      force:
-        description: 'Auch ohne neuen Commit neu bauen und ausrollen'
-        type: boolean
-        default: false
 
 permissions:
   contents: read
 
-# Nie zwei Releases gleichzeitig; ein laufender Release wird nicht abgebrochen.
 concurrency:
   group: release-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   check:
@@ -38,48 +30,3 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - run: npm test
       - run: npm run build
-
-  deploy:
-    name: Release auf www.pharos.team
-    needs: check
-    # Nur main wird ausgerollt; andere Branches laufen bis hierher als reine Prüfung.
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    environment:
-      name: production
-      url: https://www.pharos.team
-    steps:
-      - name: SSH-Zugang einrichten
-        env:
-          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
-          KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
-          HOST: ${{ secrets.DEPLOY_HOST }}
-        run: |
-          if [[ -z "$SSH_KEY" || -z "$KNOWN_HOSTS" || -z "$HOST" ]]; then
-            echo "::error::Secrets DEPLOY_HOST, DEPLOY_SSH_KEY und DEPLOY_KNOWN_HOSTS fehlen (Settings → Environments → production)."
-            exit 1
-          fi
-          install -m 700 -d ~/.ssh
-          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          # Host-Key fest hinterlegt statt StrictHostKeyChecking=no (MITM-Schutz).
-          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
-
-      - name: Release ausführen
-        env:
-          HOST: ${{ secrets.DEPLOY_HOST }}
-          SSH_USER: ${{ secrets.DEPLOY_USER || 'deploy' }}
-          SHA: ${{ github.sha }}
-          FORCE: ${{ inputs.force && '1' || '0' }}
-        run: |
-          # Genau den geprüften Commit ausrollen. Das Skript läuft in der Fassung aus
-          # origin/main (git show), ohne vorher das Arbeitsverzeichnis anzufassen.
-          ssh -i ~/.ssh/deploy_key -o BatchMode=yes -o ConnectTimeout=20 "$SSH_USER@$HOST" \
-            "cd /opt/pharos && git fetch --quiet origin main && git show origin/main:deploy/deploy.sh | FORCE=$FORCE bash -s -- '$SHA'"
-
-      - name: Öffentlicher Smoke-Test
-        run: |
-          curl -fsS --retry 5 --retry-delay 3 https://www.pharos.team/health
-          echo
-          curl -fsS -o /dev/null -w "Startseite: HTTP %{http_code}\n" https://www.pharos.team/

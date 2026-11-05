@@ -69,15 +69,18 @@ sudo systemctl reload caddy      # holt automatisch Let's-Encrypt-Zertifikat
 
 ## 7 — Update-Workflow
 
-Automatisch per GitHub Action `.github/workflows/release.yml` nach jedem Merge auf `main`:
-Tests und Build in CI, danach per SSH `deploy/deploy.sh` auf dem Server. Das Skript zieht
-den Commit per Fast-Forward, führt `npm ci` nur bei geändertem Lockfile aus, baut nach
-`dist.next`, tauscht atomar gegen `dist`, startet den Proxy nur bei Server-Änderungen neu
-und rollt `dist` zurück, wenn der Health-Check scheitert.
+Nur manuell, wie in VermieterOS: Merges und Pull Requests lösen nichts aus.
+Release: GitHub → Actions → **Release** → „Run workflow" auf `main`. Die Action
+(`.github/workflows/release.yml`) prüft zuerst (Tests und Build) und führt danach per SSH
+`deploy/deploy.sh` auf dem Server aus. Auf einem anderen Branch gestartet läuft nur die
+Prüfung, ausgerollt wird nichts.
 
-**Kein Deploy/Restart 9–18 Uhr ohne Rückfrage** — die Action hält das ein: Merges in
-diesem Fenster werden nur geprüft, der Abendlauf um 19:15 Uhr rollt sie aus. Sofort-Release
-tagsüber: Actions → Release → „Run workflow" → „Sperrzeit 9–18 Uhr übergehen".
+Das Skript zieht den Commit per Fast-Forward, führt `npm ci` nur bei geändertem Lockfile
+aus, baut nach `dist.next`, tauscht atomar gegen `dist`, startet den Proxy nur bei
+Server-Änderungen neu und rollt `dist` zurück, wenn der Health-Check scheitert.
+
+**Kein Deploy/Restart 9–18 Uhr ohne Rückfrage** — der manuelle Start ist diese Rückfrage,
+tagsüber also nur bewusst auslösen.
 
 Manuell auf dem Server: `cd /opt/pharos && bash deploy/deploy.sh` (optional mit `FORCE=1`).
 

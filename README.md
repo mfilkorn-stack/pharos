@@ -1,83 +1,75 @@
 # Pharos
 
-Werkzeuge für Rettungsfachpersonal (Aus-/Fortbildung) in einer PWA. **Kein Medizinprodukt.** **Keine patientenbezogene Entscheidungsgrundlage.**
+Stand: 07.11.2026
+
+Werkzeuge für Rettungsfachpersonal (Aus- und Fortbildung) in einer PWA, live unter
+[www.pharos.team](https://www.pharos.team). **Kein Medizinprodukt.** **Keine patientenbezogene
+Entscheidungsgrundlage.**
 
 ## Module
 
-- **Lexikon / MedScan** — Wirkstoff-Nachschlagewerk mit Barcode-, BMP- und OCR-Erkennung, SAA-Check.
-- **Medigabe** — 8-Schritt-Wizard für die Medikamentengabe nach SAA/BPR 2025.
-- **Trainer** — SINNHAFT-Übergabe nach Gräff et al. 2023.
+| Modul | Was es kann |
+|---|---|
+| **MedScan** (Lexikon) | Wirkstoffe und Handelsnamen nachschlagen, Packung oder Medikationsplan scannen (Barcode, BMP, OCR), Drogen und Toxidrome, SAA-Check gegen die Dauermedikation. Offline nutzbar. |
+| **Medigabe** | 8-Schritt-Wizard für die Medikamentengabe nach SAA/BPR 2025: Indikation, Kontraindikationen, Aufklärung, Dosis, 6-R-Regel, Doku-Zusammenfassung. |
+| **Übergabe** (Trainer) | SINNHAFT-Übergabe nach Gräff et al. 2023 einsprechen oder tippen; die KI sortiert in die Felder und bewertet wie das aufnehmende ZNA-Team. |
 
 ## Stack
 
-Vite 8 + React 19 + Tailwind 4, PWA (Workbox). Vitest (jsdom). Express-Proxy für die KI-Pfade. Tesseract.js (lazy). zxing-wasm (lazy Fallback).
+Vite 8, React 19, Tailwind 4, PWA über `vite-plugin-pwa` (Workbox). Vitest mit jsdom.
+Express-5-Proxy (`server/ki-proxy.mjs`) für die KI-Pfade, der Anthropic-Key bleibt serverseitig.
+Tesseract.js und zxing-wasm werden erst bei Bedarf geladen. Schriften (Inter, JetBrains Mono)
+sind selbst gehostet.
 
-## Setup
-
-```bash
-npm install
-npm run data:ocr    # einmalig: deu.traineddata nach public/tesseract/ (~10 MB)
-npm run data        # Pipeline → src/modules/lexikon/data/*.json (Inputs in scripts/input/)
-npm run dev
-```
-
-## Build
+## Entwicklung
 
 ```bash
-npm run build && npm run preview
+npm ci
+npm run data:ocr      # einmalig: deu.traineddata nach public/tesseract/ (~10 MB)
+cp .env.local.example .env.local   # ANTHROPIC_API_KEY eintragen
+npm run dev:all       # KI-Proxy (:8787) und Vite parallel
 ```
 
-## Tests
+| Befehl | Zweck |
+|---|---|
+| `npm test` | Vitest einmalig, `npm run test:watch` im Watch-Modus |
+| `npm run build` | `dist/`, `VITE_KI_PROXY_URL` wird zur Build-Zeit eingebettet |
+| `npm run data` | Lexikon-Pipeline, Inputs in `scripts/input/` (siehe `scripts/README.md`) |
+| `npm run data:saa` / `data:saa-matrix` | SAA-Datensatz und Interaktionsmatrix |
 
-```bash
-npm test
-```
+Lexikon-Daten (`src/modules/lexikon/data/*.json`) sind Pipeline-Output und werden nie direkt
+editiert. Medigabe-Dosierungen stammen ausschließlich aus SAA und BPR 2025 mit Seitenbeleg.
+Weitere Regeln stehen in `CLAUDE.md`.
 
-## Datenpipeline
+## Release
 
-Siehe `scripts/README.md`. Inputs (manuell beschaffen): `scripts/input/wido-atc.zip`, `scripts/input/top250.csv`, optional `scripts/input/extras.json`.
+Zwei manuelle Schritte, Merges lösen nichts aus:
 
-## Architektur
+1. **Prüfen:** GitHub → Actions → **Release** → „Run workflow" auf `main` (Tests und Build).
+2. **Ausrollen**, wenn der Lauf grün ist:
+   ```bash
+   ssh -t pharos 'cd /opt/pharos && bash deploy/deploy.sh'
+   ```
 
-Siehe `docs/superpowers/specs/2026-06-01-wirkstoff-lookup-v1.1-design.md`.
+Kein Deploy zwischen 9 und 18 Uhr ohne Rückfrage. Server-Einrichtung, Skript-Ablauf und
+Fallstricke: `DEPLOY-HETZNER.md`.
 
-## Sicherheit & Recht
+## Datenschutz und KI
 
-- Datensparsamkeit: alle Offline-Pfade on-device, ephemer, ohne Upload.
-- KI-Pfad aktiv (Flags `cloudPackung`/`cloudPlan` in `src/modules/lexikon/config.js`). Der Anthropic-Key liegt nur serverseitig im Proxy, nie im Client-Bundle.
-- BMP-Data-Matrix Parser ist Whitelist-only: Patientenkopf und Diagnosen werden nicht gelesen.
-- Consent persistent in `localStorage`, kein PII.
+- Offline-Pfade (Suche, Barcode, BMP, OCR) laufen auf dem Gerät, nichts wird hochgeladen.
+- Die Cloud-Erkennung greift nur, wenn lokal nichts gefunden wurde, und liefert nur
+  Wirkstoffnamen. Die Anzeige kommt weiter aus der lokalen Datenbank.
+- Der BMP-Parser liest nur die Medikation, Patientenkopf und Diagnosen werden ignoriert.
+- `localStorage` hält nur Consent, Favoriten und Verlauf (Wirkstoff-IDs), keine Patientendaten.
+- Test-Modus: keine Patientendaten Dritter eingeben. Vor produktivem Einsatz mit Drittdaten
+  braucht es AVV mit Anthropic, EU-Hosting und eine Rechtsgrundlage.
 
-## Stand v1.1 (Abnahme)
+## Dokumentation
 
-| Paket | Abnahme | Status |
-|---|---|---|
-| 1 | Scaffold + PWA installierbar offline | ✅ |
-| 2 | Suche zeigt 48 Seed-Substanzen | ✅ |
-| 3 | `build-data.mjs` idempotent, Validierung grün | ✅ |
-| 4 | Tier 0a/0b mit Badge | ✅ |
-| 5 | Scanner + Barcode + ConfirmList (Pflicht-Bestätigung) | ✅ |
-| 6 | Consent persistent + Re-Consent bei Versionswechsel | ✅ |
-| 7 | OCR Tesseract lazy, eigene Origin | ✅ |
-
-Manueller Browser-Smoke-Test (PWA offline, OCR-Modell-Cache, Kamera) ist Endabnahme durch GF.
-
-## v1.2-self (Test-Modus)
-
-**Cloud-Erkennung** (Anthropic Claude) ist im Self-Test aktiviert. Setup:
-
-```bash
-cp .env.local.example .env.local
-# ANTHROPIC_API_KEY eintragen
-npm install
-npm run ki-proxy      # in einem Terminal — startet localhost:8787
-npm run dev           # in einem anderen Terminal — startet PWA
-```
-
-Pipeline: Barcode → BMP/PZN → OCR → KI. KI läuft nur, wenn lokal nichts gefunden wurde
-und der Proxy erreichbar ist. KI gibt **nur Wirkstoffnamen** zurück — die Anzeige
-kommt weiter aus der lokalen DB/ATC-Schicht.
-
-**Test-Modus heißt: keine Patientendaten Dritter.** Eigene Packungen, eigene Pläne.
-Vor produktivem Einsatz mit Drittdaten: AVV mit Anthropic, EU-Hosting, Rechtsgrundlage
-(siehe Konzept §6).
+| Datei | Inhalt |
+|---|---|
+| `CLAUDE.md` | Harte Regeln, Konventionen, Struktur |
+| `DEPLOY-HETZNER.md` | Server, Caddy, systemd, Release-Ablauf |
+| `docs/DECISIONS.md` | Getroffene und offene Entscheidungen |
+| `docs/audits/2026-10-21-design-ux-audit.md` | UI/UX-Audit mit offenen Punkten |
+| `AUDIT_REPORT.md` | Funktions- und Sicherheitsaudit (Stand 2026-06-02) |
